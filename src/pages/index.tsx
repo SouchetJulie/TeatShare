@@ -9,8 +9,8 @@ export default function Home() {
       <Head>
         <title>TeatShare - Home</title>
         <meta
-          name="description"
-          content="Site de partage de fiches de cours pour les instituteurs, par les instituteurs"
+          name="viewport"
+          content="initial-scale=1.0, width=device-width"
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
