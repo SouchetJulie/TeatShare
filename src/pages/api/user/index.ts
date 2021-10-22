@@ -1,8 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import {
-  createNewUser,
-  getAllUsers,
-} from "../../../server/services/test-mongodb";
+import { createNewUser, getAllUsers } from "../../../server/services/db";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   switch (req.method) {
