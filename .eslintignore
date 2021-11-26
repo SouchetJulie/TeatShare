@@ -1,3 +1,4 @@
 nodes_modules/
 src/types/Grade.ts
 src/types/Subject.ts
+*.d.ts
