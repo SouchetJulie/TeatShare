@@ -19,9 +19,16 @@ export const getAllUsers = async () => {
 export const createNewUser = async (user: UserAuth): Promise<{error} | InsertOneResult<UserDB>> => {
   try {
     if (!user.firstName || !user.lastName || !user.password || !user.email) {
-      return { error: 'Missing values'};
+      return {error: 'Missing values'};
     }
     const collection = (await getDatabase()).collection<UserDB>("User");
+
+    // Is email already taken?
+    const foundInDB = await collection.findOne<UserDB>({email: user.email});
+
+    if (foundInDB) {
+      return {error: 'Email is already in use.'};
+    }
 
     const hashedPassword =  bcrypt.hashSync(user.password, 15);
 
