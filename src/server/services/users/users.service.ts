@@ -1,13 +1,12 @@
 import bcrypt from 'bcrypt';
 import { InsertOneResult } from 'mongodb';
 
-import { database } from '../database';
+import { getDatabase } from '../database';
 import { UserAuth, UserDB } from '../../../types/User';
-
-const collection = database.collection<UserDB>("User");
 
 export const getAllUsers = async () => {
   try {
+    const collection = (await getDatabase()).collection<UserDB>("User");
     const users = await collection.find({}).toArray();
     // remove password before sending it back
     users.forEach(user => delete user.password);
@@ -22,6 +21,7 @@ export const createNewUser = async (user: UserAuth): Promise<{error} | InsertOne
     if (!user.firstName || !user.lastName || !user.password || !user.email) {
       return { error: 'Missing values'};
     }
+    const collection = (await getDatabase()).collection<UserDB>("User");
 
     const hashedPassword =  bcrypt.hashSync(user.password, 15);
 
@@ -51,6 +51,7 @@ export const createNewUser = async (user: UserAuth): Promise<{error} | InsertOne
 
 export const login = async (user: UserAuth): Promise<{error} | boolean> => {
   try {
+    const collection = (await getDatabase()).collection<UserDB>("User");
     const userDB = await collection.findOne<UserDB>({
       email: user.email
     });
@@ -60,5 +61,3 @@ export const login = async (user: UserAuth): Promise<{error} | boolean> => {
     return {error: 'Login failed'}
   }
 }
-
-// TODO better error handling
