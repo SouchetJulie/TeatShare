@@ -1,8 +1,9 @@
 import bcrypt from 'bcryptjs';
 import { InsertOneResult } from 'mongodb';
 
-import { getDatabase } from '../database';
-import { IUserAuth, IUserDB } from '../../../types/user.interface';
+import { getDatabase } from './database.service';
+import { IUserAuth, IUserDB } from '../../types/user.interface';
+import { ObjectId } from 'bson';
 
 export const getAllUsers = async () => {
   try {
@@ -15,6 +16,18 @@ export const getAllUsers = async () => {
     return { error: e };
   }
 };
+
+export const getUser = async (userId: ObjectId) => {
+  try {
+    const collection = (await getDatabase()).collection<IUserDB>("User");
+    const user = await collection.findOne({_id: userId});
+    // remove password before sending it back
+    delete user.password;
+    return user;
+  } catch (e) {
+    return { error: e };
+  }
+}
 
 export const createNewUser = async (user: IUserAuth): Promise<{error} | InsertOneResult<IUserDB>> => {
   try {
@@ -40,11 +53,13 @@ export const createNewUser = async (user: IUserAuth): Promise<{error} | InsertOn
       // foreign keys
       grades: [],
       subjects: [],
-      postIds: [],
+      lessonIds: [],
       bookmarkIds: [],
       commentIds: [],
       // add authentication parameters
-      ...user,
+      email: user.email,
+      firstName: user.firstName,
+      lastName: user.lastName,
       password: hashedPassword
     };
 
@@ -74,6 +89,11 @@ export const checkCredentials = async (user: IUserAuth): Promise<boolean> => {
   }
 }
 
-export const setSession = (user: IUserAuth): string => {
-  return ""
+/**
+ * Checks whether the given object is of User type.
+ * @param {Record<string, any>} user
+ * @return {boolean}
+ */
+export const isUser = (user: Record<string, any>): user is IUserDB => {
+  return user && user['error'] === undefined && user['email'];
 }
