@@ -2,7 +2,7 @@ import bcrypt from 'bcryptjs';
 import { InsertOneResult } from 'mongodb';
 
 import { getDatabase } from './database.service';
-import { IUserAuth, IUserDB } from '@typing/user.interface';
+import { IUserAuth, IUserDB, IUserPublic } from '@typing/user.interface';
 
 export const getAllUsers = async () => {
   try {
@@ -16,7 +16,7 @@ export const getAllUsers = async () => {
   }
 };
 
-export const getUserByEmail = async (email: string) => {
+export const getUserByEmail = async (email: string): Promise<IUserPublic | { error: any }> => {
   try {
     const collection = (await getDatabase()).collection<IUserDB>('User');
     const user = await collection.findOne({email: email});
