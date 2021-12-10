@@ -2,7 +2,9 @@ import Card from "../atoms/Card";
 import { FunctionComponent } from "react";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import "../../../assets";
+import Image from "next/image";
+import Illu1 from "../../../../public/assets/illu1.svg";
+import Illu2 from "../../../../public/assets/illu2.svg";
 
 interface Props {}
 
@@ -35,6 +37,10 @@ const LoginForm: FunctionComponent<Props> = () => {
           <button type="submit">Créer un compte</button>
         </form>
       </Card>
+      <div className="loginIcons">
+        <Image src={Illu2} alt="" height="350px" width="350px" />
+        <Image src={Illu1} alt="" height="350px" width="350px" />
+      </div>
     </div>
   );
 };
