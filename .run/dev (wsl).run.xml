@@ -1,11 +1,11 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="dev (wsl)" type="js.build_tools.npm">
+  <configuration default="false" name="dev" type="js.build_tools.npm">
     <package-json value="$PROJECT_DIR$/package.json" />
     <command value="run" />
     <scripts>
       <script value="dev" />
     </scripts>
-    <node-interpreter value="wsl://Ubuntu-20.04@/home/jsouchet/.nvm/versions/node/v14.15.4/bin/node" />
+    <node-interpreter value="project" />
     <envs />
     <method v="2" />
   </configuration>

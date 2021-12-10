@@ -1,5 +1,5 @@
 // Not subject to change, so hardcoded for better type-checking
-export enum Subject {
+export enum ESubject {
   "Maths" = "Maths",
   "Francais" = "Français",
   "Anglais" = "Anglais",
