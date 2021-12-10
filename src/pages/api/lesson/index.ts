@@ -1,10 +1,12 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { defaultHandler } from '../../../server/common/default.handler';
-import { loginPostHandler } from '../../../server/handlers/user/login/post.handler';
+import { lessonGetHandler } from '../../../server/handlers/lesson/get.handler';
+import { lessonPostHandler } from '../../../server/handlers/lesson/post.handler';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const handlers = {
-    "POST": loginPostHandler,
+    "GET": lessonGetHandler,
+    "POST": lessonPostHandler
     // add here handlers for other methods
   }
 
