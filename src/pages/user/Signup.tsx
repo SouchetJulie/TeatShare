@@ -1,10 +1,9 @@
 import React, { FunctionComponent } from "react";
-import SignUpForm from "../../client/components/molecules/SignUpForm";
 
 interface Props {}
 
 const signup: FunctionComponent<Props> = () => {
-  return <SignUpForm />;
+  return <></>;
 };
 
 export default signup;
