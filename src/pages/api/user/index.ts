@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { defaultHandler } from '../../../server/common/default.handler';
-import { userGetHandler } from '../../../server/handlers/user/get.handler';
+import { defaultHandler } from '@common/default.handler';
+import { userGetHandler } from '@handlers/user/get.handler';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const handlers = {

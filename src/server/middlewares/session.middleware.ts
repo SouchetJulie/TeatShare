@@ -2,7 +2,7 @@ import nextSession from "next-session";
 import { promisifyStore } from 'next-session/lib/compat';
 import MongoStore from 'connect-mongo';
 
-import { getClient } from '../services/database';
+import { getClient } from '@services/database.service';
 
 const mongoStore = promisifyStore(MongoStore.create({
   clientPromise: getClient()
@@ -17,7 +17,8 @@ export const getSession = nextSession({
   autoCommit: false,
   cookie: {
     httpOnly: true,
-    sameSite: "strict"
+    sameSite: "strict",
+    secure: process.env.NODE_ENV === 'production'
   },
   store: mongoStore
 });

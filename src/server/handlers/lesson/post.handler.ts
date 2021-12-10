@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { ILessonFile } from '../../../types/lesson-file.interface';
-import { createNewLesson } from '../../services/lessons.service';
+import { ILessonFile } from '@typing/lesson-file.interface';
+import { createNewLesson } from '@services/lessons.service';
 
 export const lessonPostHandler = async (req: NextApiRequest, res: NextApiResponse) => {
   const lesson: ILessonFile = req.body;

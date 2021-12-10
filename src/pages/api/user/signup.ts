@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { defaultHandler } from '../../../server/common/default.handler';
-import { signupPostHandler } from '../../../server/handlers/user/signup/post.handler';
+import { defaultHandler } from '@common/default.handler';
+import { signupPostHandler } from '@handlers/user/signup/post.handler';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const handlers = {

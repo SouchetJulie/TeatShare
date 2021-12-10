@@ -1,5 +1,5 @@
 import { getDatabase } from './database.service';
-import { ILessonFile } from '../../types/lesson-file.interface';
+import { ILessonFile } from '@typing/lesson-file.interface';
 import { ObjectId } from 'bson';
 
 
@@ -27,7 +27,7 @@ export const createNewLesson = async (
     tagIds = [],
     commentIds = [],
   }: ILessonFile
-) : Promise<{id: ObjectId} | {error: string}> => {
+): Promise<{ id: ObjectId } | { error: string }> => {
   try {
     if (!title) { // TODO test !isUser(user)
       return {error: 'Missing author or title.'};
@@ -56,7 +56,7 @@ export const createNewLesson = async (
 
     if (result.acknowledged) {
       user.lessonIds?.push(result.insertedId); // TODO remove `?`
-      return { id: result.insertedId }
+      return {id: result.insertedId}
     } else {
       return {error: 'Lesson upload failed'};
     }

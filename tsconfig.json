@@ -18,7 +18,17 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "downlevelIteration": true,
-    "incremental": true
+    "incremental": true,
+    "baseUrl": "src",
+    "paths": {
+      "@components/*": ["client/components/*"],
+      "@styles/*": ["client/styles/*"],
+      "@services/*": ["server/services/*"],
+      "@middlewares/*": ["server/middlewares/*"],
+      "@handlers/*": ["server/handlers/*"],
+      "@common/*": ["server/common/*"],
+      "@typing/*": ["types/*"], // aliased to typing to avoid @types keyword
+    }
   },
   "include": [
     "next-env.d.ts",

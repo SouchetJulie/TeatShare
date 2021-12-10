@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { getAllUsers } from '../../services/users.service';
+import { getAllUsers } from '@services/users.service';
 
 
 export const userGetHandler = async (req: NextApiRequest, res: NextApiResponse) => {
