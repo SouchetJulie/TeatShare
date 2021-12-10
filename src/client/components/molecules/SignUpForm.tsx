@@ -1,47 +1,42 @@
 import Card from "../atoms/Card";
 import { FunctionComponent } from "react";
-import Input from "../atoms/Input";
 
 interface Props {}
 
 const SignUpForm: FunctionComponent<Props> = () => {
   return (
     <Card>
+      <h2>S&apos;incrire</h2>
       <form action="/api/user/signup" method="POST">
-        <label htmlFor="firstName">Prénom :</label>
-        <Input
+        <input
           id="firstName"
           name="firstName"
           placeholder="Entrez votre prénom"
           type="text"
         />
 
-        <label htmlFor="lastName">Nom :</label>
-        <Input
+        <input
           id="lastName"
           name="lastName"
           placeholder="Entrez votre nom"
           type="text"
         />
 
-        <label htmlFor="email">Email :</label>
-        <Input
+        <input
           id="email"
           name="email"
           placeholder="Entrez un email valide"
           type="email"
         />
 
-        <label htmlFor="password">Mot de passe :</label>
-        <Input
+        <input
           id="password"
           name="password"
           placeholder="Choisissez un mot de passe fort"
           type="password"
         />
 
-        <label htmlFor="passwordConfirm">Répétez le mot de passe :</label>
-        <Input
+        <input
           id="passwordConfirm"
           name="passwordConfirm"
           placeholder="Choisissez un mot de passe fort"
