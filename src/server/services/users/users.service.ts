@@ -1,12 +1,12 @@
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import { InsertOneResult } from 'mongodb';
 
 import { getDatabase } from '../database';
-import { UserAuth, UserDB } from '../../../types/User';
+import { IUserAuth, IUserDB } from '../../../types/user.interface';
 
 export const getAllUsers = async () => {
   try {
-    const collection = (await getDatabase()).collection<UserDB>("User");
+    const collection = (await getDatabase()).collection<IUserDB>("User");
     const users = await collection.find({}).toArray();
     // remove password before sending it back
     users.forEach(user => delete user.password);
@@ -16,15 +16,15 @@ export const getAllUsers = async () => {
   }
 };
 
-export const createNewUser = async (user: UserAuth): Promise<{error} | InsertOneResult<UserDB>> => {
+export const createNewUser = async (user: IUserAuth): Promise<{error} | InsertOneResult<IUserDB>> => {
   try {
     if (!user.firstName || !user.lastName || !user.password || !user.email) {
       return {error: 'Missing values'};
     }
-    const collection = (await getDatabase()).collection<UserDB>("User");
+    const collection = (await getDatabase()).collection<IUserDB>("User");
 
     // Is email already taken?
-    const foundInDB = await collection.findOne<UserDB>({email: user.email});
+    const foundInDB = await collection.findOne<IUserDB>({email: user.email});
 
     if (foundInDB) {
       return {error: 'Email is already in use.'};
@@ -32,7 +32,7 @@ export const createNewUser = async (user: UserAuth): Promise<{error} | InsertOne
 
     const hashedPassword =  bcrypt.hashSync(user.password, 15);
 
-    const userDB: UserDB = {
+    const userDB: IUserDB = {
       // set default values
       joinDate: new Date(),
       description: '',
@@ -56,10 +56,10 @@ export const createNewUser = async (user: UserAuth): Promise<{error} | InsertOne
   }
 };
 
-export const login = async (user: UserAuth): Promise<{error} | boolean> => {
+export const login = async (user: IUserAuth): Promise<{error} | boolean> => {
   try {
-    const collection = (await getDatabase()).collection<UserDB>("User");
-    const userDB = await collection.findOne<UserDB>({
+    const collection = (await getDatabase()).collection<IUserDB>("User");
+    const userDB = await collection.findOne<IUserDB>({
       email: user.email
     });
 

@@ -1,10 +1,10 @@
-import { Grade } from './Grade';
-import { Subject } from './Subject';
+import { EGrade } from './grade.enum';
+import { ESubject } from './subject.enum';
 
 /**
  * Used for authentication and sign-up
  */
-export interface UserAuth {
+export interface IUserAuth {
   email: string,
   password: string, // to be removed outside of auth
   firstName?: string;
@@ -21,24 +21,27 @@ export interface UserAuth {
  * @property {Date} joinDate
  * @property {string} description
  * @property {string} location
- * @property {Grade[]} grades
- * @property {Subject[]} subjects
+ * @property {EGrade[]} grades
+ * @property {ESubject[]} subjects
  * @property {string[]} postIds
  * @property {string[]} bookmarkIds
  * @property {string[]} commentIds
  */
-export interface UserDB extends UserAuth {
+export interface IUserDB extends IUserAuth {
   _id?: string; // used in database
   avatar?: File;
   joinDate: Date;
   description: string;
   location: string;
-  grades: Grade[];
-  subjects: Subject[];
+  grades: EGrade[];
+  subjects: ESubject[];
   // foreign keys
   postIds: string[];
   bookmarkIds: string[];
   commentIds: string[];
 }
 
-export type UserPublic = Omit<UserDB, 'password'>;
+/**
+ * Used for sending data to the client about an User
+ */
+export type IUserPublic = Omit<IUserDB, 'password'>;

@@ -1,5 +1,5 @@
 // Not subject to change, so hardcoded for better type-checking
-export enum Grade {
+export enum EGrade {
   "CP" = "CP",
   "CE1" = "CE1",
   "CE2" = "CE2",
