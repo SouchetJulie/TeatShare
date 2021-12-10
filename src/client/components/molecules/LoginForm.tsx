@@ -2,6 +2,7 @@ import Card from "../atoms/Card";
 import { FunctionComponent } from "react";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import "../../../assets";
 
 interface Props {}
 
