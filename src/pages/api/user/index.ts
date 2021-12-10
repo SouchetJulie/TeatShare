@@ -4,11 +4,11 @@ import { userGetHandler } from '@handlers/user/get.handler';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const handlers = {
-    "GET": userGetHandler,
+    'GET': userGetHandler,
     // add here handlers for other methods
   }
 
   const handler = handlers[req.method] || defaultHandler;
 
-  handler(req, res);
+  await handler(req, res);
 };
