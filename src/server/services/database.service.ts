@@ -1,9 +1,6 @@
 import { Db, MongoClient } from 'mongodb';
 
-const dbUsername = process.env.MONGODB_USERNAME;
-const dbPassword = process.env.MONGODB_PASSWORD;
-
-const uri = `mongodb+srv://${dbUsername}:${dbPassword}@teatshare.ryek8.mongodb.net/TeatShare?retryWrites=true&w=majority`;
+const uri = process.env.MONGODB_URI;
 
 let cachedClient: MongoClient = null;
 let cachedDb: Db = null;

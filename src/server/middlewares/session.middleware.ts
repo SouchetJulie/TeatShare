@@ -1,24 +1,20 @@
-import nextSession from "next-session";
-import { promisifyStore } from 'next-session/lib/compat';
-import MongoStore from 'connect-mongo';
-
-import { getClient } from '@services/database.service';
-
-const mongoStore = promisifyStore(MongoStore.create({
-  clientPromise: getClient()
-}));
+import { NextApiHandler } from 'next';
+import { withIronSession } from '@daiyam/next-iron-session';
 
 /**
- * Middleware that gets the current session?? TODO look into this
- *
- * /!\ When modifying the session, `req.session.commit()` must be called to save the changes.
+ * Adds a `IronSession` to the request before it is handled (under `req.session`).
+ * @see withIronSession, Session
+ * @param {NextApiHandler} apiHandler
+ * @return {NextApiHandler}
  */
-export const getSession = nextSession({
-  autoCommit: false,
-  cookie: {
-    httpOnly: true,
-    sameSite: "strict",
-    secure: process.env.NODE_ENV === 'production'
-  },
-  store: mongoStore
-});
+export const withSession = (apiHandler: NextApiHandler): NextApiHandler => {
+  return withIronSession(apiHandler, {
+    cookieName: 'session_id',
+    cookieOptions: {
+      httpOnly: true,
+      sameSite: 'strict',
+      secure: process.env.NODE_ENV === 'production'
+    },
+    password: process.env.SESSION_SECRET
+  })
+};

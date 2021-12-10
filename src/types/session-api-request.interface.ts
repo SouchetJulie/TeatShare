@@ -1,5 +1,5 @@
 import { NextApiRequest } from 'next';
-import { Session } from 'next-session/lib/types';
+import { Session } from '@daiyam/next-iron-session';
 
 /**
  * A NextApiRequest that includes a Session object.

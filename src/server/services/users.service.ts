@@ -3,7 +3,6 @@ import { InsertOneResult } from 'mongodb';
 
 import { getDatabase } from './database.service';
 import { IUserAuth, IUserDB } from '@typing/user.interface';
-import { ObjectId } from 'bson';
 
 export const getAllUsers = async () => {
   try {
@@ -17,12 +16,13 @@ export const getAllUsers = async () => {
   }
 };
 
-export const getUser = async (userId: ObjectId) => {
+export const getUserByEmail = async (email: string) => {
   try {
     const collection = (await getDatabase()).collection<IUserDB>('User');
-    const user = await collection.findOne({_id: userId});
+    const user = await collection.findOne({email: email});
     // remove password before sending it back
     delete user.password;
+    console.log(`[DB] Retrieved user ${user.email} from DB.`);
     return user;
   } catch (e) {
     return {error: e};

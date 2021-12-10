@@ -1,10 +1,10 @@
 import { NextApiResponse } from 'next';
 
-import { checkCredentials } from '@services/users.service';
-import { getSession } from '@middlewares/session.middleware';
+import { checkCredentials, getUserByEmail } from '@services/users.service';
 import { ISessionApiRequest } from '@typing/session-api-request.interface';
+import { withSession } from '@middlewares/session.middleware';
 
-export const loginPostHandler = async (req: ISessionApiRequest, res: NextApiResponse) => {
+const handler = async (req: ISessionApiRequest, res: NextApiResponse) => {
   const user = req.body;
   if (!user.password || !user.email) {
     res.status(400).json({error: 'Veuillez remplir le formulaire.'});
@@ -12,10 +12,11 @@ export const loginPostHandler = async (req: ISessionApiRequest, res: NextApiResp
 
   const result = await checkCredentials(user);
   if (result) {
-    const session = await getSession(req, res);
-    // Save user session
-    session.user = user;
-    await session.commit();
+    console.log(`[LOGIN] Credentials OK for ${user.email}.`);
+    const userDB = await getUserByEmail(user.email);
+    req.session.set('user', userDB);
+    await req.session.save();
+    console.log(`[LOGIN] Started session for ${user.email} from DB.`);
 
     res.status(200).json({
       success: true
@@ -27,3 +28,5 @@ export const loginPostHandler = async (req: ISessionApiRequest, res: NextApiResp
     });
   }
 };
+
+export const loginPostHandler = withSession(handler);
