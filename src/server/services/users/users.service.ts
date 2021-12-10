@@ -56,7 +56,12 @@ export const createNewUser = async (user: IUserAuth): Promise<{error} | InsertOn
   }
 };
 
-export const login = async (user: IUserAuth): Promise<{error} | boolean> => {
+/**
+ * Checks whether the given user credentials are valid or not.
+ * @param {IUserAuth} user
+ * @return {Promise<{error} | boolean>}
+ */
+export const checkCredentials = async (user: IUserAuth): Promise<boolean> => {
   try {
     const collection = (await getDatabase()).collection<IUserDB>("User");
     const userDB = await collection.findOne<IUserDB>({
@@ -65,6 +70,10 @@ export const login = async (user: IUserAuth): Promise<{error} | boolean> => {
 
     return await bcrypt.compare(user.password, userDB.password);
   } catch (e) {
-    return {error: 'Login failed'}
+    return false;
   }
+}
+
+export const setSession = (user: IUserAuth): string => {
+  return ""
 }

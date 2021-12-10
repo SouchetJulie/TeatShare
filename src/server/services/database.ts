@@ -5,15 +5,15 @@ const dbPassword = process.env.MONGODB_PASSWORD;
 
 const uri = `mongodb+srv://${dbUsername}:${dbPassword}@teatshare.ryek8.mongodb.net/TeatShare?retryWrites=true&w=majority`;
 
-let cachedClient = null;
-let cachedDb = null;
+let cachedClient: MongoClient = null;
+let cachedDb: Db = null;
 
 /**
  * Connect to MongoDB client and our database
  */
 export const connectToDatabase = async () => {
   if (cachedClient && cachedDb) {
-    return { client: cachedClient, db: cachedDb }
+    return {client: cachedClient, db: cachedDb}
   }
 
   const client = cachedClient || await MongoClient.connect(uri, {});
@@ -23,10 +23,15 @@ export const connectToDatabase = async () => {
   cachedClient = client;
   cachedDb = db;
 
-  return { client, db };
+  return {client, db};
 }
 
 export const getDatabase = async (): Promise<Db> => {
   const {db} = await connectToDatabase();
   return db;
+}
+
+export const getClient = async (): Promise<MongoClient> => {
+  const {client} = await connectToDatabase();
+  return client;
 }
