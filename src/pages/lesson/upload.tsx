@@ -11,7 +11,13 @@ const upload: FunctionComponent = () => {
       <input id="lesson_upload_form_subtitle" name="subtitle" placeholder="Multiplier des nombres de 1 à 10..."/>
 
       <label htmlFor="lesson_upload_form_file">Fichier</label>
-      <input id="lesson_upload_form_file" name="file" type="file"/>
+      <input
+        id="lesson_upload_form_file"
+        name="file"
+        type="file"
+        accept="application/pdf"
+        required
+      />
 
       <button>Envoyer</button>
     </form>

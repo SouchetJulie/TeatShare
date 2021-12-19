@@ -5,7 +5,7 @@
     <scripts>
       <script value="dev" />
     </scripts>
-    <node-interpreter value="project" />
+    <node-interpreter value="$APPLICATION_CONFIG_DIR$/node/node-v14.15.0-win-x64/node" />
     <envs />
     <method v="2" />
   </configuration>
