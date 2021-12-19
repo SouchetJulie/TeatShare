@@ -1,6 +1,8 @@
 import { getDatabase } from './database.service';
 import { ILessonFile } from '@typing/lesson-file.interface';
 import { ObjectId } from 'bson';
+import { IUserPublic } from '@typing/user.interface';
+import { addLesson, isUser } from '@services/users.service';
 
 
 export const getAllLessons = async () => {
@@ -13,7 +15,7 @@ export const getAllLessons = async () => {
 }
 
 export const createNewLesson = async (
-  user: Record<any, any>, // TODO IUserDB
+  user: IUserPublic,
   {
     title,
     subtitle,
@@ -29,7 +31,7 @@ export const createNewLesson = async (
   }: ILessonFile
 ): Promise<{ id: ObjectId } | { error: string }> => {
   try {
-    if (!title) { // TODO test !isUser(user)
+    if (!title || !isUser(user)) {
       return {error: 'Missing author or title.'};
     }
 
@@ -55,12 +57,20 @@ export const createNewLesson = async (
       .insertOne(lessonFile);
 
     if (result.acknowledged) {
-      user.lessonIds?.push(result.insertedId); // TODO remove `?`
+      // Adding it to the user's lessons
+      user.lessonIds.push(result.insertedId);
+      await addLesson(user, result.insertedId); // TODO debug
+
+      console.log(`[LESSON] Lesson upload successful! id: ${result.insertedId}`);
       return {id: result.insertedId}
     } else {
-      return {error: 'Lesson upload failed'};
+      const error = 'Lesson upload failed! Write operation was not acknowledged.';
+      console.log(`[LESSON] ${error}`);
+      return {error};
     }
   } catch (e) {
-    return {error: 'Lesson upload failed'};
+    const error = `Lesson upload failed! There was an error: ${e}`;
+    console.log(`[LESSON] ${error}`);
+    return {error};
   }
 }

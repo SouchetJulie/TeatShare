@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { createNewUser } from '@services/users.service';
 
-export const signupPostHandler = async (req: NextApiRequest, res: NextApiResponse) => {
+export const signupHandler = async (req: NextApiRequest, res: NextApiResponse) => {
   const user = req.body;
   if (!user.firstName ||
     !user.lastName ||

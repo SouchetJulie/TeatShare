@@ -1,10 +1,10 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { defaultHandler } from '@common/default.handler';
-import { signupPostHandler } from '@handlers/user/signup/post.handler';
+import { signupHandler } from '@handlers/user/signup/signup.handler';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const handlers = {
-    'POST': signupPostHandler,
+    'POST': signupHandler,
     // add here handlers for other methods
   }
 

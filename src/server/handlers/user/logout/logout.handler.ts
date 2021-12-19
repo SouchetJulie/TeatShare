@@ -24,4 +24,4 @@ const handler = async (req: ISessionApiRequest, res: NextApiResponse) => {
   });
 };
 
-export const logoutPostHandler = withSession(handler);
+export const logoutHandler = withSession(handler);

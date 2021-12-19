@@ -3,6 +3,7 @@ import { InsertOneResult } from 'mongodb';
 
 import { getDatabase } from './database.service';
 import { IUserAuth, IUserDB, IUserPublic } from '@typing/user.interface';
+import { ObjectId } from 'bson';
 
 export const getAllUsers = async () => {
   try {
@@ -96,4 +97,19 @@ export const checkCredentials = async (user: IUserAuth): Promise<boolean> => {
  */
 export const isUser = (user: Record<string, any>): user is IUserDB => {
   return user && user['error'] === undefined && user['email'];
+}
+
+/**
+ * Adds the given lesson id to the list of lessons published by this user.
+ * @param {IUserPublic} user
+ * @param {ObjectId} lessonId
+ */
+export const addLesson = async (user: IUserPublic, lessonId: ObjectId) => {
+  const collection = (await getDatabase()).collection<IUserDB>('User');
+  const lessons = user.lessonIds;
+  lessons.push(lessonId);
+  return collection.updateOne(
+    {_id: user._id},
+    {$set: {lessonIds: lessons}}
+  );
 }

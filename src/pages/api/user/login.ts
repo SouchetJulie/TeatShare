@@ -1,11 +1,11 @@
 import { NextApiResponse } from 'next';
 import { defaultHandler } from '@common/default.handler';
-import { loginPostHandler } from '@handlers/user/login/post.handler';
+import { loginHandler } from '@handlers/user/login/login.handler';
 import { ISessionApiRequest } from '@typing/session-api-request.interface';
 
 export default async (req: ISessionApiRequest, res: NextApiResponse) => {
   const handlers = {
-    'POST': loginPostHandler,
+    'POST': loginHandler,
     // add here handlers for other methods
   }
 

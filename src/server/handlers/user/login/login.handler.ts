@@ -25,7 +25,7 @@ const handler = async (req: ISessionApiRequest, res: NextApiResponse) => {
 
     req.session.set<IUserPublic>('user', user);
     await req.session.save();
-    console.log(`[LOGIN] Started session for ${userCredentials.email} from DB.`);
+    console.log(`[LOGIN] Started session for ${userCredentials.email}.`);
 
     res.status(200).json({
       success: true
@@ -38,4 +38,4 @@ const handler = async (req: ISessionApiRequest, res: NextApiResponse) => {
   }
 };
 
-export const loginPostHandler = withSession(handler);
+export const loginHandler = withSession(handler);
