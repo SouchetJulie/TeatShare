@@ -1,0 +1,15 @@
+import {NextApiRequest, NextApiResponse} from 'next';
+import {notImplementedHandler} from '../../../server/common/not-implemented.handler';
+import {lessonGetOneHandler} from '../../../server/handlers/lesson/get.handler';
+
+export default async (req: NextApiRequest, res: NextApiResponse) => {
+    const {_id} = req.query as { _id: string };
+    const handlers = {
+        "GET": lessonGetOneHandler(_id)
+        // add here handlers for other methods
+    }
+
+    const handler = handlers[req.method] || notImplementedHandler;
+
+    await handler(req, res);
+};
