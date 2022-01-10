@@ -1,20 +1,28 @@
-/**
- * Meta data about a lesson file
- */
-import { ObjectId } from 'bson';
+import {ObjectId} from 'bson';
+import {CleanFile} from "@typing/clean-file.interface";
 
-export interface ILessonFile {
-  title: ObjectId;
-  subtitle?: string;
-  file?: File;
-  // meta data
-  _id?: string;
-  creationDate: Date;
-  publicationDate?: Date;
-  isDraft: boolean;
-  // foreign keys
-  authorId: ObjectId;
-  categoryIds: ObjectId[];
-  tagIds: ObjectId[];
-  commentIds: ObjectId[];
+/**
+ * Data about a lesson.
+ */
+export interface ILesson {
+    file: CleanFile;
+    // meta data
+    _id?: ObjectId;
+    title: string;
+    subtitle?: string;
+    creationDate: Date;
+    lastModifiedDate: Date;
+    publicationDate?: Date;
+    isDraft: boolean;
+    // foreign keys
+    authorId: ObjectId;
+    categoryIds: ObjectId[];
+    tagIds: ObjectId[];
+    commentIds: ObjectId[];
 }
+
+/**
+ *
+ * Data for creation of a Lesson.
+ */
+export type ILessonCreate = Partial<ILesson>;
