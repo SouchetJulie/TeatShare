@@ -1,0 +1,12 @@
+@import "src/client/styles/variables";
+
+.wrapper {
+  background-color: #a0ced9;
+}
+
+.container{
+  width: 100vw;
+  height: auto;
+  background-color: $bgc;
+  margin: 0;
+}
