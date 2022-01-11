@@ -1,11 +1,11 @@
 import {NextApiRequest, NextApiResponse} from 'next';
 import {notImplementedHandler} from '@common/not-implemented.handler';
-import {lessonGetOneHandler} from '@handlers/lesson/get.handler';
+import {userGetOneHandler} from '@handlers/user/get.handler';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
     const {_id} = req.query as { _id: string };
     const handlers = {
-        "GET": lessonGetOneHandler(_id)
+        "GET": userGetOneHandler(_id)
         // add here handlers for other methods
     }
 

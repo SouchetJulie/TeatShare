@@ -30,10 +30,10 @@ export const getUserByEmail = async (email: string): Promise<IUserPublic | { err
     }
 };
 
-export const getOneUser = async (userId: ObjectId) => {
+export const getOneUser = async (userId: string) => {
     try {
         const collection = (await getDatabase()).collection<IUserDB>("User");
-        const user = await collection.findOne({_id: userId});
+        const user = await collection.findOne({_id: new ObjectId(userId)});
         // remove password before sending it back
         delete user.password;
         return user;
@@ -89,7 +89,7 @@ export const createNewUser = async (user: IUserAuth): Promise<{ error } | Insert
  * @param {IUserAuth} user
  * @return {Promise<{error} | boolean>}
  */
-export const checkCredentials = async (user: IUserAuth): Promise< boolean> => {
+export const checkCredentials = async (user: IUserAuth): Promise<boolean> => {
     try {
         const collection = (await getDatabase()).collection<IUserDB>("User");
         const userDB = await collection.findOne<IUserDB>({
