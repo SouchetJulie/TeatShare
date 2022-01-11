@@ -1,6 +1,6 @@
 import {NextApiRequest, NextApiResponse} from 'next';
-import {notImplementedHandler} from '../../../server/common/not-implemented.handler';
-import {lessonGetOneHandler} from '../../../server/handlers/lesson/get.handler';
+import {notImplementedHandler} from '@common/not-implemented.handler';
+import {lessonGetOneHandler} from '@handlers/lesson/get.handler';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
     const {_id} = req.query as { _id: string };
