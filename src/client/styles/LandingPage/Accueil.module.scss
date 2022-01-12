@@ -44,6 +44,7 @@
     z-index: 1;
     overflow-y: hidden;
     .block2Content{
+      overflow: hidden;
       background-color: green;
       display: flex;
       width: 50%;
@@ -99,7 +100,6 @@
         max-width: 600px;
         padding: 0.5rem 1.5rem;
         margin-top: 4%;
-
         .fromMe {
           font-size: 25px;
           background-color: $white;

@@ -11,6 +11,7 @@ const NavBar = (): JSX.Element => {
                     alt='Logo'
                 />
             </div>
+
             <div className={styles.navigationLink}>
                         <li>
                             Se connecter
