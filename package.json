@@ -8,7 +8,6 @@
     "start": "next start"
   },
   "dependencies": {
-    "@daiyam/next-iron-session": "^4.1.10-d1",
     "@google-cloud/storage": "^5.16.1",
     "bcryptjs": "^2.4.3",
     "formidable": "^2.0.1",
