@@ -16,11 +16,41 @@ const Accueil = () => {
                 </div>
             </div>
             <div className={styles.bloc2}>
-                <div className={styles.leftSide}>
-                    <div className={styles.fromMe}>Im speech bubble</div>
+                <div className={styles.block2Content}>
+                    <div className={styles.leftSide}>
+                        <div className={styles.imessage}>
+                            <p className={styles.fromMe}>Je n&apos;ai pas<br/> d&apos;inspiration...</p>
+                            <div className={styles.queue}></div>
+                        </div>
+                        <h2>Non, Facile!</h2>
+                    </div>
+
+                    <div className={styles.rightSide}>
+                        <h2>Trouvez-en.</h2>
+                        <div className={styles.imessage}>
+                            <p className={styles.fromMe}>Créer un cours<br/> c&apos;est compliqué !!</p>
+                        </div>
+
+                    </div>
                 </div>
-                <div className={styles.rightSide}></div>
-                <div className={styles.bottomSide}></div>
+
+
+                <div className={styles.bottomSide}>
+                    <p>Le cours vous a t&apos;il aidé ?</p>
+                    <div className={styles.choice}>
+                        <div className={styles.yesPart}>
+                            <p>OUI</p>
+                        </div>
+                        <div className={styles.noPart}>
+                            <p>NON</p>
+                        </div>
+                    </div>
+                    <button className={styles.callToAction}>
+                        <Link href={`/user/signup`} >
+                            <a className={styles.participate}>Participer</a>
+                        </Link>
+                    </button>
+                </div>
             </div>
         </div>
     );
