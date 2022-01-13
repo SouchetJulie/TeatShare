@@ -33,8 +33,6 @@ const Accueil = () => {
 
                     </div>
                 </div>
-
-
                 <div className={styles.bottomSide}>
                     <p>Le cours vous a t&apos;il aidé ?</p>
                     <div className={styles.choice}>

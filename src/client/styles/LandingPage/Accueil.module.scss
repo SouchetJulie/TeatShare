@@ -41,7 +41,7 @@
     transform: rotate(3deg);
     transform-origin: 0% 0%;
     margin-top: -6%;
-    z-index: 1;
+    overflow-x: hidden;
     overflow-y: hidden;
     .block2Content{
       overflow: hidden;
