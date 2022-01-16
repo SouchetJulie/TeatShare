@@ -1,7 +1,62 @@
 @import "src/client/styles/variables";
+
 .cardContainer{
   width: 100%;
   height: auto;
   border-radius: 15px;
+  box-shadow: 1px 1px 1px $grey;
+  margin: 10%;
+  overflow-x: hidden ;
+  .cardImg{
+    width: 100%;
+    height: auto;
+  }
+  .thematic{
+    width: 100%;
+    margin: 5% 5% ;
+    display: inline-flex;
+    color: $white;
+    font-weight: bold;
+    font-size: calc(100% - 2px);
+    .matiere{
+      width: 30%;
+      background-color: $bleu;
+      border-radius: 12px ;
+      text-align: center;
+    }
+    .course{
+      margin-left: 5%;
+      width: 30%;
+      text-align: center;
+      border-radius: 12px;
+      background-color: $orange;
+    }
+  }
+  .cardDate{
+    margin: 2% 5%;
+    display: inline-flex;
+    p{
+      font-weight: bold;
+    }
+  }
+  .cardTitle{
+    margin: 2% 5% ;
+    p{
+      font-weight: 500;
+      font-size: 150%;
+    }
+  }
+  button{
+    width: 80%;
+    text-align: center;
+    background-color: $white;
+    border: 3px solid $orange;
+    border-radius: 40px;
+    margin: 15% auto 5%;
+    display: block;
+    font-size: 150%;
+    font-weight: bolder;
+    color: $orange;
 
+  }
 }
