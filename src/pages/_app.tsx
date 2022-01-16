@@ -7,6 +7,7 @@ import {store} from "@stores/store";
 import {IAlert} from "@stores/alert.store";
 
 import "@styles/globals.scss";
+import NavBar from "@components/menu/NavBar";
 
 // eslint-disable-next-line require-jsdoc
 function MyApp({Component, pageProps}: AppProps) {
@@ -25,12 +26,15 @@ function MyApp({Component, pageProps}: AppProps) {
     });
 
   return (
+    <>
+      <NavBar/>
     <Provider store={store}>
       <div className="d-flex flex-column position-fixed bottom-0 w-100">
         {alerts}
       </div>
       <Component {...pageProps} />
     </Provider>
+    </>
   );
 }
 
