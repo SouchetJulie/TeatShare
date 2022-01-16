@@ -1,14 +1,17 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { defaultHandler } from '@common/default.handler';
-import { userGetHandler } from '@handlers/user/get.handler';
+import { getAllUsers } from '../../../server/services/users/users.service';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-  const handlers = {
-    'GET': userGetHandler,
-    // add here handlers for other methods
+  switch (req.method) {
+    case 'GET':
+      await getRoute(req, res);
+      break;
+    default:
+      res.status(501).send('Not implemented');
   }
+};
 
-  const handler = handlers[req.method] || defaultHandler;
-
-  await handler(req, res);
+const getRoute = async (req: NextApiRequest, res: NextApiResponse) => {
+  const users = await getAllUsers();
+  res.status(200).json({users});
 };

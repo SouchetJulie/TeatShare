@@ -4,7 +4,7 @@ interface Props {}
 
 const signup: FunctionComponent<Props> = () => {
   return (
-    <form action={'/api/user/signup'} method="POST">
+    <form action="/api/user/signup" method="POST">
       <label htmlFor="firstName">Prénom :</label>
       <input
         id="firstName"
