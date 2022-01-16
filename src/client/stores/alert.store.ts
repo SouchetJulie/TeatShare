@@ -1,8 +1,9 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit'
 import {RootState} from "@stores/store";
+import {ReactNode} from "react";
 
 export interface IAlert {
-  message: string;
+  message: ReactNode;
   success: boolean;
   id?: number;
 }
