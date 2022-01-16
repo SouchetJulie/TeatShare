@@ -1,0 +1,183 @@
+@import "src/client/styles/variables";
+
+.accueil_container{
+  width: 100%;
+  height: auto;
+  background-color: $white;
+  .bloc1{
+    width: 100%;
+    height: 70%;
+    background-image:url('../../../../public/landingPage/background.png') ;
+    background-repeat: no-repeat;
+    background-size: cover;
+    z-index: 0;
+    .block1_Content{
+      color: $white;
+      margin: 0 0 0 5% ;
+      h1{
+        padding-top: 16%;
+        margin-bottom: 15px;
+        font-size: 70px;
+      }
+      p{
+        margin-bottom: 30px;
+        font-size: 35px;
+      }
+      button{
+        border-radius: 40px;
+        color: $white;
+        border: none;
+        width: 350px;
+        height: 50px;
+        background: $orange;
+        font-size: 20px;
+        font-weight: bold;
+      }
+    }
+  }
+  .bloc2 {
+    width: 105%;
+    background-color: $orange;
+    transform: rotate(3deg);
+    transform-origin: 0% 0%;
+    margin-top: -6%;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    .block2Content{
+      overflow: hidden;
+      display: flex;
+      width: 50%;
+      margin:1% auto auto auto;
+    }
+    .leftSide {
+      width: 45%;
+      transform: rotate(-6deg);
+      margin: 9% 1% 0 auto;
+      .imessage {
+        background-color: #fff;
+        border: 1px solid #e5e5ea;
+        border-radius:25px;
+        display: flex;
+        flex-direction: column;
+        max-width: 600px;
+        padding: 0.5rem 1.5rem;
+        margin-bottom: 4%;
+        .queue{
+          clip-path: ellipse(16px 16px at 1% 2%);
+          background: $white;
+          width: 50px;
+          height: 50px;
+          transform: scaleX(-100%);
+          position: absolute;
+          right: 14%;
+          bottom: 22%;
+        }
+        .fromMe {
+          font-size: 25px;
+          background-color: $white;
+          color: $orange;
+          text-align: center;
+          font-weight: bold;
+        }
+      }
+      h2{
+        color: $white;
+        font-size: 50px;
+        text-align: center;
+      }
+    }
+    .rightSide {
+      width: 45%;
+      transform: rotate(-1deg);
+      margin: 6% auto auto auto;
+      .imessage {
+        background-color: #fff;
+        border: 1px solid #e5e5ea;
+        border-radius: 0.75rem;
+        display: flex;
+        flex-direction: column;
+        max-width: 600px;
+        padding: 0.5rem 1.5rem;
+        margin-top: 4%;
+        .fromMe {
+          font-size: 25px;
+          background-color: $white;
+          color: $orange;
+          text-align: center;
+          font-weight: bold;
+        }
+      }
+      h2{
+        font-size: 50px;
+        text-align: center;
+        color: $white;
+      }
+    }
+    .bottomSide {
+      transform: rotate(-3deg);
+      width: 30%;
+      height: 100%;
+      margin: 0 auto;
+      p{
+        width: 100%;
+        height: auto;
+        font-size: 40px;
+        font-weight: bold;
+        color: $white;
+        text-align: center;
+        margin: 6% 0 4% 0;
+      }
+      .choice{
+        width: 100%;
+        height: 75px;
+        display: flex;
+        border-radius: 20px;
+        overflow-x: hidden;
+        .yesPart {
+          display: flex;
+          background-color: $white;
+          width: 50%;
+          align-items: center;
+          p{
+            margin: 0;
+            font-size: 30px;
+            font-weight: bold;
+            color: $orange;
+          }
+        }
+        .noPart {
+          display: flex;
+          background-color: $bleu;
+          width: 50%;
+          align-items: center;
+          p{
+            margin: 0;
+            font-size: 30px;
+            font-weight: bold;
+            color: $white;
+
+          }
+        }
+      }
+      .callToAction{
+        width: 70%;
+        display: flex;
+        margin: 5% auto auto auto;
+        background-color: $orange;
+        border-radius: 30px;
+        border: 2px solid $white;
+        justify-content: center;
+
+        .participate {
+          padding: 10px;
+          color: $white;
+          font-size:20px;
+
+        }
+      }
+
+    }
+  }
+
+
+}

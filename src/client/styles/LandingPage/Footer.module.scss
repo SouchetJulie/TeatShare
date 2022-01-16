@@ -1,0 +1,56 @@
+@import "src/client/styles/variables";
+
+.landing_footer_container{
+
+  width: 100%;
+  height: auto;
+  background-color: $grbk;
+  color: white;
+  font-weight: bold;
+}
+.landing_footer_content{
+  width: 70%;
+  height: 100%;
+  margin: auto;
+
+  .landing_footer_bloc1{
+    padding: 5% 0;
+    height: 30%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    h2{
+      font-size: 40px;
+    }
+    .socialIconsLogos{
+      width: 20%;
+      display: flex;
+      justify-content: space-evenly;
+    }
+  }
+  .landing_footer_bloc2{
+    padding: 5% 0%;
+    margin: auto;
+    font-size: 1rem ;
+    height: 65%;
+    display: flex;
+    justify-content: space-between;
+    div{
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      .link{
+        font-weight: bold;
+      }
+    }
+    .spaceText{
+      p{
+        margin: 10% 0;
+      }
+    }
+  }
+  .landing_footer_bloc3{
+    text-align: center;
+    padding: 1% 0;
+  }
+}

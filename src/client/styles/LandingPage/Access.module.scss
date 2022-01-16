@@ -1,0 +1,63 @@
+@import "src/client/styles/variables";
+
+.accessContainer{
+  width: 100%;
+  height: 65vh;
+  background-color: $white;
+  margin-top: 15%;
+  position: relative;
+  .accessContent{
+    width: 27%;
+    margin-top: 5%;
+    margin-left: 17%;
+    .accessTitle{
+      margin-bottom: 5%;
+      color: $orange;
+      font-size: 52px;
+      font-weight: bold;
+      span{
+        color: $bleu;
+      }
+    }
+    ul{
+      width: 100%;
+      margin-bottom: 5%;
+      list-style-position: outside;
+      li{
+        width: 100%;
+        text-align: justify;
+        margin-bottom: 3%;
+        font-weight: bold;
+        color: $grey;
+        font-size: 25px;
+
+      }
+    }
+    div{
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      .accessButton{
+        border-radius: 40px;
+        color: $white;
+        border: none;
+        width: 271px;
+        height: 43px;
+        background: $orange;
+        font-size: 24px;
+        font-weight: bold;
+      }
+    }
+  }
+  .accessImgWrapper{
+    position: absolute;
+    background-repeat: no-repeat;
+    right: 5%;
+    top: -1%;
+    width: 36%;
+    height: 130%;
+    background-image: url("../../../../public/landingPage/phone2.png");
+    background-size: cover;
+  }
+}
+
