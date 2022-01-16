@@ -1,4 +1,4 @@
-import logo from '../../../public/logos/name.png';
+import logo from '../../../../public/logos/name.png';
 import Image from 'next/image';
 import styles from '../../styles/LandingPage/NavBar.module.scss'
 

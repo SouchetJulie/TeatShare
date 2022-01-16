@@ -1,8 +1,8 @@
 import styles from '../../styles/LandingPage/Actualites.module.scss';
 import Link from "next/link";
-import cardData from '../../../public/FakeDatas/LandingPage.cards.json';
+import cardData from '../../../FakeDatas/LandingPage.cards.json';
 import LandingCard from "./LandingCard";
-import Masonry from 'react-masonry-css'
+import Masonry from 'react-masonry-css';
 
 const Actualites = () => {
 
@@ -11,7 +11,7 @@ const Actualites = () => {
                 key={i}
                 course={res.course}
                 date={res.date}
-                img={res.img.replace('XXX', `cours${i + 1}.png`)}
+                img={`${i}`}
                 matiere={res.matiere}
                 time={res.time}
                 title={res.title}

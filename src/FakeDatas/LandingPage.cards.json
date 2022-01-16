@@ -3,7 +3,6 @@
     "title": "Comment apprendre les tables de multiplication ?",
     "date": "23 Juillet 2020",
     "time": "15min",
-    "img": "/../../public/LandingPage/Cours/XXX",
     "matiere": "Math",
     "course": "CP"
   },
@@ -11,7 +10,6 @@
     "title": "Le son 'OU' ",
     "date": "15 Septembre 2019",
     "time": "30min",
-    "img": "/../../../public/LandingPage/Cours/XXX",
     "matiere": "Français",
     "course": "CP"
   },
@@ -19,7 +17,6 @@
     "title": "Les Alpes",
     "date": "08 Octobre 2020",
     "time": "1h",
-    "img": "/../../../public/LandingPage/Cours/XXX",
     "matiere": "GEO",
     "course": "CE2"
   },
@@ -27,7 +24,6 @@
     "title": "Le Moyen Age",
     "date": "12 Novembre 2021",
     "time": "2h",
-    "img": "/../../../public/LandingPage/Cours/XXX",
     "matiere": "Histoire",
     "course": "CM1"
   },
@@ -35,7 +31,6 @@
     "title": "Carte de Noël",
     "date": "23 Octobre 2015",
     "time": "15min",
-    "img": "/../../../public/LandingPage/Cours/XXX",
     "matiere": "Art Plastique",
     "course": "All Classes"
   },
@@ -43,7 +38,6 @@
     "title": "Comment apprendre les tables de multiplication ?",
     "date": "22 Mars 2014",
     "time": "15min",
-    "img": "/../../../public/LandingPage/Cours/XXX",
     "matiere": "Math",
     "course": "CE1"
   }

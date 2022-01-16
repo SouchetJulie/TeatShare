@@ -1,7 +1,7 @@
 import styles from '../../styles/LandingPage/Temoignage.module.scss';
 import Image from 'next/image';
-import guillemetDown from '../../../public/LandingPage/guillemetsDown.png';
-import guillemetUp from '../../../public/LandingPage/guillemetsUp.png';
+import guillemetDown from '../../../../public/landingPage/guillemetsDown.png';
+import guillemetUp from '../../../../public/landingPage/guillemetsUp.png';
 
 const Temoignage = () => {
     return (
