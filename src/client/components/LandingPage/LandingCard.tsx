@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from 'next/image';
 import {ILandingPageCardInterface} from "../../../types/ILandingPageCard.interface";
 
+
 const LandingCard: FunctionComponent<ILandingPageCardInterface> = (
     {
         course,
@@ -13,16 +14,13 @@ const LandingCard: FunctionComponent<ILandingPageCardInterface> = (
         time,
         title
     }) =>{
-
-
     return(
         <div className={styles.cardContainer}>
             <div className={styles.cardImg}>
-                {/*  <Image
+                  <Image
                     src={img}
-                    width={100}
-                    height={100}
-                  />*/}
+                layout='fill'
+                  />
             </div>
             <div className={styles.thematic}>
                 <span className={styles.matiere}>{matiere}</span>

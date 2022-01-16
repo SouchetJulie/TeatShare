@@ -2,6 +2,7 @@ import styles from '../../styles/LandingPage/Actualites.module.scss';
 import Link from "next/link";
 import cardData from '../../../public/FakeDatas/LandingPage.cards.json';
 import LandingCard from "./LandingCard";
+import Masonry from 'react-masonry-css'
 
 const Actualites = () => {
 
@@ -18,13 +19,20 @@ const Actualites = () => {
 
     return (
         <div className={styles.actualites_container}>
-            <h2>Nos Actualités</h2>
-            {cards}
+            <h2>Nos p’tites actus.</h2>
+            <Masonry
+                breakpointCols={3}
+                className={styles.myMasonryGrid}
+                columnClassName={styles.myMasonryGridColumn}
+            >
+                {cards}
+            </Masonry>
             <button>
                 <Link href={`/user/login`} >
                     <a className={styles.connexion}>Voir tous les cours</a>
                 </Link>
             </button>
+
         </div>
     );
 };

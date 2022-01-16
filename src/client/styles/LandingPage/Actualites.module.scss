@@ -19,4 +19,16 @@
     font-size: 20px;
     font-weight: bold;
   }
+  .myMasonryGrid {
+    display: -webkit-box; /* Not needed if autoprefixing */
+    display: -ms-flexbox; /* Not needed if autoprefixing */
+    display: flex;
+    margin: auto;
+    width: 70%;
+  }
+  .myMasonryGridColumn {
+    padding-left: 30px; /* gutter size */
+    background-clip: padding-box;
+  }
+
 }

@@ -18,6 +18,7 @@ const Home: FunctionComponent<Props> = () => {
           content="initial-scale=1.0, width=device-width"
         />
         <link rel="icon" href="/favicon.ico" />
+          <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
       </Head>
       <LandingPage />
     </>
