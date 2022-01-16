@@ -1,4 +1,4 @@
-import {forwardRef, FunctionComponent} from 'react';
+import {forwardRef, FunctionComponent, MouseEventHandler, ReactNode} from 'react';
 import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
 import Nav from 'react-bootstrap/Nav';
@@ -9,7 +9,10 @@ import {useUser} from "../../hooks/useUser.hook";
 import styles from './navbar.module.scss';
 
 // eslint-disable-next-line react/display-name,react/prop-types
-const UserDropdownToggle = forwardRef(({children, onClick}, ref) => (
+const UserDropdownToggle = forwardRef(({
+                                         children,
+                                         onClick
+                                       }: { children?: ReactNode; onClick: MouseEventHandler }, ref) => (
   <a
     href=""
     ref={ref}
@@ -41,8 +44,15 @@ const NavBar: FunctionComponent = () => {
             </div>
             <div className={styles.navSection}>
               <Nav.Link href={"/"}>Accueil</Nav.Link>
-              <Nav.Link href={"/for_later"} disabled>A lire plus tard</Nav.Link>
-              <Nav.Link href={"/settings"} disabled>Paramètres</Nav.Link>
+              {
+                user ? (
+                    <>
+                      <Nav.Link href={"/for_later"} disabled>A lire plus tard</Nav.Link>
+                      <Nav.Link href={"/settings"} disabled>Paramètres</Nav.Link>
+                    </>
+                  )
+                  : ("")
+              }
             </div>
             {
               user ?
