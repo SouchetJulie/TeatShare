@@ -1,15 +1,14 @@
-import { NextApiResponse } from 'next';
-import { defaultHandler } from '@common/default.handler';
-import { loginHandler } from '@handlers/user/login/login.handler';
-import { ISessionApiRequest } from '@typing/session-api-request.interface';
+import {NextApiRequest, NextApiResponse} from 'next';
+import {notImplementedHandler} from '@common/not-implemented.handler';
+import {loginHandler} from '@handlers/user/login/login.handler';
 
-export default async (req: ISessionApiRequest, res: NextApiResponse) => {
-  const handlers = {
-    'POST': loginHandler,
-    // add here handlers for other methods
-  }
+export default async (req: NextApiRequest, res: NextApiResponse) => {
+    const handlers = {
+        'POST': loginHandler,
+        // add here handlers for other methods
+    }
 
-  const handler = handlers[req.method] || defaultHandler;
+    const handler = handlers[req.method] || notImplementedHandler;
 
-  await handler(req, res);
+    await handler(req, res);
 };

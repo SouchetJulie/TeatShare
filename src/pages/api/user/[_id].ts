@@ -1,10 +1,11 @@
 import {NextApiRequest, NextApiResponse} from 'next';
 import {notImplementedHandler} from '@common/not-implemented.handler';
-import {signupHandler} from '@handlers/user/signup/signup.handler';
+import {userGetOneHandler} from '@handlers/user/get.handler';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
+    const {_id} = req.query as { _id: string };
     const handlers = {
-        'POST': signupHandler,
+        "GET": userGetOneHandler(_id)
         // add here handlers for other methods
     }
 
@@ -12,5 +13,3 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
     await handler(req, res);
 };
-
-

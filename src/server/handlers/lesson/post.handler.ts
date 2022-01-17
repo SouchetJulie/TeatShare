@@ -1,42 +1,43 @@
-import {NextApiResponse} from 'next';
-import {Fields, File, Files, IncomingForm, Part} from 'formidable';
+import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
+import { Fields, File, Files, IncomingForm, Part } from "formidable";
 
-import {withSession} from '@middlewares/session.middleware';
-import {createNewLesson} from '@services/lessons.service';
-import {ISessionApiRequest} from '@typing/session-api-request.interface';
-import {IUserPublic} from '@typing/user.interface';
-import {ILessonCreate} from '@typing/lesson-file.interface';
+import { withSession } from "@middlewares/session.middleware";
+import { createNewLesson } from "@services/lessons.service";
+import { IUserPublic } from "@typing/user.interface";
+import { ILessonCreate } from "@typing/lesson-file.interface";
 
 interface LessonFormData {
   fields?: Fields;
   files?: Files;
 }
 
-const handler = async (req: ISessionApiRequest, res: NextApiResponse) => {
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    const formData: LessonFormData & { error?: string } = await new Promise((resolve, reject) => {
-      const form = new IncomingForm({
-        hashAlgorithm: 'sha256',
-        multiples: false,
-        filter: ({mimetype}: Part) => mimetype && mimetype.includes('pdf'), // keep only pdf
-      });
+    const formData: LessonFormData & { error?: string } = await new Promise(
+      (resolve, reject) => {
+        const form = new IncomingForm({
+          keepExtensions: false,
+          hashAlgorithm: "sha256",
+          multiples: false,
+          filter: ({ mimetype }: Part) => mimetype && mimetype.includes("pdf"), // keep only pdf
+        });
 
-      form.parse(req, (err, fields: Fields, files: Files) => {
-        if (err) {
-          return reject(err);
-        }
-        resolve({fields, files});
-      });
-    })
-      .catch((err) => ({error: err}));
+        form.parse(req, (err, fields: Fields, files: Files) => {
+          if (err) {
+            return reject(err);
+          }
+          resolve({ fields, files });
+        });
+      }
+    ).catch((err) => ({ error: err }));
 
     // Error handling
     if (formData.error) {
-      return res.status(400).json({error: formData.error});
+      return res.status(400).json({ error: formData.error });
     }
 
     // Get author
-    const currentUser = req.session.get<IUserPublic>('user');
+    const currentUser: IUserPublic = req.session.user;
 
     // Get file
     let file: File;
@@ -56,18 +57,23 @@ const handler = async (req: ISessionApiRequest, res: NextApiResponse) => {
 
     const uploadedLesson: ILessonCreate = {
       ...formData.fields,
-      isDraft: JSON.parse(isDraft) // conversion to boolean
+      isDraft: JSON.parse(isDraft), // conversion to boolean
     };
 
     const result = await createNewLesson(currentUser, file, uploadedLesson);
-    if (result['id']) {
-      return res.status(200).json({success: true, id: result['id']});
+    if ("id" in result) {
+      const id = result.id;
+
+      currentUser.lessonIds.push(id);
+      await req.session.save();
+
+      return res.status(200).json({ success: true, id });
     } else {
-      return res.status(400).json({success: false, error: result['error']});
+      return res.status(400).json({ success: false, error: result["error"] });
     }
   } catch (e) {
-    return res.status(400).json({success: false, error: e.message});
+    return res.status(400).json({ success: false, error: e.message });
   }
 };
 
-export const lessonPostHandler = withSession(handler);
+export const lessonPostHandler: NextApiHandler = withSession(handler);
