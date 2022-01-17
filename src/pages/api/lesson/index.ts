@@ -1,7 +1,7 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-import { defaultHandler } from '@common/default.handler';
-import { lessonGetHandler } from '@handlers/lesson/get.handler';
-import { lessonPostHandler } from '@handlers/lesson/post.handler';
+import {NextApiRequest, NextApiResponse} from 'next';
+import {notImplementedHandler} from '@common/not-implemented.handler';
+import {lessonGetAllHandler} from '@handlers/lesson/get.handler';
+import {lessonPostHandler} from '@handlers/lesson/post.handler';
 
 // Disable the default body parser
 export const config = {
@@ -11,12 +11,13 @@ export const config = {
 };
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-  const handlers = {
-    'GET': lessonGetHandler, 'POST': lessonPostHandler
-    // add here handlers for other methods
-  };
+    const handlers = {
+        'GET': lessonGetAllHandler,
+        'POST': lessonPostHandler
+        // add here handlers for other methods
+    };
 
-  const handler = handlers[req.method] || defaultHandler;
+    const handler = handlers[req.method] || notImplementedHandler;
 
-  await handler(req, res);
+    await handler(req, res);
 };

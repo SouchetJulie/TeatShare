@@ -1,6 +1,5 @@
-import { NextApiHandler, NextApiResponse } from 'next';
+import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 import { withIronSession } from '@daiyam/next-iron-session';
-import { ISessionApiRequest } from '@typing/session-api-request.interface';
 
 /**
  * Adds a `IronSession` to the request before it is handled (under `req.session`).
@@ -8,7 +7,7 @@ import { ISessionApiRequest } from '@typing/session-api-request.interface';
  * @param {NextApiHandler} apiHandler
  * @return {NextApiHandler}
  */
-export const withSession = (apiHandler: (req: ISessionApiRequest, res: NextApiResponse) => Promise<unknown>): NextApiHandler => {
+export const withSession = (apiHandler: (req: NextApiRequest, res: NextApiResponse) => Promise<unknown>): NextApiHandler => {
   return withIronSession(apiHandler, {
     cookieName: 'session_id',
     cookieOptions: {

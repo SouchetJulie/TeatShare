@@ -1,8 +1,8 @@
 import bcrypt from 'bcryptjs';
 import { InsertOneResult } from 'mongodb';
 
-import { getDatabase } from '../database';
-import { IUserAuth, IUserDB } from '../../../types/user.interface';
+import { getDatabase } from '../database.service';
+import { IUserAuth, IUserDB } from "@typing/user.interface";
 
 export const getAllUsers = async () => {
   try {
@@ -40,7 +40,7 @@ export const createNewUser = async (user: IUserAuth): Promise<{error} | InsertOn
       // foreign keys
       grades: [],
       subjects: [],
-      postIds: [],
+      lessonIds: [],
       bookmarkIds: [],
       commentIds: [],
       // add authentication parameters

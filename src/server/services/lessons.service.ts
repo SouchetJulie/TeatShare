@@ -20,6 +20,15 @@ export const getAllLessons = async () => {
     }
 };
 
+export const getOneLesson = async (id: string) => {
+    try {
+        const collection = (await getDatabase()).collection<ILesson>('LessonFile');
+        return await collection.findOne({_id: new ObjectId(id)});
+    } catch (e) {
+        return {error: e};
+    }
+};
+
 /**
  * Creates a new Lesson by uploading it to the necessary services, with the relevant updates to the author as well.
  * @param {IUserPublic} user
@@ -38,7 +47,7 @@ export const createNewLesson = async (
             return {error: 'Missing file.'};
         }
         if (!isUser(user)) {
-            return {error: 'Missing author.'};
+            return {error: 'Missing author .'};
         }
 
         // Add to cloud storage
@@ -63,7 +72,7 @@ export const createNewLesson = async (
             // set the pub. date if necessary
             publicationDate: (uploadedLesson.isDraft ? undefined : new Date()),
             // foreign keys
-            authorId: user._id,
+            authorId: new ObjectId(user._id),
             categoryIds: [],
             tagIds: [],
             commentIds: [],

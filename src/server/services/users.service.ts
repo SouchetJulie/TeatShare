@@ -30,6 +30,18 @@ export const getUserByEmail = async (email: string): Promise<IUserPublic | { err
     }
 };
 
+export const getOneUser = async (userId: string) => {
+    try {
+        const collection = (await getDatabase()).collection<IUserDB>("User");
+        const user = await collection.findOne({_id: new ObjectId(userId)});
+        // remove password before sending it back
+        delete user.password;
+        return user;
+    } catch (e) {
+        return {error: e};
+    }
+}
+
 export const createNewUser = async (user: IUserAuth): Promise<{ error } | InsertOneResult<IUserDB>> => {
     try {
         if (!user.firstName || !user.lastName || !user.password || !user.email) {
@@ -65,6 +77,7 @@ export const createNewUser = async (user: IUserAuth): Promise<{ error } | Insert
         };
 
         return await collection
+          // @ts-ignore
             .insertOne(userDB);
     } catch (e) {
         return {error: e};
