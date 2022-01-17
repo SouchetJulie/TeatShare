@@ -1,4 +1,4 @@
-import {AppProps} from "next/app";
+import { AppProps } from "next/app";
 import {useState} from "react";
 import {Provider} from "react-redux";
 
@@ -8,9 +8,13 @@ import {IAlert} from "@stores/alert.store";
 
 import "@styles/globals.scss";
 import NavBar from "@components/menu/NavBar";
+import SideBar from "@components/menu/SideBar";
 
-// eslint-disable-next-line require-jsdoc
-function MyApp({Component, pageProps}: AppProps) {
+/**
+ * Main application component: contains the parts that are in common for the whole app.
+ * @constructor
+ */
+function App({ Component, pageProps }: AppProps) {
   const [alertList, setAlertList] = useState([]);
 
   store.subscribe(() => setAlertList(store.getState().alerts.list));
@@ -24,10 +28,10 @@ function MyApp({Component, pageProps}: AppProps) {
         id={alert.id}
       />
     });
-
   return (
     <>
       <NavBar/>
+      <SideBar />
     <Provider store={store}>
       <div className="d-flex flex-column position-fixed bottom-0 w-100">
         {alerts}
@@ -38,4 +42,4 @@ function MyApp({Component, pageProps}: AppProps) {
   );
 }
 
-export default MyApp;
+export default App;

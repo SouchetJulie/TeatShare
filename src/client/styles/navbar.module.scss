@@ -1,0 +1,110 @@
+@import "../../../node_modules/bootstrap/scss/functions";
+@import "../../../node_modules/bootstrap/scss/mixins";
+@import "../../../node_modules/bootstrap/scss/variables";
+
+.navbar hr {
+  color: $light;
+}
+
+.classBadges {
+  flex-grow: 1;
+  display: flex;
+  justify-content: start;
+  text-transform: uppercase;
+
+  & > * {
+    margin-right: 5px;
+  }
+}
+
+.navSection {
+  display: flex;
+}
+
+.popover {
+  padding: 0;
+  background-color: transparent;
+  box-shadow: $primary 0 0 3px;
+  border-radius: 3px;
+}
+
+.sidebarContent {
+  a {
+    color: $light;
+
+    &:active, &:focus {
+      color: $dark;
+    }
+
+    &:hover {
+      color: $info;
+    }
+
+    i {
+      font-size: 1.75em;
+      display: block;
+    }
+  }
+}
+
+@include media-breakpoint-down(md) {
+  .navSection {
+    flex-direction: column;
+  }
+
+  .navbarExtra {
+    display: block;
+  }
+
+  .sidebarContent {
+    a i {
+      display: none;
+    }
+  }
+
+  .sidebar {
+    display: none;
+  }
+}
+
+@include media-breakpoint-up(md) {
+  .navbarExtra {
+    display: none;
+  }
+
+  .sidebar {
+    z-index: 1050;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 90px;
+    flex-direction: column;
+    align-items: center;
+
+    padding-top: 70px;
+    background-color: $primary;
+    box-shadow: $dark 0 0 10px;
+
+    font-size: 0.75em;
+    text-align: center;
+
+    &:before {
+      content: "";
+      width: 56px;
+      height: 56px;
+      top: 0;
+      right: -56px;
+      position: absolute;
+      -webkit-mask-composite: destination-out;
+      mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1 1" preserveAspectRatio="none"><circle cx="1" cy="1" r="1" fill="black"/></svg>') 0/100% 100%,
+      linear-gradient(#fff, #fff);
+      mask-composite: exclude;
+      background: $primary;
+    }
+  }
+
+  .separated {
+    margin-top: 100px;
+  }
+}
