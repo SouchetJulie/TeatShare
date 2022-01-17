@@ -1,61 +1,92 @@
-import axios, {AxiosError} from "axios";
-import {FormEvent, FunctionComponent, useState} from 'react';
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Form from "react-bootstrap/Form";
+import axios, { AxiosError } from "axios";
+import { FormEvent, FunctionComponent, useState } from "react";
+import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
+import Col from "react-bootstrap/Col";
+import Container from "react-bootstrap/Container";
+import Form from "react-bootstrap/Form";
+import Row from "react-bootstrap/Row";
 
-import {useAppDispatch} from "@hooks/store-hook";
-import {addAlert} from "@stores/alert.store";
-import {ResourceApiResponse} from "@typing/api-response.interface";
+import { useAppDispatch } from "@hooks/store-hook";
+import { addAlert } from "@stores/alert.store";
 
-import styles from "./upload.module.scss";
-import {Alert} from "react-bootstrap";
+import { ResourceApiResponse } from "@typing/api-response.interface";
+import styles from "@styles/upload.module.scss";
+
+const requiredFields = ["title", "file"];
 
 const upload: FunctionComponent = () => {
   // store
   const dispatch = useAppDispatch();
 
   const [isDraft, setIsDraft] = useState(false);
+  const [validated, setValidated] = useState(false);
 
-  const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
+  const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
 
-    const form = e.target as HTMLFormElement;
+    setValidated(true);
+
+    const form = event.target as HTMLFormElement;
     const formData = new FormData(form);
-    formData.append('isDraft', isDraft + "");
+    formData.append("isDraft", isDraft + "");
 
-    const {data} = await axios.post<ResourceApiResponse>('/api/lesson', formData)
-      .catch((e: AxiosError) => {
-        const data: ResourceApiResponse = {
+    // Check all required fields are filled
+    if (
+      !requiredFields.every(
+        (field: string) => formData.has(field) && formData.get(field)
+      )
+    ) {
+      return;
+    }
+
+    const { data } = await axios
+      .post<ResourceApiResponse>("/api/lesson", formData)
+      .catch((error: AxiosError) => {
+        const response: ResourceApiResponse = {
           success: false,
-          error: e.response.data.error || e.request || e.message
+          error: error.response.data.error || error.request || error.message,
         };
-        return {data};
+        return { data: response };
       });
 
-    const {success} = data;
+    const { success } = data;
 
     if (success) {
-      const {id} = data;
-      const message = <span>Leçon {isDraft ? 'sauvegardée' : 'créée'} avec succès ! <Alert.Link
-        href={`/api/lesson/${id}`}>(Voir la leçon)</Alert.Link> </span>
+      const { id } = data;
+      const message = (
+        <span>
+          Leçon {isDraft ? "sauvegardée" : "créée"} avec succès !
+          <Alert.Link href={`/api/lesson/${id}`}>(Voir la leçon)</Alert.Link>
+        </span>
+      );
 
-      dispatch(addAlert({message, success}));
+      dispatch(addAlert({ message, success }));
     } else {
-      const {error} = data;
-      dispatch(addAlert({message: `Création de la branche échouée : ${error}`, success}));
+      const { error } = data;
+      dispatch(
+        addAlert({
+          message: `Création de la branche échouée : ${error}`,
+          success,
+        })
+      );
     }
-  }
+  };
 
   return (
     <Container className="min-vh-100">
       <Row>
         <h1 className="mt-4">Importer un PDF</h1>
       </Row>
-      <Form className="my-5 row" onSubmit={onSubmit} method="POST">
+      <Form
+        className="my-5 row"
+        onSubmit={onSubmit}
+        onChange={() => setValidated(false)}
+        method="POST"
+        noValidate
+        validated={validated}
+      >
         <Col>
           <Form.Group controlId="lesson_upload_form_title">
             <Form.Label className={styles.label}>Titre</Form.Label>
@@ -106,7 +137,6 @@ const upload: FunctionComponent = () => {
             Sauvegarder
           </Button>
         </Col>
-
       </Form>
     </Container>
   );
