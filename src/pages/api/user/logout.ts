@@ -1,9 +1,8 @@
-import {NextApiResponse} from 'next';
+import {NextApiRequest, NextApiResponse} from 'next';
 import {notImplementedHandler} from "@common/not-implemented.handler";
 import {logoutHandler} from '@handlers/user/logout/logout.handler';
-import {ISessionApiRequest} from '@typing/session-api-request.interface';
 
-export default async (req: ISessionApiRequest, res: NextApiResponse) => {
+export default async (req: NextApiRequest, res: NextApiResponse) => {
     const handlers = {
         'GET': logoutHandler,
         'POST': logoutHandler,
