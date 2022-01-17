@@ -12,7 +12,7 @@ export default function Test() {
           name="description"
           content="Site de partage de fiches de cours pour les instituteurs, par les instituteurs"
         />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href={'/favicon.ico'} />
       </Head>
       <LandingPage />
       <Link href="/">Home</Link>
