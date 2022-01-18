@@ -1,4 +1,4 @@
-import { NextApiRequest, NextApiResponse } from "next";
+import {NextApiRequest, NextApiResponse} from 'next';
 import {notImplementedHandler} from '@common/not-implemented.handler';
 import {loginHandler} from '@handlers/user/login/login.handler';
 

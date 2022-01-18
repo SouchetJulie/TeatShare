@@ -1,9 +1,17 @@
 import {withSession} from '@middlewares/session.middleware';
-import {IUserPublic} from '@typing/user.interface';
-import { ISessionApiRequest } from "@typing/session-api-request.interface";
 
-export default withSession(async (req: ISessionApiRequest, res) => {
-    return res.json({
-        user: req.session.get<IUserPublic>('user')
+export default withSession(async (req, res) => {
+    const {user} = req.session;
+
+    if (!user) {
+        return res.status(401).json({
+            success: false,
+            error: 'Il faut être connecté.'
+        })
+    }
+
+    return res.status(200).json({
+        success: true,
+        user
     });
 })
