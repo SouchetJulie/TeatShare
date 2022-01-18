@@ -17,6 +17,10 @@ interface LoginFormComponentProps {}
 
 const LoginFormComponent: FunctionComponent<LoginFormComponentProps> = () => {
   const [validated, setValidated] = useState<boolean>(false);
+  //To check if the form is full
+  const [email, setEmail] = useState<string>('');
+  const [pwd, setPwd] = useState<string>('');
+  const styleBtn: string = (email && pwd) ? styles.loginRedirectSignup : styles.loginButtonSendInvalid;
   const router = useRouter();
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (
@@ -83,6 +87,7 @@ const LoginFormComponent: FunctionComponent<LoginFormComponentProps> = () => {
             placeholder="adresse email"
             type="email"
             required
+            onChange={(e)=>{setEmail(e.target.value)}}
           />
           {/* Password */}
           <Form.Label htmlFor="password" className={styles.invisibleLabel}>
@@ -95,11 +100,12 @@ const LoginFormComponent: FunctionComponent<LoginFormComponentProps> = () => {
             placeholder="mot de passe"
             type="password"
             required
+            onChange={(e)=>{setPwd(e.target.value)}}
           />
 
           {/* Validation */}
           <Button
-            className={styles.loginButtonSend}
+            className={styleBtn}
             type="submit"
             onFocus={handleFocus}
           >
