@@ -3,8 +3,8 @@
 .accessContainer {
   width: 100%;
   height: auto;
-  padding-top: 10%;
-  padding-bottom: 10%;
+  padding-top: 13%;
+  padding-bottom: 13%;
   position: relative;
 
   .accessContent {
@@ -16,6 +16,7 @@
       color: $orange;
       font-size: 52px;
       font-weight: bold;
+      margin-left: 2rem;
 
       span {
         color: $bleu;
@@ -89,6 +90,65 @@
       top: 20%;
       width: 50%;
       height: 100%;
+    }
+  }
+}
+
+@media screen and (max-width: 500px) {
+
+  .accessContainer {
+    display: flex;
+    flex-wrap: wrap;
+
+    .accessContent {
+      padding: 0;
+
+      width: 70%;
+      margin: auto;
+
+      .accessTitle {
+        font-size: 30px;
+        margin-left: 0;
+        margin-bottom: 10%;
+        text-align: center;
+      }
+
+      ul {
+        padding: 0;
+
+        li {
+          margin-bottom: 8%;
+          font-size: 20px;
+          list-style: none;
+          margin-left: 0px;
+        }
+      }
+
+      div {
+        .accessButton {
+          margin-bottom: 10%;
+          border-radius: 40px;
+          color: $white;
+          border: none;
+          width: 271px;
+          height: 43px;
+          background: $orange;
+          font-size: 24px;
+          font-weight: bold;
+        }
+      }
+    }
+
+    .accessImgWrapper {
+      position: relative;
+
+      width: 70%;
+      right: 0;
+      height: 200px;
+      margin: auto;
+
+      background-position: center;
+
     }
   }
 }

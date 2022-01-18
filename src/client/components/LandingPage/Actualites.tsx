@@ -1,19 +1,18 @@
-import styles from '../../styles/LandingPage/Actualites.module.scss';
+import styles from "../../styles/LandingPage/Actualites.module.scss";
 import Link from "next/link";
-import cardData from '../../../FakeDatas/LandingPage.cards.json';
+import cardData from "../../../FakeDatas/LandingPage.cards.json";
 import LandingCard from "./LandingCard";
-import Masonry from 'react-masonry-css';
+import Masonry from "react-masonry-css";
 
 const Actualites = () => {
-  
   const breakpointColumnsObj = {
     default: 3,
     1100: 2,
     700: 2,
-    500: 1
+    500: 1,
   };
 
-  const cards = cardData.map((res,i) => (
+  const cards = cardData.map((res, i) => (
     <LandingCard
       key={i}
       course={res.course}
@@ -22,11 +21,12 @@ const Actualites = () => {
       matiere={res.matiere}
       time={res.time}
       title={res.title}
-    />));
+    />
+  ));
 
   return (
     <div className={styles.actualites_container}>
-      <h2>Nos Actualités</h2>
+      <h2>Nos p’tites actus.</h2>
       <Masonry
         breakpointCols={breakpointColumnsObj}
         className={styles.myMasonryGrid}
@@ -35,7 +35,7 @@ const Actualites = () => {
         {cards}
       </Masonry>
       <button className={styles.btnConnexion}>
-        <Link href={`/user/login`} >
+        <Link href={`/user/login`}>
           <a>Voir tous les cours</a>
         </Link>
       </button>

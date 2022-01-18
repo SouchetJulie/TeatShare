@@ -1,17 +1,19 @@
 @import "src/client/styles/variables";
 
-.actualites_container{
+.actualites_container {
   width: 100%;
   height: auto;
   background-color: $white;
 
-  h2{
+  h2 {
     color: $orange;
-    font-size: 30px;
+    font-size: 52px;
     margin: 4% auto 3% auto;
     text-align: center;
+    font-weight: bold;
   }
-  .btnConnexion{
+
+  .btnConnexion {
     margin: 4% auto;
     border-radius: 40px;
     color: $white;
@@ -22,11 +24,13 @@
     font-size: 1em;
     font-weight: bold;
     display: block;
-    a{
+
+    a {
       width: 100%;
       height: 100%;
     }
   }
+
   .myMasonryGrid {
     display: -webkit-box; /* Not needed if autoprefixing */
     display: -ms-flexbox; /* Not needed if autoprefixing */
@@ -34,9 +38,11 @@
     margin: auto;
     width: 80%;
   }
+
   .myMasonryGridColumn {
     background-clip: padding-box;
     padding: 2% 2%;
   }
 
 }
+

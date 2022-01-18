@@ -18,8 +18,10 @@
     margin: auto;
     align-items: center;
 
+
     .temoignageText {
       margin: auto;
+
 
       h2 {
         font-size: 33px;
@@ -33,6 +35,7 @@
         color: $white;
         font-size: 27px;
         text-align: center;
+
       }
 
       .temoignagePeopleName {
@@ -45,18 +48,58 @@
     }
 
     .guillemetUp {
-      height: 80%;
+      height: 70%;
       display: flex;
       align-items: flex-start;
     }
 
     .guillemetDown {
-      height: 80%;
+      height: 70%;
       display: flex;
       align-items: flex-end;
     }
   }
 }
 
-@media screen and (max-width: 1100px) {
+
+@media screen and (max-width: 500px) {
+
+  .temoignageContainer {
+    height: 50vh;
+    width: 110%;
+
+    .temoignageContent {
+
+
+      .temoignageText {
+
+
+        h2 {
+          font-size: 32px;
+        }
+
+        p {
+          font-size: 20px;
+        }
+
+        .temoignagePeopleName {
+          font-size: 25px;
+        }
+      }
+
+      .guillemetUp {
+        height: 70%;
+        display: flex;
+        align-items: flex-start;
+      }
+
+      .guillemetDown {
+        height: 70%;
+        display: flex;
+        align-items: flex-end;
+      }
+    }
+
+  }
+
 }

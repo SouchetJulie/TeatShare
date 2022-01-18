@@ -1,10 +1,11 @@
 @import "~bootstrap/scss/bootstrap";
 
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
+
 html,
 body,
 #__next {
@@ -23,7 +24,7 @@ a {
 h1 {
   font-size: 40px;
   color: white;
-  text-align: center;
+
 }
 
 .round-button {

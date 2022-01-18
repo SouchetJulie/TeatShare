@@ -1,6 +1,6 @@
 @import "src/client/styles/variables";
 
-.container{
+.container {
   width: 100%;
   height: 100px;
   background: white;
@@ -8,16 +8,20 @@
   justify-content: space-between;
   align-items: center;
   z-index: 1;
-  .img_container{
+
+  .img_container {
     width: 10%;
-    height:auto;
+    height: auto;
+    margin-left: 3%;
   }
-  .navigationLink{
+
+  .navigationLink {
     width: 30%;
     height: 100%;
     display: flex;
     justify-content: space-between;
-    li{
+
+    li {
       display: flex;
       color: $grey;
       font-weight: bold;
@@ -28,25 +32,138 @@
       text-align: center;
       justify-content: center;
       align-items: center;
-      .profileLiContainer{
+
+      .profileLiContainer {
+
         display: flex;
         justify-content: center;
         align-items: center;
         width: 100%;
         height: 100%;
-        .profilePicContainer{
+
+        .profilePicContainer {
           width: 70px;
           height: 70px;
           background-color: black;
           border-radius: 40px;
+
+          span {
+            img {
+              width: 50px;
+              height: 50px;
+            }
+          }
+
         }
       }
     }
   }
-  .navigationLink:nth-child(1){
+
+  .navigationLink:nth-child(1) {
     margin: 0px 10px 0 10px;
   }
-  .navigationLink:nth-child(2){
+
+  .navigationLink:nth-child(2) {
     margin: 0px 10px 0 10px;
+  }
+}
+
+@media screen and (max-width: 1100px) {
+  .container {
+    width: 100%;
+    height: 70px;
+    background: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1;
+
+    .img_container {
+      width: 120px;
+      height: auto;
+    }
+
+    .navigationLink {
+      width: 40%;
+
+      li {
+        display: flex;
+        color: $grey;
+        font-weight: bold;
+        width: 33%;
+        height: 100%;
+        font-size: 15px;
+        list-style: none;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+
+        .profileLiContainer {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 100%;
+          height: 100%;
+
+          .profilePicContainer {
+            width: 50px;
+            height: 50px;
+            background-color: black;
+            border-radius: 40px;
+          }
+        }
+      }
+    }
+
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .container {
+    width: 100%;
+    height: 70px;
+    background: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1;
+
+    .img_container {
+      width: 120px;
+      height: auto;
+    }
+
+    .navigationLink {
+      width: 60%;
+
+      li {
+        display: flex;
+        color: $grey;
+        font-weight: bold;
+        width: 33%;
+        height: 100%;
+        font-size: 15px;
+        list-style: none;
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+
+        .profileLiContainer {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 100%;
+          height: 100%;
+
+          .profilePicContainer {
+            width: 50px;
+            height: 50px;
+            background-color: black;
+            border-radius: 40px;
+          }
+        }
+      }
+    }
+
   }
 }
