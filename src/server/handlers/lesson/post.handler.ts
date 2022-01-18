@@ -13,6 +13,16 @@ interface LessonFormData {
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
+    // Get author
+    const currentUser: IUserPublic = req.session.user;
+
+    if (!currentUser) {
+      return res
+        .status(401)
+        .json({ error: "Il faut se connecter pour effectuer cette action." });
+    }
+
+    // Read form
     const formData: LessonFormData & { error?: string } = await new Promise(
       (resolve, reject) => {
         const form = new IncomingForm({
@@ -31,13 +41,20 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       }
     ).catch((err) => ({ error: err }));
 
-    // Error handling
     if (formData.error) {
       return res.status(400).json({ error: formData.error });
     }
-
-    // Get author
-    const currentUser: IUserPublic = req.session.user;
+    if (!formData?.files) {
+      return res.status(400).json({ error: "Fichier manquant." });
+    }
+    if (!formData?.fields.isDraft) {
+      return res
+        .status(400)
+        .json({ error: "Choix brouillon/publication manquant." });
+    }
+    if (!formData?.fields.title) {
+      return res.status(400).json({ error: "Titre manquant." });
+    }
 
     // Get file
     let file: File;

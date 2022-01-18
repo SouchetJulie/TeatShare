@@ -67,7 +67,7 @@ const upload: FunctionComponent = () => {
       const { error } = data;
       dispatch(
         addAlert({
-          message: `Création de la branche échouée : ${error}`,
+          message: `Création de la leçon échouée : ${error}`,
           success,
         })
       );
