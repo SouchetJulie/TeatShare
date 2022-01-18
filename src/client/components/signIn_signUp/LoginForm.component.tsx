@@ -47,6 +47,7 @@ const LoginFormComponent: FunctionComponent<LoginFormComponentProps> = () => {
       }
     } else {
       // TODO Add alert store
+      alert("failed");
     }
   };
   const handleFocus = (): void => {};
