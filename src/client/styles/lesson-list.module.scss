@@ -1,0 +1,31 @@
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/mixins";
+@import "~bootstrap/scss/variables";
+
+.form {
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap-reverse;
+}
+
+.inputGroup > * {
+  border-radius: 25px;
+}
+
+@include media-breakpoint-up("md") {
+  .inputGroup {
+    width: 30%;
+  }
+}
+
+@include media-breakpoint-down("md") {
+  .inputGroup {
+    margin-bottom: 5px;
+  }
+}
+
+.formInput {
+  border-top-left-radius: 25px !important;
+  border-bottom-left-radius: 25px !important;
+}

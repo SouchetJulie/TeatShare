@@ -6,10 +6,10 @@ import NavLink from "react-bootstrap/NavLink";
 
 import { useAppDispatch } from "@hooks/store-hook";
 import { addAlert } from "@stores/alert.store";
-import { createEmptyUser } from "@utils/create-empty-user";
 import styles from "@styles/lesson-item.module.scss";
 import { ILesson } from "@typing/lesson-file.interface";
 import { IUserPublic } from "@typing/user.interface";
+import { createEmptyUser } from "@utils/create-empty-user";
 
 interface Props {
   lesson: ILesson;
