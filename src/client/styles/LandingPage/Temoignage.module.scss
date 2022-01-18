@@ -1,32 +1,41 @@
 @import "src/client/styles/variables";
 
-.temoignageContainer{
-  width: 100%;
+.temoignageContainer {
+  transform: rotate(-3deg);
+  transform-origin: 0% 100%;
+  width: 105%;
   height: 45vh;
   background-color: $bleu;
   color: white;
-  .temoignageContent{
+  overflow-x: hidden;
+  overflow-y: hidden;
+
+  .temoignageContent {
+    transform: rotate(3deg);
     display: flex;
     width: 70%;
     height: 100%;
-
     margin: auto;
     align-items: center;
-    .temoignageText{
+
+    .temoignageText {
       margin: auto;
-      h2{
+
+      h2 {
         font-size: 33px;
         font-weight: bold;
         text-align: center;
         margin-bottom: 5%;
       }
-      p{
+
+      p {
         font-weight: 600;
         color: $white;
         font-size: 27px;
         text-align: center;
       }
-      .temoignagePeopleName{
+
+      .temoignagePeopleName {
         margin-top: 5%;
         font-weight: 600;
         color: $white;
@@ -34,15 +43,20 @@
         text-align: end;
       }
     }
-    .guillemetUp{
+
+    .guillemetUp {
       height: 80%;
       display: flex;
       align-items: flex-start;
     }
-    .guillemetDown{
+
+    .guillemetDown {
       height: 80%;
       display: flex;
       align-items: flex-end;
     }
   }
+}
+
+@media screen and (max-width: 1100px) {
 }

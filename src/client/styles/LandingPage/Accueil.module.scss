@@ -1,29 +1,35 @@
 @import "src/client/styles/variables";
 
-.accueil_container{
+.accueil_container {
   width: 100%;
   height: auto;
   background-color: $white;
-  .bloc1{
+
+  .bloc1 {
     width: 100%;
-    height: 70%;
-    background-image:url('../../../../public/landingPage/background.png') ;
+    height: 90vh;
+    background-image: url('../../../../public/landingPage/background.png');
     background-repeat: no-repeat;
     background-size: cover;
     z-index: 0;
-    .block1_Content{
+
+    .block1Content {
       color: $white;
-      margin: 0 0 0 5% ;
-      h1{
+      margin: 0 0 0 5%;
+
+
+      h1 {
         padding-top: 16%;
         margin-bottom: 15px;
         font-size: 70px;
       }
-      p{
+
+      p {
         margin-bottom: 30px;
         font-size: 35px;
       }
-      button{
+
+      button {
         border-radius: 40px;
         color: $white;
         border: none;
@@ -35,34 +41,40 @@
       }
     }
   }
+
   .bloc2 {
     width: 105%;
+    height: 70vh;
     background-color: $orange;
     transform: rotate(3deg);
     transform-origin: 0% 0%;
     margin-top: -6%;
     overflow-x: hidden;
     overflow-y: hidden;
-    .block2Content{
+
+    .block2Content {
       overflow: hidden;
       display: flex;
       width: 50%;
-      margin:1% auto auto auto;
+      margin: 1% auto auto auto;
     }
+
     .leftSide {
       width: 45%;
       transform: rotate(-6deg);
       margin: 9% 1% 0 auto;
+
       .imessage {
         background-color: #fff;
         border: 1px solid #e5e5ea;
-        border-radius:25px;
+        border-radius: 25px;
         display: flex;
         flex-direction: column;
         max-width: 600px;
         padding: 0.5rem 1.5rem;
         margin-bottom: 4%;
-        .queue{
+
+        .queue {
           clip-path: ellipse(16px 16px at 1% 2%);
           background: $white;
           width: 50px;
@@ -72,6 +84,7 @@
           right: 14%;
           bottom: 22%;
         }
+
         .fromMe {
           font-size: 25px;
           background-color: $white;
@@ -80,16 +93,19 @@
           font-weight: bold;
         }
       }
-      h2{
+
+      h2 {
         color: $white;
         font-size: 50px;
         text-align: center;
       }
     }
+
     .rightSide {
       width: 45%;
       transform: rotate(-1deg);
       margin: 6% auto auto auto;
+
       .imessage {
         background-color: #fff;
         border: 1px solid #e5e5ea;
@@ -99,6 +115,7 @@
         max-width: 600px;
         padding: 0.5rem 1.5rem;
         margin-top: 4%;
+
         .fromMe {
           font-size: 25px;
           background-color: $white;
@@ -107,18 +124,21 @@
           font-weight: bold;
         }
       }
-      h2{
+
+      h2 {
         font-size: 50px;
         text-align: center;
         color: $white;
       }
     }
+
     .bottomSide {
       transform: rotate(-3deg);
       width: 30%;
       height: 100%;
       margin: 0 auto;
-      p{
+
+      p {
         width: 100%;
         height: auto;
         font-size: 40px;
@@ -127,30 +147,35 @@
         text-align: center;
         margin: 6% 0 4% 0;
       }
-      .choice{
+
+      .choice {
         width: 100%;
         height: 75px;
         display: flex;
         border-radius: 20px;
         overflow-x: hidden;
+
         .yesPart {
           display: flex;
           background-color: $white;
           width: 50%;
           align-items: center;
-          p{
+
+          p {
             margin: 0;
             font-size: 30px;
             font-weight: bold;
             color: $orange;
           }
         }
+
         .noPart {
           display: flex;
           background-color: $bleu;
           width: 50%;
           align-items: center;
-          p{
+
+          p {
             margin: 0;
             font-size: 30px;
             font-weight: bold;
@@ -159,7 +184,8 @@
           }
         }
       }
-      .callToAction{
+
+      .callToAction {
         width: 70%;
         display: flex;
         margin: 5% auto auto auto;
@@ -171,13 +197,117 @@
         .participate {
           padding: 10px;
           color: $white;
-          font-size:20px;
+          font-size: 20px;
 
         }
       }
-
     }
   }
+}
 
+@media screen and (max-width: 1100px) {
+  .accueil_container {
+    .bloc1 {
+      .block1Content {
+        width: 70%;
+        margin: auto;
+        text-align: center;
+        background: green;
 
+        h1 {
+          font-size: 40px;
+        }
+
+        p {
+          font-size: 20px;
+        }
+      }
+    }
+
+    .bloc2 {
+
+      .leftSide {
+        .imessage {
+          .queue {
+            display: none;
+          }
+
+          .fromMe {
+            font-size: 20px;
+          }
+        }
+
+        h2 {
+          font-size: 35px;
+        }
+      }
+
+      .rightSide {
+        .imessage {
+          .queue {
+            display: none;
+          }
+
+          .fromMe {
+            font-size: 20px;
+          }
+        }
+
+        h2 {
+          font-size: 35px;
+        }
+      }
+
+      .bottomSide {
+        width: 40%;
+
+        p {
+          font-size: 35px;
+        }
+
+        .choice {
+          margin: auto;
+          width: 60%;
+          height: 45px;
+          border-radius: 15px;
+
+          .yesPart {
+            display: flex;
+            background-color: $white;
+            width: 50%;
+            align-items: center;
+
+            p {
+              margin: 0;
+              font-size: 20px;
+              font-weight: bold;
+              color: $orange;
+            }
+          }
+
+          .noPart {
+            display: flex;
+            background-color: $bleu;
+            width: 50%;
+            align-items: center;
+
+            p {
+              margin: 0;
+              font-size: 20px;
+              font-weight: bold;
+              color: $white;
+            }
+          }
+        }
+
+        .callToAction {
+          width: 50%;
+
+          .participate {
+            font-size: 20px;
+          }
+        }
+      }
+    }
+  }
 }
