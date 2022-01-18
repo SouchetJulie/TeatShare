@@ -1,4 +1,9 @@
-import { FormEventHandler, FunctionComponent, useState } from "react";
+import {
+  FormEventHandler,
+  FunctionComponent,
+  useEffect,
+  useState,
+} from "react";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styles from "../../styles/Login.Component.module.scss";
@@ -45,6 +50,10 @@ const LoginFormComponent: FunctionComponent<LoginFormComponentProps> = () => {
     }
   };
   const handleFocus = (): void => {};
+  useEffect(() => {
+    // Prefetch the dashboard page
+    router.prefetch("/");
+  }, []);
   return (
     <div className={styles.cardWrapper}>
       <div className={styles.cardContainer}>
