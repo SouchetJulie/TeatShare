@@ -77,7 +77,7 @@ const upload: FunctionComponent = () => {
   return (
     <Container className="min-vh-100">
       <Row>
-        <h1 className="mt-4">Importer un PDF</h1>
+        <h1 className={styles.uploadPageTitle} >Importer un PDF</h1>
       </Row>
       <Form
         className="my-5 row"

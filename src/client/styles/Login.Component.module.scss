@@ -1,0 +1,93 @@
+@import "src/client/styles/variables";
+
+.cardWrapper {
+  display: flex;
+  height: 100vh;
+  background-color: $bleu;
+}
+.cardContainer {
+  position: relative;
+  display: block;
+  margin: auto;
+  padding: 50px;
+  width: 400px;
+  background-color: $white;
+  border-radius: 15px;
+  box-shadow: 0px 5px 10px #00000015;
+  z-index: 1;
+  h2{
+    margin-bottom: 2%;
+    color: $orange;
+  }
+  .loginForm {
+    display: block;
+  }
+  .loginInput {
+    width: 100%;
+    background-color: $greyc;
+    border: none;
+    border-radius: 20px;
+    padding: 10px;
+    margin-top: 7px;
+    margin-bottom: 14px;
+    outline: none;
+    box-shadow: none;
+  }
+  .invisibleLabel{
+    display: none;
+  }
+  .loginButtonSendInvalid{
+    width: 100%;
+    padding: 10px;
+    margin-top: 7px;
+    margin-bottom: 7px;
+    text-align: center;
+    font-weight: 800;
+    color: $orange;
+    background-color: $orangec;
+    border: none;
+    border-radius: 20px;
+    outline: none;
+    box-shadow: none;
+  }
+  .loginValidated {
+    width: 100%;
+    padding: 10px;
+    margin-top: 7px;
+    margin-bottom: 7px;
+    text-align: center;
+    font-weight: 800;
+    color: $white;
+    background-color: $orange;
+    border: none;
+    border-radius: 20px;
+    outline: none;
+    box-shadow: none;
+  }
+  .loginRedirectSignup {
+    width: 100%;
+    padding: 10px;
+    margin-top: 7px;
+    margin-bottom: 7px;
+    text-align: center;
+    font-weight: 500;
+    color: $orange;
+  }
+  .cancelIcon {
+    position: absolute;
+    font-size:30px;
+    right: 20px;
+    top: 10px;
+    color: $grey;
+  }
+  .loginIcons {
+    position: absolute;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+}
+

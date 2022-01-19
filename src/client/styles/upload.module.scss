@@ -1,3 +1,5 @@
+@import "src/client/styles/variables";
+
 .control {
   border-top-color: transparent;
   border-left-color: transparent;
@@ -8,4 +10,10 @@
 .label {
   font-variant: small-caps;
   font-size: 1.25em;
+}
+
+.uploadPageTitle{
+  color: $orange;
+  text-align: center;
+  margin-top: 4%;
 }
