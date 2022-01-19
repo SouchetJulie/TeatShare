@@ -1,10 +1,10 @@
-import { FunctionComponent } from "react";
+import React, { FunctionComponent } from "react";
 
 interface Props {}
 
 const login: FunctionComponent<Props> = () => {
   return (
-    <form action={'/api/user/login'} method="POST">
+    <form action="/api/user/login" method="POST">
       <label htmlFor="email">Email :</label>
       <input
         id="email"
