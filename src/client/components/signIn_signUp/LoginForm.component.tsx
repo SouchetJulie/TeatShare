@@ -54,7 +54,7 @@ const LoginFormComponent: FunctionComponent<LoginFormComponentProps> = () => {
             const success: boolean = true;
             const message = (
               <span>
-                Vous êtes connectés, vous allez être redirigés.
+                Connexion réussie!
               </span>
               );
             dispatch(addAlert({ message, success}));
