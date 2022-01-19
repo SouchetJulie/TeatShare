@@ -4,7 +4,7 @@ const storage = new Storage({
   credentials: {
     client_email: process.env.client_email,
     client_id: process.env.client_id,
-    private_key: JSON.parse(process.env.private_key),
+    private_key: process.env.private_key,
   },
   projectId: process.env.project_id,
 });
