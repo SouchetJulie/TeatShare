@@ -91,19 +91,19 @@ export const createNewLesson = async (
 
       if (updateResult.modifiedCount === 1) {
         console.log(
-          `[LESSON] Lesson upload successful! id: ${result.insertedId}`,
+          `[LESSON] L'upload de la leçon a réussi! id: ${result.insertedId}`,
           updateResult
         );
         return { id: result.insertedId };
       } else {
         const error =
-          "Lesson upload failed! Write operation was not acknowledged.";
+          "L'upload de la leçon a échoué ! L'opération d'écriture a été ignorée.";
         console.log(`[LESSON] ${error}`);
         return { error };
       }
     }
   } catch (e) {
-    const error = `Lesson upload failed! There was an error: ${e.message}`;
+    const error = `L'upload de la leçon a échoué ! Il y a eu une erreur: ${e.message}`;
     console.log(`[LESSON] ${error}`);
     return { error };
   }
