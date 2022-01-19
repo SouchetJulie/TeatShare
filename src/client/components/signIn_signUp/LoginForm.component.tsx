@@ -8,21 +8,28 @@ import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styles from "../../styles/Login.Component.module.scss";
 import Link from "next/link";
-import { Button, Form } from "react-bootstrap";
+import {Alert, Button, Form } from "react-bootstrap";
 import axios from "axios";
 import { LoginRequest } from "@typing/login-request.interface";
 import { useRouter } from "next/router";
+import { addAlert } from "@stores/alert.store";
+import { useAppDispatch } from "@hooks/store-hook";
 
 interface LoginFormComponentProps {}
 
 const LoginFormComponent: FunctionComponent<LoginFormComponentProps> = () => {
+  // store
+  const dispatch = useAppDispatch();
+  // router
+  const router = useRouter();
+  //Form validation
   const [validated, setValidated] = useState<boolean>(false);
   //To check if the form is full
   const [email, setEmail] = useState<string>('');
   const [pwd, setPwd] = useState<string>('');
-  const styleBtn: string = (email && pwd) ? styles.loginRedirectSignup : styles.loginButtonSendInvalid;
-  const router = useRouter();
-
+  //Style of btn when fields empty or not
+  const styleBtn: string = (email && pwd) ? styles.loginValidated : styles.loginButtonSendInvalid;
+  
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (
     event
   ): Promise<void> => {
@@ -42,16 +49,30 @@ const LoginFormComponent: FunctionComponent<LoginFormComponentProps> = () => {
           url: "/api/user/login",
           data: user,
         })
-          .then(function (response) {
-            router.push("/");
+          .then(async function () {
+            // Add an alert to say to the user that it will take some time
+            const success: boolean = true;
+            const message = (
+              <span>
+                Vous êtes connectés, vous allez être redirigés.
+              </span>
+              );
+            dispatch(addAlert({ message, success}));
+            await router.push("/");
           })
           .catch(function (error) {
             alert("failed");
           });
       }
     } else {
-      // TODO Add alert store
-      alert("failed");
+      // Add
+      const success: boolean = false;
+      const message = (
+        <span>
+          Les champs ne sont pas bons
+        </span>
+      );
+      dispatch(addAlert({ message, success}));
     }
   };
   const handleFocus = (): void => {};
@@ -113,15 +134,11 @@ const LoginFormComponent: FunctionComponent<LoginFormComponentProps> = () => {
           </Button>
 
           {/* Création de compte -> Redirection */}
-          <button
-            className={styles.loginRedirectSignup}
-            type="button"
-            onFocus={handleFocus}
-          >
+          <p className={styles.loginRedirectSignup}>
             <Link href={"/user/signup"}>
               <a>Créer un compte</a>
             </Link>
-          </button>
+          </p>
         </Form>
       </div>
     </div>

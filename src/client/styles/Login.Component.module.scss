@@ -28,8 +28,9 @@
     border-radius: 20px;
     padding: 10px;
     margin-top: 7px;
-    margin-bottom: 7px;
+    margin-bottom: 14px;
     outline: none;
+    box-shadow: none;
   }
   .invisibleLabel{
     display: none;
@@ -45,6 +46,22 @@
     background-color: $orangec;
     border: none;
     border-radius: 20px;
+    outline: none;
+    box-shadow: none;
+  }
+  .loginValidated {
+    width: 100%;
+    padding: 10px;
+    margin-top: 7px;
+    margin-bottom: 7px;
+    text-align: center;
+    font-weight: 800;
+    color: $white;
+    background-color: $orange;
+    border: solid 4px $orange;
+    border-radius: 20px;
+    outline: none;
+    box-shadow: none;
   }
   .loginRedirectSignup {
     width: 100%;
@@ -52,11 +69,8 @@
     margin-top: 7px;
     margin-bottom: 7px;
     text-align: center;
-    font-weight: 800;
+    font-weight: 500;
     color: $orange;
-    background-color: $white;
-    border: solid 4px $orange;
-    border-radius: 20px;
   }
   .cancelIcon {
     position: absolute;
