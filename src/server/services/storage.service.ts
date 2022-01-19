@@ -1,5 +1,6 @@
 import { Storage } from "@google-cloud/storage";
 
+console.log(process.env.private_key); // TODO to remove
 const storage = new Storage({
   credentials: {
     client_email: process.env.client_email,
