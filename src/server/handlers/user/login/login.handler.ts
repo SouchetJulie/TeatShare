@@ -9,9 +9,8 @@ import { LoginRequest } from "@typing/login-request.interface";
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const userCredentials = req.body as LoginRequest;
-  console.log(req.body);
   if (!userCredentials.password || !userCredentials.email) {
-    return res.status(400).json({ error: "Veuillez remplir les champs !" });
+    return res.status(400).json({ error: "Identifiants manquants." });
   }
 
   const result = await checkCredentials(userCredentials);
