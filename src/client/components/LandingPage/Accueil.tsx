@@ -12,11 +12,11 @@ const Accueil = () => {
             Vous voudriez partager vos cours ou vous êtes <br />à la recherche
             de l&apos;inspiration ?
           </p>
-          <button>
-            <Link href={`/user/login`}>
+          <Link href={`/user/login`}>
+            <button>
               <a className={styles.connexion}>Se connecter</a>
-            </Link>
-          </button>
+            </button>
+          </Link>
         </div>
       </div>
       <div className={styles.bloc2}>

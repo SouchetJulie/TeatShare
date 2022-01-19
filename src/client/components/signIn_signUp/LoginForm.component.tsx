@@ -8,7 +8,7 @@ import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styles from "../../styles/Login.Component.module.scss";
 import Link from "next/link";
-import {Button, Form } from "react-bootstrap";
+import { Button, Form } from "react-bootstrap";
 import axios from "axios";
 import { LoginRequest } from "@typing/login-request.interface";
 import { useRouter } from "next/router";
@@ -25,11 +25,12 @@ const LoginFormComponent: FunctionComponent<LoginFormComponentProps> = () => {
   // Form validation
   const [validated, setValidated] = useState<boolean>(false);
   // To check if the form is full
-  const [email, setEmail] = useState<string>('');
-  const [pwd, setPwd] = useState<string>('');
+  const [email, setEmail] = useState<string>("");
+  const [pwd, setPwd] = useState<string>("");
   // Style of btn when fields empty or not
-  const styleBtn: string = (email && pwd) ? styles.loginValidated : styles.loginButtonSendInvalid;
-  
+  const styleBtn: string =
+    email && pwd ? styles.loginValidated : styles.loginButtonSendInvalid;
+
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (
     event
   ): Promise<void> => {
@@ -45,12 +46,8 @@ const LoginFormComponent: FunctionComponent<LoginFormComponentProps> = () => {
       };
       if (user.email && user.password) {
         const success: boolean = true;
-        const message = (
-          <span>
-            Traitement en cours...
-          </span>
-        );
-        dispatch(addAlert({ message, success}));
+        const message = <span>Traitement en cours...</span>;
+        dispatch(addAlert({ message, success }));
         axios({
           method: "POST",
           url: "/api/user/login",
@@ -59,33 +56,25 @@ const LoginFormComponent: FunctionComponent<LoginFormComponentProps> = () => {
           .then(async function () {
             // Add an alert to say to the user that it will take some time
             const success: boolean = true;
-            const message = (
-              <span>
-                Connexion réussie!
-              </span>
-              );
-            dispatch(addAlert({ message, success}));
-            await router.push("/");
+            const message = <span>Connexion réussie!</span>;
+            dispatch(addAlert({ message, success }));
+            setTimeout(() => {
+              router.push("/");
+            }, 2500);
           })
           .catch(function () {
             const success: boolean = false;
             const message = (
-              <span>
-                Nom d&apos;utilisateur ou mot de passe incorrects
-              </span>
+              <span>Nom d&apos;utilisateur ou mot de passe incorrects</span>
             );
-            dispatch(addAlert({ message, success}));
+            dispatch(addAlert({ message, success }));
           });
       }
     } else {
       // Add
       const success: boolean = false;
-      const message = (
-        <span>
-          Veuillez remplir le formulaire
-        </span>
-      );
-      dispatch(addAlert({ message, success}));
+      const message = <span>Veuillez remplir le formulaire</span>;
+      dispatch(addAlert({ message, success }));
     }
   };
   const handleFocus = (): void => {};
@@ -121,7 +110,9 @@ const LoginFormComponent: FunctionComponent<LoginFormComponentProps> = () => {
             placeholder="adresse email"
             type="email"
             required
-            onChange={(e)=>{setEmail(e.target.value)}}
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
           />
           {/* Password */}
           <Form.Label htmlFor="password" className={styles.invisibleLabel}>
@@ -134,15 +125,13 @@ const LoginFormComponent: FunctionComponent<LoginFormComponentProps> = () => {
             placeholder="mot de passe"
             type="password"
             required
-            onChange={(e)=>{setPwd(e.target.value)}}
+            onChange={(e) => {
+              setPwd(e.target.value);
+            }}
           />
 
           {/* Validation */}
-          <Button
-            className={styleBtn}
-            type="submit"
-            onFocus={handleFocus}
-          >
+          <Button className={styleBtn} type="submit" onFocus={handleFocus}>
             Valider
           </Button>
 
