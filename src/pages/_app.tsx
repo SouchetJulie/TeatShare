@@ -3,8 +3,6 @@ import { useState } from "react";
 import { Provider } from "react-redux";
 
 import Alert from "@components/Alert";
-import NavBar from "@components/menu/NavBar";
-import SideBar from "@components/menu/SideBar";
 import { store } from "@stores/store";
 import { IAlert } from "@stores/alert.store";
 import "@styles/globals.scss";
