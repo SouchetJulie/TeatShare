@@ -234,7 +234,9 @@
     .bloc2 {
       .block2Content {
         width: 80%;
-  
+        // this padding fix the box border cutted
+        padding-top: 2%;
+
       }
 
       .leftSide {
