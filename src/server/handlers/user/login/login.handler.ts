@@ -1,5 +1,4 @@
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
-
 import {
   checkCredentials,
   getUserByEmail,
