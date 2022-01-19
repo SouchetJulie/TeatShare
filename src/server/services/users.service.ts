@@ -77,7 +77,7 @@ export const createNewUser = async (user: IUserAuth): Promise<{ error } | Insert
         };
 
         return await collection
-
+          // @ts-ignore
             .insertOne(userDB);
     } catch (e) {
         return {error: e};

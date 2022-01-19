@@ -1,8 +1,15 @@
 @import "~bootstrap/scss/bootstrap";
 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 html,
 body,
 #__next {
+
   min-height: 100vh;
   padding: 0;
   margin: 0;
@@ -19,12 +26,10 @@ h2 {
   color: #f96f5d;
 }
 
-* {
-  box-sizing: border-box;
-}
-
 h1 {
-  color: $primary;
+  font-size: 40px;
+  color: white;
+
 }
 
 .round-button {

@@ -21,6 +21,8 @@
     "incremental": true,
     "baseUrl": "src",
     "paths": {
+      "@imgCours/*": ["../public/landingPage/cours/*"],
+      "@socialIcons/*": ["../public/landingPage/socialIcons/*"],
       "@components/*": ["client/components/*"],
       "@hooks/*": ["client/hooks/*"],
       "@stores/*": ["client/stores/*"],
