@@ -1,130 +1,46 @@
-import {
-  forwardRef,
-  FunctionComponent,
-  MouseEventHandler,
-  ReactNode,
-  RefObject,
-} from "react";
+import { FunctionComponent } from "react";
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
-import Dropdown from "react-bootstrap/Dropdown";
-import Image from "react-bootstrap/Image";
 
-import { useUser } from "../../hooks/useUser.hook";
+import GradeLinks from "@components/menu/GradeLinks";
+import MainLinks from "@components/menu/MainLinks";
+import SideBarContent from "@components/menu/SideBarContent";
+import UserLinks from "@components/menu/UserLinks";
+import { useUser } from "@hooks/useUser.hook";
 import styles from "@styles/navbar.module.scss";
-import { Badge } from "react-bootstrap";
-import { SideBarContent } from "@components/menu/SideBar";
+import { NavbarVariant } from "@typing/navbar-variant.enum";
 
-// eslint-disable-next-line react/display-name,react/prop-types
-const UserDropdownToggle = forwardRef(
-  (
-    { children, onClick }: { children?: ReactNode; onClick: MouseEventHandler },
-    ref
-  ) => (
-    <a
-      href=""
-      ref={ref as RefObject<HTMLAnchorElement>}
-      onClick={(e) => {
-        e.preventDefault();
-        onClick(e);
-      }}
-    >
-      {children}
-    </a>
-  )
-);
+interface Props {
+  variant?: NavbarVariant;
+}
 
-const NavBar: FunctionComponent = () => {
+const NavBar: FunctionComponent<Props> = ({ variant = NavbarVariant.dark }) => {
   const { user } = useUser();
 
-  // Liste des élements de la nav
-  const parametersHtml: JSX.Element | string = user ? (
-    <>
-      <Nav.Link href={"/for_later"} className={styles.navLinks}>
-        A lire plus tard
-      </Nav.Link>
-      <Nav.Link href={"/settings"} className={styles.navLinks}>
-        Paramètres
-      </Nav.Link>
-    </>
-  ) : (
-    ""
-  );
-  // Toggle connexion deconnexion
-  const connexion: JSX.Element = user ? (
-    <Dropdown className="ms-md-5">
-      <Dropdown.Toggle as={UserDropdownToggle} id="user-dropdown-toggle">
-        <Image
-          className="border"
-          roundedCircle
-          width={40}
-          height={40}
-          alt={user.email}
-        />
-      </Dropdown.Toggle>
-      <Dropdown.Menu>
-        <Dropdown.Item href={"/user/_me"}>Mon profil</Dropdown.Item>
-        <Dropdown.Divider />
-        <Dropdown.Item href={"/api/user/logout"}>Déconnexion</Dropdown.Item>
-      </Dropdown.Menu>
-    </Dropdown>
-  ) : (
-    <div className={"ms-md-5 " + styles.navSection}>
-      <Nav.Link href={"/user/login"}>Connexion</Nav.Link>
-      <Nav.Link href={"/user/signup"}>Inscription</Nav.Link>
-    </div>
-  );
+  const bgStyle = variant === "light" ? styles.light : "";
+
   return (
-    <Navbar expand="md" sticky="top" className={styles.navbar}>
-      <Container>
+    <Navbar
+      variant={variant}
+      expand="md"
+      sticky="top"
+      className={`${styles.navbar} ${bgStyle}`}
+    >
+      <Container fluid="lg">
         <Navbar.Brand href={"/"} className={styles.navBarBrand}>
           TeatShare
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="w-100">
-            {/* Badges */}
-            <div className={styles.classBadges}>
-              <Nav.Link href={"/lesson?class=cp"}>
-                <Badge bg="secondary" pill>
-                  cp
-                </Badge>
-              </Nav.Link>
-              <Nav.Link href={"/lesson?class=ce1"}>
-                <Badge bg="secondary" pill>
-                  ce1
-                </Badge>
-              </Nav.Link>
-              <Nav.Link href={"/lesson?class=ce2"}>
-                <Badge bg="secondary" pill>
-                  ce2
-                </Badge>
-              </Nav.Link>
-              <Nav.Link href={"/lesson?class=cm1"}>
-                <Badge bg="secondary" pill>
-                  cm1
-                </Badge>
-              </Nav.Link>
-              <Nav.Link href={"/lesson?class=cm2"}>
-                <Badge bg="secondary" pill>
-                  cm2
-                </Badge>
-              </Nav.Link>
-            </div>
+            <GradeLinks user={user} />
             <hr />
-            {/* Liens */}
-            <div className={styles.navSection}>
-              <Nav.Link href={"/"} className={styles.navLinks}>
-                Accueil
-              </Nav.Link>
-              {parametersHtml}
-            </div>
+            <MainLinks user={user} />
             <hr />
-            <SideBarContent className={styles.navbarExtra} />
+            <SideBarContent className={styles.hiddenMd} />
             <hr />
-            {/* Profil */}
-            {connexion}
+            <UserLinks user={user} />
           </Nav>
         </Navbar.Collapse>
       </Container>

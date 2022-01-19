@@ -1,30 +1,33 @@
-@import "../../../node_modules/bootstrap/scss/functions";
-@import "../../../node_modules/bootstrap/scss/mixins";
-@import "../../../node_modules/bootstrap/scss/variables";
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/mixins";
+@import "~bootstrap/scss/variables";
 
 @import "src/client/styles/variables";
 
+$gray: #474A57;
 
-.navbar{
-  background-color: #474A57;
-  color: $white;
-  .navBarBrand{
-    color: $white;
-  }
-  hr {
-    color: $white;
-  }
-  .navSection {
-    display: flex;
-    .navLinks{
-      color: $white;
-    }
-  }
+.navbar {
+  // dark by default
+  background-color: $gray;
 }
 
-.classBadges {
-  flex-grow: 1;
+.light {
+  background-color: $light;
+}
+
+.navSection {
   display: flex;
+  align-items: center;
+}
+
+.navLinks {
+ text-align: center;
+}
+
+.gradeBadges {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
   justify-content: flex-start;
   text-transform: uppercase;
 
@@ -33,31 +36,11 @@
   }
 }
 
-
-.popover {
+div.popover {
   padding: 0;
+  border-radius: 3px;
   background-color: transparent;
   box-shadow: $primary 0 0 3px;
-  border-radius: 3px;
-}
-
-.sidebarContent {
-  a {
-    color: $light;
-
-    &:active, &:focus {
-      color: $dark;
-    }
-
-    &:hover {
-      color: $info;
-    }
-
-    i {
-      font-size: 1.75em;
-      display: block;
-    }
-  }
 }
 
 @include media-breakpoint-down(md) {
@@ -65,63 +48,76 @@
     flex-direction: column;
   }
 
-  .navbarExtra {
+  .hiddenMd {
     display: block;
   }
 
-  .sidebarContent {
-    color: $white;
-    a i {
-      display: none;
-    }
-  }
-  .sidebarContentColor{
-    color: $white !important;
+  .sidebarContent i {
+    display: none;
   }
 
   .sidebar {
-    display: none;
+    display: none !important; // override bootstrap d-flex on mobile
   }
 }
 
 @include media-breakpoint-up(md) {
-  .navbarExtra {
+  .hiddenMd {
     display: none;
   }
 
+  $sidebarWidth: 90px;
+
   .sidebar {
-    z-index: 1050;
+    font-size: 0.75em;
     position: fixed;
-    left: 0;
+    z-index: 1050;
     top: 0;
     bottom: 0;
-    width: 90px;
-    flex-direction: column;
+    left: 0;
+    display: flex;
     align-items: center;
+    flex-direction: column;
 
+    width: $sidebarWidth;
     padding-top: 70px;
+    text-align: center;
+
     background-color: $bleu;
     box-shadow: $dark 0 0 10px;
 
-    font-size: 0.75em;
-    text-align: center;
-
     &:before {
-      content: "";
-      width: 26px;
-      height: 26px;
+      position: absolute;
       top: 0;
       right: -26px;
-      position: absolute;
+      width: 26px;
+      height: 26px;
+      content: "";
+      background: $bleu;
       -webkit-mask-composite: destination-out;
       mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1 1" preserveAspectRatio="none"><circle cx="1" cy="1" r="1" fill="black"/></svg>') 0/100% 100%,
       linear-gradient(#fff, #fff);
       mask-composite: exclude;
-      background: $bleu;
+    }
+
+    i {
+      font-size: 1.75em;
+      display: block;
+    }
+
+    a {
+      color: tint-color($secondary, 80%);
+
+      &:active,
+      &:focus,
+      &:hover {
+        color: $light;
+      }
     }
   }
-  .sidebarNotDisplay {
-    display: none;
+
+  .navbar {
+    padding-left: $sidebarWidth;
   }
 
   .separated {

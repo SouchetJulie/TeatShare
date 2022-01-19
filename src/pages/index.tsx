@@ -7,26 +7,18 @@ import { useUser } from "@hooks/useUser.hook";
 interface Props {}
 
 /**
- * App constructor
+ * Home page.
  * @constructor
  */
 const Home: FunctionComponent<Props> = () => {
   const { user } = useUser();
-  const displayNav: boolean = user ? true : false;
-  const whatLanding: JSX.Element = user ? (
-    <HomePage displayNav={displayNav} />
-  ) : (
-    <LandingPage />
-  );
+  const component: JSX.Element = user ? <HomePage /> : <LandingPage />;
   return (
     <>
       <Head>
-        <title>TeatShare - Home</title>
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-        <link rel="icon" href="/favicon.ico" />
-        <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+        <title>TeatShare - Accueil</title>
       </Head>
-      {whatLanding}
+      {component}
     </>
   );
 };
