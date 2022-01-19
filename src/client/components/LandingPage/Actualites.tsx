@@ -26,7 +26,7 @@ const Actualites = () => {
 
   return (
     <div className={styles.actualites_container}>
-      <h2>Nos p’tites actus.</h2>
+      <h2>Nos actualités</h2>
       <Masonry
         breakpointCols={breakpointColumnsObj}
         className={styles.myMasonryGrid}

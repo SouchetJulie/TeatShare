@@ -1,5 +1,5 @@
 import { FunctionComponent } from "react";
-import SignUpFormComponent from '../../client/components/signIn_signUp/LoginForm.component';
+import SignUpFormComponent from '../../client/components/signIn_signUp/SignUpForm.component';
 
 interface Props {}
 

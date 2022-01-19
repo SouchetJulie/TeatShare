@@ -11,7 +11,7 @@ const Temoignage = () => {
                     <Image src={guillemetUp} alt='quote up'/>
                 </div>
                 <div className={styles.temoignageText}>
-                    <h2>Ils témoignent :)</h2>
+                    <h2>Ils témoignent !</h2>
                     <p>La communauté Teatshare  m’a beaucoup<br/> apporté. Plus que de simples conseils, je me suis<br/>sentie comprise !</p>
                     <li className={styles.temoignagePeopleName}>Sabito</li>
                 </div>

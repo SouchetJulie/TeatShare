@@ -8,7 +8,7 @@ import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styles from "../../styles/Login.Component.module.scss";
 import Link from "next/link";
-import {Alert, Button, Form } from "react-bootstrap";
+import {Button, Form } from "react-bootstrap";
 import axios from "axios";
 import { LoginRequest } from "@typing/login-request.interface";
 import { useRouter } from "next/router";
@@ -22,12 +22,12 @@ const LoginFormComponent: FunctionComponent<LoginFormComponentProps> = () => {
   const dispatch = useAppDispatch();
   // router
   const router = useRouter();
-  //Form validation
+  // Form validation
   const [validated, setValidated] = useState<boolean>(false);
-  //To check if the form is full
+  // To check if the form is full
   const [email, setEmail] = useState<string>('');
   const [pwd, setPwd] = useState<string>('');
-  //Style of btn when fields empty or not
+  // Style of btn when fields empty or not
   const styleBtn: string = (email && pwd) ? styles.loginValidated : styles.loginButtonSendInvalid;
   
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (
@@ -67,11 +67,11 @@ const LoginFormComponent: FunctionComponent<LoginFormComponentProps> = () => {
             dispatch(addAlert({ message, success}));
             await router.push("/");
           })
-          .catch(function (error) {
+          .catch(function () {
             const success: boolean = false;
             const message = (
               <span>
-                Nom d'utilisateur ou mot de passe incorrects
+                Nom d&apos;utilisateur ou mot de passe incorrects
               </span>
             );
             dispatch(addAlert({ message, success}));
