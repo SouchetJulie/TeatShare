@@ -1,3 +1,7 @@
+@import "./variables";
+$primary: $bleu;
+$secondary: $orange;
+
 @import "~bootstrap/scss/bootstrap";
 
 * {
