@@ -40,19 +40,23 @@ export const SideBarContent: FunctionComponent<Props> = ({
       overlay={popover}
       defaultShow={false}
     >
-      <Nav.Link>
+      <Nav.Link className={styles.sidebarContentColor}>
         <i className="bi bi-search" />
         Recherche
       </Nav.Link>
     </OverlayTrigger>
-    <Nav.Link href={"/lesson"} eventKey={"/lesson"}>
+    <Nav.Link
+      href={"/lesson"}
+      eventKey={"/lesson"}
+      className={styles.sidebarContentColor}
+    >
       <i className="bi bi-list-task" />
       Fiches de cours
     </Nav.Link>
     <Nav.Link
       href={"/lesson/upload"}
       eventKey={"/lesson/upload"}
-      className={styles.separated}
+      className={`${styles.separated} ${styles.sidebarContentColor}`}
     >
       <i className="bi bi-plus-circle-fill" />
       Création de fiche
@@ -60,12 +64,19 @@ export const SideBarContent: FunctionComponent<Props> = ({
   </div>
 );
 
-// Not meant to be usable with assistive technologies
-// There is a duplicate of sidebar content in the main navbar
-const SideBar: FunctionComponent = () => (
-  <Nav className={styles.sidebar} aria-hidden>
-    <SideBarContent />
-  </Nav>
-);
+interface ISideBarComponent {
+  displayNav: boolean;
+}
+
+const SideBar: FunctionComponent<ISideBarComponent> = ({
+  displayNav,
+}: ISideBarComponent): JSX.Element => {
+  const style: string = displayNav ? styles.sidebar : styles.sidebarNotDisplay;
+  return (
+    <Nav className={style} aria-hidden>
+      <SideBarContent />
+    </Nav>
+  );
+};
 
 export default SideBar;

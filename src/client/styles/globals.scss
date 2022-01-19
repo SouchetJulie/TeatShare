@@ -39,9 +39,3 @@ h1 {
   padding-right: 40px;
   margin: 5px;
 }
-
-@include media-breakpoint-up(md) {
-  body {
-    padding-left: 90px;
-  }
-}

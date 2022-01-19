@@ -38,19 +38,53 @@ const UserDropdownToggle = forwardRef(
 const NavBar: FunctionComponent = () => {
   const { user } = useUser();
 
+  // Liste des élements de la nav
+  const parametersHtml: JSX.Element | string = user ? (
+    <>
+      <Nav.Link href={"/for_later"} className={styles.navLinks}>
+        A lire plus tard
+      </Nav.Link>
+      <Nav.Link href={"/settings"} className={styles.navLinks}>
+        Paramètres
+      </Nav.Link>
+    </>
+  ) : (
+    ""
+  );
+  // Toggle connexion deconnexion
+  const connexion: JSX.Element = user ? (
+    <Dropdown className="ms-md-5">
+      <Dropdown.Toggle as={UserDropdownToggle} id="user-dropdown-toggle">
+        <Image
+          className="border"
+          roundedCircle
+          width={40}
+          height={40}
+          alt={user.email}
+        />
+      </Dropdown.Toggle>
+      <Dropdown.Menu>
+        <Dropdown.Item href={"/user/_me"}>Mon profil</Dropdown.Item>
+        <Dropdown.Divider />
+        <Dropdown.Item href={"/api/user/logout"}>Déconnexion</Dropdown.Item>
+      </Dropdown.Menu>
+    </Dropdown>
+  ) : (
+    <div className={"ms-md-5 " + styles.navSection}>
+      <Nav.Link href={"/user/login"}>Connexion</Nav.Link>
+      <Nav.Link href={"/user/signup"}>Inscription</Nav.Link>
+    </div>
+  );
   return (
-    <Navbar
-      variant="dark"
-      bg="dark"
-      expand="md"
-      sticky="top"
-      className={styles.navbar}
-    >
+    <Navbar expand="md" sticky="top" className={styles.navbar}>
       <Container>
-        <Navbar.Brand href={"/"}>TeatShare</Navbar.Brand>
+        <Navbar.Brand href={"/"} className={styles.navBarBrand}>
+          TeatShare
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="w-100 d-flex justify-content-between">
+          <Nav className="w-100">
+            {/* Badges */}
             <div className={styles.classBadges}>
               <Nav.Link href={"/lesson?class=cp"}>
                 <Badge bg="secondary" pill>
@@ -79,48 +113,18 @@ const NavBar: FunctionComponent = () => {
               </Nav.Link>
             </div>
             <hr />
+            {/* Liens */}
             <div className={styles.navSection}>
-              <Nav.Link href={"/"}>Accueil</Nav.Link>
-              {user ? (
-                <>
-                  <Nav.Link href={"/for_later"}>A lire plus tard</Nav.Link>
-                  <Nav.Link href={"/settings"}>Paramètres</Nav.Link>
-                </>
-              ) : (
-                ""
-              )}
+              <Nav.Link href={"/"} className={styles.navLinks}>
+                Accueil
+              </Nav.Link>
+              {parametersHtml}
             </div>
             <hr />
             <SideBarContent className={styles.navbarExtra} />
             <hr />
-            {user ? (
-              <Dropdown className="ms-md-5">
-                <Dropdown.Toggle
-                  as={UserDropdownToggle}
-                  id="user-dropdown-toggle"
-                >
-                  <Image
-                    className="border"
-                    roundedCircle
-                    width={40}
-                    height={40}
-                    alt={user.email}
-                  />
-                </Dropdown.Toggle>
-                <Dropdown.Menu>
-                  <Dropdown.Item href={"/user/_me"}>Mon profil</Dropdown.Item>
-                  <Dropdown.Divider />
-                  <Dropdown.Item href={"/api/user/logout"}>
-                    Déconnexion
-                  </Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-            ) : (
-              <div className={"ms-md-5 " + styles.navSection}>
-                <Nav.Link href={"/user/login"}>Connexion</Nav.Link>
-                <Nav.Link href={"/user/signup"}>Inscription</Nav.Link>
-              </div>
-            )}
+            {/* Profil */}
+            {connexion}
           </Nav>
         </Navbar.Collapse>
       </Container>

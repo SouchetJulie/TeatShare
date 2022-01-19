@@ -2,14 +2,30 @@
 @import "../../../node_modules/bootstrap/scss/mixins";
 @import "../../../node_modules/bootstrap/scss/variables";
 
-.navbar hr {
-  color: $light;
+@import "src/client/styles/variables";
+
+
+.navbar{
+  background-color: #474A57;
+  color: $white;
+  .navBarBrand{
+    color: $white;
+  }
+  hr {
+    color: $white;
+  }
+  .navSection {
+    display: flex;
+    .navLinks{
+      color: $white;
+    }
+  }
 }
 
 .classBadges {
   flex-grow: 1;
   display: flex;
-  justify-content: start;
+  justify-content: flex-start;
   text-transform: uppercase;
 
   & > * {
@@ -17,9 +33,6 @@
   }
 }
 
-.navSection {
-  display: flex;
-}
 
 .popover {
   padding: 0;
@@ -57,9 +70,13 @@
   }
 
   .sidebarContent {
+    color: $white;
     a i {
       display: none;
     }
+  }
+  .sidebarContentColor{
+    color: $white !important;
   }
 
   .sidebar {
@@ -83,7 +100,7 @@
     align-items: center;
 
     padding-top: 70px;
-    background-color: $primary;
+    background-color: $bleu;
     box-shadow: $dark 0 0 10px;
 
     font-size: 0.75em;
@@ -91,17 +108,20 @@
 
     &:before {
       content: "";
-      width: 56px;
-      height: 56px;
+      width: 26px;
+      height: 26px;
       top: 0;
-      right: -56px;
+      right: -26px;
       position: absolute;
       -webkit-mask-composite: destination-out;
       mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1 1" preserveAspectRatio="none"><circle cx="1" cy="1" r="1" fill="black"/></svg>') 0/100% 100%,
       linear-gradient(#fff, #fff);
       mask-composite: exclude;
-      background: $primary;
+      background: $bleu;
     }
+  }
+  .sidebarNotDisplay {
+    display: none;
   }
 
   .separated {
