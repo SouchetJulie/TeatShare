@@ -40,7 +40,7 @@ const LandingCard: FunctionComponent<ILandingPageCardInterface> = ({
       <div className={styles.cardTitle}>
         <p>{title}</p>
       </div>
-      <button>
+      <button className={styles.landingCardbtn}>
         <Link href={"/"}>
           <a>Lire la suite</a>
         </Link>

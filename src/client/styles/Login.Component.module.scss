@@ -72,8 +72,15 @@
     text-align: center;
     font-weight: 500;
     color: $orange;
+    a {
+      &:hover {
+        color: $orange;
+      }
+    }
   }
   .cancelIcon {
+    width: 20px;
+    height: 20px;
     position: absolute;
     font-size:30px;
     right: 20px;
