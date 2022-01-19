@@ -103,7 +103,7 @@ export const createNewLesson = async (
       }
     }
   } catch (e) {
-    const error = `Lesson upload failed! There was an error: ${e}`;
+    const error = `Lesson upload failed! There was an error: ${e.message}`;
     console.log(`[LESSON] ${error}`);
     return { error };
   }
