@@ -44,6 +44,13 @@ const LoginFormComponent: FunctionComponent<LoginFormComponentProps> = () => {
         password: formData.get("password") as string,
       };
       if (user.email && user.password) {
+        const success: boolean = true;
+        const message = (
+          <span>
+            Traitement en cours...
+          </span>
+        );
+        dispatch(addAlert({ message, success}));
         axios({
           method: "POST",
           url: "/api/user/login",
@@ -61,7 +68,13 @@ const LoginFormComponent: FunctionComponent<LoginFormComponentProps> = () => {
             await router.push("/");
           })
           .catch(function (error) {
-            alert("failed");
+            const success: boolean = false;
+            const message = (
+              <span>
+                Nom d'utilisateur ou mot de passe incorrects
+              </span>
+            );
+            dispatch(addAlert({ message, success}));
           });
       }
     } else {
@@ -69,7 +82,7 @@ const LoginFormComponent: FunctionComponent<LoginFormComponentProps> = () => {
       const success: boolean = false;
       const message = (
         <span>
-          Les champs ne sont pas bons
+          Veuillez remplir le formulaire
         </span>
       );
       dispatch(addAlert({ message, success}));
