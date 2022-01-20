@@ -43,11 +43,11 @@ const UserLinks: FunctionComponent<Props> = ({ user }: Props) => {
   const logout = useLogout();
 
   return user ? (
-    <Dropdown className="ms-lg-5 ms-md-3 my-auto text-light">
+    <Dropdown className="ms-lg-5 ms-md-3 my-auto text-light" drop="start">
       <Dropdown.Toggle as={UserDropdownToggle} id="user-dropdown-toggle">
         {user.email}
       </Dropdown.Toggle>
-      <Dropdown.Menu variant="dark" role="menu">
+      <Dropdown.Menu variant="dark" role="menu" className="mt-3 mt-md-0">
         <Dropdown.Item href={"/user/_me"}>Mon profil</Dropdown.Item>
         <Dropdown.Divider />
         <Dropdown.Item onClick={logout}>Déconnexion</Dropdown.Item>

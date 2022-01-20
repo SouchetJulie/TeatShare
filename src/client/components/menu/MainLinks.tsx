@@ -14,17 +14,11 @@ interface Props {
 const MainLinks: FunctionComponent<Props> = ({ show }: Props) => {
   return (
     <div className={styles.navSection}>
-      <Nav.Link href={"/"} className={styles.navLinks}>
-        Accueil
-      </Nav.Link>
+      <Nav.Link href={"/"}>Accueil</Nav.Link>
       {show ? (
         <>
-          <Nav.Link href={"/for_later"} className={styles.navLinks}>
-            A lire plus tard
-          </Nav.Link>
-          <Nav.Link href={"/settings"} className={styles.navLinks}>
-            Paramètres
-          </Nav.Link>
+          <Nav.Link href={"/for_later"}>A lire plus tard</Nav.Link>
+          <Nav.Link href={"/settings"}>Paramètres</Nav.Link>
         </>
       ) : null}
     </div>

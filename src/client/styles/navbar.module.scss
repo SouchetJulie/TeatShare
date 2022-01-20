@@ -7,6 +7,7 @@
 $gray: #474A57;
 
 .navbar {
+  text-align: center;
   // dark by default
   background-color: $gray;
 }
@@ -18,10 +19,6 @@ $gray: #474A57;
 .navSection {
   display: flex;
   align-items: center;
-}
-
-.navLinks {
- text-align: center;
 }
 
 .gradeBadges {
@@ -58,6 +55,10 @@ div.popover {
 
   .sidebar {
     display: none !important; // override bootstrap d-flex on mobile
+  }
+
+  .gradeBadges {
+    justify-content: center;
   }
 }
 
