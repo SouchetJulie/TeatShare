@@ -1,12 +1,26 @@
-@import "~bootstrap/scss/functions";
-@import "~bootstrap/scss/mixins";
-@import "~bootstrap/scss/variables";
+@import "../../../../node_modules/bootstrap/scss/functions";
+@import "../../../../node_modules/bootstrap/scss/mixins";
+@import "../../../../node_modules/bootstrap/scss/variables";
+
+.lessonContainer {
+
+  height: 500px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  scrollbar-color: rebeccapurple green;
+  scrollbar-width: thin;
+}
 
 .form {
   width: 100%;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap-reverse;
+}
+
+.filterButton {
+  background-color: #F96F5D;
+  border: none;
 }
 
 .inputGroup > * {

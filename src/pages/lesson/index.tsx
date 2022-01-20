@@ -10,7 +10,7 @@ import Row from "react-bootstrap/Row";
 import LessonItem from "@components/lessons/LessonItem";
 import { getAllLessons } from "@services/lessons.service";
 import { ILesson } from "@typing/lesson-file.interface";
-import styles from "@styles/lesson-list.module.scss";
+import styles from "@styles/Lesson/lesson-list.module.scss";
 
 interface Props {
   lessons: ILesson[];
@@ -18,11 +18,15 @@ interface Props {
 
 const Lessons: FunctionComponent<Props> = ({ lessons }: Props) => (
   <>
-    <Container className="my-4">
+    <Container className="my-4 mb-5">
       {/* Filtres */}
       <Form as={Row} className={styles.form}>
         <Col md="auto">
-          <Button type="submit" variant="secondary">
+          <Button
+            type="submit"
+            variant="secondary"
+            className={styles.filterButton}
+          >
             Filtrer
           </Button>
         </Col>
@@ -60,9 +64,9 @@ const Lessons: FunctionComponent<Props> = ({ lessons }: Props) => (
         </InputGroup>
       </Form>
     </Container>
-    <Container className="my-4">
+    <Container className="my-4 ">
       {/* Affichage des résultats */}
-      <Row>
+      <Row className={styles.lessonContainer}>
         {lessons.map((lesson: ILesson) => (
           <LessonItem key={`lesson-item-${lesson._id}`} lesson={lesson} />
         ))}
