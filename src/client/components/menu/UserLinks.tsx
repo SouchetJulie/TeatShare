@@ -7,6 +7,7 @@ import React, {
 } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 import Nav from "react-bootstrap/Nav";
+import Link from "next/link";
 
 import styles from "@styles/navbar.module.scss";
 import { IUserPublic } from "@typing/user.interface";
@@ -48,15 +49,21 @@ const UserLinks: FunctionComponent<Props> = ({ user }: Props) => {
         {user.email}
       </Dropdown.Toggle>
       <Dropdown.Menu variant="dark" role="menu" className="mt-3 mt-md-0">
-        <Dropdown.Item href={"/user/_me"}>Mon profil</Dropdown.Item>
+        <Dropdown.Item as={Link} href={"/user"}>
+          Mon profil
+        </Dropdown.Item>
         <Dropdown.Divider />
         <Dropdown.Item onClick={logout}>Déconnexion</Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
   ) : (
     <div className={"ms-md-5 " + styles.navSection}>
-      <Nav.Link href={"/user/login"}>Connexion</Nav.Link>
-      <Nav.Link href={"/user/signup"}>Inscription</Nav.Link>
+      <Nav.Link as={Link} href={"/user/login"}>
+        Connexion
+      </Nav.Link>
+      <Nav.Link as={Link} href={"/user/signup"}>
+        Inscription
+      </Nav.Link>
     </div>
   );
 };

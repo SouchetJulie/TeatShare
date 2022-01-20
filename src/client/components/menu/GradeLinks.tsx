@@ -4,6 +4,7 @@ import Badge from "react-bootstrap/Badge";
 
 import styles from "@styles/navbar.module.scss";
 import { EGrade } from "@typing/grade.enum";
+import Link from "next/link";
 
 interface ClassLinkItemProps {
   name: EGrade;
@@ -12,7 +13,7 @@ interface ClassLinkItemProps {
 const GradeLinkItem: FunctionComponent<ClassLinkItemProps> = ({
   name,
 }: ClassLinkItemProps) => (
-  <Nav.Link href={`/lesson?class=${name}`} className="ms-3 ms-md-0">
+  <Nav.Link as={Link} href={`/lesson?class=${name}`} className="ms-3 ms-md-0">
     <Badge bg="secondary" pill>
       {name}
     </Badge>

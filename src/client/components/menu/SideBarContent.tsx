@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from "react";
+import React, { FunctionComponent, useState } from "react";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
 import Nav from "react-bootstrap/Nav";
 import Popover from "react-bootstrap/Popover";
@@ -7,50 +7,63 @@ import InputGroup from "react-bootstrap/InputGroup";
 import Button from "react-bootstrap/Button";
 
 import styles from "@styles/navbar.module.scss";
-
-const popover = (
-  <Popover id="popover-basic" className={styles.popover}>
-    <Form action={"/lesson"}>
-      <InputGroup>
-        <Form.Control type="input" name="search" placeholder="Recherche..." />
-        <Button type="submit" variant="secondary">
-          <i className="bi bi-search" aria-label="Recherche" />
-        </Button>
-      </InputGroup>
-    </Form>
-  </Popover>
-);
+import Link from "next/link";
+import { useRouter } from "next/router";
 
 interface Props {
   className?: string;
 }
 
-const SideBarContent: FunctionComponent<Props> = ({ className }: Props) => (
-  <div className={`${className} ${styles.sidebarContent}`}>
-    <OverlayTrigger
-      trigger="click"
-      placement="auto"
-      overlay={popover}
-      defaultShow={false}
-    >
-      <Nav.Link>
-        <i className="bi bi-search" />
-        Recherche
+const SideBarContent: FunctionComponent<Props> = ({ className }: Props) => {
+  const router = useRouter();
+  const [searchTerm, setSearchTerm] = useState<string>("");
+
+  const onSubmit: React.FormEventHandler = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+
+    router.push(`/lesson?search=${searchTerm}`);
+  };
+
+  const popover = (
+    <Popover id="popover-basic" className={styles.popover}>
+      <Form onSubmit={onSubmit}>
+        <InputGroup>
+          <Form.Control
+            type="input"
+            name="search"
+            placeholder="Recherche..."
+            value={searchTerm}
+            onChange={(event) => setSearchTerm(event.target.value)}
+          />
+          <Button type="submit" variant="secondary">
+            <i className="bi bi-search" aria-label="Recherche" />
+          </Button>
+        </InputGroup>
+      </Form>
+    </Popover>
+  );
+
+  return (
+    <div className={`${className} ${styles.sidebarContent}`}>
+      <OverlayTrigger
+        trigger="click"
+        placement="auto"
+        overlay={popover}
+        defaultShow={false}
+      >
+        <Nav.Link>
+          <i className="bi bi-search">Recherche</i>
+        </Nav.Link>
+      </OverlayTrigger>
+      <Nav.Link as={Link} href={"/lesson"}>
+        <i className="bi bi-list-task">Fiches de cours</i>
       </Nav.Link>
-    </OverlayTrigger>
-    <Nav.Link href={"/lesson"} eventKey={"/lesson"}>
-      <i className="bi bi-list-task" />
-      Fiches de cours
-    </Nav.Link>
-    <Nav.Link
-      href={"/lesson/upload"}
-      eventKey={"/lesson/upload"}
-      className={styles.separated}
-    >
-      <i className="bi bi-plus-circle-fill" />
-      Création de fiche
-    </Nav.Link>
-  </div>
-);
+      <Nav.Link as={Link} href={"/lesson/upload"} className={styles.separated}>
+        <i className="bi bi-plus-circle-fill">Création de fiche</i>
+      </Nav.Link>
+    </div>
+  );
+};
 
 export default SideBarContent;

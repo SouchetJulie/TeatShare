@@ -18,7 +18,9 @@ function App({ Component, pageProps }: AppProps) {
   const [alertList, setAlertList] = useState([]);
 
   store.subscribe(() => {
-    setAlertList(store.getState().alerts.list);
+    const state = store.getState();
+    setAlertList(state.alerts.list);
+    console.log("user:", state.user.authenticatedUser);
   });
 
   const alerts = alertList.map((alert: IAlert) => {
