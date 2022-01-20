@@ -77,11 +77,12 @@ const LoginForm: FunctionComponent = () => {
       dispatch(addAlert({ message, success }));
     }
   };
-  const handleFocus = (): void => {};
+
   useEffect(() => {
     // Prefetch the dashboard page
     router.prefetch("/");
   }, []);
+
   return (
     <div className={styles.cardWrapper}>
       <div className={styles.cardContainer}>
@@ -129,11 +130,7 @@ const LoginForm: FunctionComponent = () => {
           />
 
           {/* Validation */}
-          <Button
-            className={`${styleBtn} ${styles.loginButton}`}
-            type="submit"
-            onFocus={handleFocus}
-          >
+          <Button className={`${styleBtn} ${styles.loginButton}`} type="submit">
             Valider
           </Button>
 

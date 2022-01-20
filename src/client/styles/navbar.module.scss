@@ -7,6 +7,10 @@
 $gray: #474A57;
 
 .navbar {
+  position: fixed !important;
+  top: 0;
+  right: 0;
+  left: 0;
   text-align: center;
   // dark by default
   background-color: $gray;

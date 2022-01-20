@@ -40,9 +40,13 @@ function App({ Component, pageProps }: AppProps) {
         <link rel="icon" href={"/favicon.ico"} />
       </Head>
       <Provider store={store}>
-        <NavBar />
-        <SideBar />
-        <Component {...pageProps} />
+        <header>
+          <NavBar />
+          <SideBar />
+        </header>
+        <main id="__next_page">
+          <Component {...pageProps} />
+        </main>
         <div className="d-flex flex-column position-fixed bottom-0 w-100">
           {alerts}
         </div>
