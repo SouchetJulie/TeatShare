@@ -55,13 +55,12 @@ const LoginForm: FunctionComponent = () => {
 
         axios
           .post<UserApiResponse>("/api/user/login", user)
-          .then(async ({ data }: AxiosResponse<UserApiResponse>) => {
+          .then(({ data }: AxiosResponse<UserApiResponse>) => {
             success = true;
             message = "Connexion réussie!";
             dispatch(addAlert({ message, success }));
-
             dispatch(setUser(data.user));
-            await router.push("/");
+            router.push("/");
           })
           .catch(() => {
             success = false;
