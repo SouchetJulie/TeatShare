@@ -11,7 +11,7 @@ import { useAppDispatch } from "@hooks/store-hook";
 import { addAlert } from "@stores/alert.store";
 
 import { ResourceApiResponse } from "@typing/api-response.interface";
-import styles from "@styles/upload.module.scss";
+import styles from "@styles/Lesson/upload.module.scss";
 
 const requiredFields = ["title", "file"];
 
@@ -77,7 +77,7 @@ const upload: FunctionComponent = () => {
   return (
     <Container className="min-vh-100">
       <Row>
-        <h1 className={styles.uploadPageTitle} >Importer un PDF</h1>
+        <h1 className={styles.uploadPageTitle}>Importer un PDF</h1>
       </Row>
       <Form
         className="my-5 row"

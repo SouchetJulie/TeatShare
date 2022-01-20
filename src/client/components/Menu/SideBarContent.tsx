@@ -6,7 +6,7 @@ import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import Button from "react-bootstrap/Button";
 
-import styles from "@styles/navbar.module.scss";
+import styles from "@styles/Menu/navbar.module.scss";
 
 const popover = (
   <Popover id="popover-basic" className={styles.popover}>

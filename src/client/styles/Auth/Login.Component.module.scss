@@ -1,4 +1,4 @@
-@import "src/client/styles/variables";
+@import "../variables";
 
 .cardWrapper {
   display: flex;
@@ -10,15 +10,15 @@
 .cardContainer {
   position: relative;
   z-index: 1;
+  z-index: 1;
   display: block;
+  width: 400px;
   width: 400px;
   margin: auto;
   padding: 50px;
-  width: 400px;
-  background-color: $white;
   border-radius: 15px;
+  background-color: $white;
   box-shadow: 0px 5px 10px #00000015;
-  z-index: 1;
   h2{
     margin-bottom: 2%;
     color: $orange;
@@ -31,47 +31,47 @@
   // TODO to put in a separate component for uniform inputs all over the app
   .loginInput {
     width: 100%;
-    background-color: $greyc;
-    border: none;
-    border-radius: 20px;
-    padding: 10px;
     margin-top: 7px;
     margin-bottom: 14px;
+    padding: 10px;
+    border: none;
+    border-radius: 20px;
     outline: none;
+    background-color: $greyc;
     box-shadow: none;
   }
   .invisibleLabel{
     display: none;
   }
   .loginButtonSendInvalid{
+    font-weight: 800;
     width: 100%;
-    padding: 10px;
     margin-top: 7px;
     margin-bottom: 7px;
+    padding: 10px;
     text-align: center;
-    font-weight: 800;
     color: $orange;
-    background-color: $orangec;
     border: none;
     border-radius: 20px;
     outline: none;
+    background-color: $orangec;
     box-shadow: none;
   }
 
   // TODO to put in a separate component for uniform buttons all over the app
   .loginButton {
     font-weight: 800;
+    font-weight: 800;
     width: 100%;
-    padding: 10px;
     margin-top: 7px;
     margin-bottom: 7px;
+    padding: 10px;
     text-align: center;
-    font-weight: 800;
     color: $white;
-    background-color: $orange;
     border: none;
     border-radius: 20px;
     outline: none;
+    background-color: $orange;
     box-shadow: none;
   }
   .loginButtonSendInvalid {
@@ -85,12 +85,12 @@
   }
 
   .loginRedirectSignup {
+    font-weight: 500;
     width: 100%;
-    padding: 10px;
     margin-top: 7px;
     margin-bottom: 7px;
+    padding: 10px;
     text-align: center;
-    font-weight: 500;
     color: $orange;
     a {
       &:hover {
@@ -99,23 +99,23 @@
     }
   }
   .cancelIcon {
+    font-size:30px;
+    position: absolute;
+    top: 10px;
+    right: 20px;
     width: 20px;
     height: 20px;
-    position: absolute;
-    font-size:30px;
-    right: 20px;
-    top: 10px;
-    color: $grey;
     cursor: pointer;
+    color: $grey;
   }
   .loginIcons {
     position: absolute;
     z-index: 0;
-    width: 100%;
-    height: 100%;
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
+    width: 100%;
+    height: 100%;
   }
 }
 
