@@ -2,12 +2,16 @@
 
 .cardWrapper {
   display: flex;
-  height: 100vh;
-  background-color: $bleu;
+  height: calc(100vh - #{$navbarHeight
+});
+  background-color: $secondary;
 }
+
 .cardContainer {
   position: relative;
+  z-index: 1;
   display: block;
+  width: 400px;
   margin: auto;
   padding: 50px;
   width: 400px;
@@ -19,9 +23,12 @@
     margin-bottom: 2%;
     color: $orange;
   }
+
   .loginForm {
     display: block;
   }
+
+  // TODO to put in a separate component for uniform inputs all over the app
   .loginInput {
     width: 100%;
     background-color: $greyc;
@@ -50,7 +57,10 @@
     outline: none;
     box-shadow: none;
   }
-  .loginValidated {
+
+  // TODO to put in a separate component for uniform buttons all over the app
+  .loginButton {
+    font-weight: 800;
     width: 100%;
     padding: 10px;
     margin-top: 7px;
@@ -64,6 +74,16 @@
     outline: none;
     box-shadow: none;
   }
+  .loginButtonSendInvalid {
+    color: $primary;
+    background-color: $primary-light;
+  }
+
+  .loginValidated {
+    color: $white;
+    background-color: $primary;
+  }
+
   .loginRedirectSignup {
     width: 100%;
     padding: 10px;
@@ -86,6 +106,7 @@
     right: 20px;
     top: 10px;
     color: $grey;
+    cursor: pointer;
   }
   .loginIcons {
     position: absolute;

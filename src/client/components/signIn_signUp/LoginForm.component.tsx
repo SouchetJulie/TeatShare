@@ -8,16 +8,16 @@ import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styles from "../../styles/Login.Component.module.scss";
 import Link from "next/link";
-import { Button, Form } from "react-bootstrap";
+import {Button, Form } from "react-bootstrap";
 import axios from "axios";
+import { useAppDispatch } from "@hooks/store-hook";
 import { LoginRequest } from "@typing/login-request.interface";
 import { useRouter } from "next/router";
 import { addAlert } from "@stores/alert.store";
-import { useAppDispatch } from "@hooks/store-hook";
+import { setUser } from "@stores/user.store";
+import { UserApiResponse } from "@typing/api-response.interface";
 
-interface LoginFormComponentProps {}
-
-const LoginFormComponent: FunctionComponent<LoginFormComponentProps> = () => {
+const LoginForm: FunctionComponent = () => {
   // store
   const dispatch = useAppDispatch();
   // router
@@ -34,62 +34,60 @@ const LoginFormComponent: FunctionComponent<LoginFormComponentProps> = () => {
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (
     event
   ): Promise<void> => {
-    setValidated(true);
-    const form = event.currentTarget;
     event.preventDefault();
     event.stopPropagation();
+
+    setValidated(true);
+
+    const form = event.currentTarget;
+
     if (form.checkValidity()) {
       const formData: FormData = new FormData(form);
       const user: LoginRequest = {
         email: formData.get("email") as string,
         password: formData.get("password") as string,
       };
+
       if (user.email && user.password) {
-        const success: boolean = true;
-        const message = <span>Traitement en cours...</span>;
+        let success: boolean = true;
+        let message = "Traitement en cours...";
         dispatch(addAlert({ message, success }));
-        axios({
-          method: "POST",
-          url: "/api/user/login",
-          data: user,
-        })
-          .then(async function () {
-            // Add an alert to say to the user that it will take some time
-            const success: boolean = true;
-            const message = <span>Connexion réussie!</span>;
+
+        axios
+          .post<UserApiResponse>("/api/user/login", user)
+          .then(async ({ data }: AxiosResponse<UserApiResponse>) => {
+            success = true;
+            message = "Connexion réussie!";
             dispatch(addAlert({ message, success }));
-            setTimeout(() => {
-              router.push("/");
-            }, 2500);
+
+            dispatch(setUser(data.user));
+            await router.push("/");
           })
-          .catch(function () {
-            const success: boolean = false;
-            const message = (
-              <span>Nom d&apos;utilisateur ou mot de passe incorrects</span>
-            );
+          .catch(() => {
+            success = false;
+            message = "Nom d''utilisateur ou mot de passe incorrects";
             dispatch(addAlert({ message, success }));
           });
       }
     } else {
       // Add
       const success: boolean = false;
-      const message = <span>Veuillez remplir le formulaire</span>;
+      const message = "Veuillez remplir le formulaire.";
       dispatch(addAlert({ message, success }));
     }
   };
-  const handleFocus = (): void => {};
+
   useEffect(() => {
     // Prefetch the dashboard page
     router.prefetch("/");
   }, []);
+
   return (
     <div className={styles.cardWrapper}>
       <div className={styles.cardContainer}>
-        <div className={styles.cancelIcon}>
-          <Link href="/">
-            <FontAwesomeIcon icon={faTimes} />
-          </Link>
-        </div>
+        <Link href="/">
+          <FontAwesomeIcon icon={faTimes} className={styles.cancelIcon} />
+        </Link>
         <h2>Se connecter</h2>
         <Form
           noValidate
@@ -100,14 +98,14 @@ const LoginFormComponent: FunctionComponent<LoginFormComponentProps> = () => {
           className={styles.loginForm}
         >
           {/* Email */}
-          <Form.Label htmlFor="email" className={styles.invisibleLabel}>
+          <Form.Label htmlFor="email" className="visually-hidden">
             Email :
           </Form.Label>
           <Form.Control
             className={styles.loginInput}
             id="email"
             name="email"
-            placeholder="adresse email"
+            placeholder="Adresse email"
             type="email"
             required
             onChange={(e) => {
@@ -115,14 +113,14 @@ const LoginFormComponent: FunctionComponent<LoginFormComponentProps> = () => {
             }}
           />
           {/* Password */}
-          <Form.Label htmlFor="password" className={styles.invisibleLabel}>
+          <Form.Label htmlFor="password" className="visually-hidden">
             Mot de passe :
           </Form.Label>
           <Form.Control
             className={styles.loginInput}
             id="password"
             name="password"
-            placeholder="mot de passe"
+            placeholder="Mot de passe"
             type="password"
             required
             onChange={(e) => {
@@ -131,7 +129,7 @@ const LoginFormComponent: FunctionComponent<LoginFormComponentProps> = () => {
           />
 
           {/* Validation */}
-          <Button className={styleBtn} type="submit" onFocus={handleFocus}>
+          <Button className={`${styleBtn} ${styles.loginButton}`} type="submit">
             Valider
           </Button>
 
@@ -146,4 +144,4 @@ const LoginFormComponent: FunctionComponent<LoginFormComponentProps> = () => {
     </div>
   );
 };
-export default LoginFormComponent;
+export default LoginForm;
