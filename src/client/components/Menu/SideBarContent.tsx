@@ -10,7 +10,7 @@ import styles from "@styles/Menu/navbar.module.scss";
 
 const popover = (
   <Popover id="popover-basic" className={styles.popover}>
-    <Form action={"/lesson"}>
+    <Form action={"/post"}>
       <InputGroup>
         <Form.Control type="input" name="search" placeholder="Recherche..." />
         <Button type="submit" variant="secondary">
@@ -38,13 +38,13 @@ const SideBarContent: FunctionComponent<Props> = ({ className }: Props) => (
         Recherche
       </Nav.Link>
     </OverlayTrigger>
-    <Nav.Link href={"/lesson"} eventKey={"/lesson"}>
+    <Nav.Link href={"/post"} eventKey={"/post"}>
       <i className="bi bi-list-task" />
       Fiches de cours
     </Nav.Link>
     <Nav.Link
-      href={"/lesson/upload"}
-      eventKey={"/lesson/upload"}
+      href={"/post/upload"}
+      eventKey={"/post/upload"}
       className={styles.separated}
     >
       <i className="bi bi-plus-circle-fill" />
