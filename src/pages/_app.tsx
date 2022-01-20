@@ -1,9 +1,59 @@
 import { AppProps } from "next/app";
-import "../client/styles/globals.scss";
+import Head from "next/head";
+import { useState } from "react";
+import { Provider } from "react-redux";
 
-// eslint-disable-next-line require-jsdoc
-function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />;
+import Alert from "@components/AlertComponent";
+import NavBar from "@components/Menu/NavBar";
+import SideBar from "@components/Menu/SideBar";
+import { store } from "@stores/store";
+import { IAlert } from "@stores/alert.store";
+import "@styles/globals.scss";
+
+/**
+ * Main application component: contains the parts that are in common for the whole app.
+ * @constructor
+ */
+function App({ Component, pageProps }: AppProps) {
+  const [alertList, setAlertList] = useState([]);
+
+  store.subscribe(() => {
+    setAlertList(store.getState().alerts.list);
+  });
+
+  const alerts = alertList.map((alert: IAlert) => {
+    return (
+      <Alert
+        key={`alert-${alert.id}`}
+        message={alert.message}
+        success={alert.success}
+        id={alert.id}
+        ttl={alert.ttl}
+      />
+    );
+  });
+
+  return (
+    <>
+      <Head>
+        <title>TeatShare</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+        <link rel="icon" href={"/favicon.ico"} />
+      </Head>
+      <Provider store={store}>
+        <header>
+          <NavBar />
+          <SideBar />
+        </header>
+        <main id="__next_page">
+          <Component {...pageProps} />
+        </main>
+        <div className="d-flex flex-column position-fixed bottom-0 w-100 onTop">
+          {alerts}
+        </div>
+      </Provider>
+    </>
+  );
 }
 
-export default MyApp;
+export default App;

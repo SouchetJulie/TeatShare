@@ -1,5 +1,6 @@
 import { EGrade } from './grade.enum';
 import { ESubject } from './subject.enum';
+import { ObjectId } from "bson";
 
 /**
  * Used for authentication and sign-up
@@ -28,7 +29,7 @@ export interface IUserAuth {
  * @property {string[]} commentIds
  */
 export interface IUserDB extends IUserAuth {
-  _id?: string; // used in database
+  _id?: ObjectId; // used in database
   avatar?: File;
   joinDate: Date;
   description: string;
@@ -36,9 +37,9 @@ export interface IUserDB extends IUserAuth {
   grades: EGrade[];
   subjects: ESubject[];
   // foreign keys
-  postIds: string[];
-  bookmarkIds: string[];
-  commentIds: string[];
+  lessonIds: ObjectId[];
+  bookmarkIds: ObjectId[];
+  commentIds: ObjectId[];
 }
 
 /**

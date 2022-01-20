@@ -1,21 +1,65 @@
-html,
-body {
-  padding: 0;
+// imported first to override bootstrap defaults
+@import "./variables";
+
+// override bootstrap theme colors
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+
+$enable-negative-margins: true;
+
+// adding new colors
+$custom-colors: (
+        "primary-light": $primary-light
+);
+
+$theme-colors: map-merge($theme-colors, $custom-colors);
+
+@import "~bootstrap/scss/bootstrap";
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css");
+
+* {
+  box-sizing: border-box;
   margin: 0;
+  padding: 0;
+}
+
+html,
+body,
+#__next {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+#__next_page {
+  padding-top: $navbarHeight;
 }
 
 a {
-  color: inherit;
   text-decoration: none;
+  color: inherit;
 }
 h2 {
   margin: 0;
 }
 
-* {
-  box-sizing: border-box;
+h1 {
+  font-size: 40px;
+  color: white;
+
+}
+
+.round-button {
+  margin: 5px;
+  padding-right: 40px;
+  padding-left: 40px;
+  border-radius: 25px;
+}
+
+.onTop {
+  z-index: 2000;
 }
 .cardContainer {
   padding: 50px;
