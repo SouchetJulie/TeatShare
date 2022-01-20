@@ -48,7 +48,7 @@ function App({ Component, pageProps }: AppProps) {
         <main id="__next_page">
           <Component {...pageProps} />
         </main>
-        <div className="d-flex flex-column position-fixed bottom-0 w-100">
+        <div className="d-flex flex-column position-fixed bottom-0 w-100 onTop">
           {alerts}
         </div>
       </Provider>
