@@ -1,8 +1,8 @@
 import React, { FunctionComponent } from "react";
 import Nav from "react-bootstrap/Nav";
 
-import SideBarContent from "@components/menu/SideBarContent";
-import styles from "@styles/navbar.module.scss";
+import SideBarContent from "@components/Menu/SideBarContent";
+import styles from "@styles/Menu/navbar.module.scss";
 import { useSelector } from "react-redux";
 import { selectIsAuthenticated } from "@stores/user.store";
 

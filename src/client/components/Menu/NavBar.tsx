@@ -3,11 +3,11 @@ import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 
-import GradeLinks from "@components/menu/GradeLinks";
-import MainLinks from "@components/menu/MainLinks";
-import SideBarContent from "@components/menu/SideBarContent";
-import UserLinks from "@components/menu/UserLinks";
-import styles from "@styles/navbar.module.scss";
+import GradeLinks from "@components/Menu/GradeLinks";
+import MainLinks from "@components/Menu/MainLinks";
+import SideBarContent from "@components/Menu/SideBarContent";
+import UserLinks from "@components/Menu/UserLinks";
+import styles from "@styles/Menu/navbar.module.scss";
 import { NavbarVariant } from "@typing/navbar-variant.enum";
 import { useSelector } from "react-redux";
 import { selectAuthenticatedUser } from "@stores/user.store";

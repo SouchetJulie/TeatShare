@@ -8,7 +8,7 @@ import React, {
 import Dropdown from "react-bootstrap/Dropdown";
 import Nav from "react-bootstrap/Nav";
 
-import styles from "@styles/navbar.module.scss";
+import styles from "@styles/Menu/navbar.module.scss";
 import { IUserPublic } from "@typing/user.interface";
 import { useLogout } from "@hooks/useLogout.hook";
 

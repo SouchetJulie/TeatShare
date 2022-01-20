@@ -1,20 +1,19 @@
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import axios, { AxiosResponse } from "axios";
-import Link from "next/link";
-import { useRouter } from "next/router";
 import {
   FormEventHandler,
   FunctionComponent,
   useEffect,
   useState,
 } from "react";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import styles from "@styles/Auth/Login.Component.module.scss";
+import Link from "next/link";
 import { Button, Form } from "react-bootstrap";
-
+import axios, { AxiosResponse } from "axios";
 import { useAppDispatch } from "@hooks/store-hook";
-import { addAlert } from "@stores/alert.store";
-import styles from "@styles/Login.Component.module.scss";
 import { LoginRequest } from "@typing/login-request.interface";
+import { useRouter } from "next/router";
+import { addAlert } from "@stores/alert.store";
 import { setUser } from "@stores/user.store";
 import { UserApiResponse } from "@typing/api-response.interface";
 
@@ -56,13 +55,12 @@ const LoginForm: FunctionComponent = () => {
 
         axios
           .post<UserApiResponse>("/api/user/login", user)
-          .then(async ({ data }: AxiosResponse<UserApiResponse>) => {
+          .then(({ data }: AxiosResponse<UserApiResponse>) => {
             success = true;
             message = "Connexion réussie!";
             dispatch(addAlert({ message, success }));
-
             dispatch(setUser(data.user));
-            await router.push("/");
+            router.push("/");
           })
           .catch(() => {
             success = false;

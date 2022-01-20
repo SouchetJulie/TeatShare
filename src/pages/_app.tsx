@@ -3,9 +3,9 @@ import Head from "next/head";
 import { useState } from "react";
 import { Provider } from "react-redux";
 
-import Alert from "@components/Alert";
-import NavBar from "@components/menu/NavBar";
-import SideBar from "@components/menu/SideBar";
+import Alert from "@components/AlertComponent";
+import NavBar from "@components/Menu/NavBar";
+import SideBar from "@components/Menu/SideBar";
 import { store } from "@stores/store";
 import { IAlert } from "@stores/alert.store";
 import "@styles/globals.scss";
@@ -28,6 +28,7 @@ function App({ Component, pageProps }: AppProps) {
         message={alert.message}
         success={alert.success}
         id={alert.id}
+        ttl={alert.ttl}
       />
     );
   });
@@ -47,7 +48,7 @@ function App({ Component, pageProps }: AppProps) {
         <main id="__next_page">
           <Component {...pageProps} />
         </main>
-        <div className="d-flex flex-column position-fixed bottom-0 w-100">
+        <div className="d-flex flex-column position-fixed bottom-0 w-100 onTop">
           {alerts}
         </div>
       </Provider>
