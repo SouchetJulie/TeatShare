@@ -41,15 +41,6 @@ a {
   text-decoration: none;
   color: inherit;
 }
-h2 {
-  margin: 0;
-}
-
-h1 {
-  font-size: 40px;
-  color: white;
-
-}
 
 .round-button {
   margin: 5px;
@@ -62,31 +53,10 @@ h1 {
   z-index: 2000;
 }
 .cardContainer {
-  padding: 50px;
-  width: 400px;
   display: block;
+  width: 400px;
   margin: auto;
+  padding: 50px;
   border-radius: 15px;
   box-shadow: 0px 5px 10px rgb(65, 65, 65);
-}
-form {
-  display: block;
-  background-color: green;
-}
-input {
-  width: 100%;
-  background-color: rgb(230, 230, 230);
-  border: none;
-  border-radius: 15px;
-  padding: 5px;
-  margin-top: 5px;
-  margin-bottom: 5px;
-}
-button {
-  width: 100%;
-  border: none;
-  border-radius: 15px;
-  padding: 5px;
-  margin-top: 5px;
-  text-align: center;
 }

@@ -11,11 +11,11 @@ import Link from "next/link";
 import { Button, Form } from "react-bootstrap";
 import axios, { AxiosResponse } from "axios";
 import { useAppDispatch } from "@hooks/store-hook";
-import { LoginRequest } from "@typing/login-request.interface";
 import { useRouter } from "next/router";
 import { addAlert } from "@stores/alert.store";
 import { setUser } from "@stores/user.store";
 import { UserApiResponse } from "@typing/api-response.interface";
+import { IUserAuth } from "@typing/user.interface";
 
 const LoginForm: FunctionComponent = () => {
   // store
@@ -43,7 +43,7 @@ const LoginForm: FunctionComponent = () => {
 
     if (form.checkValidity()) {
       const formData: FormData = new FormData(form);
-      const user: LoginRequest = {
+      const user: IUserAuth = {
         email: formData.get("email") as string,
         password: formData.get("password") as string,
       };
@@ -92,8 +92,6 @@ const LoginForm: FunctionComponent = () => {
           noValidate
           validated={validated}
           onSubmit={handleSubmit}
-          action={"/api/user/login"}
-          method="POST"
           className={styles.loginForm}
         >
           {/* Email */}
