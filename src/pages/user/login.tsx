@@ -1,12 +1,8 @@
 import { FunctionComponent } from "react";
-import LoginFormComponent from '../../client/components/signIn_signUp/LoginForm.component';
+import LoginForm from "../../client/components/signIn_signUp/LoginForm.component";
 
-interface Props {}
-
-const login: FunctionComponent<Props> = () => {
-  return (
-    <LoginFormComponent />
-  );
+const login: FunctionComponent = () => {
+  return <LoginForm />;
 };
 
 export default login;

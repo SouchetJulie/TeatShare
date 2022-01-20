@@ -1,0 +1,131 @@
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/mixins";
+@import "~bootstrap/scss/variables";
+
+@import "src/client/styles/variables";
+
+$gray: #474A57;
+
+.navbar {
+  position: fixed !important;
+  top: 0;
+  right: 0;
+  left: 0;
+  text-align: center;
+  // dark by default
+  background-color: $gray;
+}
+
+.light {
+  background-color: $light;
+}
+
+.navSection {
+  display: flex;
+  align-items: center;
+}
+
+.gradeBadges {
+  display: flex;
+  align-items: center;
+  flex-grow: 1;
+  justify-content: flex-start;
+  text-transform: uppercase;
+
+  & > * {
+    margin-right: 5px;
+  }
+}
+
+div.popover {
+  padding: 0;
+  border-radius: 3px;
+  background-color: transparent;
+  box-shadow: $primary 0 0 3px;
+}
+
+@include media-breakpoint-down(md) {
+  .navSection {
+    flex-direction: column;
+  }
+
+  .hiddenMd {
+    display: block;
+  }
+
+  .sidebarContent i {
+    display: none;
+  }
+
+  .sidebar {
+    display: none !important; // override bootstrap d-flex on mobile
+  }
+
+  .gradeBadges {
+    justify-content: center;
+  }
+}
+
+@include media-breakpoint-up(md) {
+  .hiddenMd {
+    display: none;
+  }
+
+  $sidebarWidth: 90px;
+
+  .sidebar {
+    font-size: 0.75em;
+    position: fixed;
+    z-index: 1050;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    width: $sidebarWidth;
+    padding-top: 70px;
+    text-align: center;
+
+    background-color: $bleu;
+    box-shadow: $dark 0 0 10px;
+
+    &:before {
+      position: absolute;
+      top: 0;
+      right: -26px;
+      width: 26px;
+      height: 26px;
+      content: "";
+      background: $bleu;
+      -webkit-mask-composite: destination-out;
+      mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1 1" preserveAspectRatio="none"><circle cx="1" cy="1" r="1" fill="black"/></svg>') 0/100% 100%,
+      linear-gradient(#fff, #fff);
+      mask-composite: exclude;
+    }
+
+    i {
+      font-size: 1.75em;
+      display: block;
+    }
+
+    a {
+      color: tint-color($secondary, 80%);
+
+      &:active,
+      &:focus,
+      &:hover {
+        color: $light;
+      }
+    }
+  }
+
+  .navbar {
+    padding-left: $sidebarWidth;
+  }
+
+  .separated {
+    margin-top: 100px;
+  }
+}
