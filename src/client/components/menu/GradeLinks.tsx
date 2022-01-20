@@ -4,7 +4,6 @@ import Badge from "react-bootstrap/Badge";
 
 import styles from "@styles/navbar.module.scss";
 import { EGrade } from "@typing/grade.enum";
-import { IUserPublic } from "@typing/user.interface";
 
 interface ClassLinkItemProps {
   name: EGrade;
@@ -21,18 +20,18 @@ const GradeLinkItem: FunctionComponent<ClassLinkItemProps> = ({
 );
 
 interface Props {
-  user?: IUserPublic;
+  show?: boolean;
 }
 
 /**
  * Links for each grade.
  * @constructor
  */
-const GradeLinks: FunctionComponent<Props> = ({ user }: Props) => {
+const GradeLinks: FunctionComponent<Props> = ({ show }: Props) => {
   const grades = Object.values(EGrade);
   return (
     <div className={styles.gradeBadges}>
-      {user
+      {show
         ? grades.map((grade: EGrade) => (
             <GradeLinkItem key={`grade-link-${grade}`} name={grade} />
           ))

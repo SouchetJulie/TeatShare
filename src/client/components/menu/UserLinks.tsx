@@ -10,6 +10,7 @@ import Nav from "react-bootstrap/Nav";
 
 import styles from "@styles/navbar.module.scss";
 import { IUserPublic } from "@typing/user.interface";
+import { useLogout } from "@hooks/useLogout.hook";
 
 interface Props {
   user?: IUserPublic;
@@ -38,8 +39,10 @@ const UserDropdownToggle = forwardRef(
  * Links relative to the current user.
  * @constructor
  */
-const UserLinks: FunctionComponent<Props> = ({ user }: Props) =>
-  user ? (
+const UserLinks: FunctionComponent<Props> = ({ user }: Props) => {
+  const logout = useLogout();
+
+  return user ? (
     <Dropdown className="ms-lg-5 ms-md-3 my-auto text-light">
       <Dropdown.Toggle as={UserDropdownToggle} id="user-dropdown-toggle">
         {user.email}
@@ -47,7 +50,7 @@ const UserLinks: FunctionComponent<Props> = ({ user }: Props) =>
       <Dropdown.Menu variant="dark" role="menu">
         <Dropdown.Item href={"/user/_me"}>Mon profil</Dropdown.Item>
         <Dropdown.Divider />
-        <Dropdown.Item href={"/api/user/logout"}>Déconnexion</Dropdown.Item>
+        <Dropdown.Item onClick={logout}>Déconnexion</Dropdown.Item>
       </Dropdown.Menu>
     </Dropdown>
   ) : (
@@ -56,5 +59,6 @@ const UserLinks: FunctionComponent<Props> = ({ user }: Props) =>
       <Nav.Link href={"/user/signup"}>Inscription</Nav.Link>
     </div>
   );
+};
 
 export default UserLinks;

@@ -2,23 +2,22 @@ import { FunctionComponent } from "react";
 import Nav from "react-bootstrap/Nav";
 
 import styles from "@styles/navbar.module.scss";
-import { IUserPublic } from "@typing/user.interface";
 
 interface Props {
-  user?: IUserPublic;
+  show?: boolean;
 }
 
 /**
  * Main app links.
  * @constructor
  */
-const MainLinks: FunctionComponent<Props> = ({ user }: Props) => {
+const MainLinks: FunctionComponent<Props> = ({ show }: Props) => {
   return (
     <div className={styles.navSection}>
       <Nav.Link href={"/"} className={styles.navLinks}>
         Accueil
       </Nav.Link>
-      {user ? (
+      {show ? (
         <>
           <Nav.Link href={"/for_later"} className={styles.navLinks}>
             A lire plus tard

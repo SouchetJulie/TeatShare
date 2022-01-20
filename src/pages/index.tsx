@@ -2,7 +2,8 @@ import LandingPage from "../client/components/LandingPage/LandingPage";
 import Head from "next/head";
 import { FunctionComponent } from "react";
 import HomePage from "@components/HomePage/HomePage";
-import { useUser } from "@hooks/useUser.hook";
+import { useSelector } from "react-redux";
+import { selectAuthenticatedUser } from "@stores/user.store";
 
 interface Props {}
 
@@ -11,7 +12,7 @@ interface Props {}
  * @constructor
  */
 const Home: FunctionComponent<Props> = () => {
-  const { user } = useUser();
+  const user = useSelector(selectAuthenticatedUser);
   const component: JSX.Element = user ? <HomePage /> : <LandingPage />;
   return (
     <>

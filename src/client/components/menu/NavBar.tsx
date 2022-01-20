@@ -7,17 +7,23 @@ import GradeLinks from "@components/menu/GradeLinks";
 import MainLinks from "@components/menu/MainLinks";
 import SideBarContent from "@components/menu/SideBarContent";
 import UserLinks from "@components/menu/UserLinks";
-import { useUser } from "@hooks/useUser.hook";
 import styles from "@styles/navbar.module.scss";
 import { NavbarVariant } from "@typing/navbar-variant.enum";
+import { useSelector } from "react-redux";
+import { selectAuthenticatedUser } from "@stores/user.store";
 
 interface Props {
   variant?: NavbarVariant;
 }
 
-const NavBar: FunctionComponent<Props> = ({ variant = NavbarVariant.dark }) => {
-  const { user } = useUser();
+const NavBar: FunctionComponent<Props> = ({ variant }) => {
+  const user = useSelector(selectAuthenticatedUser);
+  const isAuthenticated = !!user;
 
+  // If variant isn't explicitly set, use authenticated status
+  if (variant === undefined) {
+    variant = isAuthenticated ? NavbarVariant.dark : NavbarVariant.light;
+  }
   const bgStyle = variant === "light" ? styles.light : "";
 
   return (
@@ -34,9 +40,9 @@ const NavBar: FunctionComponent<Props> = ({ variant = NavbarVariant.dark }) => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="w-100">
-            <GradeLinks user={user} />
+            <GradeLinks show={isAuthenticated} />
             <hr />
-            <MainLinks user={user} />
+            <MainLinks show={isAuthenticated} />
             <hr />
             <SideBarContent className={styles.hiddenMd} />
             <hr />

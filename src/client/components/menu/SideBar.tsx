@@ -3,15 +3,14 @@ import Nav from "react-bootstrap/Nav";
 
 import SideBarContent from "@components/menu/SideBarContent";
 import styles from "@styles/navbar.module.scss";
+import { useSelector } from "react-redux";
+import { selectIsAuthenticated } from "@stores/user.store";
 
-interface Props {
-  hasUser: boolean;
-}
-
-const SideBar: FunctionComponent<Props> = ({ hasUser }): JSX.Element => {
-  const style: string = hasUser ? styles.sidebar : "";
+const SideBar: FunctionComponent = (): JSX.Element => {
+  const isAuthenticated = useSelector(selectIsAuthenticated);
+  const style: string = isAuthenticated ? styles.sidebar : "";
   return (
-    <Nav className={style} aria-hidden hidden={!hasUser}>
+    <Nav className={style} aria-hidden hidden={!isAuthenticated}>
       <SideBarContent />
     </Nav>
   );

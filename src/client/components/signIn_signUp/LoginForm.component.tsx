@@ -1,6 +1,6 @@
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import {
@@ -15,10 +15,10 @@ import { useAppDispatch } from "@hooks/store-hook";
 import { addAlert } from "@stores/alert.store";
 import styles from "@styles/Login.Component.module.scss";
 import { LoginRequest } from "@typing/login-request.interface";
+import { setUser } from "@stores/user.store";
+import { UserApiResponse } from "@typing/api-response.interface";
 
-interface LoginFormProps {}
-
-const LoginForm: FunctionComponent<LoginFormProps> = () => {
+const LoginForm: FunctionComponent = () => {
   // store
   const dispatch = useAppDispatch();
   // router
@@ -54,19 +54,17 @@ const LoginForm: FunctionComponent<LoginFormProps> = () => {
         let message = "Traitement en cours...";
         dispatch(addAlert({ message, success }));
 
-        axios({
-          method: "POST",
-          url: "/api/user/login",
-          data: user,
-        })
-          .then(async function () {
-            // Add an alert to say to the user that it will take some time
+        axios
+          .post<UserApiResponse>("/api/user/login", user)
+          .then(async ({ data }: AxiosResponse<UserApiResponse>) => {
             success = true;
             message = "Connexion réussie!";
             dispatch(addAlert({ message, success }));
+
+            dispatch(setUser(data.user));
             await router.push("/");
           })
-          .catch(function () {
+          .catch(() => {
             success = false;
             message = "Nom d''utilisateur ou mot de passe incorrects";
             dispatch(addAlert({ message, success }));
@@ -75,7 +73,7 @@ const LoginForm: FunctionComponent<LoginFormProps> = () => {
     } else {
       // Add
       const success: boolean = false;
-      const message = <span>Veuillez remplir le formulaire</span>;
+      const message = "Veuillez remplir le formulaire.";
       dispatch(addAlert({ message, success }));
     }
   };
