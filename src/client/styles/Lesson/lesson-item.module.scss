@@ -1,0 +1,71 @@
+@import "src/client/styles/variables";
+
+.card {
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border: none;
+  border-radius: 0px;
+  border-bottom: solid 1px black;
+  color: $grey;
+
+  .badge {
+    background: $orange;
+    padding: 0 2%;
+    border-radius: 12px;
+  }
+}
+
+.main {
+  flex-grow: 1;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  background-color: transparent;
+  border: none;
+  margin: 0;
+  background: green;
+
+  & *:first-child {
+    font-weight: bold;
+    font-size: 20px;
+    text-transform: capitalize;
+  }
+
+  div {
+    width: 30%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .hashtag {
+      font-weight: normal;
+      font-size: 15px;
+    }
+
+    .avatar {
+      width: 25px;
+      height: 25px;
+      background: grey;
+      border-radius: 100%;
+    }
+
+    .authorLink {
+      z-index: 5;
+      background: #009FB7;
+    }
+  }
+}
+
+.subtitle {
+  margin-top: 5px;
+  font-size: 15px;
+  color: $grey;
+}
+
+

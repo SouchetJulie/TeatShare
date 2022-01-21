@@ -2,6 +2,7 @@ import { FunctionComponent } from "react";
 import Nav from "react-bootstrap/Nav";
 
 import styles from "@styles/Menu/navbar.module.scss";
+import Link from "next/link";
 
 interface Props {
   show?: boolean;
@@ -11,16 +12,12 @@ interface Props {
  * Main app links.
  * @constructor
  */
-const MainLinks: FunctionComponent<Props> = ({ show }: Props) => {
+const MainLinks: FunctionComponent<Props> = () => {
   return (
     <div className={styles.navSection}>
-      <Nav.Link href={"/"}>Accueil</Nav.Link>
-      {show ? (
-        <>
-          <Nav.Link href={"/for_later"}>A lire plus tard</Nav.Link>
-          <Nav.Link href={"/settings"}>Paramètres</Nav.Link>
-        </>
-      ) : null}
+      <Nav.Link as={Link} href={"/"}>
+        Accueil
+      </Nav.Link>
     </div>
   );
 };

@@ -22,8 +22,9 @@ export const useLogout = () => {
         dispatch(resetUser());
         dispatch(
           addAlert({
-            message: "Déconnexion.",
+            message: "Déconnecté",
             success: true,
+            ttl: 1500,
           })
         );
         router.push("/");

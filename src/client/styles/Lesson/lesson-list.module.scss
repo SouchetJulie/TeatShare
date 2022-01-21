@@ -1,0 +1,43 @@
+@import "../../../../node_modules/bootstrap/scss/functions";
+@import "../../../../node_modules/bootstrap/scss/mixins";
+@import "../../../../node_modules/bootstrap/scss/variables";
+
+.lessonContainer {
+
+  overflow-x: hidden;
+  overflow-y: scroll;
+  height: 500px;
+}
+
+.form {
+  align-items: center;
+  flex-wrap: wrap-reverse;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.filterButton {
+  border: none;
+  background-color: #F96F5D;
+}
+
+.inputGroup > * {
+  border-radius: 25px;
+}
+
+@include media-breakpoint-up("md") {
+  .inputGroup {
+    width: 30%;
+  }
+}
+
+@include media-breakpoint-down("md") {
+  .inputGroup {
+    margin-bottom: 5px;
+  }
+}
+
+.formInput {
+  border-top-left-radius: 25px !important;
+  border-bottom-left-radius: 25px !important;
+}

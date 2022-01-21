@@ -8,6 +8,7 @@ import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 
 import { useAppDispatch } from "@hooks/store-hook";
+import { useLoginRedirect } from "@hooks/useLoginRedirect.hook";
 import { addAlert } from "@stores/alert.store";
 
 import { ResourceApiResponse } from "@typing/api-response.interface";
@@ -17,7 +18,13 @@ import { getAxiosErrorMessage } from "../../client/utils/get-axios-error.utils";
 const requiredFields = ["title", "file"];
 
 const upload: FunctionComponent = () => {
-  // store
+  // Route guard
+  const user = useLoginRedirect();
+
+  if (!user) {
+    return <></>;
+  }
+
   const dispatch = useAppDispatch();
 
   const [isDraft, setIsDraft] = useState(false);
