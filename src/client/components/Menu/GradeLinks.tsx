@@ -13,10 +13,17 @@ interface ClassLinkItemProps {
 const GradeLinkItem: FunctionComponent<ClassLinkItemProps> = ({
   name,
 }: ClassLinkItemProps) => (
-  <Nav.Link as={Link} href={`/lesson?class=${name}`} className="ms-3 ms-md-0">
-    <Badge bg="secondary" pill>
-      {name}
-    </Badge>
+  <Nav.Link
+    as={Link}
+    href={`/?class=${name}`}
+    passHref
+    className="ms-3 ms-md-0"
+  >
+    <a>
+      <Badge bg="secondary" pill>
+        {name}
+      </Badge>
+    </a>
   </Nav.Link>
 );
 
@@ -28,7 +35,7 @@ interface Props {
  * Links for each grade.
  * @constructor
  */
-const GradeLinks: FunctionComponent<Props> = ({ show }: Props) => {
+const GradeLinks: FunctionComponent<Props> = ({ show = true }: Props) => {
   const grades = Object.values(EGrade);
   return (
     <div className={styles.gradeBadges}>

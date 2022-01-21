@@ -13,6 +13,7 @@ interface Props {}
  */
 const Home: FunctionComponent<Props> = () => {
   const user = useSelector(selectAuthenticatedUser);
+  // TODO use lessons component when authenticated
   const component: JSX.Element = user ? <HomePage /> : <LandingPage />;
   return (
     <>

@@ -14,7 +14,9 @@ interface Props {
   className?: string;
 }
 
-const SideBarContent: FunctionComponent<Props> = ({ className }: Props) => {
+const SideBarContent: FunctionComponent<Props> = ({
+  className = "",
+}: Props) => {
   // Using router instead of form action to preserve store when navigating
   const router = useRouter();
   const [searchTerm, setSearchTerm] = useState<string>("");
@@ -23,7 +25,7 @@ const SideBarContent: FunctionComponent<Props> = ({ className }: Props) => {
     event.preventDefault();
     event.stopPropagation();
 
-    router.push(`/lesson?search=${searchTerm}`);
+    router.push(`/?search=${searchTerm}`);
   };
 
   const popover = (
@@ -46,7 +48,9 @@ const SideBarContent: FunctionComponent<Props> = ({ className }: Props) => {
   );
 
   return (
-    <div className={`${className} ${styles.sidebarContent}`}>
+    <div
+      className={`${className} ${styles.sidebarContent} ${styles.navSection}`}
+    >
       <OverlayTrigger
         trigger="click"
         placement="auto"
@@ -54,17 +58,19 @@ const SideBarContent: FunctionComponent<Props> = ({ className }: Props) => {
         defaultShow={false}
       >
         <Nav.Link>
-          <i className="bi bi-search">Recherche</i>
+          <a className="bi bi-search">Recherche</a>
         </Nav.Link>
       </OverlayTrigger>
-      <Nav.Link as={Link} href={"/lesson"}>
-        <i className="bi bi-file-richtext">Mes fiches de cours</i>
+      <Nav.Link as={Link} href={"/lesson"} passHref>
+        <Nav.Link className="nav-link bi bi-file-richtext">
+          Mes fiches de cours
+        </Nav.Link>
       </Nav.Link>
-      <Nav.Link as={Link} href={"/for_later"}>
-        <i className="bi bi-journal-bookmark">A lire plus tard</i>
+      <Nav.Link as={Link} href={"/for_later"} passHref>
+        <a className="nav-link bi bi-journal-bookmark">A lire plus tard</a>
       </Nav.Link>
-      <Nav.Link as={Link} href={"/lesson/upload"} className={styles.separated}>
-        <i className="bi bi-plus-circle-fill">Création de fiche</i>
+      <Nav.Link as={Link} href={"/lesson/upload"} passHref>
+        <a className={"nav-link bi bi-plus-circle-fill"}>Création de fiche</a>
       </Nav.Link>
     </div>
   );

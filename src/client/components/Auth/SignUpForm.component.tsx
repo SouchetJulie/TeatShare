@@ -205,7 +205,7 @@ const SignupForm: FunctionComponent = () => {
 
               {/* Création de compte -> Redirection */}
               <p className={styles.loginRedirectSignup}>
-                <Link href={"/user/signup"}>
+                <Link href={"/user/login"}>
                   <a>Déjà un compte ? Se connecter</a>
                 </Link>
               </p>

@@ -1,6 +1,6 @@
-@import "../../../../node_modules/bootstrap/scss/functions";
-@import "../../../../node_modules/bootstrap/scss/mixins";
-@import "../../../../node_modules/bootstrap/scss/variables";
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/mixins";
+@import "~bootstrap/scss/variables";
 
 @import "../variables";
 
@@ -14,6 +14,11 @@ $gray: #474A57;
   text-align: center;
   // dark by default
   background-color: $gray;
+
+  a {
+    margin-right: 5px;
+    margin-left: 5px;
+  }
 }
 
 .light {
@@ -28,12 +33,11 @@ $gray: #474A57;
 .gradeBadges {
   display: flex;
   align-items: center;
-  flex-grow: 1;
   justify-content: flex-start;
   text-transform: uppercase;
 
-  & > * {
-    margin-right: 5px;
+  & > a:not(:last-child) {
+    margin-right: 25px;
   }
 }
 
@@ -49,11 +53,7 @@ div.popover {
     flex-direction: column;
   }
 
-  .hiddenMd {
-    display: block;
-  }
-
-  .sidebarContent i {
+  .sidebarContent a:before {
     display: none;
   }
 
@@ -64,11 +64,15 @@ div.popover {
   .gradeBadges {
     justify-content: center;
   }
+
+  .dropdownMenu {
+    text-align: center;
+  }
 }
 
 @include media-breakpoint-up(md) {
   .hiddenMd {
-    display: none;
+    display: none !important;
   }
 
   $sidebarWidth: 90px;
@@ -91,6 +95,7 @@ div.popover {
     background-color: $bleu;
     box-shadow: $dark 0 0 10px;
 
+    // rounded corner on top
     &:before {
       position: absolute;
       top: 0;
@@ -105,11 +110,6 @@ div.popover {
       mask-composite: exclude;
     }
 
-    i {
-      font-size: 1.75em;
-      display: block;
-    }
-
     a {
       color: tint-color($secondary, 80%);
 
@@ -118,14 +118,29 @@ div.popover {
       &:hover {
         color: $light;
       }
+
+      // SVG icons
+      &:before {
+         font-size: 1.75em;
+         display: block;
+       }
+    }
+  }
+
+  .sidebarContent {
+    flex-direction: column;
+
+    & > a {
+      margin-top: 10px;
+
+      // last link is special
+      &:last-child {
+        margin-top: 100px;
+      }
     }
   }
 
   .navbar {
     padding-left: $sidebarWidth;
-  }
-
-  .separated {
-    margin-top: 100px;
   }
 }
