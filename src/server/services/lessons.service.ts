@@ -2,7 +2,7 @@ import { ObjectId } from "bson";
 import { File } from "formidable";
 
 import { getDatabase } from "./database.service";
-import { addLesson, isUser } from "@services/users.service";
+import { addLessonToUser, isUser } from "@services/users.service";
 import { ILesson, ILessonCreate } from "@typing/lesson-file.interface";
 import { IUserPublic } from "@typing/user.interface";
 import storageService from "@services/storage.service";
@@ -93,7 +93,7 @@ export const createNewLesson = async (
 
     if (result.acknowledged) {
       // Adding it to the user's lessons
-      const updateResult = await addLesson(user, result.insertedId);
+      const updateResult = await addLessonToUser(user, result.insertedId);
 
       console.log(
         `[LESSON] L'upload de la leçon a réussi! id: ${result.insertedId}`,

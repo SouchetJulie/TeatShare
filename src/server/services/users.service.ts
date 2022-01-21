@@ -2,13 +2,9 @@ import bcrypt from "bcryptjs";
 import { ObjectId } from "bson";
 import { InsertOneResult } from "mongodb";
 
+import { createEmptyUser } from "@utils/create-empty-user";
+import { IUserAuth,IUserCreate, IUserDB, IUserPublic ,} from "@typing/user.interface";
 import { getDatabase } from "./database.service";
-import {
-  IUserAuth,
-  IUserCreate,
-  IUserDB,
-  IUserPublic,
-} from "@typing/user.interface";
 
 export const getAllUsers = async () => {
   try {
@@ -29,9 +25,8 @@ export const getUserByEmail = async (
   try {
     const collection = (await getDatabase()).collection<IUserDB>("User");
     const user = await collection.findOne({ email: email });
-
-    if (!user) {
-      return { error: `User ${email} not found.` };
+if (!user) {
+      return { error: `Utilisateur ${email} inconnu.` };
     }
     // remove password before sending it back
     // @ts-ignore
@@ -47,9 +42,8 @@ export const getOneUser = async (userId: string) => {
   try {
     const collection = (await getDatabase()).collection<IUserDB>("User");
     const user = await collection.findOne({ _id: new ObjectId(userId) });
-
-    if (!user) {
-      return { error: `User ${userId} not found.` };
+if (!user) {
+      return { error: `Utilisateur n° ${userId} inconnu.` };
     }
 
     // remove password before sending it back
@@ -80,28 +74,16 @@ export const createNewUser = async (
     const hashedPassword = bcrypt.hashSync(user.password, 15);
 
     const userDB: IUserDB = {
-      // set default values
-      joinDate: new Date(),
-      description: "",
-      location: "",
-      // foreign keys
-      grades: [],
-      subjects: [],
-      lessonIds: [],
-      bookmarkIds: [],
-      commentIds: [],
-      // add authentication parameters
+      ...createEmptyUser(),
       email: user.email,
       firstName: user.firstName,
       lastName: user.lastName,
       password: hashedPassword,
     };
-
-    return await collection
       // @ts-ignore
-      .insertOne(userDB);
+    return await collection.insertOne(userDB);
   } catch (e) {
-    return { error: (e as Error).message };
+    return { error: (e as Error).message};
   }
 };
 
@@ -138,7 +120,10 @@ export const isUser = (user: Record<string, any>): user is IUserDB => {
  * @param {IUserPublic} user
  * @param {ObjectId} lessonId
  */
-export const addLesson = async (user: IUserPublic, lessonId: ObjectId) => {
+export const addLessonToUser = async (
+  user: IUserPublic,
+  lessonId: ObjectId
+) => {
   const collection = (await getDatabase()).collection<IUserDB>("User");
   return collection.updateOne(
     { email: user.email },

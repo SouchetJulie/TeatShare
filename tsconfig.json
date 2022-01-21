@@ -32,6 +32,7 @@
       "@middlewares/*": ["server/middlewares/*"],
       "@handlers/*": ["server/handlers/*"],
       "@common/*": ["server/common/*"],
+      "@utils/*": ["utils/*"],
       "@typing/*": ["types/*"], // aliased to typing to avoid @types keyword
     }
   },
