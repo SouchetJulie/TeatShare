@@ -10,6 +10,7 @@ import UserLinks from "@components/Menu/UserLinks";
 import { selectAuthenticatedUser } from "@stores/user.store";
 import styles from "@styles/Menu/navbar.module.scss";
 import { NavbarVariant } from "@typing/navbar-variant.enum";
+import LessonLinks from "@components/Menu/LessonLinks";
 
 interface Props {
   variant?: NavbarVariant;
@@ -44,7 +45,7 @@ const NavBar: FunctionComponent<Props> = ({ variant }) => {
                 <hr />
                 <GradeLinks />
                 <hr />
-                <sidebarContent className={styles.hiddenMd} />
+                <LessonLinks className={styles.hiddenMd} />
               </>
             ) : null}
             <hr />
