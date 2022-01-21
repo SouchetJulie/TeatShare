@@ -4,6 +4,8 @@ import React, {
   MouseEventHandler,
   ReactNode,
   RefObject,
+  useEffect,
+  useState,
 } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 import Nav from "react-bootstrap/Nav";
@@ -42,11 +44,23 @@ const UserDropdownToggle = forwardRef(
  */
 const UserLinks: FunctionComponent<Props> = ({ user }: Props) => {
   const logout = useLogout();
+  const [username, setUsername] = useState("");
+
+  // For display
+  useEffect(() => {
+    if (user) {
+      if (user.firstName || user.lastName) {
+        setUsername(`${user.firstName} ${user.lastName}`.trim());
+      } else {
+        setUsername(user.email);
+      }
+    }
+  }, [user, setUsername]);
 
   return user ? (
     <Dropdown className="ms-lg-5 ms-md-3 my-auto text-light" drop="start">
       <Dropdown.Toggle as={UserDropdownToggle} id="user-dropdown-toggle">
-        {user.email}
+        {username}
       </Dropdown.Toggle>
       <Dropdown.Menu variant="dark" role="menu" className="mt-3 mt-md-0">
         <Dropdown.Item as={Link} href={"/user"}>
