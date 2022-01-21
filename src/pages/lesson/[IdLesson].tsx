@@ -1,9 +1,9 @@
 import { useRouter } from "next/router";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import Post from "@components/Lesson/Post";
+import LessonPost from "@components/Lesson/LessonPost";
 
-const IdPost = () => {
+const IdLesson = () => {
   const router = useRouter();
   const [lesson, setlesson] = useState<any>(null);
   const [loading, setloading] = useState<boolean>(true);
@@ -22,7 +22,9 @@ const IdPost = () => {
     }
   }, [router.isReady]);
   console.log();
-  return <>{loading ? <p>Votre cours arrive</p> : <Post lesson={lesson} />}</>;
+  return (
+    <>{loading ? <p>Votre cours arrive</p> : <LessonPost lesson={lesson} />}</>
+  );
 };
 
-export default IdPost;
+export default IdLesson;
