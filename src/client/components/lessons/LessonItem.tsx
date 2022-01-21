@@ -3,12 +3,10 @@ import axios from "axios";
 import Link from "next/link";
 import Card from "react-bootstrap/Card";
 import NavLink from "react-bootstrap/NavLink";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBookmark } from "@fortawesome/free-solid-svg-icons";
 
 import { useAppDispatch } from "@hooks/store-hook";
 import { addAlert } from "@stores/alert.store";
-import styles from "@styles/Lesson/lesson-item.module.scss";
+import styles from "@styles/lesson-item.module.scss";
 import { ILesson } from "@typing/lesson-file.interface";
 import { IUserPublic } from "@typing/user.interface";
 import { createEmptyUser } from "@utils/create-empty-user";
@@ -56,7 +54,7 @@ const LessonItem: FunctionComponent<Props> = ({ lesson }: Props) => {
 
   return (
     <Card className={styles.card}>
-      <div className={styles.badge}>matiere</div>
+      <div>{/* badges */}</div>
       <div className={styles.main}>
         <h6 className={styles.header}>
           <NavLink
@@ -65,18 +63,13 @@ const LessonItem: FunctionComponent<Props> = ({ lesson }: Props) => {
           >
             {lesson.title}
           </NavLink>
-          <div>
-            <span className={styles.hashtag}>#Chimie #Atom</span>
-            <div>
-              <span className={styles.avatar}></span>
-              <span className={styles.authorLink}>
-                Écrit par{" "}
-                <Link href={`/api/user/${lesson.authorId}`}>
-                  {`${author.firstName} ${author.lastName}`}
-                </Link>
-              </span>
-            </div>
-          </div>
+          <span>{/* hashtags */}</span>
+          <span className={styles.authorLink}>
+            Écrit par{" "}
+            <Link href={`/api/user/${lesson.authorId}`}>
+              {`${author.firstName} ${author.lastName}`}
+            </Link>
+          </span>
         </h6>
         {lesson.subtitle && (
           <Card.Subtitle className={styles.subtitle}>
@@ -84,9 +77,7 @@ const LessonItem: FunctionComponent<Props> = ({ lesson }: Props) => {
           </Card.Subtitle>
         )}
       </div>
-      <div className=" h-100">
-        <FontAwesomeIcon icon={faBookmark} />
-      </div>
+      <div>{/* marque-page & aperçu */}</div>
     </Card>
   );
 };

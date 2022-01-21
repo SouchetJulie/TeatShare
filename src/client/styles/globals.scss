@@ -29,7 +29,6 @@ body,
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
   Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   min-height: 100vh;
-  padding: 0;
   margin: 0;
   padding: 0;
 }
@@ -40,14 +39,16 @@ body,
   height: 100vh;
   padding-top: $navbarHeight;
 
-  &.authenticated {
-    padding-left: $sidebarWidth;
+  @include media-breakpoint-up(md) {
+    &.authenticated {
+      padding-left: $sidebarWidth;
+    }
   }
 }
 
 a {
-  color: inherit;
   text-decoration: none;
+  color: inherit;
 }
 
 * {
@@ -55,8 +56,8 @@ a {
 }
 
 h1 {
-  color: white;
   text-align: center;
+  color: white;
 }
 .round-button {
   margin: 5px;
@@ -74,5 +75,5 @@ h1 {
   margin: auto;
   padding: 50px;
   border-radius: 15px;
-  box-shadow: 0px 5px 10px rgb(65, 65, 65);
+  box-shadow: 0 5px 10px rgb(65, 65, 65);
 }
