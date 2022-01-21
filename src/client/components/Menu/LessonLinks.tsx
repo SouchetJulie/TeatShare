@@ -14,9 +14,7 @@ interface Props {
   className?: string;
 }
 
-const SidebarContent: FunctionComponent<Props> = ({
-  className = "",
-}: Props) => {
+const LessonLinks: FunctionComponent<Props> = ({ className = "" }: Props) => {
   // Using router instead of form action to preserve store when navigating
   const router = useRouter();
   const [searchTerm, setSearchTerm] = useState<string>("");
@@ -74,4 +72,4 @@ const SidebarContent: FunctionComponent<Props> = ({
   );
 };
 
-export default SidebarContent;
+export default LessonLinks;
