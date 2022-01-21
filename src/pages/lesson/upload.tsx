@@ -11,7 +11,8 @@ import { useAppDispatch } from "@hooks/store-hook";
 import { addAlert } from "@stores/alert.store";
 
 import { ResourceApiResponse } from "@typing/api-response.interface";
-import styles from "@styles/upload.module.scss";
+import styles from "@styles/Lesson/upload.module.scss";
+import { getAxiosErrorMessage } from "../../client/utils/get-axios-error.utils";
 
 const requiredFields = ["title", "file"];
 
@@ -46,7 +47,7 @@ const upload: FunctionComponent = () => {
       .catch((error: AxiosError) => {
         const response: ResourceApiResponse = {
           success: false,
-          error: error.response.data.error || error.request || error.message,
+          error: getAxiosErrorMessage(error),
         };
         return { data: response };
       });
@@ -77,7 +78,7 @@ const upload: FunctionComponent = () => {
   return (
     <Container className="min-vh-100">
       <Row>
-        <h1 className="mt-4">Importer un PDF</h1>
+        <h1 className={styles.uploadPageTitle}>Importer un PDF</h1>
       </Row>
       <Form
         className="my-5 row"

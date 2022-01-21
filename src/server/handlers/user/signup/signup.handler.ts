@@ -1,13 +1,13 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-import { createNewUser } from '@services/users.service';
+import { NextApiRequest, NextApiResponse } from "next";
+import { createNewUser } from "@services/users.service";
 
-export const signupHandler = async (req: NextApiRequest, res: NextApiResponse) => {
+export const signupHandler = async (
+  req: NextApiRequest,
+  res: NextApiResponse
+) => {
   const user = req.body;
-  if (!user.firstName ||
-    !user.lastName ||
-    !user.password ||
-    !user.email) {
-    res.status(400).json({error: 'Veuillez remplir le formulaire.'});
+  if (!user.password || !user.email) {
+    return res.status(400).json({ error: "Veuillez remplir le formulaire." });
   }
 
   // Remove unnecessary and sensitive information
@@ -16,15 +16,15 @@ export const signupHandler = async (req: NextApiRequest, res: NextApiResponse) =
   }
 
   const result = await createNewUser(user);
-  if (!result['error']) {
-    res.status(200).json({
+  if (!result["error"]) {
+    return res.status(200).json({
       success: true,
-      result
+      result,
     });
   } else {
-    res.status(400).json({
+    return res.status(400).json({
       success: false,
-      error: JSON.stringify(result['error'])
+      error: JSON.stringify(result["error"]),
     });
   }
 };

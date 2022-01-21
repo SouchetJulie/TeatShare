@@ -1,5 +1,5 @@
 import { FunctionComponent } from "react";
-import styles from "../styles/Home.module.scss";
+import styles from "@styles/LandingPage/Home.module.scss";
 import Image from "next/image";
 
 interface Props {}

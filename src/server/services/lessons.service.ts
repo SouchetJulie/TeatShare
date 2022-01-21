@@ -23,7 +23,13 @@ export const getAllLessons = async () => {
 export const getOneLesson = async (id: string) => {
   try {
     const collection = (await getDatabase()).collection<ILesson>("LessonFile");
-    return await collection.findOne({ _id: new ObjectId(id) });
+    const lesson = await collection.findOne({ _id: new ObjectId(id) });
+
+    if (!lesson) {
+      return { error: `Lesson ${id} not found.` };
+    } else {
+      return lesson;
+    }
   } catch (e) {
     return { error: e };
   }
@@ -75,7 +81,7 @@ export const createNewLesson = async (
       // set the pub. date if necessary
       publicationDate: uploadedLesson.isDraft ? undefined : new Date(),
       // foreign keys
-      authorId: user._id,
+      authorId: user._id as ObjectId,
       categoryIds: [],
       tagIds: [],
       commentIds: [],
@@ -89,21 +95,21 @@ export const createNewLesson = async (
       // Adding it to the user's lessons
       const updateResult = await addLessonToUser(user, result.insertedId);
 
-      if (updateResult.modifiedCount === 1) {
-        console.log(
-          `[LESSON] Lesson upload successful! id: ${result.insertedId}`,
-          updateResult
-        );
-        return { id: result.insertedId };
-      } else {
-        const error =
-          "Lesson upload failed! Write operation was not acknowledged.";
-        console.log(`[LESSON] ${error}`);
-        return { error };
-      }
+      console.log(
+        `[LESSON] L'upload de la leçon a réussi! id: ${result.insertedId}`,
+        updateResult
+      );
+      return { id: result.insertedId };
+    } else {
+      const error =
+        "L'upload de la leçon a échoué ! L'opération d'écriture a été ignorée.";
+      console.log(`[LESSON] ${error}`);
+      return { error };
     }
-  } catch (e) {
-    const error = `Lesson upload failed! There was an error: ${e}`;
+  } catch (e: unknown) {
+    const error = `L'upload de la leçon a échoué ! Il y a eu une erreur: ${
+      (e as Error).message
+    }`;
     console.log(`[LESSON] ${error}`);
     return { error };
   }

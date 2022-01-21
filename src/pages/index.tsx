@@ -1,21 +1,26 @@
-import LandingPage from "../client/components/LandingPage";
-import Link from "next/link";
+import LandingPage from "../client/components/LandingPage/LandingPage";
 import Head from "next/head";
+import { FunctionComponent } from "react";
+import HomePage from "@components/HomePage/HomePage";
+import { useSelector } from "react-redux";
+import { selectAuthenticatedUser } from "@stores/user.store";
 
-// eslint-disable-next-line require-jsdoc
-export default function Home() {
+interface Props {}
+
+/**
+ * Home page.
+ * @constructor
+ */
+const Home: FunctionComponent<Props> = () => {
+  const user = useSelector(selectAuthenticatedUser);
+  const component: JSX.Element = user ? <HomePage /> : <LandingPage />;
   return (
     <>
       <Head>
-        <title>TeatShare - Home</title>
-        <meta
-          name="viewport"
-          content="initial-scale=1.0, width=device-width"
-        />
-        <link rel="icon" href="/favicon.ico" />
+        <title>TeatShare - Accueil</title>
       </Head>
-      <LandingPage />
-      <Link href="/test">Test</Link>
+      {component}
     </>
   );
-}
+};
+export default Home;
