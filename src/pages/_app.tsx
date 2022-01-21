@@ -15,7 +15,7 @@ import "@styles/globals.scss";
  * @constructor
  */
 function App({ Component, pageProps }: AppProps) {
-  const [alertList, setAlertList] = useState([]);
+  const [alertList, setAlertList] = useState<IAlert[]>([]);
 
   store.subscribe(() => {
     setAlertList(store.getState().alerts.list);
