@@ -62,9 +62,7 @@ const SideBarContent: FunctionComponent<Props> = ({
         </Nav.Link>
       </OverlayTrigger>
       <Nav.Link as={Link} href={"/lesson"} passHref>
-        <Nav.Link className="nav-link bi bi-file-richtext">
-          Mes fiches de cours
-        </Nav.Link>
+        <a className="nav-link bi bi-file-richtext">Mes fiches de cours</a>
       </Nav.Link>
       <Nav.Link as={Link} href={"/for_later"} passHref>
         <a className="nav-link bi bi-journal-bookmark">A lire plus tard</a>
