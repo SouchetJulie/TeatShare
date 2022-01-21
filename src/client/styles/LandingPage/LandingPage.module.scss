@@ -4,10 +4,10 @@
   background-color: #a0ced9;
 }
 
-.container{
+.container {
+  overflow-x: hidden;
   width: 100%;
   height: auto;
-  background-color: $white;
   margin: 0;
-  overflow-x: hidden;
+  background-color: $white;
 }
