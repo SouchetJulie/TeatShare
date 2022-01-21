@@ -9,7 +9,7 @@ $enable-negative-margins: true;
 
 // adding new colors
 $custom-colors: (
-        "primary-light": $primary-light
+  "primary-light": $primary-light
 );
 
 $theme-colors: map-merge($theme-colors, $custom-colors);
@@ -34,7 +34,14 @@ body,
 }
 
 #__next_page {
+  overflow-x: hidden;
+  width: 100vw;
+  height: 100vh;
   padding-top: $navbarHeight;
+
+  &.authenticated {
+    padding-left: $sidebarWidth;
+  }
 }
 
 a {
