@@ -65,7 +65,7 @@ div.popover {
     justify-content: center;
   }
 
-  .dropdownMenu {
+  .dropdownMenu a {
     text-align: center !important;
   }
 }
@@ -119,9 +119,9 @@ div.popover {
 
       // SVG icons
       &:before {
-         font-size: 1.75em;
-         display: block;
-       }
+        font-size: 1.75em;
+        display: block;
+      }
     }
   }
 
