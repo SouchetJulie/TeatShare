@@ -30,6 +30,7 @@ const LoginForm: FunctionComponent = () => {
   // Style of btn when fields empty or not
   const styleBtn: string =
     email && pwd ? styles.loginValidated : styles.loginButtonSendInvalid;
+  const [buttonMessage, setButtonMessage] = useState("Se connecter");
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (
     event
@@ -51,28 +52,30 @@ const LoginForm: FunctionComponent = () => {
       if (user.email && user.password) {
         let success: boolean = true;
         let message = "Traitement en cours...";
-        dispatch(addAlert({ message, success }));
+        setButtonMessage(message);
 
         axios
           .post<UserApiResponse>("/api/user/login", user)
           .then(({ data }: AxiosResponse<UserApiResponse>) => {
             success = true;
             message = "Connexion réussie!";
-            dispatch(addAlert({ message, success }));
-            dispatch(setUser(data.user));
+            dispatch(addAlert({ message, success, ttl: 2000 }));
+
             router.push("/");
+            dispatch(setUser(data.user));
           })
           .catch(() => {
             success = false;
-            message = "Nom d''utilisateur ou mot de passe incorrects";
-            dispatch(addAlert({ message, success }));
+            message = "Nom d'utilisateur ou mot de passe incorrects";
+            setButtonMessage("Connexion échouée.");
+            dispatch(addAlert({ message, success, ttl: 2000 }));
           });
       }
     } else {
       // Add
       const success: boolean = false;
-      const message = "Veuillez remplir le formulaire.";
-      dispatch(addAlert({ message, success }));
+      const message = "Veuillez remplir correctement le formulaire.";
+      dispatch(addAlert({ message, success, ttl: 2000 }));
     }
   };
 
@@ -127,7 +130,7 @@ const LoginForm: FunctionComponent = () => {
 
           {/* Validation */}
           <Button className={`${styleBtn} ${styles.loginButton}`} type="submit">
-            Valider
+            {buttonMessage}
           </Button>
 
           {/* Création de compte -> Redirection */}

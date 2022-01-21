@@ -77,7 +77,6 @@ const SignupForm: FunctionComponent = () => {
 
         success = true;
         message = "Inscription réussie !";
-        setButtonMessage(message);
         dispatch(addAlert({ message, success, ttl: 2000 }));
 
         router.push("/");
