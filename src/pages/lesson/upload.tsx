@@ -12,6 +12,7 @@ import { addAlert } from "@stores/alert.store";
 
 import { ResourceApiResponse } from "@typing/api-response.interface";
 import styles from "@styles/Lesson/upload.module.scss";
+import { getAxiosErrorMessage } from "../../client/utils/get-axios-error.utils";
 
 const requiredFields = ["title", "file"];
 
@@ -46,7 +47,7 @@ const upload: FunctionComponent = () => {
       .catch((error: AxiosError) => {
         const response: ResourceApiResponse = {
           success: false,
-          error: error.response.data.error || error.request || error.message,
+          error: getAxiosErrorMessage(error),
         };
         return { data: response };
       });

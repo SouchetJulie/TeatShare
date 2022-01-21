@@ -42,12 +42,6 @@ a {
   color: inherit;
 }
 
-h1 {
-  font-size: 40px;
-  color: white;
-
-}
-
 .round-button {
   margin: 5px;
   padding-right: 40px;
@@ -57,4 +51,12 @@ h1 {
 
 .onTop {
   z-index: 2000;
+}
+.cardContainer {
+  display: block;
+  width: 400px;
+  margin: auto;
+  padding: 50px;
+  border-radius: 15px;
+  box-shadow: 0px 5px 10px rgb(65, 65, 65);
 }

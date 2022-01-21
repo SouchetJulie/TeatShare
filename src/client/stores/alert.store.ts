@@ -5,7 +5,7 @@ import { ReactNode } from "react";
 export interface IAlert {
   message: ReactNode;
   success: boolean;
-  id?: number;
+  id: number;
   ttl?: number;
 }
 
@@ -25,7 +25,10 @@ const alertSlice = createSlice({
   name: "alert",
   initialState,
   reducers: {
-    addAlert: (state: AlertState, action: PayloadAction<IAlert>) => {
+    addAlert: (
+      state: AlertState,
+      action: PayloadAction<Omit<IAlert, "id">>
+    ) => {
       state.list.push({
         ...action.payload,
         id: state.counter,

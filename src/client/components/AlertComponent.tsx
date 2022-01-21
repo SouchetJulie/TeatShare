@@ -8,7 +8,7 @@ const AlertComponent: FunctionComponent<IAlert> = ({
   message,
   success,
   id,
-  ttl,
+  ttl = 0,
 }) => {
   const dispatch = useAppDispatch();
   const [show, setShow] = useState(true);
@@ -20,10 +20,10 @@ const AlertComponent: FunctionComponent<IAlert> = ({
 
   // Hides the alert after a time
   useEffect(() => {
-    if (ttl !== undefined) {
+    if (ttl) {
       setTimeout(remove, ttl);
     }
-  }, [setShow]);
+  }, []);
 
   const variant = success ? "success" : "danger";
 
