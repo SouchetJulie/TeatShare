@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import Link from "next/link";
 
 import GradeLinks from "@components/Menu/GradeLinks";
-import SideBarContent from "@components/Menu/SideBarContent";
+import SidebarContent from "@components/Menu/SidebarContent";
 import UserLinks from "@components/Menu/UserLinks";
 import { selectAuthenticatedUser } from "@stores/user.store";
 import styles from "@styles/Menu/navbar.module.scss";
@@ -45,7 +45,7 @@ const NavBar: FunctionComponent<Props> = ({ variant }) => {
                 <hr />
                 <GradeLinks />
                 <hr />
-                <SideBarContent className={styles.hiddenMd} />
+                <SidebarContent className={styles.hiddenMd} />
               </>
             ) : null}
             <hr />
