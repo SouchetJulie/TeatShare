@@ -14,6 +14,7 @@ import Link from "next/link";
 import styles from "@styles/Menu/navbar.module.scss";
 import { IUserPublic } from "@typing/user.interface";
 import { useLogout } from "@hooks/useLogout.hook";
+import { NavDropdown } from "react-bootstrap";
 
 interface Props {
   user?: IUserPublic;
@@ -58,29 +59,21 @@ const UserLinks: FunctionComponent<Props> = ({ user }: Props) => {
   }, [user, setUsername]);
 
   return user ? (
-    <Dropdown
-      className="ms-lg-5 ms-md-3 mb-2 my-md-auto text-light"
-      drop="start"
+    <NavDropdown
+      className={`ms-lg-5 ms-md-3 mb-2 my-md-auto text-light ${styles.dropdownMenu}`}
+      title={username}
+      menuVariant="dark"
     >
-      <Dropdown.Toggle as={UserDropdownToggle} id="user-dropdown-toggle">
-        {username}
-      </Dropdown.Toggle>
-      <Dropdown.Menu
-        variant="dark"
-        role="menu"
-        className={"mt-3 mt-md-0 " + styles.dropdownMenu}
-      >
-        <Dropdown.Item>
-          <Link href={"/user"}>Mon profil</Link>
-        </Dropdown.Item>
-        <Dropdown.Divider />
-        <Dropdown.Item>
-          <Link href={"/settings"}>Paramètres</Link>
-        </Dropdown.Item>
-        <Dropdown.Divider />
-        <Dropdown.Item onClick={logout}>Déconnexion</Dropdown.Item>
-      </Dropdown.Menu>
-    </Dropdown>
+      <NavDropdown.Item>
+        <Link href={"/user"}>Mon profil</Link>
+      </NavDropdown.Item>
+      <Dropdown.Divider />
+      <NavDropdown.Item>
+        <Link href={"/settings"}>Paramètres</Link>
+      </NavDropdown.Item>
+      <Dropdown.Divider />
+      <NavDropdown.Item onClick={logout}>Déconnexion</NavDropdown.Item>
+    </NavDropdown>
   ) : (
     <div className={"ms-md-5 mb-2 my-md-auto " + styles.navSection}>
       <Nav.Link as={Link} href={"/user/login"}>
