@@ -9,7 +9,7 @@ import Dropdown from "react-bootstrap/Dropdown";
 import Nav from "react-bootstrap/Nav";
 import Link from "next/link";
 
-import styles from "@styles/navbar.module.scss";
+import styles from "@styles/Menu/navbar.module.scss";
 import { IUserPublic } from "@typing/user.interface";
 import { useLogout } from "@hooks/useLogout.hook";
 
@@ -52,6 +52,9 @@ const UserLinks: FunctionComponent<Props> = ({ user }: Props) => {
         <Dropdown.Item as={Link} href={"/user"}>
           Mon profil
         </Dropdown.Item>
+        <Nav.Link as={Link} href={"/settings"}>
+          Paramètres
+        </Nav.Link>
         <Dropdown.Divider />
         <Dropdown.Item onClick={logout}>Déconnexion</Dropdown.Item>
       </Dropdown.Menu>

@@ -1,0 +1,19 @@
+@import "../variables";
+
+.control {
+  margin-bottom: 30px;
+  border-top-color: transparent;
+  border-right-color: transparent;
+  border-left-color: transparent;
+}
+
+.label {
+  font-size: 1.25em;
+  font-variant: small-caps;
+}
+
+.uploadPageTitle{
+  margin-top: 4%;
+  text-align: center;
+  color: $orange;
+}

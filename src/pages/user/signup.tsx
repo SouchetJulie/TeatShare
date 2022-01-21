@@ -1,12 +1,8 @@
 import { FunctionComponent } from "react";
-import SignUpFormComponent from '../../client/components/signIn_signUp/SignUpForm.component';
+import SignupForm from "@components/Auth/SignUpForm.component";
 
-interface Props {}
-
-const signup: FunctionComponent<Props> = () => {
-  return (
-    <SignUpFormComponent />
-  );
+const signup: FunctionComponent = () => {
+  return <SignupForm />;
 };
 
 export default signup;

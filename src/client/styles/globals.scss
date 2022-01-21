@@ -42,13 +42,21 @@ a {
   color: inherit;
 }
 
-h1 {
-  font-size: 40px;
-}
-
 .round-button {
   margin: 5px;
   padding-right: 40px;
   padding-left: 40px;
   border-radius: 25px;
+}
+
+.onTop {
+  z-index: 2000;
+}
+.cardContainer {
+  display: block;
+  width: 400px;
+  margin: auto;
+  padding: 50px;
+  border-radius: 15px;
+  box-shadow: 0px 5px 10px rgb(65, 65, 65);
 }

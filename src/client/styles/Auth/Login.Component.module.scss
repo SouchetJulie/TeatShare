@@ -1,4 +1,4 @@
-@import "src/client/styles/variables";
+@import "../variables";
 
 .cardWrapper {
   display: flex;
@@ -10,17 +10,18 @@
 .cardContainer {
   position: relative;
   z-index: 1;
+  z-index: 1;
   display: block;
+  width: 400px;
   width: 400px;
   margin: auto;
   padding: 50px;
   border-radius: 15px;
   background-color: $white;
-  box-shadow: 0 5px 10px #00000015;
-
-  h2 {
+  box-shadow: 0px 5px 10px #00000015;
+  h2{
     margin-bottom: 2%;
-    color: $primary;
+    color: $orange;
   }
 
   .loginForm {
@@ -35,21 +36,44 @@
     padding: 10px;
     border: none;
     border-radius: 20px;
+    outline: none;
     background-color: $greyc;
+    box-shadow: none;
   }
-
-  // TODO to put in a separate component for uniform buttons all over the app
-  .loginButton {
+  .invisibleLabel{
+    display: none;
+  }
+  .loginButtonSendInvalid{
     font-weight: 800;
     width: 100%;
     margin-top: 7px;
     margin-bottom: 7px;
     padding: 10px;
     text-align: center;
+    color: $orange;
     border: none;
     border-radius: 20px;
+    outline: none;
+    background-color: $orangec;
+    box-shadow: none;
   }
 
+  // TODO to put in a separate component for uniform buttons all over the app
+  .loginButton {
+    font-weight: 800;
+    font-weight: 800;
+    width: 100%;
+    margin-top: 7px;
+    margin-bottom: 7px;
+    padding: 10px;
+    text-align: center;
+    color: $white;
+    border: none;
+    border-radius: 20px;
+    outline: none;
+    background-color: $orange;
+    box-shadow: none;
+  }
   .loginButtonSendInvalid {
     color: $primary;
     background-color: $primary-light;
@@ -67,18 +91,23 @@
     margin-bottom: 7px;
     padding: 10px;
     text-align: center;
-    color: $primary;
+    color: $orange;
+    a {
+      &:hover {
+        color: $orange;
+      }
+    }
   }
-
   .cancelIcon {
+    font-size:30px;
     position: absolute;
     top: 10px;
     right: 20px;
-    height: 30px;
+    width: 20px;
+    height: 20px;
     cursor: pointer;
     color: $grey;
   }
-
   .loginIcons {
     position: absolute;
     z-index: 0;
