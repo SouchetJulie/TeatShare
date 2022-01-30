@@ -24,6 +24,7 @@
       "@imgCours/*": ["../public/landingPage/cours/*"],
       "@socialIcons/*": ["../public/landingPage/socialIcons/*"],
       "@public/*": ["../public/*"],
+      "@assets/*": ["client/assets/*"],
       "@components/*": ["client/components/*"],
       "@hooks/*": ["client/hooks/*"],
       "@stores/*": ["client/stores/*"],
