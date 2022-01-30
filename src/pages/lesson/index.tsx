@@ -1,7 +1,7 @@
 import axios, {AxiosResponse} from "axios";
 import React, {FunctionComponent, useEffect, useState} from "react";
 
-import {LessonList} from "@components/Lessons/LessonList";
+import {LessonList} from "@components/Lesson/LessonList";
 import {useAppDispatch} from "@hooks/store-hook";
 import {useLoginRedirect} from "@hooks/useLoginRedirect.hook";
 import {addAlert} from "@stores/alert.store";
