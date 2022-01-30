@@ -1,62 +1,60 @@
 @import "src/client/styles/variables";
 
 .temoignageContainer {
-  transform: rotate(-3deg);
-  transform-origin: 0% 100%;
-  width: 105%;
-  height: 45vh;
-  background-color: $bleu;
-  color: white;
   overflow-x: hidden;
   overflow-y: hidden;
+  width: 105%;
+  height: 45vh;
+  transform: rotate(-3deg);
+  transform-origin: 0 100%;
+  color: white;
+  background-color: $bleu;
 
   .temoignageContent {
-    transform: rotate(3deg);
     display: flex;
+    align-items: center;
     width: 70%;
     height: 100%;
     margin: auto;
-    align-items: center;
-
+    transform: rotate(3deg);
 
     .temoignageText {
       margin: auto;
 
-
       h2 {
         font-size: 33px;
         font-weight: bold;
-        text-align: center;
         margin-bottom: 5%;
+        text-align: center;
       }
 
       p {
-        font-weight: 600;
-        color: $white;
         font-size: 27px;
+        font-weight: 600;
         text-align: center;
+        color: $white;
 
       }
 
       .temoignagePeopleName {
-        margin-top: 5%;
-        font-weight: 600;
-        color: $white;
         font-size: 30px;
+        font-weight: 600;
+        margin-top: 5%;
         text-align: end;
+        color: $white;
       }
     }
 
     .guillemetUp {
-      height: 70%;
       display: flex;
       align-items: flex-start;
+      height: 70%;
     }
 
     .guillemetDown {
-      height: 70%;
       display: flex;
       align-items: flex-end;
+      height: 70%;
     }
   }
 }
@@ -65,14 +63,12 @@
 @media screen and (max-width: 500px) {
 
   .temoignageContainer {
-    height: 50vh;
     width: 110%;
+    height: 50vh;
 
     .temoignageContent {
 
-
       .temoignageText {
-
 
         h2 {
           font-size: 32px;
@@ -88,18 +84,16 @@
       }
 
       .guillemetUp {
-        height: 70%;
         display: flex;
         align-items: flex-start;
+        height: 70%;
       }
 
       .guillemetDown {
-        height: 70%;
         display: flex;
         align-items: flex-end;
+        height: 70%;
       }
     }
-
   }
-
 }
