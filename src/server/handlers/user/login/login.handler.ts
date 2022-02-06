@@ -1,5 +1,5 @@
 import {NextApiHandler, NextApiRequest, NextApiResponse} from "next";
-import {checkCredentials, getUserByEmail,} from "@services/users.service";
+import {checkCredentials, getUserByEmail} from "@services/users.service";
 import {withSession} from "@middlewares/session.middleware";
 import {LoginRequest} from "@typing/login-request.interface";
 import {UserApiResponse} from "@typing/api-response.interface";

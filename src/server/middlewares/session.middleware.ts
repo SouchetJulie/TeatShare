@@ -9,13 +9,17 @@ import {IUserPublic} from "@typing/user.interface";
  * @return {NextApiHandler}
  */
 export const withSession = (apiHandler: NextApiHandler): NextApiHandler => {
+  if (!process.env.SESSION_SECRET) {
+    throw new Error('SESSION_SECRET must be defined in environment');
+  }
+
   return withIronSessionApiRoute(apiHandler, {
     cookieName: 'session_id',
     cookieOptions: {
       httpOnly: true,
       sameSite: 'strict'
     },
-    password: process.env.SESSION_SECRET || ''
+    password: process.env.SESSION_SECRET
   })
 };
 

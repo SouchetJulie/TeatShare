@@ -1,10 +1,9 @@
 import {NextApiHandler, NextApiRequest, NextApiResponse} from "next";
 import {Fields, File, Files, IncomingForm, Part} from "formidable";
-
-import {withSession} from "@middlewares/session.middleware";
-import {createNewLesson} from "@services/lessons.service";
+import {createNewLesson, getOneLesson} from "@services/lessons.service";
 import {IUserPublic} from "@typing/user.interface";
-import {ILessonCreate} from "@typing/lesson-file.interface";
+import {ILesson, ILessonCreate} from "@typing/lesson-file.interface";
+import {ApiResponse} from "@typing/api-response.interface";
 
 interface LessonFormData {
   fields?: Fields;
@@ -43,7 +42,7 @@ const parseForm = (req: NextApiRequest): Promise<LessonFormData> => new Promise(
  * @param {NextApiRequest} req Incoming request.
  * @param {NextApiResponse} res Whether the recording succeeded, and the reasons why not otherwise.
  */
-const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+export const lessonPostHandler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse<ApiResponse<{ lesson: ILesson }>>) => {
   try {
     // Get author
     const currentUser: IUserPublic | undefined = req.session.user;
@@ -51,7 +50,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     if (!currentUser) {
       return res
         .status(401)
-        .json({error: "Il faut se connecter pour effectuer cette action."});
+        .json({
+          success: false,
+          error: "Il faut se connecter pour effectuer cette action."
+        });
     }
 
     // Read form
@@ -59,19 +61,32 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
       formData = await parseForm(req);
     } catch (e) {
-      return res.status(400).json({error: (e as Error).message});
+      console.log(`[LESSON] Parsing the lesson upload failed`, e);
+      return res.status(400).json({
+        success: false,
+        error: (e as Error).message
+      });
     }
 
     if (!formData?.files) {
-      return res.status(400).json({error: "Fichier manquant."});
+      return res.status(400).json({
+        success: false,
+        error: "Fichier manquant."
+      });
     }
     if (!formData?.fields?.isDraft) {
       return res
         .status(400)
-        .json({error: "Choix brouillon/publication manquant."});
+        .json({
+          success: false,
+          error: "Choix brouillon/publication manquant."
+        });
     }
     if (!formData?.fields.title) {
-      return res.status(400).json({error: "Titre manquant."});
+      return res.status(400).json({
+        success: false,
+        error: "Titre manquant."
+      });
     }
 
     // Get file
@@ -90,25 +105,40 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       isDraft = formData?.fields.isDraft;
     }
 
-    const uploadedLesson: ILessonCreate = {
+    const lessonCreate: ILessonCreate = {
       ...formData.fields,
       isDraft: JSON.parse(isDraft), // conversion to boolean
     };
 
-    const result = await createNewLesson(currentUser, file, uploadedLesson);
-    if ("id" in result) {
-      const id = result.id;
+    const {id} = await createNewLesson(currentUser, file, lessonCreate);
 
-      currentUser.lessonIds.push(id);
-      await req.session.save();
+    currentUser.lessonIds.push(id);
+    await req.session.save();
 
-      return res.status(200).json({success: true, id});
-    } else {
-      return res.status(400).json({success: false, error: result["error"]});
+    console.log(`[LESSON] Upload of lesson ${id} successful`);
+
+    // Read what was uploaded
+    const uploadedLesson: ILesson | null = await getOneLesson(id.toString());
+
+    if (!uploadedLesson) {
+      console.log("[LESSON] Upload of lesson failed: uploaded lesson not found");
+      return res.status(500).json({
+        success: false,
+        error: "Uploader la leçon a échoué."
+      });
     }
+
+    return res.status(200).json({
+      success: true,
+      data: {
+        lesson: uploadedLesson
+      }
+    });
   } catch (e) {
-    return res.status(500).json({success: false, error: (e as Error).message});
+    console.log(`[LESSON] Upload of lesson failed:`, e);
+    return res.status(500).json({
+      success: false,
+      error: "Uploader la leçon a échoué."
+    });
   }
 };
-
-export const lessonPostHandler: NextApiHandler = withSession(handler);

@@ -1,7 +1,8 @@
 import {NextApiHandler, NextApiRequest, NextApiResponse} from 'next';
-import {notImplementedHandler} from '@common/not-implemented.handler';
 import {lessonGetAllHandler} from '@handlers/lesson/get.handler';
 import {lessonPostHandler} from '@handlers/lesson/post.handler';
+import routerMiddleware from "@middlewares/router.middleware";
+import {ApiResponse} from "@typing/api-response.interface";
 
 // Disable the default body parser
 export const config = {
@@ -10,14 +11,12 @@ export const config = {
   }
 };
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+export default async (req: NextApiRequest, res: NextApiResponse<ApiResponse>) => {
   const handlers: Record<string, NextApiHandler> = {
     'GET': lessonGetAllHandler,
     'POST': lessonPostHandler
     // add here handlers for other methods
   };
 
-  const handler = (req.method ? handlers[req.method] : notImplementedHandler) || notImplementedHandler;
-
-  await handler(req, res);
+  await routerMiddleware(handlers, req.method)(req, res);
 };
