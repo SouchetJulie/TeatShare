@@ -1,6 +1,6 @@
-import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import {RootState} from "@stores/store";
-import {IUserPublic} from "@typing/user.interface";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { RootState } from "@stores/store";
+import { IUserPublic } from "@typing/user.interface";
 
 // State
 interface UserState {
@@ -16,7 +16,10 @@ const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    setUser: (state: UserState, action: PayloadAction<IUserPublic | undefined>) => {
+    setUser: (
+      state: UserState,
+      action: PayloadAction<IUserPublic | undefined>
+    ) => {
       state.authenticatedUser = action.payload;
     },
     resetUser: (state: UserState) => {
@@ -31,6 +34,6 @@ const selectAuthenticatedUser = (state: RootState): IUserPublic | undefined =>
 const selectIsAuthenticated = (state: RootState): boolean =>
   !!state.user.authenticatedUser;
 
-export const {setUser, resetUser} = userSlice.actions;
-export const {reducer: userReducer} = userSlice;
-export {selectAuthenticatedUser, selectIsAuthenticated};
+export const { setUser, resetUser } = userSlice.actions;
+export const { reducer: userReducer } = userSlice;
+export { selectAuthenticatedUser, selectIsAuthenticated };

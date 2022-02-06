@@ -52,11 +52,11 @@
         background: $orange;
         font-size: 24px;
         font-weight: bold;
-       a{
-         &:hover{
-           color: $white;
-         }
-       }
+        a {
+          &:hover {
+            color: $white;
+          }
+        }
       }
     }
   }
@@ -75,7 +75,6 @@
 }
 
 @media screen and (max-width: 1100px) {
-
   .accessContainer {
     .accessContent {
       .accessTitle {
@@ -100,7 +99,6 @@
 }
 
 @media screen and (max-width: 500px) {
-
   .accessContainer {
     display: flex;
     flex-wrap: wrap;
@@ -153,7 +151,6 @@
       margin: auto;
 
       background-position: center;
-
     }
   }
 }

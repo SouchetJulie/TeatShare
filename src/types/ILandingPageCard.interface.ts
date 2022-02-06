@@ -7,5 +7,5 @@ export interface ILandingPageCardInterface {
   img: number;
   matiere: string;
   time: string;
-  title: string
+  title: string;
 }

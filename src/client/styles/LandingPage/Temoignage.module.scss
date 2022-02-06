@@ -18,10 +18,8 @@
     margin: auto;
     align-items: center;
 
-
     .temoignageText {
       margin: auto;
-
 
       h2 {
         font-size: 33px;
@@ -35,7 +33,6 @@
         color: $white;
         font-size: 27px;
         text-align: center;
-
       }
 
       .temoignagePeopleName {
@@ -61,19 +58,13 @@
   }
 }
 
-
 @media screen and (max-width: 500px) {
-
   .temoignageContainer {
     height: 50vh;
     width: 110%;
 
     .temoignageContent {
-
-
       .temoignageText {
-
-
         h2 {
           font-size: 32px;
         }
@@ -99,7 +90,5 @@
         align-items: flex-end;
       }
     }
-
   }
-
 }

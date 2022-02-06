@@ -1,7 +1,7 @@
-import {NextApiHandler, NextApiRequest, NextApiResponse} from "next";
-import {notImplementedHandler} from "@common/not-implemented.handler";
+import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
+import { notImplementedHandler } from "@common/not-implemented.handler";
 import authCheckMiddleware from "@middlewares/auth-check.middleware";
-import {ApiResponse} from "@typing/api-response.interface";
+import { ApiResponse } from "@typing/api-response.interface";
 
 /**
  * Aiguille la requête vers la bonne méthode pour exécuter le traitant approprié.
@@ -11,10 +11,17 @@ import {ApiResponse} from "@typing/api-response.interface";
  * @param {boolean} requiresAuth Whether the route requires the user to be connected. (default = true)
  * @return {NextApiHandler}
  */
-export default (handlers: Record<string, NextApiHandler>, method: string | undefined, requiresAuth = true): NextApiHandler =>
-  async (req: NextApiRequest, res: NextApiResponse<ApiResponse>): Promise<void> => {
+export default (
+    handlers: Record<string, NextApiHandler>,
+    method: string | undefined,
+    requiresAuth = true
+  ): NextApiHandler =>
+  async (
+    req: NextApiRequest,
+    res: NextApiResponse<ApiResponse>
+  ): Promise<void> => {
     if (!method) {
-      throw new Error('No request method')
+      throw new Error("No request method");
     }
 
     const handler = handlers[method];
@@ -29,4 +36,4 @@ export default (handlers: Record<string, NextApiHandler>, method: string | undef
     } else {
       return handler(req, res);
     }
-  }
+  };

@@ -1,22 +1,23 @@
 import Head from "next/head";
 import { FunctionComponent } from "react";
-import { useSelector } from "react-redux";
 import { selectAuthenticatedUser } from "@stores/user.store";
 import { LessonList } from "@components/lessons/LessonList";
 import { ILesson } from "@typing/lesson-file.interface";
 import { GetStaticProps } from "next";
 import { getAllLessons } from "@services/lessons.service";
 import LandingPage from "@components/LandingPage/LandingPage";
+import { useAppSelector } from "@hooks/store-hook";
 
 interface Props {
   lessons: ILesson[];
 }
+
 /**
  * Home page.
  * @constructor
  */
 const Home: FunctionComponent<Props> = ({ lessons }) => {
-  const user = useSelector(selectAuthenticatedUser);
+  const user = useAppSelector(selectAuthenticatedUser);
   const component: JSX.Element = user ? (
     <LessonList lessons={lessons} />
   ) : (

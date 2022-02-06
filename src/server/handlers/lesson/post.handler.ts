@@ -1,9 +1,9 @@
-import {NextApiHandler, NextApiRequest, NextApiResponse} from "next";
-import {Fields, File, Files, IncomingForm, Part} from "formidable";
-import {createNewLesson, getOneLesson} from "@services/lessons.service";
-import {IUserPublic} from "@typing/user.interface";
-import {ILesson, ILessonCreate} from "@typing/lesson-file.interface";
-import {ApiResponse} from "@typing/api-response.interface";
+import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
+import { Fields, File, Files, IncomingForm, Part } from "formidable";
+import { createNewLesson, getOneLesson } from "@services/lessons.service";
+import { IUserPublic } from "@typing/user.interface";
+import { ILesson, ILessonCreate } from "@typing/lesson-file.interface";
+import { ApiResponse } from "@typing/api-response.interface";
 
 interface LessonFormData {
   fields?: Fields;
@@ -16,76 +16,77 @@ interface LessonFormData {
  * @return {Promise<LessonFormData>} The form's values.
  * @throws {Error} If the parsing fails.
  */
-const parseForm = (req: NextApiRequest): Promise<LessonFormData> => new Promise(
-  (
-    resolve: (value: { fields: Fields, files: Files }) => void,
-    reject: (reason: Error) => void
-  ) => {
-    const form = new IncomingForm({
-      keepExtensions: false,
-      hashAlgorithm: "sha256",
-      multiples: false,
-      filter: ({mimetype}: Part): boolean => !!mimetype && mimetype.includes("pdf"), // keep only pdf
-    });
+const parseForm = (req: NextApiRequest): Promise<LessonFormData> =>
+  new Promise(
+    (
+      resolve: (value: { fields: Fields; files: Files }) => void,
+      reject: (reason: Error) => void
+    ) => {
+      const form = new IncomingForm({
+        keepExtensions: false,
+        hashAlgorithm: "sha256",
+        multiples: false,
+        filter: ({ mimetype }: Part): boolean =>
+          !!mimetype && mimetype.includes("pdf"), // keep only pdf
+      });
 
-    form.parse(req, (err, fields: Fields, files: Files) => {
-      if (err) {
-        return reject(err);
-      }
-      resolve({fields, files});
-    });
-  });
-
+      form.parse(req, (err, fields: Fields, files: Files) => {
+        if (err) {
+          return reject(err);
+        }
+        resolve({ fields, files });
+      });
+    }
+  );
 
 /**
  * Parses the incoming request to record a new Lesson.
  * @param {NextApiRequest} req Incoming request.
  * @param {NextApiResponse} res Whether the recording succeeded, and the reasons why not otherwise.
  */
-export const lessonPostHandler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse<ApiResponse<{ lesson: ILesson }>>) => {
+export const lessonPostHandler: NextApiHandler = async (
+  req: NextApiRequest,
+  res: NextApiResponse<ApiResponse<{ lesson: ILesson }>>
+) => {
   try {
     // Get author
     const currentUser: IUserPublic | undefined = req.session.user;
 
     if (!currentUser) {
-      return res
-        .status(401)
-        .json({
-          success: false,
-          error: "Il faut se connecter pour effectuer cette action."
-        });
+      return res.status(401).json({
+        success: false,
+        error: "Il faut se connecter pour effectuer cette action.",
+      });
     }
 
     // Read form
-    let formData: LessonFormData
+    let formData: LessonFormData;
     try {
       formData = await parseForm(req);
     } catch (e) {
       console.log(`[LESSON] Parsing the lesson upload failed`, e);
       return res.status(400).json({
         success: false,
-        error: (e as Error).message
+        error: (e as Error).message,
       });
     }
 
     if (!formData?.files) {
       return res.status(400).json({
         success: false,
-        error: "Fichier manquant."
+        error: "Fichier manquant.",
       });
     }
     if (!formData?.fields?.isDraft) {
-      return res
-        .status(400)
-        .json({
-          success: false,
-          error: "Choix brouillon/publication manquant."
-        });
+      return res.status(400).json({
+        success: false,
+        error: "Choix brouillon/publication manquant.",
+      });
     }
     if (!formData?.fields.title) {
       return res.status(400).json({
         success: false,
-        error: "Titre manquant."
+        error: "Titre manquant.",
       });
     }
 
@@ -110,7 +111,7 @@ export const lessonPostHandler: NextApiHandler = async (req: NextApiRequest, res
       isDraft: JSON.parse(isDraft), // conversion to boolean
     };
 
-    const {id} = await createNewLesson(currentUser, file, lessonCreate);
+    const { id } = await createNewLesson(currentUser, file, lessonCreate);
 
     currentUser.lessonIds.push(id);
     await req.session.save();
@@ -121,24 +122,26 @@ export const lessonPostHandler: NextApiHandler = async (req: NextApiRequest, res
     const uploadedLesson: ILesson | null = await getOneLesson(id.toString());
 
     if (!uploadedLesson) {
-      console.log("[LESSON] Upload of lesson failed: uploaded lesson not found");
+      console.log(
+        "[LESSON] Upload of lesson failed: uploaded lesson not found"
+      );
       return res.status(500).json({
         success: false,
-        error: "Uploader la leçon a échoué."
+        error: "Uploader la leçon a échoué.",
       });
     }
 
     return res.status(200).json({
       success: true,
       data: {
-        lesson: uploadedLesson
-      }
+        lesson: uploadedLesson,
+      },
     });
   } catch (e) {
     console.log(`[LESSON] Upload of lesson failed:`, e);
     return res.status(500).json({
       success: false,
-      error: "Uploader la leçon a échoué."
+      error: "Uploader la leçon a échoué.",
     });
   }
 };

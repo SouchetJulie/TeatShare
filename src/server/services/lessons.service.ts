@@ -1,12 +1,12 @@
-import {ObjectId} from "bson";
-import {File} from "formidable";
+import { ObjectId } from "bson";
+import { File } from "formidable";
 
-import {getDatabase} from "./database.service";
-import {addLessonToUser, isUser} from "@services/users.service";
-import {ILesson, ILessonCreate} from "@typing/lesson-file.interface";
-import {IUserPublic} from "@typing/user.interface";
+import { getDatabase } from "./database.service";
+import { addLessonToUser, isUser } from "@services/users.service";
+import { ILesson, ILessonCreate } from "@typing/lesson-file.interface";
+import { IUserPublic } from "@typing/user.interface";
 import storageService from "@services/storage.service";
-import {cleanFileMetadata} from "@common/file.utils";
+import { cleanFileMetadata } from "@common/file.utils";
 
 /**
  * Fetches all Lessons from database.
@@ -24,7 +24,7 @@ export const getAllLessons: () => Promise<ILesson[]> = async () => {
  */
 export const getOneLesson = async (id: string): Promise<ILesson | null> => {
   const collection = (await getDatabase()).collection<ILesson>("LessonFile");
-  return collection.findOne({_id: new ObjectId(id)});
+  return collection.findOne({ _id: new ObjectId(id) });
 };
 
 /**
@@ -57,9 +57,7 @@ export const createNewLesson = async (
   });
   file.filepath = destination;
 
-  console.log(
-    `[LESSON] Uploaded ${file.originalFilename} to ${destination}.`
-  );
+  console.log(`[LESSON] Uploaded ${file.originalFilename} to ${destination}.`);
 
   // Add to database
   const lesson: ILesson = {
@@ -86,9 +84,13 @@ export const createNewLesson = async (
   if (result.acknowledged) {
     // Adding it to the user's lessons
     await addLessonToUser(user, result.insertedId);
-    console.log(`[LESSON] L'upload de la leçon a réussi! id: ${result.insertedId}`);
-    return {id: result.insertedId};
+    console.log(
+      `[LESSON] L'upload de la leçon a réussi! id: ${result.insertedId}`
+    );
+    return { id: result.insertedId };
   } else {
-    throw new Error("L'upload de la leçon a échoué ! L'opération d'écriture a été ignorée.");
+    throw new Error(
+      "L'upload de la leçon a échoué ! L'opération d'écriture a été ignorée."
+    );
   }
 };

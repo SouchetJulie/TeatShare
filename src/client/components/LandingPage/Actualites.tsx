@@ -3,9 +3,12 @@ import Link from "next/link";
 import cardData from "../../../FakeDatas/LandingPage.cards.json";
 import LandingCard from "./LandingCard";
 import Masonry from "react-masonry-css";
-import {ILandingPageCardInterface} from "@typing/ILandingPageCard.interface";
+import { ILandingPageCardInterface } from "@typing/ILandingPageCard.interface";
 
-type LandingCardData = Pick<ILandingPageCardInterface, 'title' | 'course' | 'matiere' | 'time' | 'date'>
+type LandingCardData = Pick<
+  ILandingPageCardInterface,
+  "title" | "course" | "matiere" | "time" | "date"
+>;
 
 const Actualites = () => {
   const breakpointColumnsObj = {

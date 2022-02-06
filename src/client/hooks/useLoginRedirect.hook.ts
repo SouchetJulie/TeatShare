@@ -1,11 +1,10 @@
-import {useRouter} from "next/router";
-import {useEffect} from "react";
-import {useSelector} from "react-redux";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 
-import {useAppDispatch} from "@hooks/store-hook";
-import {addAlert} from "@stores/alert.store";
-import {selectAuthenticatedUser} from "@stores/user.store";
-import {IUserPublic} from "@typing/user.interface";
+import { useAppDispatch, useAppSelector } from "@hooks/store-hook";
+import { addAlert } from "@stores/alert.store";
+import { selectAuthenticatedUser } from "@stores/user.store";
+import { IUserPublic } from "@typing/user.interface";
 
 /**
  * Hook for blocking access to a page when unauthenticated.
@@ -16,7 +15,7 @@ import {IUserPublic} from "@typing/user.interface";
 export const useLoginRedirect = (): IUserPublic | undefined => {
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const user = useSelector(selectAuthenticatedUser);
+  const user = useAppSelector(selectAuthenticatedUser);
 
   useEffect(() => {
     if (!user) {

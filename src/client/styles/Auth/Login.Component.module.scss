@@ -2,8 +2,7 @@
 
 .cardWrapper {
   display: flex;
-  height: calc(100vh - #{$navbarHeight
-});
+  height: calc(100vh - #{$navbarHeight});
   background-color: $secondary;
 }
 
@@ -19,7 +18,7 @@
   border-radius: 15px;
   background-color: $white;
   box-shadow: 0px 5px 10px #00000015;
-  h2{
+  h2 {
     margin-bottom: 2%;
     color: $orange;
   }
@@ -40,10 +39,10 @@
     background-color: $greyc;
     box-shadow: none;
   }
-  .invisibleLabel{
+  .invisibleLabel {
     display: none;
   }
-  .loginButtonSendInvalid{
+  .loginButtonSendInvalid {
     font-weight: 800;
     width: 100%;
     margin-top: 7px;
@@ -99,7 +98,7 @@
     }
   }
   .cancelIcon {
-    font-size:30px;
+    font-size: 30px;
     position: absolute;
     top: 10px;
     right: 20px;
@@ -118,4 +117,3 @@
     height: 100%;
   }
 }
-

@@ -1,16 +1,21 @@
-import {FormEventHandler, FunctionComponent, useEffect, useState,} from "react";
-import {faTimes} from "@fortawesome/free-solid-svg-icons";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {
+  FormEventHandler,
+  FunctionComponent,
+  useEffect,
+  useState,
+} from "react";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styles from "@styles/Auth/Login.Component.module.scss";
 import Link from "next/link";
-import {Button, Form} from "react-bootstrap";
-import axios, {AxiosResponse} from "axios";
-import {useAppDispatch} from "@hooks/store-hook";
-import {useRouter} from "next/router";
-import {addAlert} from "@stores/alert.store";
-import {setUser} from "@stores/user.store";
-import {UserApiResponse} from "@typing/api-response.interface";
-import {IUserAuth} from "@typing/user.interface";
+import { Button, Form } from "react-bootstrap";
+import axios, { AxiosResponse } from "axios";
+import { useAppDispatch } from "@hooks/store-hook";
+import { useRouter } from "next/router";
+import { addAlert } from "@stores/alert.store";
+import { setUser } from "@stores/user.store";
+import { UserApiResponse } from "@typing/api-response.interface";
+import { IUserAuth } from "@typing/user.interface";
 
 const LoginForm: FunctionComponent = () => {
   // store
@@ -51,10 +56,10 @@ const LoginForm: FunctionComponent = () => {
 
         axios
           .post<UserApiResponse>("/api/user/login", user)
-          .then(({data: response}: AxiosResponse<UserApiResponse>) => {
+          .then(({ data: response }: AxiosResponse<UserApiResponse>) => {
             success = true;
             message = "Connexion réussie!";
-            dispatch(addAlert({message, success, ttl: 2000}));
+            dispatch(addAlert({ message, success, ttl: 2000 }));
 
             router.push("/");
             dispatch(setUser(response.data?.user));
@@ -63,14 +68,14 @@ const LoginForm: FunctionComponent = () => {
             success = false;
             message = "Nom d'utilisateur ou mot de passe incorrects";
             setButtonMessage("Connexion échouée.");
-            dispatch(addAlert({message, success, ttl: 2000}));
+            dispatch(addAlert({ message, success, ttl: 2000 }));
           });
       }
     } else {
       // Add
       const success: boolean = false;
       const message = "Veuillez remplir correctement le formulaire.";
-      dispatch(addAlert({message, success, ttl: 2000}));
+      dispatch(addAlert({ message, success, ttl: 2000 }));
     }
   };
 
@@ -83,7 +88,7 @@ const LoginForm: FunctionComponent = () => {
     <div className={styles.cardWrapper}>
       <div className={styles.cardContainer}>
         <Link href="/">
-          <FontAwesomeIcon icon={faTimes} className={styles.cancelIcon}/>
+          <FontAwesomeIcon icon={faTimes} className={styles.cancelIcon} />
         </Link>
         <h2>Se connecter</h2>
         <Form

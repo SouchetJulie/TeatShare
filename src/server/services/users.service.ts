@@ -1,11 +1,15 @@
 import bcrypt from "bcryptjs";
-import {ObjectId} from "bson";
-import {InsertOneResult} from "mongodb";
+import { ObjectId } from "bson";
+import { InsertOneResult } from "mongodb";
 
-import {createEmptyUser} from "@utils/create-empty-user";
-import {IUserAuth, IUserCreate, IUserDB, IUserPublic,} from "@typing/user.interface";
-import {getDatabase} from "./database.service";
-
+import { createEmptyUser } from "@utils/create-empty-user";
+import {
+  IUserAuth,
+  IUserCreate,
+  IUserDB,
+  IUserPublic,
+} from "@typing/user.interface";
+import { getDatabase } from "./database.service";
 
 /**
  * Fetches all users from database.
@@ -21,16 +25,17 @@ export const getAllUsers: () => Promise<IUserDB[]> = async () => {
   return users;
 };
 
-
 /**
  * Fetches one user from database.
  *
  * @param {string} email Email of the user to fetch.
  * @return {Promise<IUserPublic | null>} The user, or null if not found.
  */
-export const getUserByEmail = async (email: string): Promise<IUserPublic | null> => {
+export const getUserByEmail = async (
+  email: string
+): Promise<IUserPublic | null> => {
   const collection = (await getDatabase()).collection<IUserDB>("User");
-  const user = await collection.findOne({email: email});
+  const user = await collection.findOne({ email: email });
   if (!user) {
     return null;
   }
@@ -46,9 +51,13 @@ export const getUserByEmail = async (email: string): Promise<IUserPublic | null>
  * @param {string} userId Id (_id) of the user to fetch.
  * @return {Promise<IUserPublic | null>} The user, or null if not found.
  */
-export const getOneUser = async (userId: string): Promise<IUserPublic | null> => {
+export const getOneUser = async (
+  userId: string
+): Promise<IUserPublic | null> => {
   const collection = (await getDatabase()).collection<IUserDB>("User");
-  const user: IUserDB | null = await collection.findOne({_id: new ObjectId(userId)});
+  const user: IUserDB | null = await collection.findOne({
+    _id: new ObjectId(userId),
+  });
   if (!user) {
     return null;
   }
@@ -75,7 +84,7 @@ export const createNewUser = async (
   const collection = (await getDatabase()).collection<IUserDB>("User");
 
   // Is email already taken?
-  const foundInDB = await collection.findOne<IUserDB>({email: user.email});
+  const foundInDB = await collection.findOne<IUserDB>({ email: user.email });
 
   if (foundInDB) {
     throw new Error("Cet e-mail est déjà utilisé.");
@@ -135,7 +144,7 @@ export const addLessonToUser = async (
 ) => {
   const collection = (await getDatabase()).collection<IUserDB>("User");
   return collection.updateOne(
-    {email: user.email},
-    {$push: {lessonIds: lessonId}}
+    { email: user.email },
+    { $push: { lessonIds: lessonId } }
   );
 };
