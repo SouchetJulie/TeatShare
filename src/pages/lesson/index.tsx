@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from "react";
 import { LessonList } from "@components/lessons/LessonList";
-import { useLoginRedirect } from "@hooks/useLoginRedirect.hook";
+import { useLoginRedirect } from "@hooks/login-redirect.hook";
 import { GetStaticProps } from "next";
 import { getAllLessons } from "@services/lessons.service";
 import { ILesson } from "@typing/lesson-file.interface";

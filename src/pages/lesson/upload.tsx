@@ -8,7 +8,7 @@ import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 
 import { useAppDispatch } from "@hooks/store-hook";
-import { useLoginRedirect } from "@hooks/useLoginRedirect.hook";
+import { useLoginRedirect } from "@hooks/login-redirect.hook";
 import { addAlert } from "@stores/alert.store";
 
 import { ResourceApiResponse } from "@typing/api-response.interface";
