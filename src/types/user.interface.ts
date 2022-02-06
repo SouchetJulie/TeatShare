@@ -1,13 +1,13 @@
-import { EGrade } from "./grade.enum";
-import { ESubject } from "./subject.enum";
-import { ObjectId } from "bson";
+import {EGrade} from "./grade.enum";
+import {ESubject} from "./subject.enum";
+import {ObjectId} from "bson";
 
 /**
  * Used for authentication
  */
 export interface IUserAuth {
   email: string;
-  password: string; // to be removed outside of auth
+  password?: string; // to be removed outside of auth
 }
 
 /**

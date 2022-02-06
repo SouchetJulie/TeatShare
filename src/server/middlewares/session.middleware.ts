@@ -9,20 +9,20 @@ import {IUserPublic} from "@typing/user.interface";
  * @return {NextApiHandler}
  */
 export const withSession = (apiHandler: NextApiHandler): NextApiHandler => {
-    return withIronSessionApiRoute(apiHandler, {
-        cookieName: 'session_id',
-        cookieOptions: {
-            httpOnly: true,
-            sameSite: 'strict'
-        },
-        password: process.env.SESSION_SECRET
-    })
+  return withIronSessionApiRoute(apiHandler, {
+    cookieName: 'session_id',
+    cookieOptions: {
+      httpOnly: true,
+      sameSite: 'strict'
+    },
+    password: process.env.SESSION_SECRET || ''
+  })
 };
 
 declare module "iron-session" {
-    // Do not delete: this is used indirectly to type req.session /!\
-    // eslint-disable-next-line no-unused-vars
-    interface IronSessionData {
-        user?: IUserPublic;
-    }
+  // Do not delete: this is used indirectly to type req.session /!\
+  // eslint-disable-next-line no-unused-vars
+  interface IronSessionData {
+    user?: IUserPublic;
+  }
 }

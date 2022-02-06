@@ -21,7 +21,7 @@ const LandingCard: FunctionComponent<ILandingPageCardInterface> = ({
                                                                      time,
                                                                      title,
                                                                    }) => {
-  const imgArray = [img1, img2, img3, img4, img5, img6];
+  const imgArray: StaticImageData[] = [img1, img2, img3, img4, img5, img6];
   return (
     <div className={styles.cardContainer}>
       <div className={styles.cardImg}>

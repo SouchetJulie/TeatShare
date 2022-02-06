@@ -3,6 +3,9 @@ import Link from "next/link";
 import cardData from "../../../FakeDatas/LandingPage.cards.json";
 import LandingCard from "./LandingCard";
 import Masonry from "react-masonry-css";
+import {ILandingPageCardInterface} from "@typing/ILandingPageCard.interface";
+
+type LandingCardData = Pick<ILandingPageCardInterface, 'title' | 'course' | 'matiere' | 'time' | 'date'>
 
 const Actualites = () => {
   const breakpointColumnsObj = {
@@ -12,12 +15,12 @@ const Actualites = () => {
     500: 1,
   };
 
-  const cards = cardData.map((res, i) => (
+  const cards = cardData.map((res: LandingCardData, i: number) => (
     <LandingCard
       key={i}
       course={res.course}
       date={res.date}
-      img={`${i}`}
+      img={i}
       matiere={res.matiere}
       time={res.time}
       title={res.title}

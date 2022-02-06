@@ -1,14 +1,13 @@
 import {IUserPublic} from "@typing/user.interface";
 
-export interface ApiResponse {
+export interface ApiResponse<DataType = unknown> {
   success: boolean;
   error?: string;
+  data?: DataType
 }
 
 export interface ResourceApiResponse extends ApiResponse {
   id?: string;
 }
 
-export interface UserApiResponse extends ApiResponse {
-  user: IUserPublic;
-}
+export type UserApiResponse = ApiResponse<{ user: IUserPublic }>
