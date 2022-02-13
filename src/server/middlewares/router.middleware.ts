@@ -1,6 +1,7 @@
-import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
+import { NextApiHandler } from "next";
 import { notImplementedHandler } from "@common/not-implemented.handler";
 import authCheckMiddleware from "@middlewares/auth-check.middleware";
+import { withSession } from "@middlewares/session.middleware";
 import { ApiResponse } from "@typing/api-response.interface";
 
 /**
@@ -12,28 +13,24 @@ import { ApiResponse } from "@typing/api-response.interface";
  * @return {NextApiHandler}
  */
 export default (
-    handlers: Record<string, NextApiHandler>,
-    method: string | undefined,
-    requiresAuth = true
-  ): NextApiHandler =>
-  async (
-    req: NextApiRequest,
-    res: NextApiResponse<ApiResponse>
-  ): Promise<void> => {
-    if (!method) {
-      throw new Error("No request method");
-    }
+  handlers: Record<string, NextApiHandler<ApiResponse>>,
+  method: string | undefined,
+  requiresAuth = true
+): NextApiHandler => {
+  if (!method) {
+    throw new Error("No request method");
+  }
 
-    const handler = handlers[method];
+  const handler = handlers[method];
 
-    // Calling a route that doesn't have a handler for this specific method
-    if (!handler) {
-      return notImplementedHandler(req, res);
-    }
+  // Calling a route that doesn't have a handler for this specific method
+  if (!handler) {
+    return notImplementedHandler;
+  }
 
-    if (requiresAuth) {
-      return authCheckMiddleware(handler)(req, res);
-    } else {
-      return handler(req, res);
-    }
-  };
+  if (requiresAuth) {
+    return withSession(authCheckMiddleware(handler));
+  } else {
+    return handler;
+  }
+};
