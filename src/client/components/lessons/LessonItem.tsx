@@ -7,6 +7,7 @@ import NavLink from "react-bootstrap/NavLink";
 import { useAppDispatch } from "@hooks/store-hook";
 import { addAlert } from "@stores/alert.store";
 import styles from "@styles/lesson-item.module.scss";
+import { ApiResponse } from "@typing/api-response.interface";
 import { ILesson } from "@typing/lesson-file.interface";
 import { IUserPublic } from "@typing/user.interface";
 import { createEmptyUser } from "@utils/create-empty-user";
@@ -23,29 +24,31 @@ const LessonItem: FunctionComponent<Props> = ({ lesson }: Props) => {
     let isSubscribed = true;
 
     axios
-      .get(`/api/user/${lesson.authorId}`)
-      .then(({ data }) => {
+      .get<ApiResponse<{ user: IUserPublic }>>(`/api/user/${lesson.authorId}`)
+      .then(({ data: response }) => {
         if (isSubscribed) {
-          if (data.success) {
-            setAuthor(data.user);
+          if (response.success && !!response.data) {
+            setAuthor(response.data.user);
           } else {
             dispatch(
               addAlert({
-                message: `Problème de lecture de l'auteur de la leçon "${lesson.title}"`,
+                ttl: 5000,
+                message: `Problème de récupération de l'auteur pour la leçon "${lesson.title}"`,
                 success: false,
               })
             );
           }
         }
       })
-      .catch(() =>
+      .catch(() => {
         dispatch(
           addAlert({
-            message: `Problème de lecture de l'auteur de la leçon "${lesson.title}"`,
+            ttl: 5000,
+            message: `Problème de récupération de l'auteur pour la leçon "${lesson.title}"`,
             success: false,
           })
-        )
-      );
+        );
+      });
 
     return (): void => {
       isSubscribed = false;
