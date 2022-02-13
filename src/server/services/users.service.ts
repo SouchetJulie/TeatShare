@@ -36,6 +36,7 @@ export const getUserByEmail = async (
 ): Promise<IUserPublic | null> => {
   const collection = (await getDatabase()).collection<IUserDB>("User");
   const user = await collection.findOne({ email: email });
+
   if (!user) {
     return null;
   }
@@ -58,6 +59,7 @@ export const getOneUser = async (
   const user: IUserDB | null = await collection.findOne({
     _id: new ObjectId(userId),
   });
+
   if (!user) {
     return null;
   }
