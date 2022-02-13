@@ -14,8 +14,8 @@ import { useAppDispatch } from "@hooks/store-hook";
 import { useRouter } from "next/router";
 import { addAlert } from "@stores/alert.store";
 import { setUser } from "@stores/user.store";
-import { UserApiResponse } from "@typing/api-response.interface";
-import { IUserAuth } from "@typing/user.interface";
+import { ApiResponse } from "@typing/api-response.interface";
+import { IUserAuth, IUserPublic } from "@typing/user.interface";
 
 const LoginForm: FunctionComponent = () => {
   // store
@@ -55,15 +55,19 @@ const LoginForm: FunctionComponent = () => {
         setButtonMessage(message);
 
         axios
-          .post<UserApiResponse>("/api/user/login", user)
-          .then(({ data: response }: AxiosResponse<UserApiResponse>) => {
-            success = true;
-            message = "Connexion réussie!";
-            dispatch(addAlert({ message, success, ttl: 2000 }));
+          .post<ApiResponse<{ user: IUserPublic }>>("/api/user/login", user)
+          .then(
+            ({
+              data: response,
+            }: AxiosResponse<ApiResponse<{ user: IUserPublic }>>) => {
+              success = true;
+              message = "Connexion réussie!";
+              dispatch(addAlert({ message, success, ttl: 2000 }));
 
-            router.push("/");
-            dispatch(setUser(response.data?.user));
-          })
+              router.push("/");
+              dispatch(setUser(response.data?.user));
+            }
+          )
           .catch(() => {
             success = false;
             message = "Nom d'utilisateur ou mot de passe incorrects";

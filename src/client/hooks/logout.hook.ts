@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import React from "react";
 
 import { useAppDispatch } from "@hooks/store-hook";
-import { resetUser } from "@stores/user.store";
+import { clearUser } from "@stores/user.store";
 import { addAlert } from "@stores/alert.store";
 import { ApiResponse } from "@typing/api-response.interface";
 
@@ -19,7 +19,7 @@ export const useLogout = () => {
       .post<ApiResponse>("/api/user/logout")
 
       .then(() => {
-        dispatch(resetUser());
+        dispatch(clearUser());
         dispatch(
           addAlert({
             message: "Déconnecté",

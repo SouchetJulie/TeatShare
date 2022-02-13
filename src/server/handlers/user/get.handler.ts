@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { getAllUsers, getOneUser } from "@services/users.service";
-import { ApiResponse, UserApiResponse } from "@typing/api-response.interface";
+import { ApiResponse } from "@typing/api-response.interface";
 import { IUserPublic } from "@typing/user.interface";
 
 export const userGetAllHandler = async (
@@ -24,11 +24,15 @@ export const userGetAllHandler = async (
 
 export const userGetOneHandler =
   (_id: string) =>
-  async (req: NextApiRequest, res: NextApiResponse<UserApiResponse>) => {
+  async (
+    req: NextApiRequest,
+    res: NextApiResponse<ApiResponse<{ user: IUserPublic }>>
+  ) => {
     try {
       const user = await getOneUser(_id);
 
       if (!user) {
+        console.warn(`[USER] Failed to get user ${_id}: not found`);
         return res.status(404).json({
           success: false,
           error: `User ${_id} not found`,
@@ -40,7 +44,7 @@ export const userGetOneHandler =
         data: { user },
       });
     } catch (e) {
-      console.warn(`[USER] Failed to get user ${_id}: ${e}`);
+      console.error(`[USER] Failed to get user ${_id}: ${e}`);
       return res.status(500).json({
         success: false,
         error: "Erreur lors de la récupération de l'utilisateur",

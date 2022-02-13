@@ -1,12 +1,12 @@
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 import { createNewUser, getOneUser } from "@services/users.service";
 import { withSession } from "@middlewares/session.middleware";
-import { UserApiResponse } from "@typing/api-response.interface";
+import { ApiResponse } from "@typing/api-response.interface";
 import { IUserCreate, IUserPublic } from "@typing/user.interface";
 
 const handler = async (
   req: NextApiRequest,
-  res: NextApiResponse<UserApiResponse>
+  res: NextApiResponse<ApiResponse<{ user: IUserPublic }>>
 ) => {
   const userCreate = req.body as IUserCreate;
   if (!userCreate.password || !userCreate.email) {

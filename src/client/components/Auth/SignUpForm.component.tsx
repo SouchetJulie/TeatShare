@@ -13,8 +13,8 @@ import { useAppDispatch } from "@hooks/store-hook";
 import { addAlert } from "@stores/alert.store";
 import { setUser } from "@stores/user.store";
 import styles from "@styles/Auth/Login.Component.module.scss";
-import { UserApiResponse } from "@typing/api-response.interface";
-import { IUserCreate } from "@typing/user.interface";
+import { ApiResponse } from "@typing/api-response.interface";
+import { IUserCreate, IUserPublic } from "@typing/user.interface";
 import { getAxiosErrorMessage } from "../../utils/get-axios-error.utils";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
@@ -71,17 +71,21 @@ const SignupForm: FunctionComponent = () => {
     setButtonMessage(message);
 
     axios
-      .post<UserApiResponse>("/api/user/signup", user)
-      .then(({ data: response }: AxiosResponse<UserApiResponse>) => {
-        setSubmitting(false);
+      .post<ApiResponse<{ user: IUserPublic }>>("/api/user/signup", user)
+      .then(
+        ({
+          data: response,
+        }: AxiosResponse<ApiResponse<{ user: IUserPublic }>>) => {
+          setSubmitting(false);
 
-        success = true;
-        message = "Inscription réussie !";
-        dispatch(addAlert({ message, success, ttl: 2000 }));
+          success = true;
+          message = "Inscription réussie !";
+          dispatch(addAlert({ message, success, ttl: 2000 }));
 
-        router.push("/");
-        dispatch(setUser(response.data?.user));
-      })
+          router.push("/");
+          dispatch(setUser(response.data?.user));
+        }
+      )
       .catch((error: AxiosError) => {
         setSubmitting(false);
 
