@@ -122,6 +122,7 @@ export const checkCredentials = async (user: IUserAuth): Promise<boolean> => {
 
     return bcrypt.compare(user.password, userDB.password);
   } catch (e) {
+    console.warn("[DB] Could not connect to database");
     return false;
   }
 };

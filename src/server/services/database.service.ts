@@ -1,4 +1,4 @@
-import { Db, DbOptions, MongoClient } from "mongodb";
+import { Db, MongoClient } from "mongodb";
 
 const uri = process.env.MONGODB_URI || "";
 
@@ -13,8 +13,7 @@ declare global {
 }
 
 let cachedClient: MongoClient = global.mongo;
-let cachedDb: ((dbName?: string, options?: DbOptions) => Db) | undefined =
-  global.mongo?.db;
+let cachedDb: Db | undefined = global.mongo?.db("TeatShare");
 
 /**
  * Connect to MongoDB client and our database
@@ -28,7 +27,7 @@ const connectToDatabase = async () => {
     cachedClient || (await MongoClient.connect(uri, {})));
   console.log("[DB] Opened new connection to database");
 
-  const db = (global.mongo.db = cachedDb || client.db);
+  const db = cachedDb || client.db("TeatShare");
 
   cachedClient = client;
   cachedDb = db;
@@ -38,7 +37,7 @@ const connectToDatabase = async () => {
 
 const getDatabase = async (): Promise<Db> => {
   const { db } = await connectToDatabase();
-  return db("TeatShare");
+  return db;
 };
 
 export { getDatabase };
