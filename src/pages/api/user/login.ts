@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { loginHandler } from "@handlers/user/login/login.handler";
 import routerMiddleware from "@middlewares/router.middleware";
 import { ApiResponse } from "@typing/api-response.interface";
+import { autoLoginHandler } from "@handlers/user/login/auto-login.handler";
 
 export default async (
   req: NextApiRequest,
@@ -9,6 +10,7 @@ export default async (
 ) => {
   const handlers = {
     POST: loginHandler,
+    GET: autoLoginHandler,
     // add here handlers for other methods
   };
 

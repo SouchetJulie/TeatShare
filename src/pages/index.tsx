@@ -1,28 +1,73 @@
 import Head from "next/head";
-import { FunctionComponent } from "react";
-import { selectAuthenticatedUser } from "@stores/user.store";
+import { FunctionComponent, useEffect, useState } from "react";
+import { selectIsAuthenticated } from "@stores/user.store";
 import { LessonList } from "@components/lessons/LessonList";
-import { ILesson } from "@typing/lesson-file.interface";
-import { GetStaticProps } from "next";
-import { getAllLessons } from "@services/lessons.service";
 import LandingPage from "@components/LandingPage/LandingPage";
-import { useAppSelector } from "@hooks/store-hook";
-
-interface Props {
-  lessons: ILesson[];
-}
+import { useAppDispatch, useAppSelector } from "@hooks/store-hook";
+import { ILesson } from "@typing/lesson-file.interface";
+import { ApiResponse } from "@typing/api-response.interface";
+import axios, { AxiosError, AxiosResponse } from "axios";
+import { addAlert } from "@stores/alert.store";
+import { getAxiosErrorMessage } from "../client/utils/get-axios-error.utils";
 
 /**
  * Home page.
  * @constructor
  */
-const Home: FunctionComponent<Props> = ({ lessons }) => {
-  const user = useAppSelector(selectAuthenticatedUser);
-  const component: JSX.Element = user ? (
+const Home: FunctionComponent = () => {
+  const isAuthenticated: boolean = useAppSelector(selectIsAuthenticated);
+  const dispatch = useAppDispatch();
+  const [lessons, setLessons] = useState<ILesson[]>([]);
+
+  useEffect(() => {
+    let isSubscribed = true;
+
+    if (isAuthenticated) {
+      axios
+        .get<ApiResponse<{ lessons: ILesson[] }>>("/api/lesson")
+        .then(
+          ({
+            data: response,
+          }: AxiosResponse<ApiResponse<{ lessons: ILesson[] }>>) => {
+            if (!response.success) {
+              dispatch(
+                addAlert({
+                  message: "Impossible de récupérer la liste des leçons",
+                  success: false,
+                  ttl: 3000,
+                })
+              );
+            } else if (isSubscribed && !!response.data) {
+              setLessons(response.data.lessons);
+            }
+          }
+        )
+        .catch((reason: AxiosError) => {
+          console.log(
+            `Erreur récupération des leçons`,
+            getAxiosErrorMessage(reason)
+          );
+          dispatch(
+            addAlert({
+              message: "Impossible de récupérer la liste des leçons",
+              success: false,
+              ttl: 3000,
+            })
+          );
+        });
+    }
+
+    return (): void => {
+      isSubscribed = false;
+    };
+  }, [setLessons, isAuthenticated]);
+
+  const component: JSX.Element = isAuthenticated ? (
     <LessonList lessons={lessons} />
   ) : (
     <LandingPage />
   );
+
   return (
     <>
       <Head>
@@ -33,27 +78,3 @@ const Home: FunctionComponent<Props> = ({ lessons }) => {
   );
 };
 export default Home;
-
-// @ts-ignore It is used by Next.js behind the scenes
-export const getStaticProps: GetStaticProps = async () => {
-  // TODO don't load the lessons when unauthenticated
-  const result = await getAllLessons();
-
-  if ("error" in result) {
-    return {
-      props: {
-        lessons: [],
-      },
-    };
-  }
-
-  const lessons = result.map(
-    (lesson: ILesson) => JSON.parse(JSON.stringify(lesson)) // so all complex types are guaranteed to be serializable
-  );
-
-  return {
-    props: {
-      lessons,
-    },
-  };
-};

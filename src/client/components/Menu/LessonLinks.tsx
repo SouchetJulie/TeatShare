@@ -55,9 +55,7 @@ const LessonLinks: FunctionComponent<Props> = ({ className = "" }: Props) => {
         overlay={popover}
         defaultShow={false}
       >
-        <Nav.Link>
-          <a className="bi bi-search">Recherche</a>
-        </Nav.Link>
+        <Nav.Link className="bi bi-search">Recherche</Nav.Link>
       </OverlayTrigger>
       <Nav.Link as={Link} href={"/lesson"} passHref>
         <a className="nav-link bi bi-file-richtext">Mes fiches de cours</a>
