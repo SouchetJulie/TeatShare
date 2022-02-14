@@ -13,7 +13,7 @@ declare global {
 }
 
 let cachedClient: MongoClient = global.mongo;
-let cachedDb: Db | undefined = global.mongo?.db("TeatShare");
+let cachedDb: Db | undefined = global.mongo?.db();
 
 /**
  * Connect to MongoDB client and our database
@@ -27,7 +27,7 @@ const connectToDatabase = async () => {
     cachedClient || (await MongoClient.connect(uri, {})));
   console.log("[DB] Opened new connection to database");
 
-  const db = cachedDb || client.db("TeatShare");
+  const db = cachedDb || client.db();
 
   cachedClient = client;
   cachedDb = db;
