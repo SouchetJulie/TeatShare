@@ -40,13 +40,8 @@ function App({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head>
-        <link
-          rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css"
-        />
-        <title>TeatShare</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-        <link rel="icon" href={"/favicon.ico"} />
+        <title>TeatShare</title>
       </Head>
       <Provider store={store}>
         <header>
