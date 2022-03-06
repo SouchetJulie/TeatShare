@@ -1,28 +1,43 @@
 import { ObjectId } from "bson";
 import { File } from "formidable";
 
-import { getDatabase } from "./database.service";
+import { Filter, getDatabase } from "./database.service";
 import { addLessonToUser, isUser } from "@services/users.service";
 import { ILesson, ILessonCreate } from "@typing/lesson-file.interface";
 import { IUserPublic } from "@typing/user.interface";
 import storageService from "@services/storage.service";
 import { cleanFileMetadata } from "@common/file.utils";
 
+const collection = (await getDatabase()).collection<ILesson>("LessonFile");
+// Create text index for later text search
+if (!collection.indexExists("title_text_subtitle_text")) {
+  void collection.createIndex(
+    {
+      title: "text",
+      subtitle: "text",
+      authorId: 1,
+    },
+    { default_language: "french" }
+  );
+}
+
 /**
- * Fetches all Lessons from database.
+ * Fetches all Lessons from database (optionally, with filters).
+ *
+ * @param {Filter<ILesson>} filters (optional)
  */
-export const getAllLessons = async () => {
-  try {
-    const collection = (await getDatabase()).collection<ILesson>("LessonFile");
-    return await collection.find({}).toArray();
-  } catch (e) {
-    return { error: e };
-  }
+export const getAllLessons = async (
+  filters?: Filter<ILesson>
+): Promise<ILesson[]> => {
+  const cursor = collection.find(filters);
+  const lessons: ILesson[] = await cursor.toArray();
+  // Free cursor resources
+  cursor.close();
+  return lessons;
 };
 
 export const getOneLesson = async (id: string) => {
   try {
-    const collection = (await getDatabase()).collection<ILesson>("LessonFile");
     const lesson = await collection.findOne({ _id: new ObjectId(id) });
 
     if (!lesson) {
@@ -81,14 +96,13 @@ export const createNewLesson = async (
       // set the pub. date if necessary
       publicationDate: uploadedLesson.isDraft ? undefined : new Date(),
       // foreign keys
-      authorId: user._id as ObjectId,
+      authorId: user._id,
       categoryIds: [],
       tagIds: [],
       commentIds: [],
       ...uploadedLesson,
     };
 
-    const collection = (await getDatabase()).collection<ILesson>("LessonFile");
     const result = await collection.insertOne(lesson);
 
     if (result.acknowledged) {

@@ -1,4 +1,13 @@
-import { Db, MongoClient } from "mongodb";
+import {
+  Condition,
+  Db,
+  Join,
+  MongoClient,
+  NestedPaths,
+  PropertyType,
+  RootFilterOperators,
+  WithId,
+} from "mongodb";
 
 const uri = process.env.MONGODB_URI;
 
@@ -31,5 +40,12 @@ const getDatabase = async (): Promise<Db> => {
   const { db } = await connectToDatabase();
   return db;
 };
+
+// Fix type for TypeScript
+export type Filter<TSchema> = {
+  [Property in Join<NestedPaths<WithId<TSchema>>, ".">]?: Condition<
+    PropertyType<WithId<TSchema>, Property>
+  >;
+} & RootFilterOperators<WithId<TSchema>>;
 
 export { getDatabase };

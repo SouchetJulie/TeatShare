@@ -3,12 +3,20 @@ import { ObjectId } from "bson";
 import { InsertOneResult } from "mongodb";
 
 import { createEmptyUser } from "@utils/create-empty-user";
-import { IUserAuth,IUserCreate, IUserDB, IUserPublic ,} from "@typing/user.interface";
+import {
+  IUserAuth,
+  IUserCreate,
+  IUserDB,
+  IUserPublic,
+} from "@typing/user.interface";
 import { getDatabase } from "./database.service";
+
+const collection = (await getDatabase()).collection<IUserDB>("User");
+// Create index for speeding up search
+collection.createIndex({ email: 1 });
 
 export const getAllUsers = async () => {
   try {
-    const collection = (await getDatabase()).collection<IUserDB>("User");
     const users = await collection.find({}).toArray();
     // remove password before sending it back
     // @ts-ignore
@@ -23,9 +31,8 @@ export const getUserByEmail = async (
   email: string
 ): Promise<IUserPublic | { error: any }> => {
   try {
-    const collection = (await getDatabase()).collection<IUserDB>("User");
     const user = await collection.findOne({ email: email });
-if (!user) {
+    if (!user) {
       return { error: `Utilisateur ${email} inconnu.` };
     }
     // remove password before sending it back
@@ -40,9 +47,8 @@ if (!user) {
 
 export const getOneUser = async (userId: string) => {
   try {
-    const collection = (await getDatabase()).collection<IUserDB>("User");
     const user = await collection.findOne({ _id: new ObjectId(userId) });
-if (!user) {
+    if (!user) {
       return { error: `Utilisateur n° ${userId} inconnu.` };
     }
 
@@ -62,7 +68,6 @@ export const createNewUser = async (
     if (!user.password || !user.email) {
       return { error: "Données manquantes." };
     }
-    const collection = (await getDatabase()).collection<IUserDB>("User");
 
     // Is email already taken?
     const foundInDB = await collection.findOne<IUserDB>({ email: user.email });
@@ -80,10 +85,10 @@ export const createNewUser = async (
       lastName: user.lastName,
       password: hashedPassword,
     };
-      // @ts-ignore
+    // @ts-ignore
     return await collection.insertOne(userDB);
   } catch (e) {
-    return { error: (e as Error).message};
+    return { error: (e as Error).message };
   }
 };
 
@@ -94,7 +99,6 @@ export const createNewUser = async (
  */
 export const checkCredentials = async (user: IUserAuth): Promise<boolean> => {
   try {
-    const collection = (await getDatabase()).collection<IUserDB>("User");
     const userDB = await collection.findOne<IUserDB>({
       email: user.email,
     });
@@ -124,7 +128,6 @@ export const addLessonToUser = async (
   user: IUserPublic,
   lessonId: ObjectId
 ) => {
-  const collection = (await getDatabase()).collection<IUserDB>("User");
   return collection.updateOne(
     { email: user.email },
     { $push: { lessonIds: lessonId } }
