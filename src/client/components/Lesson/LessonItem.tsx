@@ -1,21 +1,21 @@
-import React, { FunctionComponent, useEffect, useState } from "react";
+import React, {FunctionComponent, useEffect, useState} from "react";
 import axios from "axios";
 import Link from "next/link";
 import Card from "react-bootstrap/Card";
 import NavLink from "react-bootstrap/NavLink";
 
-import { useAppDispatch } from "@hooks/store-hook";
-import { addAlert } from "@stores/alert.store";
+import {useAppDispatch} from "@hooks/store-hook";
+import {addAlert} from "@stores/alert.store";
 import styles from "@styles/lesson-item.module.scss";
-import { ILesson } from "@typing/lesson-file.interface";
-import { IUserPublic } from "@typing/user.interface";
-import { createEmptyUser } from "@utils/create-empty-user";
+import {ILesson} from "@typing/lesson-file.interface";
+import {IUserPublic} from "@typing/user.interface";
+import {createEmptyUser} from "@utils/create-empty-user";
 
 interface Props {
   lesson: ILesson;
 }
 
-const LessonItem: FunctionComponent<Props> = ({ lesson }: Props) => {
+const LessonItem: FunctionComponent<Props> = ({lesson}: Props) => {
   const dispatch = useAppDispatch();
   const [author, setAuthor] = useState<IUserPublic>(createEmptyUser());
 
@@ -24,7 +24,7 @@ const LessonItem: FunctionComponent<Props> = ({ lesson }: Props) => {
 
     axios
       .get(`/api/user/${lesson.authorId}`)
-      .then(({ data }) => {
+      .then(({data}) => {
         if (isSubscribed) {
           if (data.success) {
             setAuthor(data.user);
@@ -52,6 +52,8 @@ const LessonItem: FunctionComponent<Props> = ({ lesson }: Props) => {
     };
   }, [setAuthor]);
 
+  const authorName = `${author.firstName} ${author.lastName}`.trim() || author.email;
+
   return (
     <Card className={styles.card}>
       <div>{/* badges */}</div>
@@ -67,7 +69,7 @@ const LessonItem: FunctionComponent<Props> = ({ lesson }: Props) => {
           <span className={styles.authorLink}>
             Écrit par{" "}
             <Link href={`/api/user/${lesson.authorId}`}>
-              {`${author.firstName} ${author.lastName}`}
+              {authorName}
             </Link>
           </span>
         </h6>

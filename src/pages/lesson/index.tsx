@@ -1,39 +1,48 @@
-import React, { FunctionComponent } from "react";
-import { LessonList } from "@components/lessons/LessonList";
+import axios, { AxiosResponse } from "axios";
+import React, { FunctionComponent, useEffect, useState } from "react";
+
+import { LessonList } from "@components/Lesson/LessonList";
+import { useAppDispatch } from "@hooks/store-hook";
 import { useLoginRedirect } from "@hooks/useLoginRedirect.hook";
-import { GetStaticProps } from "next";
-import { getAllLessons } from "@services/lessons.service";
+import { addAlert } from "@stores/alert.store";
+import { LessonsApiResponse } from "@typing/api-response.interface";
 import { ILesson } from "@typing/lesson-file.interface";
 
-// @ts-ignore It is used by Next.js behind the scenes
-export const getStaticProps: GetStaticProps = async () => {
-  const result = await getAllLessons();
-
-  if ("error" in result) {
-    return {
-      props: {
-        lessons: [],
-      },
-    };
-  }
-
-  const lessons = result.map(
-    (lesson: ILesson) => JSON.parse(JSON.stringify(lesson)) // so all complex types are guaranteed to be serializable
-  );
-
-  return {
-    props: {
-      lessons,
-    },
-  };
-};
-
-interface Props {
-  lessons: ILesson[];
-}
-
-const index: FunctionComponent<Props> = ({ lessons }) => {
+const index: FunctionComponent = () => {
   const user = useLoginRedirect();
+  const dispatch = useAppDispatch();
+  const [lessons, setLessons] = useState<ILesson[]>([]);
+
+  useEffect(() => {
+    let isSubscribed = true;
+
+    if (user) {
+      axios
+        .get<LessonsApiResponse>("/api/lesson")
+        .then(({ data }: AxiosResponse<LessonsApiResponse>) => {
+          if (!isSubscribed) {
+            return;
+          }
+
+          if (data.error) {
+            dispatch(
+              addAlert({
+                message: "Récupération des leçons échouée.",
+                success: false,
+              })
+            );
+            return;
+          }
+
+          // Fetch successful
+          setLessons(data.lessons);
+        });
+    }
+
+    return () => {
+      isSubscribed = false;
+    };
+  }, [setLessons]);
 
   return user ? <LessonList lessons={lessons} /> : <></>;
 };
