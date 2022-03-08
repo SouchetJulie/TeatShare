@@ -8,17 +8,6 @@ import { Filter } from "@services/database.service";
 type QueryEntry = [string, string | string[]];
 
 /**
- * Remove empty filters that would just raise an error.
- *
- * @param {Filter<ILesson>} filters Filters for a MongoDB query.
- */
-const removeEmptyFilters = (filters: Filter<ILesson>) => {
-  if (filters.$or.length === 0) {
-    delete filters.$or;
-  }
-};
-
-/**
  * Checks that the given value is actually a single string instead of an array of strings.
  *
  * @param {string | string[]} value Value read from request.
@@ -59,22 +48,14 @@ const lessonGetAllHandler = async (
     });
   }
 
-  const filters: Filter<ILesson> = { $or: [] }; // Initializes "$or" array for multiples choices
+  const filters: Filter<ILesson> = {};
 
   try {
     for (const [key, value] of query) {
       switch (key) {
         // Search by author id (multiple values are treated as "or")
         case "author":
-          if (Array.isArray(value)) {
-            filters.$or.push(
-              ...value.map((element: string) => ({
-                authorId: element,
-              }))
-            );
-          } else {
-            filters.authorId = value;
-          }
+          filters.authorId = { $in: toArray(value) };
           break;
 
         // Text search (in title and subtitle)
@@ -186,9 +167,6 @@ const lessonGetAllHandler = async (
           });
       }
     }
-
-    // Remove unnecessary filter
-    removeEmptyFilters(filters);
 
     // Read lessons from database & send result
     const lessons: ILesson[] = await getAllLessons(filters);
