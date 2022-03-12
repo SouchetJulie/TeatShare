@@ -24,6 +24,7 @@ export const useLoginRedirect = (): IUserPublic | undefined => {
         addAlert({
           message: "Il faut se connecter pour accéder à cette page.",
           success: false,
+          ttl: 3000,
         })
       );
     }
