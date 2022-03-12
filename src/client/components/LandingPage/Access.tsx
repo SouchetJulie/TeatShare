@@ -6,8 +6,8 @@ const Access = () => {
     <div className={styles.accessContainer}>
       <div className={styles.accessContent}>
         <h2 className={styles.accessTitle}>
-          En vous inscrivant, <br />
-          <span> vous aurez acces à</span>
+          En vous inscrivant, <br/>
+          <span> vous aurez accès à</span>
         </h2>
         <ul>
           <li>
@@ -18,7 +18,7 @@ const Access = () => {
             L’intégralité des cours de chaque section, du CP jusqu’au CM2.
           </li>
           <li>
-            D’enregistrer les cours qui vous intéresse dans votre bibliothèque
+            Enregistrer les cours qui vous intéressent dans votre bibliothèque
             personnelle.
           </li>
         </ul>
@@ -30,7 +30,7 @@ const Access = () => {
           </button>
         </div>
       </div>
-      <div className={styles.accessImgWrapper}></div>
+      <div className={styles.accessImgWrapper}/>
     </div>
   );
 };

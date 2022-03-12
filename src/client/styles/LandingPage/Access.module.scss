@@ -1,22 +1,22 @@
 @import "src/client/styles/variables";
 
 .accessContainer {
+  position: relative;
   width: 100%;
   height: auto;
   padding-top: 13%;
   padding-bottom: 13%;
-  position: relative;
 
   .accessContent {
     width: 27%;
     margin-left: 17%;
 
     .accessTitle {
-      margin-bottom: 5%;
-      color: $orange;
       font-size: 52px;
       font-weight: bold;
+      margin-bottom: 5%;
       margin-left: 2rem;
+      color: $orange;
 
       span {
         color: $bleu;
@@ -29,48 +29,49 @@
       list-style-position: outside;
 
       li {
-        width: 100%;
-        text-align: justify;
-        margin-bottom: 3%;
-        font-weight: bold;
-        color: $grey;
         font-size: 25px;
+        font-weight: bold;
+        width: 100%;
+        margin-bottom: 3%;
+        text-align: justify;
+        color: $grey;
       }
     }
 
     div {
-      width: 100%;
       display: flex;
       justify-content: center;
+      width: 100%;
 
       .accessButton {
-        border-radius: 40px;
-        color: $white;
-        border: none;
-        width: 271px;
-        height: 43px;
-        background: $orange;
         font-size: 24px;
         font-weight: bold;
-       a{
-         &:hover{
-           color: $white;
-         }
-       }
+        width: 271px;
+        height: 43px;
+        color: $white;
+        border: none;
+        border-radius: 40px;
+        background: $orange;
+
+        a {
+          &:hover {
+            color: $white;
+          }
+        }
       }
     }
   }
 
   .accessImgWrapper {
     position: absolute;
-    background-repeat: no-repeat;
-    right: 2%;
+    z-index: 1;
     top: 20%;
+    right: 2%;
     width: 40%;
     height: 100%;
     background-image: url("../../../../public/landingPage/phone2.png");
+    background-repeat: no-repeat;
     background-size: contain;
-    z-index: 1;
   }
 }
 
@@ -84,15 +85,15 @@
 
       ul {
         li {
-          margin-bottom: 8%;
           font-size: 20px;
+          margin-bottom: 8%;
         }
       }
     }
 
     .accessImgWrapper {
-      right: 5%;
       top: 20%;
+      right: 5%;
       width: 50%;
       height: 100%;
     }
@@ -106,15 +107,15 @@
     flex-wrap: wrap;
 
     .accessContent {
-      padding: 0;
-
       width: 70%;
+
       margin: auto;
+      padding: 0;
 
       .accessTitle {
         font-size: 30px;
-        margin-left: 0;
         margin-bottom: 10%;
+        margin-left: 0;
         text-align: center;
       }
 
@@ -122,24 +123,24 @@
         padding: 0;
 
         li {
-          margin-bottom: 8%;
           font-size: 20px;
+          margin-bottom: 8%;
+          margin-left: 0;
           list-style: none;
-          margin-left: 0px;
         }
       }
 
       div {
         .accessButton {
-          margin-bottom: 10%;
-          border-radius: 40px;
-          color: $white;
-          border: none;
-          width: 271px;
-          height: 43px;
-          background: $orange;
           font-size: 24px;
           font-weight: bold;
+          width: 271px;
+          height: 43px;
+          margin-bottom: 10%;
+          color: $white;
+          border: none;
+          border-radius: 40px;
+          background: $orange;
         }
       }
     }
@@ -147,8 +148,8 @@
     .accessImgWrapper {
       position: relative;
 
-      width: 70%;
       right: 0;
+      width: 70%;
       height: 200px;
       margin: auto;
 
