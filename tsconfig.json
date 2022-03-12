@@ -60,10 +60,9 @@
       "@utils/*": [
         "utils/*"
       ],
-      "@typing/*": [
+      "@typing/*": [ // aliased to typing to avoid @types keyword
         "types/*"
       ]
-      // aliased to typing to avoid @types keyword
     }
   },
   "include": [
