@@ -2,7 +2,7 @@ import React, { FunctionComponent } from "react";
 import Nav from "react-bootstrap/Nav";
 import Badge from "react-bootstrap/Badge";
 
-import styles from "@styles/Menu/navbar.module.scss";
+import styles from "@styles/menu/navbar.module.scss";
 import { EGrade } from "@typing/grade.enum";
 import Link from "next/link";
 

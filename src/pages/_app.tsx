@@ -2,9 +2,9 @@ import { AppProps } from "next/app";
 import Head from "next/head";
 import { Provider } from "react-redux";
 
-import Alert from "@components/AlertComponent";
-import NavBar from "@components/Menu/NavBar";
-import SideBar from "@components/Menu/SideBar";
+import Alert from "@components/ui/AlertComponent";
+import NavBar from "@components/menu/NavBar";
+import SideBar from "@components/menu/SideBar";
 import { store } from "@stores/store";
 import { IAlert, selectAlerts } from "@stores/alert.store";
 import "@styles/globals.scss";

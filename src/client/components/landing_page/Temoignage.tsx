@@ -1,4 +1,4 @@
-import styles from "../../styles/LandingPage/Temoignage.module.scss";
+import styles from "../../styles/landing_page/Temoignage.module.scss";
 import Image from "next/image";
 import guillemetDown from "../../../../public/landingPage/guillemetsDown.png";
 import guillemetUp from "../../../../public/landingPage/guillemetsUp.png";

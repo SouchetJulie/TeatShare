@@ -6,7 +6,7 @@ import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import Button from "react-bootstrap/Button";
 
-import styles from "@styles/Menu/navbar.module.scss";
+import styles from "@styles/menu/navbar.module.scss";
 import Link from "next/link";
 import { useRouter } from "next/router";
 

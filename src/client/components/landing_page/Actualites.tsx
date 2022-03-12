@@ -1,9 +1,9 @@
-import styles from "../../styles/LandingPage/Actualites.module.scss";
+import styles from "../../styles/landing_page/Actualites.module.scss";
 import Link from "next/link";
-import cardData from "../../../FakeDatas/LandingPage.cards.json";
+import cardData from "../../../fake_data/LandingPage.cards.json";
 import LandingCard from "./LandingCard";
 import Masonry from "react-masonry-css";
-import { ILandingPageCardInterface } from "@typing/ILandingPageCard.interface";
+import { ILandingPageCardInterface } from "@typing/landing-page-card.interface";
 
 type LandingCardData = Pick<
   ILandingPageCardInterface,

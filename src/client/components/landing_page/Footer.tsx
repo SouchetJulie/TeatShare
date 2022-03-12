@@ -4,7 +4,7 @@ import Link from "next/link";
 import logo from "@public/logos/name.png";
 import insta from "@socialIcons/insta.png";
 import twitter from "@socialIcons/twitter.png";
-import styles from "@styles/LandingPage/Footer.module.scss";
+import styles from "@styles/landing_page/Footer.module.scss";
 
 const Footer = () => {
   return (

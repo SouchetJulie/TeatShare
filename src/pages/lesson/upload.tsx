@@ -12,7 +12,7 @@ import { useLoginRedirect } from "@hooks/login-redirect.hook";
 import { addAlert } from "@stores/alert.store";
 
 import { ResourceApiResponse } from "@typing/api-response.interface";
-import styles from "@styles/Lesson/upload.module.scss";
+import styles from "@styles/lesson/upload.module.scss";
 import { getAxiosErrorMessage } from "../../client/utils/get-axios-error.utils";
 
 const requiredFields = ["title", "file"];

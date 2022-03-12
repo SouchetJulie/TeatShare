@@ -1,5 +1,5 @@
 import { FunctionComponent } from "react";
-import styles from "../../styles/LandingPage/LandingPage.module.scss";
+import styles from "../../styles/landing_page/LandingPage.module.scss";
 import Accueil from "./Accueil";
 import Access from "./Access";
 import Temoignage from "./Temoignage";

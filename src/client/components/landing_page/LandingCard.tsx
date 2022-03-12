@@ -1,8 +1,8 @@
 import { FunctionComponent } from "react";
-import styles from "../../styles/LandingPage/Card.module.scss";
+import styles from "../../styles/landing_page/Card.module.scss";
 import Link from "next/link";
 import Image from "next/image";
-import { ILandingPageCardInterface } from "@typing/ILandingPageCard.interface";
+import { ILandingPageCardInterface } from "@typing/landing-page-card.interface";
 
 import img1 from "@imgCours/cours1.png";
 import img2 from "@imgCours/cours2.png";

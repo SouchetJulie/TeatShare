@@ -6,7 +6,7 @@ import {
 } from "react";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import styles from "@styles/Auth/Login.Component.module.scss";
+import styles from "@styles/auth/Login.Component.module.scss";
 import Link from "next/link";
 import { Button, Form } from "react-bootstrap";
 import axios, { AxiosResponse } from "axios";

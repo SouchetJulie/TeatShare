@@ -1,6 +1,6 @@
 import logo from "../../../../public/logos/name.png";
 import Image from "next/image";
-import styles from "../../styles/LandingPage/NavBar.module.scss";
+import styles from "../../styles/landing_page/NavBar.module.scss";
 import Link from "next/link";
 
 const NavBar = (): JSX.Element => {

@@ -12,7 +12,7 @@ import * as yup from "yup";
 import { useAppDispatch } from "@hooks/store-hook";
 import { addAlert } from "@stores/alert.store";
 import { setUser } from "@stores/user.store";
-import styles from "@styles/Auth/Login.Component.module.scss";
+import styles from "@styles/auth/Login.Component.module.scss";
 import { ApiResponse } from "@typing/api-response.interface";
 import { IUserCreate, IUserPublic } from "@typing/user.interface";
 import { getAxiosErrorMessage } from "../../utils/get-axios-error.utils";

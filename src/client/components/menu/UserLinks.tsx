@@ -11,7 +11,7 @@ import Dropdown from "react-bootstrap/Dropdown";
 import Nav from "react-bootstrap/Nav";
 import Link from "next/link";
 
-import styles from "@styles/Menu/navbar.module.scss";
+import styles from "@styles/menu/navbar.module.scss";
 import { IUserPublic } from "@typing/user.interface";
 import { useLogout } from "@hooks/logout.hook";
 import { NavDropdown } from "react-bootstrap";

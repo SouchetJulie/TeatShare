@@ -55,6 +55,9 @@ const LessonItem: FunctionComponent<Props> = ({ lesson }: Props) => {
     };
   }, [setAuthor]);
 
+  const authorName =
+    `${author.firstName} ${author.lastName}`.trim() || author.email;
+
   return (
     <Card className={styles.card}>
       <div>{/* badges */}</div>
@@ -69,9 +72,7 @@ const LessonItem: FunctionComponent<Props> = ({ lesson }: Props) => {
           <span>{/* hashtags */}</span>
           <span className={styles.authorLink}>
             Écrit par{" "}
-            <Link href={`/api/user/${lesson.authorId}`}>
-              {`${author.firstName} ${author.lastName}`}
-            </Link>
+            <Link href={`/api/user/${lesson.authorId}`}>{authorName}</Link>
           </span>
         </h6>
         {lesson.subtitle && (

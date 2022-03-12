@@ -1,5 +1,5 @@
 import Link from "next/link";
-import styles from "../../styles/LandingPage/Access.module.scss";
+import styles from "../../styles/landing_page/Access.module.scss";
 
 const Access = () => {
   return (
