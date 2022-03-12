@@ -8,7 +8,7 @@ import { ILesson } from "@typing/lesson-file.interface";
 import { ApiResponse } from "@typing/api-response.interface";
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { addAlert } from "@stores/alert.store";
-import { getAxiosErrorMessage } from "../client/utils/get-axios-error.utils";
+import { getAxiosErrorMessage } from "../client_TORENAME/utils/get-axios-error.utils";
 
 /**
  * Home page.

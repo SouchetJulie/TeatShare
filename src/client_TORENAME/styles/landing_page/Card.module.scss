@@ -1,12 +1,12 @@
-@import "src/client/styles/variables";
+@import "../../styles/variables";
 
 .cardContainer {
+  overflow-x: hidden;
   width: 100%;
   height: auto;
+  margin: 10% 0;
   border-radius: 15px;
   box-shadow: 10px 10px 50px 4px $greyc;
-  margin: 10% 0;
-  overflow-x: hidden;
 
   .cardImg {
     width: 100%;
@@ -14,23 +14,23 @@
   }
 
   .thematic {
+    font-size: calc(100% - 2px);
+    font-weight: bold;
+    display: inline-flex;
     width: 100%;
     margin: 5% 5%;
-    display: inline-flex;
     color: $white;
-    font-weight: bold;
-    font-size: calc(100% - 2px);
 
     .matiere {
       width: 30%;
-      background-color: $bleu;
-      border-radius: 12px;
       text-align: center;
+      border-radius: 12px;
+      background-color: $bleu;
     }
 
     .course {
-      margin-left: 5%;
       width: 30%;
+      margin-left: 5%;
       text-align: center;
       border-radius: 12px;
       background-color: $orange;
@@ -38,14 +38,14 @@
   }
 
   .cardDate {
-    margin: 2% 5%;
     display: inline-flex;
     width: 100%;
+    margin: 2% 5%;
 
     p {
+      font-weight: bold;
       margin-bottom: 0;
       margin-left: 1%;
-      font-weight: bold;
     }
   }
 
@@ -53,23 +53,23 @@
     margin: 2% 5%;
 
     p {
-      font-weight: 600;
       font-size: 30px;
+      font-weight: 600;
     }
   }
 
   .landingCardbtn {
-    width: 60%;
-    padding: 2% 0px 2% 0px;
-    text-align: center;
-    background-color: $white;
-    border: 3px solid $orange;
-    border-radius: 40px;
-    margin: 15% auto 5%;
-    display: block;
     font-size: 150%;
     font-weight: bolder;
+    display: block;
+    width: 60%;
+    margin: 15% auto 5%;
+    padding: 2% 0px 2% 0px;
+    text-align: center;
     color: $orange;
+    border: 3px solid $orange;
+    border-radius: 40px;
+    background-color: $white;
     &:hover {
       color: $orange;
     }
@@ -90,8 +90,8 @@
       margin: 2% 5%;
 
       p {
-        font-weight: 600;
         font-size: 30px;
+        font-weight: 600;
       }
     }
   }

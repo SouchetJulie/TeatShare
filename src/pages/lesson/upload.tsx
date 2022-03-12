@@ -13,7 +13,7 @@ import { addAlert } from "@stores/alert.store";
 
 import { ResourceApiResponse } from "@typing/api-response.interface";
 import styles from "@styles/lesson/upload.module.scss";
-import { getAxiosErrorMessage } from "../../client/utils/get-axios-error.utils";
+import { getAxiosErrorMessage } from "../../client_TORENAME/utils/get-axios-error.utils";
 
 const requiredFields = ["title", "file"];
 

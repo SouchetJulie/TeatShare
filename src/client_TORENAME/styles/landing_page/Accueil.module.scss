@@ -1,4 +1,4 @@
-@import "src/client/styles/variables";
+@import "../../styles/variables";
 
 .accueil_container {
   width: 100%;
@@ -6,39 +6,39 @@
   background-color: $white;
 
   .bloc1 {
+    z-index: 0;
     width: 100%;
     height: 90vh;
     background-image: url("../../../../public/landingPage/background.png");
     background-repeat: no-repeat;
-    background-size: cover;
     background-attachment: fixed;
-    z-index: 0;
+    background-size: cover;
 
     .block1Content {
-      color: $white;
       margin: 0 0 0 5%;
+      color: $white;
 
       h1 {
-        padding-top: 16%;
-        margin-bottom: 15px;
         font-size: 70px;
+        margin-bottom: 15px;
+        padding-top: 16%;
         text-align: left;
       }
 
       p {
-        margin-bottom: 30px;
         font-size: 35px;
+        margin-bottom: 30px;
       }
 
       button {
-        border-radius: 40px;
-        color: $white;
-        border: none;
-        width: 350px;
-        height: 50px;
-        background: $orange;
         font-size: 20px;
         font-weight: bold;
+        width: 350px;
+        height: 50px;
+        color: $white;
+        border: none;
+        border-radius: 40px;
+        background: $orange;
 
         .connexion:hover {
           color: white;
@@ -48,90 +48,90 @@
   }
 
   .bloc2 {
-    width: 105%;
-    background-color: $orange;
-    transform: rotate(3deg);
-    transform-origin: 0% 0%;
-    margin-top: -6%;
     overflow-x: hidden;
     overflow-y: hidden;
+    width: 105%;
+    margin-top: -6%;
     padding: 5% 0 5% 0;
+    transform: rotate(3deg);
+    transform-origin: 0% 0%;
+    background-color: $orange;
 
     .block2Content {
-      overflow: hidden;
       display: flex;
+      overflow: hidden;
       width: 50%;
 
       // this padding fix the box border cutted
-      padding-top: 1%;
       margin: auto auto auto auto;
+      padding-top: 1%;
     }
 
     .leftSide {
       width: 45%;
-      transform: rotate(-6deg);
       margin: auto 1% 0 auto;
+      transform: rotate(-6deg);
 
       .imessage {
-        background-color: #fff;
-        border: 1px solid #e5e5ea;
-        border-radius: 25px;
         display: flex;
         flex-direction: column;
         max-width: 600px;
-        padding: 0.5rem 1.5rem;
         margin-bottom: 4%;
+        padding: 0.5rem 1.5rem;
+        border: 1px solid #e5e5ea;
+        border-radius: 25px;
+        background-color: #fff;
 
         .queue {
-          clip-path: ellipse(16px 16px at 1% 2%);
-          background: $white;
-          width: 50px;
-          height: 50px;
-          transform: scaleX(-100%);
           position: absolute;
           right: 14%;
           bottom: 22%;
+          width: 50px;
+          height: 50px;
+          transform: scaleX(-100%);
+          background: $white;
+          clip-path: ellipse(16px 16px at 1% 2%);
         }
 
         .fromMe {
           font-size: 25px;
-          background-color: $white;
-          color: $orange;
-          text-align: center;
           font-weight: bold;
           margin-bottom: 0;
+          text-align: center;
+          color: $orange;
+          background-color: $white;
         }
       }
 
       h2 {
-        color: $white;
         font-size: 50px;
         text-align: center;
+        color: $white;
       }
     }
 
     .rightSide {
       width: 45%;
-      transform: rotate(-1deg);
       margin: 0% auto auto auto;
+      transform: rotate(-1deg);
 
       .imessage {
-        background-color: #fff;
-        border: 1px solid #e5e5ea;
-        border-radius: 25px;
         display: flex;
         flex-direction: column;
         max-width: 600px;
-        padding: 0.5rem 1.5rem;
         margin-top: 4%;
+        padding: 0.5rem 1.5rem;
+        border: 1px solid #e5e5ea;
+        border-radius: 25px;
+        background-color: #fff;
 
         .fromMe {
           font-size: 25px;
-          background-color: $white;
-          color: $orange;
-          text-align: center;
           font-weight: bold;
           margin-bottom: 0;
+          text-align: center;
+          color: $orange;
+          background-color: $white;
         }
       }
 
@@ -143,70 +143,70 @@
     }
 
     .bottomSide {
-      transform: rotate(-3deg);
       width: 30%;
       height: 100%;
       margin: 0 auto;
+      transform: rotate(-3deg);
 
       p {
-        width: 100%;
-        height: auto;
         font-size: 40px;
         font-weight: bold;
-        color: $white;
-        text-align: center;
+        width: 100%;
+        height: auto;
         margin: 6% 0 4% 0;
+        text-align: center;
+        color: $white;
       }
 
       .choice {
+        display: flex;
+        overflow-x: hidden;
         width: 100%;
         height: 75px;
-        display: flex;
         border-radius: 20px;
-        overflow-x: hidden;
 
         .yesPart {
           display: flex;
-          background-color: $white;
-          width: 50%;
           align-items: center;
+          width: 50%;
+          background-color: $white;
 
           p {
-            margin: 0;
             font-size: 30px;
             font-weight: bold;
+            margin: 0;
             color: $orange;
           }
         }
 
         .noPart {
           display: flex;
-          background-color: $bleu;
-          width: 50%;
           align-items: center;
+          width: 50%;
+          background-color: $bleu;
 
           p {
-            margin: 0;
             font-size: 30px;
             font-weight: bold;
+            margin: 0;
             color: $white;
           }
         }
       }
 
       .callToAction {
-        width: 70%;
         display: flex;
-        margin: 5% auto auto auto;
-        background-color: $orange;
-        border-radius: 30px;
-        border: 2px solid $white;
         justify-content: center;
+        width: 70%;
+        margin: 5% auto auto auto;
+        border: 2px solid $white;
+        border-radius: 30px;
+        background-color: $orange;
 
         .participate {
+          font-size: 20px;
           padding: 10px;
           color: $white;
-          font-size: 20px;
         }
       }
     }
@@ -281,35 +281,35 @@
         }
 
         .choice {
-          margin: auto;
           width: 60%;
           height: 45px;
+          margin: auto;
           border-radius: 15px;
 
           .yesPart {
             display: flex;
-            background-color: $white;
-            width: 50%;
             align-items: center;
+            width: 50%;
+            background-color: $white;
 
             p {
-              margin: 0;
               font-size: 20px;
               font-weight: bold;
+              margin: 0;
               color: $orange;
             }
           }
 
           .noPart {
             display: flex;
-            background-color: $bleu;
-            width: 50%;
             align-items: center;
+            width: 50%;
+            background-color: $bleu;
 
             p {
-              margin: 0;
               font-size: 20px;
               font-weight: bold;
+              margin: 0;
               color: $white;
             }
           }
@@ -334,12 +334,12 @@
     background-color: $white;
 
     .bloc1 {
-      height: 90vh;
       display: flex;
+      height: 90vh;
 
       .block1Content {
-        color: $white;
         margin: auto;
+        color: $white;
 
         h1 {
           font-size: 32px;
@@ -398,70 +398,70 @@
       }
 
       .bottomSide {
-        transform: rotate(-3deg);
         width: 70%;
         height: 100%;
         margin: 0 auto;
+        transform: rotate(-3deg);
 
         p {
-          width: 100%;
-          height: auto;
           font-size: 32px;
           font-weight: bold;
-          color: $white;
-          text-align: center;
+          width: 100%;
+          height: auto;
           margin: 6% 0 4% 0;
+          text-align: center;
+          color: $white;
         }
 
         .choice {
+          display: flex;
+          overflow-x: hidden;
           width: 100%;
           height: 50px;
-          display: flex;
           border-radius: 15px;
-          overflow-x: hidden;
 
           .yesPart {
             display: flex;
-            background-color: $white;
-            width: 50%;
             align-items: center;
+            width: 50%;
+            background-color: $white;
 
             p {
-              margin: 0;
               font-size: 27px;
               font-weight: bold;
+              margin: 0;
               color: $orange;
             }
           }
 
           .noPart {
             display: flex;
-            background-color: $bleu;
-            width: 50%;
             align-items: center;
+            width: 50%;
+            background-color: $bleu;
 
             p {
-              margin: 0;
               font-size: 27px;
               font-weight: bold;
+              margin: 0;
               color: $white;
             }
           }
         }
 
         .callToAction {
-          width: 70%;
           display: flex;
-          margin: 5% auto auto auto;
-          background-color: $orange;
-          border-radius: 30px;
-          border: 2px solid $white;
           justify-content: center;
+          width: 70%;
+          margin: 5% auto auto auto;
+          border: 2px solid $white;
+          border-radius: 30px;
+          background-color: $orange;
 
           .participate {
+            font-size: 20px;
             padding: 10px;
             color: $white;
-            font-size: 20px;
           }
         }
       }
