@@ -18,17 +18,15 @@ import { getAxiosErrorMessage } from "../../client/utils/get-axios-error.utils";
 const requiredFields = ["title", "file"];
 
 const upload: FunctionComponent = () => {
-  // Route guard
-  const user = useLoginRedirect();
+  const dispatch = useAppDispatch();
+  const user = useLoginRedirect(); // Route guard
+
+  const [isDraft, setIsDraft] = useState(false);
+  const [validated, setValidated] = useState(false);
 
   if (!user) {
     return <></>;
   }
-
-  const dispatch = useAppDispatch();
-
-  const [isDraft, setIsDraft] = useState(false);
-  const [validated, setValidated] = useState(false);
 
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();

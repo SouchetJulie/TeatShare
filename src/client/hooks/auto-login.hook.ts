@@ -15,7 +15,7 @@ export const useAutoLogin = () => {
     // If already logged in, redirect away from auth pages
     if (currentUser) {
       if (router.route === "/user/login" || router.route === "/user/signup") {
-        router.push("/");
+        router.back();
       }
       return;
     }
