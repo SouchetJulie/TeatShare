@@ -1,49 +1,22 @@
-import React, {
-  forwardRef,
-  FunctionComponent,
-  MouseEventHandler,
-  ReactNode,
-  RefObject,
-  useEffect,
-  useState,
-} from "react";
+import React, {FunctionComponent, useEffect, useState,} from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 import Nav from "react-bootstrap/Nav";
 import Link from "next/link";
 
 import styles from "@styles/Menu/navbar.module.scss";
-import { IUserPublic } from "@typing/user.interface";
-import { useLogout } from "@hooks/useLogout.hook";
-import { NavDropdown } from "react-bootstrap";
+import {IUserPublic} from "@typing/user.interface";
+import {useLogout} from "@hooks/useLogout.hook";
+import {NavDropdown} from "react-bootstrap";
 
 interface Props {
   user?: IUserPublic;
 }
 
-// eslint-disable-next-line react/display-name,react/prop-types
-const UserDropdownToggle = forwardRef(
-  (
-    { children, onClick }: { children?: ReactNode; onClick: MouseEventHandler },
-    ref
-  ) => (
-    <a
-      href=""
-      ref={ref as RefObject<HTMLAnchorElement>}
-      onClick={(e) => {
-        e.preventDefault();
-        onClick(e);
-      }}
-    >
-      {children}
-    </a>
-  )
-);
-
 /**
  * Links relative to the current user.
  * @constructor
  */
-const UserLinks: FunctionComponent<Props> = ({ user }: Props) => {
+const UserLinks: FunctionComponent<Props> = ({user}: Props) => {
   const logout = useLogout();
   const [username, setUsername] = useState("");
 
@@ -67,11 +40,11 @@ const UserLinks: FunctionComponent<Props> = ({ user }: Props) => {
       <NavDropdown.Item>
         <Link href={"/user"}>Mon profil</Link>
       </NavDropdown.Item>
-      <Dropdown.Divider />
+      <Dropdown.Divider/>
       <NavDropdown.Item>
         <Link href={"/settings"}>Paramètres</Link>
       </NavDropdown.Item>
-      <Dropdown.Divider />
+      <Dropdown.Divider/>
       <NavDropdown.Item onClick={logout}>Déconnexion</NavDropdown.Item>
     </NavDropdown>
   ) : (

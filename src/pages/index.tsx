@@ -1,22 +1,55 @@
 import Head from "next/head";
-import { FunctionComponent } from "react";
+import { FunctionComponent, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { selectAuthenticatedUser } from "@stores/user.store";
-import { LessonList } from "@components/lessons/LessonList";
+import { LessonList } from "@components/Lesson/LessonList";
 import { ILesson } from "@typing/lesson-file.interface";
-import { GetStaticProps } from "next";
-import { getAllLessons } from "@services/lessons.service";
 import LandingPage from "@components/LandingPage/LandingPage";
+import { useAppDispatch } from "@hooks/store-hook";
+import axios, { AxiosResponse } from "axios";
+import { LessonsApiResponse } from "@typing/api-response.interface";
+import { addAlert } from "@stores/alert.store";
 
-interface Props {
-  lessons: ILesson[];
-}
 /**
  * Home page.
  * @constructor
  */
-const Home: FunctionComponent<Props> = ({ lessons }) => {
+const Home: FunctionComponent = () => {
   const user = useSelector(selectAuthenticatedUser);
+  const dispatch = useAppDispatch();
+  const [lessons, setLessons] = useState<ILesson[]>([]);
+
+  useEffect(() => {
+    let isSubscribed = true;
+
+    if (user) {
+      axios
+        .get<LessonsApiResponse>("/api/lesson")
+        .then(({ data }: AxiosResponse<LessonsApiResponse>) => {
+          if (!isSubscribed) {
+            return;
+          }
+
+          if (data.error) {
+            dispatch(
+              addAlert({
+                message: "Récupération des leçons échouée.",
+                success: false,
+              })
+            );
+            return;
+          }
+
+          // Fetch successful
+          setLessons(data.lessons);
+        });
+    }
+
+    return () => {
+      isSubscribed = false;
+    };
+  }, [setLessons]);
+
   const component: JSX.Element = user ? (
     <LessonList lessons={lessons} />
   ) : (
@@ -31,28 +64,5 @@ const Home: FunctionComponent<Props> = ({ lessons }) => {
     </>
   );
 };
+
 export default Home;
-
-// @ts-ignore It is used by Next.js behind the scenes
-export const getStaticProps: GetStaticProps = async () => {
-  // TODO don't load the lessons when unauthenticated
-  const result = await getAllLessons();
-
-  if ("error" in result) {
-    return {
-      props: {
-        lessons: [],
-      },
-    };
-  }
-
-  const lessons = result.map(
-    (lesson: ILesson) => JSON.parse(JSON.stringify(lesson)) // so all complex types are guaranteed to be serializable
-  );
-
-  return {
-    props: {
-      lessons,
-    },
-  };
-};

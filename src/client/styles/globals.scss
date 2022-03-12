@@ -9,7 +9,7 @@ $enable-negative-margins: true;
 
 // adding new colors
 $custom-colors: (
-  "primary-light": $primary-light
+        "primary-light": $primary-light
 );
 
 $theme-colors: map-merge($theme-colors, $custom-colors);
@@ -58,6 +58,7 @@ h1 {
   text-align: center;
   color: white;
 }
+
 .round-button {
   margin: 5px;
   padding-right: 40px;
@@ -68,6 +69,7 @@ h1 {
 .onTop {
   z-index: 2000;
 }
+
 .cardContainer {
   display: block;
   width: 400px;

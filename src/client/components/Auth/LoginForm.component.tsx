@@ -1,4 +1,4 @@
-import {FormEventHandler, FunctionComponent, useEffect, useState,} from "react";
+import {FormEventHandler, FunctionComponent, useState,} from "react";
 import {faTimes} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import styles from "@styles/Auth/Login.Component.module.scss";
@@ -73,11 +73,6 @@ const LoginForm: FunctionComponent = () => {
       dispatch(addAlert({message, success, ttl: 2000}));
     }
   };
-
-  useEffect(() => {
-    // Prefetch the dashboard page
-    router.prefetch("/");
-  }, []);
 
   return (
     <div className={styles.cardWrapper}>

@@ -1,24 +1,27 @@
 module.exports = {
-  env: {
-    browser: true,
-    es2021: true,
-  },
-  extends: ["plugin:react/recommended", "google", "prettier"],
-  parser: "@typescript-eslint/parser",
-  parserOptions: {
-    ecmaFeatures: {
-      jsx: true,
+    env: {
+        browser: true,
+        es2021: true,
     },
-    ecmaVersion: 12,
-    sourceType: "module",
-  },
-  plugins: ["react", "@typescript-eslint"],
-  rules: {
-    "react/react-in-jsx-scope": 0,
-  },
-  settings: {
-    react: {
-      version: "detect",
+    extends: [
+        "google",
+        "prettier",
+        "plugin:@next/next/recommended"
+    ],
+    parser: "@typescript-eslint/parser",
+    parserOptions: {
+        ecmaFeatures: {
+            jsx: true,
+        },
+        ecmaVersion: 12,
+        sourceType: "module",
     },
-  },
+    plugins: [
+        "@typescript-eslint"
+    ],
+    settings: {
+        react: {
+            version: "detect",
+        },
+    },
 };

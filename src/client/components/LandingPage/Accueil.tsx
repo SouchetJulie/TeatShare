@@ -29,7 +29,7 @@ const Accueil = () => {
               </p>
               <div className={styles.queue}/>
             </div>
-            <h2>Non, Facile!</h2>
+            <h2>Non, facile!</h2>
           </div>
 
           <div className={styles.rightSide}>
@@ -43,7 +43,7 @@ const Accueil = () => {
           </div>
         </div>
         <div className={styles.bottomSide}>
-          <p>Le cours vous a t&apos;il aidé ?</p>
+          <p>Le cours vous a-t&apos;il aidé ?</p>
           <div className={styles.choice}>
             <div className={styles.yesPart}>
               <p>OUI</p>

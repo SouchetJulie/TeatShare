@@ -1,4 +1,5 @@
 import {IUserPublic} from "@typing/user.interface";
+import {ILesson} from "@typing/lesson-file.interface";
 
 export interface ApiResponse<DataType = unknown> {
   success: boolean;
@@ -6,8 +7,12 @@ export interface ApiResponse<DataType = unknown> {
   data?: DataType
 }
 
-export interface ResourceApiResponse extends ApiResponse {
+export interface SingleResourceApiResponse extends ApiResponse {
   id?: string;
 }
 
 export type UserApiResponse = ApiResponse<{ user: IUserPublic }>
+
+export interface LessonsApiResponse extends ApiResponse {
+  lessons: ILesson[];
+}

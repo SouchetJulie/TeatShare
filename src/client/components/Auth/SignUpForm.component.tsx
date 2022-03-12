@@ -4,7 +4,7 @@ import {faTimes} from "@fortawesome/free-solid-svg-icons/faTimes";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {useRouter} from "next/router";
 import Link from "next/link";
-import {FunctionComponent, useEffect, useState} from "react";
+import {FunctionComponent, useState} from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
@@ -91,11 +91,6 @@ const SignupForm: FunctionComponent = () => {
         dispatch(addAlert({message, success}));
       });
   };
-
-  useEffect(() => {
-    // Prefetch the dashboard page
-    router.prefetch("/");
-  }, []);
 
   return (
     <Formik
