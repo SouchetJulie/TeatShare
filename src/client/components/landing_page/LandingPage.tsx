@@ -4,7 +4,6 @@ import Accueil from "./Accueil";
 import Access from "./Access";
 import Temoignage from "./Temoignage";
 import Actualites from "./Actualites";
-import Footer from "./Footer";
 
 const LandingPage: FunctionComponent = () => (
   <div className={styles.container}>
@@ -12,7 +11,6 @@ const LandingPage: FunctionComponent = () => (
     <Access />
     <Temoignage />
     <Actualites />
-    <Footer />
   </div>
 );
 

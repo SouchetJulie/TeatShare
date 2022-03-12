@@ -9,7 +9,7 @@ const SideBar: FunctionComponent = (): JSX.Element => {
   const isAuthenticated = useAppSelector(selectIsAuthenticated);
   const style: string = isAuthenticated ? styles.sidebar : "";
   return (
-    <Nav className={style} aria-hidden hidden={!isAuthenticated}>
+    <Nav as="nav" className={style} aria-hidden hidden={!isAuthenticated}>
       <LessonLinks />
     </Nav>
   );

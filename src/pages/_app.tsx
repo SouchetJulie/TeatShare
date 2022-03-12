@@ -2,9 +2,10 @@ import { AppProps } from "next/app";
 import Head from "next/head";
 import { Provider } from "react-redux";
 
-import Alert from "@components/ui/AlertComponent";
+import Footer from "@components/menu/Footer";
 import NavBar from "@components/menu/NavBar";
 import SideBar from "@components/menu/SideBar";
+import Alert from "@components/ui/AlertComponent";
 import { store } from "@stores/store";
 import { IAlert, selectAlerts } from "@stores/alert.store";
 import "@styles/globals.scss";
@@ -13,7 +14,7 @@ import { useAppSelector } from "@hooks/store-hook";
 import { useAutoLogin } from "@hooks/auto-login.hook";
 
 /**
- * Main application component: contains the parts that are in common for the whole app.
+ * Main application component: contains the parts that are shared for the whole app.
  * @constructor
  */
 const App = ({ Component, pageProps }: AppProps) => {
@@ -36,13 +37,8 @@ const App = ({ Component, pageProps }: AppProps) => {
   return (
     <>
       <Head>
-        <link
-          rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css"
-        />
         <title>TeatShare</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-        <link rel="icon" href={"/favicon.ico"} />
       </Head>
       <header>
         <NavBar />
@@ -54,10 +50,16 @@ const App = ({ Component, pageProps }: AppProps) => {
       <div className="d-flex flex-column position-fixed bottom-0 w-100 onTop">
         {alerts}
       </div>
+      <Footer />
     </>
   );
 };
 
+/**
+ * Wrapper for the app for accessing Redux store
+ * @param {AppProps} props
+ * @return {JSX.Element}
+ */
 const _app = ({ Component, pageProps, router }: AppProps): JSX.Element => (
   <Provider store={store}>
     <App pageProps={pageProps} Component={Component} router={router} />

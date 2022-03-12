@@ -1,11 +1,11 @@
 @import "src/client/styles/variables";
 
 .landing_footer_container {
-  width: 100%;
-  height: auto;
-  background-color: $grbk;
-  color: white;
   font-weight: bold;
+  width: 100vw;
+  height: auto;
+  color: white;
+  background-color: $grbk;
 }
 
 .landing_footer_content {
@@ -14,30 +14,30 @@
   margin: auto;
 
   .landing_footer_bloc1 {
-    padding: 5% 0;
-    height: 30%;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    height: 30%;
+    padding: 5% 0;
 
-    h2 {
-      font-size: 40px;
+    & > *:first-child {
+      font-size: calc(20px + 1.5vmin);
     }
 
     .socialIconsLogos {
-      width: 20%;
       display: flex;
       justify-content: space-evenly;
+      width: 20%;
     }
   }
 
   .landing_footer_bloc2 {
-    padding: 5% 0%;
-    margin: auto;
     font-size: 1rem;
-    height: 65%;
     display: flex;
     justify-content: space-between;
+    height: 65%;
+    margin: auto;
+    padding: 5% 0;
 
     div {
       display: flex;
@@ -57,19 +57,19 @@
   }
 
   .landing_footer_bloc3 {
-    text-align: center;
     padding: 1% 0;
+    text-align: center;
   }
 }
 
 @media screen and (max-width: 1100px) {
   .landing_footer_content {
     .landing_footer_bloc1 {
-      padding: 5% 0;
-      height: 30%;
-      width: 50%;
       display: block;
+      width: 50%;
+      height: 30%;
       margin: auto;
+      padding: 5% 0;
 
       h2 {
         font-size: 30px;
@@ -77,20 +77,20 @@
       }
 
       .socialIconsLogos {
-        margin: auto;
-        width: 100%;
         display: flex;
         justify-content: space-between;
+        width: 100%;
+        margin: auto;
       }
     }
 
     .landing_footer_bloc2 {
-      padding: 5% 0%;
-      margin: auto;
       font-size: 15px;
-      height: auto;
       display: flex;
       flex-direction: column;
+      height: auto;
+      margin: auto;
+      padding: 5% 0;
       text-align: center;
 
       div {
@@ -115,32 +115,32 @@
 @media screen and (max-width: 500px) {
   .landing_footer_content {
     .landing_footer_bloc1 {
-      padding: 5% 0;
-      height: 30%;
       display: block;
       width: 70%;
+      height: 30%;
+      padding: 5% 0;
 
       h2 {
         font-size: 30px;
-        text-align: center;
         margin-bottom: 10%;
+        text-align: center;
       }
 
       .socialIconsLogos {
-        margin: auto;
-        width: 100%;
         display: flex;
         justify-content: space-between;
+        width: 100%;
+        margin: auto;
       }
     }
 
     .landing_footer_bloc2 {
-      padding: 5% 0%;
-      margin: auto;
       font-size: 15px;
-      height: auto;
       display: flex;
       flex-direction: column;
+      height: auto;
+      margin: auto;
+      padding: 5% 0;
       text-align: center;
 
       div {

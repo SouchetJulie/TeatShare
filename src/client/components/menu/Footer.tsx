@@ -8,20 +8,20 @@ import styles from "@styles/landing_page/Footer.module.scss";
 
 const Footer = () => {
   return (
-    <div className={styles.landing_footer_container}>
+    <footer className={styles.landing_footer_container}>
       <div className={styles.landing_footer_content}>
         <div className={styles.landing_footer_bloc1}>
-          <h2>Suivez nous sur les réseaux !</h2>
+          <h6>Suivez nous sur les réseaux !</h6>
           <div className={styles.socialIconsLogos}>
-            <Image src={twitter} width="70" height="70" />
-            <Image src={insta} width="70" height="70" />
+            <Image src={twitter} width="40" height="40" />
+            <Image src={insta} width="40" height="40" />
           </div>
         </div>
         <div className={styles.landing_footer_bloc2}>
           <div className={styles.spaceText}>
             <Image src={logo} layout="responsive" className={styles.test} />
             <p>+1 (7635) 547-12-97</p>
-            <Link href="">teatshare@live.fr</Link>
+            <Link href="/">teatshare@live.fr</Link>
           </div>
           <div>
             <Link href="/">Lien</Link>
@@ -33,10 +33,10 @@ const Footer = () => {
           </div>
         </div>
         <div className={styles.landing_footer_bloc3}>
-          <p>© 2022. Tous droits réservés</p>
+          © 2022. Tous droits réservés
         </div>
       </div>
-    </div>
+    </footer>
   );
 };
 export default Footer;
