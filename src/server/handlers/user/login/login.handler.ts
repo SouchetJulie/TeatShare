@@ -1,39 +1,16 @@
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 import { checkCredentials, getUserByEmail } from "@services/users.service";
-import { withSession } from "@middlewares/session.middleware";
-import { ApiResponse } from "@typing/api-response.interface";
 import { IUserAuth, IUserPublic } from "@typing/user.interface";
-import { runMiddleware } from "@common/run-middleware.helper";
-import { ISanitizedResponse } from "@middlewares/sanitization/sanitized-response.interface";
-import { sendError } from "next/dist/server/api-utils";
-import { body } from "express-validator";
-import { validateMiddleware } from "@middlewares/sanitization/validate.middleware";
+import { body, ValidationChain } from "express-validator";
+import { validate } from "@middlewares/sanitization/validate.middleware";
+import { ApiResponse } from "@typing/api-response.interface";
+import { withSession } from "@middlewares/session.middleware";
 
 const handler = async (
   req: NextApiRequest,
-  res: NextApiResponse<ApiResponse<{ user: IUserPublic }>> &
-    ISanitizedResponse<IUserAuth>
+  res: NextApiResponse<ApiResponse<{ user: IUserPublic }>>
 ) => {
-  try {
-    await runMiddleware(
-      req,
-      res,
-      body("email").isEmail().withMessage("Ce doit être un email")
-    );
-    await runMiddleware(
-      req,
-      res,
-      body("password")
-        .exists()
-        .withMessage("Le mot de passe ne doit pas être vide")
-    );
-    await runMiddleware(req, res, validateMiddleware);
-  } catch (e) {
-    // If the middlewares threw an error
-    return sendError(res, 500, "Le traitement de la requête à échoué");
-  }
-
-  const userCredentials = res.sanitized;
+  const userCredentials = req.body.sanitized as IUserAuth;
 
   const result = await checkCredentials(userCredentials);
   if (result) {
@@ -63,6 +40,13 @@ const handler = async (
   }
 };
 
+const loginValidationChain: ValidationChain[] = [
+  body("email").isEmail().withMessage("Ce doit être un email"),
+  body("password")
+    .exists()
+    .withMessage("Le mot de passe ne doit pas être vide"),
+];
+
 export const loginHandler: NextApiHandler = withSession(
-  handler as NextApiHandler
+  validate(loginValidationChain, handler)
 );

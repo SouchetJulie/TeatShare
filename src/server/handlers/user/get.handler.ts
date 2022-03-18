@@ -1,25 +1,23 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { getAllUsers, getOneUser } from "@services/users.service";
-import { ISanitizedResponse } from "@middlewares/sanitization/sanitized-response.interface";
-import { runMiddleware } from "@common/run-middleware.helper";
-import { query } from "express-validator";
-import { validateMiddleware } from "@middlewares/sanitization/validate.middleware";
-import { sendError } from "next/dist/server/api-utils";
 import { ApiResponse } from "@typing/api-response.interface";
 import { IUserPublic } from "@typing/user.interface";
+import { validate } from "@middlewares/sanitization/validate.middleware";
+import { getOneByIdValidationChain } from "@middlewares/sanitization/validation-chains";
 
-export const userGetAllHandler = async (
+const userGetAllHandler = async (
   req: NextApiRequest,
   res: NextApiResponse<ApiResponse<{ users: IUserPublic[] }>>
 ) => {
   try {
     const users = await getAllUsers();
+    console.log(`[USER] ${users.length} users found`);
     res.status(200).json({
       success: true,
       data: { users },
     });
   } catch (e) {
-    console.warn(`[USER] Failed to get all users: ${e}`);
+    console.error(`[USER] Failed to get all users: ${e}`);
     return res.status(500).json({
       success: false,
       error: "Erreur lors de la récupération de tous les utilisateurs",
@@ -27,30 +25,13 @@ export const userGetAllHandler = async (
   }
 };
 
-export const userGetOneHandler =
+const baseUserGetOneHandler =
   (_id: string) =>
   async (
     req: NextApiRequest,
-    res: NextApiResponse<ApiResponse<{ user: IUserPublic }>> &
-      ISanitizedResponse<{ _id: string }>
+    res: NextApiResponse<ApiResponse<{ user: IUserPublic }>>
   ) => {
-    try {
-      await runMiddleware(
-        req,
-        res,
-        query("_id")
-          .isHexadecimal()
-          .withMessage("L'id doit être en hexadécimal")
-          .isLength({ min: 24, max: 24 })
-          .withMessage("L'id doit faire 24 caractères")
-      );
-      await runMiddleware(req, res, validateMiddleware);
-    } catch (e) {
-      // If the middlewares threw an error
-      return sendError(res, 500, "Le traitement de la requête à échoué");
-    }
-
-    const { _id: id } = res.sanitized;
+    const { _id: id } = req.body.sanitized as { _id: string };
 
     try {
       const user = await getOneUser(id);
@@ -75,3 +56,8 @@ export const userGetOneHandler =
       });
     }
   };
+
+const userGetOneHandler = (_id: string) =>
+  validate(getOneByIdValidationChain, baseUserGetOneHandler(_id));
+
+export { userGetAllHandler, userGetOneHandler };

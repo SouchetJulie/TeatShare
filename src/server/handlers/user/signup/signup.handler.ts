@@ -1,49 +1,16 @@
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 import { createNewUser, getOneUser } from "@services/users.service";
-import { withSession } from "@middlewares/session.middleware";
-import { ApiResponse } from "@typing/api-response.interface";
 import { IUserCreate, IUserPublic } from "@typing/user.interface";
-import { runMiddleware } from "@common/run-middleware.helper";
-import { ISanitizedResponse } from "@middlewares/sanitization/sanitized-response.interface";
-import { sendError } from "next/dist/server/api-utils";
-import { body } from "express-validator";
-import { validateMiddleware } from "@middlewares/sanitization/validate.middleware";
+import { body, ValidationChain } from "express-validator";
+import { validate } from "@middlewares/sanitization/validate.middleware";
+import { ApiResponse } from "@typing/api-response.interface";
+import { withSession } from "@middlewares/session.middleware";
 
 const handler = async (
   req: NextApiRequest,
-  res: NextApiResponse<ApiResponse<{ user: IUserPublic }>> &
-    ISanitizedResponse<IUserCreate>
+  res: NextApiResponse<ApiResponse<{ user: IUserPublic }>>
 ) => {
-  try {
-    await runMiddleware(
-      req,
-      res,
-      body("firstName").optional({ checkFalsy: true })
-    );
-    await runMiddleware(
-      req,
-      res,
-      body("lastName").optional({ checkFalsy: true })
-    );
-    await runMiddleware(
-      req,
-      res,
-      body("email").isEmail().withMessage("Ce doit être un email")
-    );
-    await runMiddleware(
-      req,
-      res,
-      body("password")
-        .isStrongPassword()
-        .withMessage("Le mot de passe n'est pas assez fort")
-    );
-    await runMiddleware(req, res, validateMiddleware);
-  } catch (e) {
-    // If the middlewares threw an error
-    return sendError(res, 500, "Le traitement de la requête à échoué");
-  }
-
-  const userCreate = res.sanitized;
+  const userCreate = req.body.sanitized as IUserCreate;
 
   const result = await createNewUser(userCreate);
 
@@ -77,6 +44,15 @@ const handler = async (
   }
 };
 
+const signupValidationChain: ValidationChain[] = [
+  body("firstName").optional({ checkFalsy: true }),
+  body("lastName").optional({ checkFalsy: true }),
+  body("email").isEmail().withMessage("Ce doit être un email"),
+  body("password")
+    .isStrongPassword()
+    .withMessage("Le mot de passe n'est pas assez fort"),
+];
+
 export const signupHandler: NextApiHandler = withSession(
-  handler as NextApiHandler
+  validate(signupValidationChain, handler)
 );

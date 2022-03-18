@@ -7,6 +7,7 @@ import { ApiResponse } from "@typing/api-response.interface";
 // Disable the default body parser
 export const config = {
   api: {
+    externalResolver: true,
     bodyParser: false,
   },
 };
