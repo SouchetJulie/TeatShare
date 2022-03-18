@@ -34,7 +34,6 @@ body,
 
 #__next_page {
   overflow-x: hidden;
-  width: 100vw;
   height: 100vh;
   padding-top: $navbarHeight;
 
@@ -58,7 +57,6 @@ h1 {
   text-align: center;
   color: white;
 }
-
 .round-button {
   margin: 5px;
   padding-right: 40px;
@@ -69,7 +67,6 @@ h1 {
 .onTop {
   z-index: 2000;
 }
-
 .cardContainer {
   display: block;
   width: 400px;

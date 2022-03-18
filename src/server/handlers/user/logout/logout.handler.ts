@@ -1,8 +1,11 @@
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
-import { withSession } from "@middlewares/session.middleware";
 import { IUserPublic } from "@typing/user.interface";
+import { ApiResponse } from "@typing/api-response.interface";
 
-const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+export const logoutHandler: NextApiHandler = async (
+  req: NextApiRequest,
+  res: NextApiResponse<ApiResponse>
+) => {
   const user: IUserPublic | undefined = req.session.user;
 
   if (!user) {
@@ -20,5 +23,3 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     success: true,
   });
 };
-
-export const logoutHandler: NextApiHandler = withSession(handler);

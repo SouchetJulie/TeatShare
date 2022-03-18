@@ -22,7 +22,7 @@ const userSlice = createSlice({
     ) => {
       state.authenticatedUser = action.payload;
     },
-    resetUser: (state: UserState) => {
+    clearUser: (state: UserState) => {
       state.authenticatedUser = undefined;
     },
   },
@@ -34,6 +34,6 @@ const selectAuthenticatedUser = (state: RootState): IUserPublic | undefined =>
 const selectIsAuthenticated = (state: RootState): boolean =>
   !!state.user.authenticatedUser;
 
-export const { setUser, resetUser } = userSlice.actions;
+export const { setUser, clearUser } = userSlice.actions;
 export const { reducer: userReducer } = userSlice;
 export { selectAuthenticatedUser, selectIsAuthenticated };

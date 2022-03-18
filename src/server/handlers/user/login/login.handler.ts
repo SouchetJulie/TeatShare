@@ -2,11 +2,12 @@ import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 import { checkCredentials, getUserByEmail } from "@services/users.service";
 import { withSession } from "@middlewares/session.middleware";
 import { LoginRequest } from "@typing/login-request.interface";
-import { UserApiResponse } from "@typing/api-response.interface";
+import { ApiResponse } from "@typing/api-response.interface";
+import { IUserPublic } from "@typing/user.interface";
 
 const handler = async (
   req: NextApiRequest,
-  res: NextApiResponse<UserApiResponse>
+  res: NextApiResponse<ApiResponse<{ user: IUserPublic }>>
 ): Promise<void> => {
   const userCredentials = req.body as LoginRequest;
   if (!userCredentials.password || !userCredentials.email) {

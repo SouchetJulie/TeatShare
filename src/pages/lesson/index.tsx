@@ -1,50 +1,11 @@
-import axios, { AxiosResponse } from "axios";
-import React, { FunctionComponent, useEffect, useState } from "react";
-
-import { LessonList } from "@components/Lesson/LessonList";
-import { useAppDispatch } from "@hooks/store-hook";
-import { useLoginRedirect } from "@hooks/useLoginRedirect.hook";
-import { addAlert } from "@stores/alert.store";
-import { LessonsApiResponse } from "@typing/api-response.interface";
-import { ILesson } from "@typing/lesson-file.interface";
+import React, { FunctionComponent } from "react";
+import { LessonList } from "@components/lesson/LessonList";
+import { useLoginRedirect } from "@hooks/login-redirect.hook";
 
 const index: FunctionComponent = () => {
   const user = useLoginRedirect();
-  const dispatch = useAppDispatch();
-  const [lessons, setLessons] = useState<ILesson[]>([]);
 
-  useEffect(() => {
-    let isSubscribed = true;
-
-    if (user) {
-      axios
-        .get<LessonsApiResponse>("/api/lesson")
-        .then(({ data }: AxiosResponse<LessonsApiResponse>) => {
-          if (!isSubscribed) {
-            return;
-          }
-
-          if (data.error) {
-            dispatch(
-              addAlert({
-                message: "Récupération des leçons échouée.",
-                success: false,
-              })
-            );
-            return;
-          }
-
-          // Fetch successful
-          setLessons(data.lessons);
-        });
-    }
-
-    return () => {
-      isSubscribed = false;
-    };
-  }, [setLessons]);
-
-  return user ? <LessonList lessons={lessons} /> : <></>;
+  return user ? <LessonList lessons={[]} /> : <></>;
 };
 
 export default index;
