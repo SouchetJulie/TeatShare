@@ -1,20 +1,18 @@
-import { NextApiHandler, NextApiRequest } from "next";
-import {
-  checkCredentials,
-  getUserByEmail,
-  isUser,
-} from "@services/users.service";
+import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
+import { checkCredentials, getUserByEmail } from "@services/users.service";
 import { withSession } from "@middlewares/session.middleware";
+import { ApiResponse } from "@typing/api-response.interface";
+import { IUserAuth, IUserPublic } from "@typing/user.interface";
 import { runMiddleware } from "@common/run-middleware.helper";
+import { ISanitizedResponse } from "@middlewares/sanitization/sanitized-response.interface";
+import { sendError } from "next/dist/server/api-utils";
 import { body } from "express-validator";
 import { validateMiddleware } from "@middlewares/sanitization/validate.middleware";
-import { sendError } from "next/dist/server/api-utils";
-import { ISanitizedResponse } from "@middlewares/sanitization/sanitized-response.interface";
-import { IUserAuth } from "@typing/user.interface";
 
 const handler = async (
   req: NextApiRequest,
-  res: ISanitizedResponse<IUserAuth>
+  res: NextApiResponse<ApiResponse<{ user: IUserPublic }>> &
+    ISanitizedResponse<IUserAuth>
 ) => {
   try {
     await runMiddleware(
@@ -37,19 +35,15 @@ const handler = async (
 
   const userCredentials = res.sanitized;
 
-  if (!userCredentials.password || !userCredentials.email) {
-    return res.status(400).json({ error: "Identifiants manquants." });
-  }
-
   const result = await checkCredentials(userCredentials);
   if (result) {
     console.log(`[LOGIN] Credentials OK for ${userCredentials.email}.`);
     const user = await getUserByEmail(userCredentials.email);
 
-    if (!isUser(user)) {
+    if (!user) {
       return res.status(400).json({
         success: false,
-        error: user["error"] || "Login failed",
+        error: "Utilisateur inconnu",
       });
     }
 
@@ -59,14 +53,16 @@ const handler = async (
 
     return res.status(200).json({
       success: true,
-      user,
+      data: { user },
     });
   } else {
     return res.status(400).json({
       success: false,
-      error: result["error"] || "Login failed",
+      error: "Connexion échouée",
     });
   }
 };
 
-export const loginHandler: NextApiHandler = withSession(handler);
+export const loginHandler: NextApiHandler = withSession(
+  handler as NextApiHandler
+);

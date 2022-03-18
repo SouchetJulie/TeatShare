@@ -16,7 +16,7 @@ export const createEmptyUser = (): IUserPublic => {
     lessonIds: [],
     bookmarkIds: [],
     commentIds: [],
-    // add authentication parameters
+    // authentication parameters
     email: "",
     firstName: "",
     lastName: "",

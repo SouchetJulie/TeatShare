@@ -1,22 +1,33 @@
+import { query } from "express-validator";
 import { NextApiRequest, NextApiResponse } from "next";
-import { getAllLessons, getOneLesson } from "@services/lessons.service";
-import { runMiddleware } from "@common/run-middleware.helper";
 import { sendError } from "next/dist/server/api-utils";
+
+import { runMiddleware } from "@common/run-middleware.helper";
 import { validateMiddleware } from "@middlewares/sanitization/validate.middleware";
 import { ISanitizedResponse } from "@middlewares/sanitization/sanitized-response.interface";
-import { query } from "express-validator";
+import { getAllLessons, getOneLesson } from "@services/lessons.service";
+import { ApiResponse } from "@typing/api-response.interface";
+import { ILesson } from "@typing/lesson-file.interface";
 
 export const lessonGetAllHandler = async (
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse<ApiResponse<{ lessons: ILesson[] }>>
 ) => {
   const lessons = await getAllLessons();
-  res.status(200).json({ lessons });
+  console.log(`[LESSON] ${lessons.length} lessons found`);
+  res.status(200).json({
+    success: true,
+    data: { lessons },
+  });
 };
 
 export const lessonGetOneHandler =
   (_id: string) =>
-  async (req: NextApiRequest, res: ISanitizedResponse<{ _id: string }>) => {
+  async (
+    req: NextApiRequest,
+    res: ISanitizedResponse<{ _id: string }> &
+      NextApiResponse<ApiResponse<{ lesson: ILesson }>>
+  ) => {
     try {
       await runMiddleware(
         req,
@@ -35,11 +46,26 @@ export const lessonGetOneHandler =
 
     const { _id: id } = res.sanitized;
 
-    const result = await getOneLesson(id);
+    try {
+      const lesson = await getOneLesson(id);
+      if (!lesson) {
+        console.log(`[LESSON] Lesson ${id} not found`);
+        return res.status(404).json({
+          success: false,
+          error: "Leçon non trouvée",
+        });
+      }
 
-    if ("error" in result) {
-      return res.status(404).json({ success: false, error: result.error });
+      console.log(`[LESSON] Lesson ${id} found`);
+      return res.status(200).json({
+        success: true,
+        data: { lesson },
+      });
+    } catch (e) {
+      console.log("[LESSON] Error while fetching lesson:", e);
+      return res.status(200).json({
+        success: false,
+        error: "Erreur lors de la récupération de la leçon",
+      });
     }
-
-    return res.status(200).json({ success: true, lesson: result });
   };

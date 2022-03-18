@@ -1,0 +1,470 @@
+@import "../../styles/variables";
+
+.accueil_container {
+  width: 100%;
+  height: auto;
+  background-color: $white;
+
+  .bloc1 {
+    z-index: 0;
+    width: 100%;
+    height: 90vh;
+    background-image: url("../../../../public/landingPage/background.png");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+
+    .block1Content {
+      margin: 0 0 0 5%;
+      color: $white;
+
+      h1 {
+        font-size: 70px;
+        margin-bottom: 15px;
+        padding-top: 16%;
+        text-align: left;
+      }
+
+      p {
+        font-size: 35px;
+        margin-bottom: 30px;
+      }
+
+      button {
+        font-size: 20px;
+        font-weight: bold;
+        width: 350px;
+        height: 50px;
+        color: $white;
+        border: none;
+        border-radius: 40px;
+        background: $orange;
+
+        .connexion:hover {
+          color: white;
+        }
+      }
+    }
+  }
+
+  .bloc2 {
+    overflow-x: hidden;
+    overflow-y: hidden;
+    width: 105%;
+    margin-top: -6%;
+    padding: 5% 0 5% 0;
+    transform: rotate(3deg);
+    transform-origin: 0% 0%;
+    background-color: $orange;
+
+    .block2Content {
+      display: flex;
+      overflow: hidden;
+      width: 50%;
+
+      // this padding fix the box border cutted
+      margin: auto auto auto auto;
+      padding-top: 1%;
+    }
+
+    .leftSide {
+      width: 45%;
+      margin: auto 1% 0 auto;
+      transform: rotate(-6deg);
+
+      .imessage {
+        display: flex;
+        flex-direction: column;
+        max-width: 600px;
+        margin-bottom: 4%;
+        padding: 0.5rem 1.5rem;
+        border: 1px solid #e5e5ea;
+        border-radius: 25px;
+        background-color: #fff;
+
+        .queue {
+          position: absolute;
+          right: 14%;
+          bottom: 22%;
+          width: 50px;
+          height: 50px;
+          transform: scaleX(-100%);
+          background: $white;
+          clip-path: ellipse(16px 16px at 1% 2%);
+        }
+
+        .fromMe {
+          font-size: 25px;
+          font-weight: bold;
+          margin-bottom: 0;
+          text-align: center;
+          color: $orange;
+          background-color: $white;
+        }
+      }
+
+      h2 {
+        font-size: 50px;
+        text-align: center;
+        color: $white;
+      }
+    }
+
+    .rightSide {
+      width: 45%;
+      margin: 0% auto auto auto;
+      transform: rotate(-1deg);
+
+      .imessage {
+        display: flex;
+        flex-direction: column;
+        max-width: 600px;
+        margin-top: 4%;
+        padding: 0.5rem 1.5rem;
+        border: 1px solid #e5e5ea;
+        border-radius: 25px;
+        background-color: #fff;
+
+        .fromMe {
+          font-size: 25px;
+          font-weight: bold;
+          margin-bottom: 0;
+          text-align: center;
+          color: $orange;
+          background-color: $white;
+        }
+      }
+
+      h2 {
+        font-size: 50px;
+        text-align: center;
+        color: $white;
+      }
+    }
+
+    .bottomSide {
+      width: 30%;
+      height: 100%;
+      margin: 0 auto;
+      transform: rotate(-3deg);
+
+      p {
+        font-size: 40px;
+        font-weight: bold;
+        width: 100%;
+        height: auto;
+        margin: 6% 0 4% 0;
+        text-align: center;
+        color: $white;
+      }
+
+      .choice {
+        display: flex;
+        overflow-x: hidden;
+        width: 100%;
+        height: 75px;
+        border-radius: 20px;
+
+        .yesPart {
+          display: flex;
+          align-items: center;
+          width: 50%;
+          background-color: $white;
+
+          p {
+            font-size: 30px;
+            font-weight: bold;
+            margin: 0;
+            color: $orange;
+          }
+        }
+
+        .noPart {
+          display: flex;
+          align-items: center;
+          width: 50%;
+          background-color: $bleu;
+
+          p {
+            font-size: 30px;
+            font-weight: bold;
+            margin: 0;
+            color: $white;
+          }
+        }
+      }
+
+      .callToAction {
+        display: flex;
+        justify-content: center;
+        width: 70%;
+        margin: 5% auto auto auto;
+        border: 2px solid $white;
+        border-radius: 30px;
+        background-color: $orange;
+
+        .participate {
+          font-size: 20px;
+          padding: 10px;
+          color: $white;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1100px) {
+  .accueil_container {
+    .bloc1 {
+      height: 50vh;
+
+      .block1Content {
+        width: 70%;
+        margin: auto;
+        text-align: center;
+
+        h1 {
+          font-size: 40px;
+          text-align: center;
+        }
+
+        p {
+          font-size: 20px;
+        }
+      }
+    }
+
+    .bloc2 {
+      .block2Content {
+        width: 80%;
+        // this padding fix the box border cutted
+        padding-top: 2%;
+      }
+
+      .leftSide {
+        .imessage {
+          .queue {
+            display: none;
+          }
+
+          .fromMe {
+            font-size: 20px;
+          }
+        }
+
+        h2 {
+          font-size: 35px;
+        }
+      }
+
+      .rightSide {
+        .imessage {
+          .queue {
+            display: none;
+          }
+
+          .fromMe {
+            font-size: 20px;
+          }
+        }
+
+        h2 {
+          font-size: 35px;
+        }
+      }
+
+      .bottomSide {
+        width: 40%;
+
+        p {
+          font-size: 35px;
+        }
+
+        .choice {
+          width: 60%;
+          height: 45px;
+          margin: auto;
+          border-radius: 15px;
+
+          .yesPart {
+            display: flex;
+            align-items: center;
+            width: 50%;
+            background-color: $white;
+
+            p {
+              font-size: 20px;
+              font-weight: bold;
+              margin: 0;
+              color: $orange;
+            }
+          }
+
+          .noPart {
+            display: flex;
+            align-items: center;
+            width: 50%;
+            background-color: $bleu;
+
+            p {
+              font-size: 20px;
+              font-weight: bold;
+              margin: 0;
+              color: $white;
+            }
+          }
+        }
+
+        .callToAction {
+          width: 50%;
+
+          .participate {
+            font-size: 20px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .accueil_container {
+    width: 100%;
+    height: auto;
+    background-color: $white;
+
+    .bloc1 {
+      display: flex;
+      height: 90vh;
+
+      .block1Content {
+        margin: auto;
+        color: $white;
+
+        h1 {
+          font-size: 32px;
+        }
+
+        p {
+          font-size: 20px;
+        }
+
+        button {
+          width: 60%;
+          height: 50px;
+        }
+      }
+    }
+
+    /*------------------------------------------ block 2----------------------------*/
+    .bloc2 {
+      width: 110%;
+
+      .block2Content {
+        width: 80%;
+        margin: 7% auto;
+      }
+
+      .leftSide {
+        .imessage {
+          .queue {
+            display: none;
+          }
+
+          .fromMe {
+            font-size: 20px;
+          }
+        }
+
+        h2 {
+          font-size: 35px;
+        }
+      }
+
+      .rightSide {
+        .imessage {
+          .queue {
+            display: none;
+          }
+
+          .fromMe {
+            font-size: 20px;
+          }
+        }
+
+        h2 {
+          font-size: 35px;
+        }
+      }
+
+      .bottomSide {
+        width: 70%;
+        height: 100%;
+        margin: 0 auto;
+        transform: rotate(-3deg);
+
+        p {
+          font-size: 32px;
+          font-weight: bold;
+          width: 100%;
+          height: auto;
+          margin: 6% 0 4% 0;
+          text-align: center;
+          color: $white;
+        }
+
+        .choice {
+          display: flex;
+          overflow-x: hidden;
+          width: 100%;
+          height: 50px;
+          border-radius: 15px;
+
+          .yesPart {
+            display: flex;
+            align-items: center;
+            width: 50%;
+            background-color: $white;
+
+            p {
+              font-size: 27px;
+              font-weight: bold;
+              margin: 0;
+              color: $orange;
+            }
+          }
+
+          .noPart {
+            display: flex;
+            align-items: center;
+            width: 50%;
+            background-color: $bleu;
+
+            p {
+              font-size: 27px;
+              font-weight: bold;
+              margin: 0;
+              color: $white;
+            }
+          }
+        }
+
+        .callToAction {
+          display: flex;
+          justify-content: center;
+          width: 70%;
+          margin: 5% auto auto auto;
+          border: 2px solid $white;
+          border-radius: 30px;
+          background-color: $orange;
+
+          .participate {
+            font-size: 20px;
+            padding: 10px;
+            color: $white;
+          }
+        }
+      }
+    }
+  }
+}

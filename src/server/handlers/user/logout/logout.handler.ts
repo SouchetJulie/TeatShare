@@ -1,17 +1,18 @@
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
-
-import { isUser } from "@services/users.service";
-import { withSession } from "@middlewares/session.middleware";
 import { IUserPublic } from "@typing/user.interface";
+import { ApiResponse } from "@typing/api-response.interface";
 
-const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  const user: IUserPublic = req.session.user;
+export const logoutHandler: NextApiHandler = async (
+  req: NextApiRequest,
+  res: NextApiResponse<ApiResponse>
+) => {
+  const user: IUserPublic | undefined = req.session.user;
 
-  if (!isUser(user)) {
-    console.log(`[LOGOUT] Logout failed:`, user["error"]);
+  if (!user) {
+    console.log("[LOGOUT] Logout failed: no user was logged in.");
     return res.status(400).json({
       success: false,
-      error: user["error"] || "Logout failed.",
+      error: "Logout failed.",
     });
   }
 
@@ -22,5 +23,3 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     success: true,
   });
 };
-
-export const logoutHandler: NextApiHandler = withSession(handler);

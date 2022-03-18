@@ -3,94 +3,111 @@ import { ObjectId } from "bson";
 import { InsertOneResult } from "mongodb";
 
 import { createEmptyUser } from "@utils/create-empty-user";
-import { IUserAuth,IUserCreate, IUserDB, IUserPublic ,} from "@typing/user.interface";
+import {
+  IUserAuth,
+  IUserCreate,
+  IUserDB,
+  IUserPublic,
+} from "@typing/user.interface";
 import { getDatabase } from "./database.service";
 
-export const getAllUsers = async () => {
-  try {
-    const collection = (await getDatabase()).collection<IUserDB>("User");
-    const users = await collection.find({}).toArray();
-    // remove password before sending it back
-    // @ts-ignore
-    users.forEach((user) => delete user.password);
-    return users;
-  } catch (e) {
-    return { error: e };
-  }
+/**
+ * Fetches all users from database.
+ *
+ * @return {Promise<IUserDB[]>} The list (possibly empty) of all users found.
+ */
+export const getAllUsers: () => Promise<IUserDB[]> = async () => {
+  const collection = (await getDatabase()).collection<IUserDB>("User");
+  const users = await collection.find({}).toArray();
+  // remove password before sending it back
+  users.forEach((user: IUserDB) => delete user.password);
+  console.log(`[DB] Retrieved ${users.length} users from DB.`);
+  return users;
 };
 
+/**
+ * Fetches one user from database.
+ *
+ * @param {string} email Email of the user to fetch.
+ * @return {Promise<IUserPublic | null>} The user, or null if not found.
+ */
 export const getUserByEmail = async (
   email: string
-): Promise<IUserPublic | { error: any }> => {
-  try {
-    const collection = (await getDatabase()).collection<IUserDB>("User");
-    const user = await collection.findOne({ email: email });
-if (!user) {
-      return { error: `Utilisateur ${email} inconnu.` };
-    }
-    // remove password before sending it back
-    // @ts-ignore
-    delete user.password;
-    console.log(`[DB] Retrieved user ${user.email} from DB.`);
-    return user;
-  } catch (e) {
-    return { error: e };
+): Promise<IUserPublic | null> => {
+  const collection = (await getDatabase()).collection<IUserDB>("User");
+  const user = await collection.findOne({ email: email });
+
+  if (!user) {
+    return null;
   }
+  // remove password before sending it back
+  delete user.password;
+  console.log(`[DB] Retrieved user ${user.email} from DB.`);
+  return user;
 };
 
-export const getOneUser = async (userId: string) => {
-  try {
-    const collection = (await getDatabase()).collection<IUserDB>("User");
-    const user = await collection.findOne({ _id: new ObjectId(userId) });
-if (!user) {
-      return { error: `Utilisateur n° ${userId} inconnu.` };
-    }
+/**
+ * Fetches one user from database.
+ *
+ * @param {string} userId Id (_id) of the user to fetch.
+ * @return {Promise<IUserPublic | null>} The user, or null if not found.
+ */
+export const getOneUser = async (
+  userId: string
+): Promise<IUserPublic | null> => {
+  const collection = (await getDatabase()).collection<IUserDB>("User");
+  const user: IUserDB | null = await collection.findOne({
+    _id: new ObjectId(userId),
+  });
 
-    // remove password before sending it back
-    // @ts-ignore
-    delete user.password;
-    return user;
-  } catch (e) {
-    return { error: e };
+  if (!user) {
+    return null;
   }
+
+  // remove password before sending it back
+  delete user.password;
+  console.log(`[DB] Retrieved user ${user.email} from DB.`);
+  return user;
 };
 
+/**
+ * Inserts a new user in database.
+ *
+ * @param {IUserCreate} user User to insert.
+ * @return {Promise<InsertOneResult<IUserDB>>} The result of the insertion.
+ * @throws {Error} If the credentials are invalid or already in use.
+ */
 export const createNewUser = async (
   user: IUserCreate
-): Promise<{ error: string } | InsertOneResult<IUserDB>> => {
-  try {
-    if (!user.password || !user.email) {
-      return { error: "Données manquantes." };
-    }
-    const collection = (await getDatabase()).collection<IUserDB>("User");
-
-    // Is email already taken?
-    const foundInDB = await collection.findOne<IUserDB>({ email: user.email });
-
-    if (foundInDB) {
-      return { error: "Cet e-mail est déjà utilisé." };
-    }
-
-    const hashedPassword = bcrypt.hashSync(user.password, 15);
-
-    const userDB: IUserDB = {
-      ...createEmptyUser(),
-      email: user.email,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      password: hashedPassword,
-    };
-      // @ts-ignore
-    return await collection.insertOne(userDB);
-  } catch (e) {
-    return { error: (e as Error).message};
+): Promise<InsertOneResult<IUserDB>> => {
+  if (!user.password || !user.email) {
+    throw new Error("Données manquantes.");
   }
+  const collection = (await getDatabase()).collection<IUserDB>("User");
+
+  // Is email already taken?
+  const foundInDB = await collection.findOne<IUserDB>({ email: user.email });
+
+  if (foundInDB) {
+    throw new Error("Cet e-mail est déjà utilisé.");
+  }
+
+  const hashedPassword = bcrypt.hashSync(user.password, 15);
+
+  const userDB: IUserDB = {
+    ...createEmptyUser(),
+    email: user.email,
+    firstName: user.firstName,
+    lastName: user.lastName,
+    password: hashedPassword,
+  };
+  return collection.insertOne(userDB);
 };
 
 /**
  * Checks whether the given user credentials are valid or not.
  * @param {IUserAuth} user
- * @return {Promise<{error} | boolean>}
+ * @return {Promise<boolean>}
  */
 export const checkCredentials = async (user: IUserAuth): Promise<boolean> => {
   try {
@@ -99,9 +116,13 @@ export const checkCredentials = async (user: IUserAuth): Promise<boolean> => {
       email: user.email,
     });
 
-    // @ts-ignore
-    return await bcrypt.compare(user.password, userDB.password);
+    if (!userDB?.password || !user?.password) {
+      return false;
+    }
+
+    return bcrypt.compare(user.password, userDB.password);
   } catch (e) {
+    console.warn("[DB] Could not connect to database");
     return false;
   }
 };

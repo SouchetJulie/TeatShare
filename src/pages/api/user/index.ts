@@ -1,14 +1,16 @@
-import {NextApiRequest, NextApiResponse} from 'next';
-import {notImplementedHandler} from '@common/not-implemented.handler';
-import {userGetAllHandler} from '@handlers/user/get.handler';
+import { NextApiRequest, NextApiResponse } from "next";
+import { userGetAllHandler } from "@handlers/user/get.handler";
+import routerMiddleware from "@middlewares/router.middleware";
+import { ApiResponse } from "@typing/api-response.interface";
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
-    const handlers = {
-        'GET': userGetAllHandler,
-        // add here handlers for other methods
-    }
+export default async (
+  req: NextApiRequest,
+  res: NextApiResponse<ApiResponse>
+) => {
+  const handlers = {
+    GET: userGetAllHandler,
+    // add here handlers for other methods
+  };
 
-    const handler = handlers[req.method] || notImplementedHandler;
-
-    await handler(req, res);
+  await routerMiddleware(handlers, req.method)(req, res);
 };

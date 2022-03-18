@@ -5,18 +5,35 @@ import { runMiddleware } from "@common/run-middleware.helper";
 import { query } from "express-validator";
 import { validateMiddleware } from "@middlewares/sanitization/validate.middleware";
 import { sendError } from "next/dist/server/api-utils";
+import { ApiResponse } from "@typing/api-response.interface";
+import { IUserPublic } from "@typing/user.interface";
 
 export const userGetAllHandler = async (
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse<ApiResponse<{ users: IUserPublic[] }>>
 ) => {
-  const users = await getAllUsers();
-  res.status(200).json({ users });
+  try {
+    const users = await getAllUsers();
+    res.status(200).json({
+      success: true,
+      data: { users },
+    });
+  } catch (e) {
+    console.warn(`[USER] Failed to get all users: ${e}`);
+    return res.status(500).json({
+      success: false,
+      error: "Erreur lors de la récupération de tous les utilisateurs",
+    });
+  }
 };
 
 export const userGetOneHandler =
   (_id: string) =>
-  async (req: NextApiRequest, res: ISanitizedResponse<{ _id: string }>) => {
+  async (
+    req: NextApiRequest,
+    res: NextApiResponse<ApiResponse<{ user: IUserPublic }>> &
+      ISanitizedResponse<{ _id: string }>
+  ) => {
     try {
       await runMiddleware(
         req,
@@ -34,11 +51,27 @@ export const userGetOneHandler =
     }
 
     const { _id: id } = res.sanitized;
-    const result = await getOneUser(id);
 
-    if ("error" in result) {
-      return res.status(404).json({ success: false, error: result.error });
+    try {
+      const user = await getOneUser(id);
+
+      if (!user) {
+        console.warn(`[USER] Failed to get user ${id}: not found`);
+        return res.status(404).json({
+          success: false,
+          error: `User ${id} not found`,
+        });
+      }
+
+      return res.status(200).json({
+        success: true,
+        data: { user },
+      });
+    } catch (e) {
+      console.error(`[USER] Failed to get user ${id}: ${e}`);
+      return res.status(500).json({
+        success: false,
+        error: "Erreur lors de la récupération de l'utilisateur",
+      });
     }
-
-    return res.status(200).json({ success: true, user: result });
   };

@@ -7,7 +7,7 @@ import { ObjectId } from "bson";
  */
 export interface IUserAuth {
   email: string;
-  password: string; // to be removed outside of auth
+  password?: string; // to be removed outside of auth
 }
 
 /**
