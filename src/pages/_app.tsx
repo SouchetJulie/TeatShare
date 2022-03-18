@@ -4,8 +4,8 @@ import { useState } from "react";
 import { Provider } from "react-redux";
 
 import Alert from "@components/AlertComponent";
-import NavBar from "@components/Menu/NavBar";
-import SideBar from "@components/Menu/SideBar";
+import NavBar from "@components/menu/NavBar";
+import SideBar from "@components/menu/SideBar";
 import { store } from "@stores/store";
 import { IAlert, selectAlerts } from "@stores/alert.store";
 import "@styles/globals.scss";
