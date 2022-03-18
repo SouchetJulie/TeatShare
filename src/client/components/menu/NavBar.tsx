@@ -5,12 +5,12 @@ import Nav from "react-bootstrap/Nav";
 import Link from "next/link";
 
 import Logo from "@assets/logos/logo-full-horizontal.svg";
-import GradeLinks from "@components/TORENAME_menu/GradeLinks";
-import UserLinks from "@components/TORENAME_menu/UserLinks";
+import GradeLinks from "@components/menu/GradeLinks";
+import UserLinks from "@components/menu/UserLinks";
 import { selectAuthenticatedUser } from "@stores/user.store";
 import styles from "@styles/menu/navbar.module.scss";
 import { NavbarVariant } from "@typing/navbar-variant.enum";
-import LessonLinks from "@components/TORENAME_menu/LessonLinks";
+import LessonLinks from "@components/menu/LessonLinks";
 import { useAppSelector } from "@hooks/store-hook";
 
 interface Props {
