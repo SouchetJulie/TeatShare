@@ -1,12 +1,4 @@
-import React, {
-  forwardRef,
-  FunctionComponent,
-  MouseEventHandler,
-  ReactNode,
-  RefObject,
-  useEffect,
-  useState,
-} from "react";
+import React, { FunctionComponent, useEffect, useState } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 import Nav from "react-bootstrap/Nav";
 import Link from "next/link";
@@ -19,25 +11,6 @@ import { NavDropdown } from "react-bootstrap";
 interface Props {
   user?: IUserPublic;
 }
-
-// eslint-disable-next-line react/display-name,react/prop-types
-const UserDropdownToggle = forwardRef(
-  (
-    { children, onClick }: { children?: ReactNode; onClick: MouseEventHandler },
-    ref
-  ) => (
-    <a
-      href=""
-      ref={ref as RefObject<HTMLAnchorElement>}
-      onClick={(e) => {
-        e.preventDefault();
-        onClick(e);
-      }}
-    >
-      {children}
-    </a>
-  )
-);
 
 /**
  * Links relative to the current user.

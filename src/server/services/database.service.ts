@@ -2,16 +2,15 @@ import { Db, MongoClient } from "mongodb";
 
 const uri = process.env.MONGODB_URI || "";
 
-// Using global to keep the connection across hot reloads
-// See https://www.mongodb.com/community/forums/t/connections-not-closed-with-nextjs/115037/3
-
 declare global {
+  // This needs to be a "var" instead of "const" or "let" to work
+  // Also, it's used just below 👇👇 despite ESLint saying otherwise
   // eslint-disable-next-line no-unused-vars,no-var
   var mongo: MongoClient;
-  // This needs to be a "var" instead of "const" or "let" to work
-  // Also, it's used just below, despite ESLint saying otherwise
 }
 
+// Using global to keep the connection across hot reloads
+// See https://www.mongodb.com/community/forums/t/connections-not-closed-with-nextjs/115037/3
 let cachedClient: MongoClient = global.mongo;
 let cachedDb: Db | undefined = global.mongo?.db();
 

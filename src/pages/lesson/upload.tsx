@@ -1,5 +1,5 @@
-import axios, {AxiosError} from "axios";
-import {FormEvent, FunctionComponent, useState} from "react";
+import axios, { AxiosError } from "axios";
+import { FormEvent, FunctionComponent, useState } from "react";
 import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
@@ -47,20 +47,20 @@ const upload: FunctionComponent = () => {
       return;
     }
 
-    const {data} = await axios
+    const { data } = await axios
       .post<ResourceApiResponse>("/api/lesson", formData)
       .catch((error: AxiosError) => {
         const response: ResourceApiResponse = {
           success: false,
           error: getAxiosErrorMessage(error),
         };
-        return {data: response};
+        return { data: response };
       });
 
-    const {success} = data;
+    const { success } = data;
 
     if (success) {
-      const {id} = data;
+      const { id } = data;
       const message = (
         <span>
           Leçon {isDraft ? "sauvegardée" : "créée"} avec succès !
@@ -68,9 +68,9 @@ const upload: FunctionComponent = () => {
         </span>
       );
 
-      dispatch(addAlert({message, success}));
+      dispatch(addAlert({ message, success }));
     } else {
-      const {error} = data;
+      const { error } = data;
       dispatch(
         addAlert({
           message: `Création de la leçon échouée : ${error}`,
