@@ -2,9 +2,9 @@ import { AppProps } from "next/app";
 import Head from "next/head";
 import { Provider } from "react-redux";
 
-import Footer from "@components/TORENAME_menu/Footer";
-import NavBar from "@components/TORENAME_menu/NavBar";
-import SideBar from "@components/TORENAME_menu/SideBar";
+import Footer from "@components/menu/Footer";
+import NavBar from "@components/menu/NavBar";
+import SideBar from "@components/menu/SideBar";
 import Alert from "@components/ui/AlertComponent";
 import { store } from "@stores/store";
 import { IAlert, selectAlerts } from "@stores/alert.store";
