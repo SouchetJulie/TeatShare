@@ -1,6 +1,6 @@
-import {NextApiHandler} from 'next';
-import {withIronSessionApiRoute} from "iron-session/next";
-import {IUserPublic} from "@typing/user.interface";
+import { NextApiHandler } from "next";
+import { withIronSessionApiRoute } from "iron-session/next";
+import { IUserPublic } from "@typing/user.interface";
 
 /**
  * Adds a `IronSession` to the request before it is handled (under `req.session`).
@@ -10,13 +10,13 @@ import {IUserPublic} from "@typing/user.interface";
  */
 export const withSession = (apiHandler: NextApiHandler): NextApiHandler => {
   return withIronSessionApiRoute(apiHandler, {
-    cookieName: 'session_id',
+    cookieName: "session_id",
     cookieOptions: {
       httpOnly: true,
-      sameSite: 'strict'
+      sameSite: "strict",
     },
-    password: process.env.SESSION_SECRET || ''
-  })
+    password: process.env.SESSION_SECRET || "",
+  });
 };
 
 declare module "iron-session" {

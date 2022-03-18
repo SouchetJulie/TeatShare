@@ -1,4 +1,4 @@
-import React, {FunctionComponent} from "react";
+import React, { FunctionComponent } from "react";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
@@ -6,7 +6,7 @@ import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import Row from "react-bootstrap/Row";
 
-import {ILesson} from "@typing/lesson-file.interface";
+import { ILesson } from "@typing/lesson-file.interface";
 import styles from "@styles/Lesson/lesson-list.module.scss";
 
 import LessonItem from "./LessonItem";
@@ -15,7 +15,7 @@ interface Props {
   lessons: ILesson[];
 }
 
-export const LessonList: FunctionComponent<Props> = ({lessons}: Props) => (
+export const LessonList: FunctionComponent<Props> = ({ lessons }: Props) => (
   <>
     <Container className="my-4 mb-5">
       {/* Filtres */}
@@ -44,7 +44,7 @@ export const LessonList: FunctionComponent<Props> = ({lessons}: Props) => (
             <option>Marqués</option>
           </Form.Select>
           <InputGroup.Text>
-            <i className="bi bi-sort-up"/>
+            <i className="bi bi-sort-up" />
           </InputGroup.Text>
         </InputGroup>
         <InputGroup as={Col} md="auto" className={styles.inputGroup}>
@@ -58,7 +58,7 @@ export const LessonList: FunctionComponent<Props> = ({lessons}: Props) => (
             placeholder="Recherche par mots-clés"
           />
           <InputGroup.Text>
-            <i className="bi bi-search"/>
+            <i className="bi bi-search" />
           </InputGroup.Text>
         </InputGroup>
       </Form>
@@ -67,7 +67,7 @@ export const LessonList: FunctionComponent<Props> = ({lessons}: Props) => (
       {/* Affichage des résultats */}
       <Row className={styles.lessonContainer}>
         {lessons.map((lesson: ILesson) => (
-          <LessonItem key={`lesson-item-${lesson._id}`} lesson={lesson}/>
+          <LessonItem key={`lesson-item-${lesson._id}`} lesson={lesson} />
         ))}
       </Row>
     </Container>

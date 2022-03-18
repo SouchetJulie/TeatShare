@@ -1,5 +1,5 @@
-import {NextApiRequest, NextApiResponse} from "next";
-import {logoutHandler} from "@handlers/user/logout/logout.handler";
+import { NextApiRequest, NextApiResponse } from "next";
+import { logoutHandler } from "@handlers/user/logout/logout.handler";
 import routerMiddleware from "@middlewares/router.middleware";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {

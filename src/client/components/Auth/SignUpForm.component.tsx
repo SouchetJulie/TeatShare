@@ -1,24 +1,24 @@
-import axios, {AxiosError, AxiosResponse} from "axios";
-import {Formik} from "formik";
-import {faTimes} from "@fortawesome/free-solid-svg-icons/faTimes";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {useRouter} from "next/router";
+import axios, { AxiosError, AxiosResponse } from "axios";
+import { Formik } from "formik";
+import { faTimes } from "@fortawesome/free-solid-svg-icons/faTimes";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useRouter } from "next/router";
 import Link from "next/link";
-import {FunctionComponent, useState} from "react";
+import { FunctionComponent, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
 import * as yup from "yup";
-import {useAppDispatch} from "@hooks/store-hook";
-import {addAlert} from "@stores/alert.store";
-import {setUser} from "@stores/user.store";
+import { useAppDispatch } from "@hooks/store-hook";
+import { addAlert } from "@stores/alert.store";
+import { setUser } from "@stores/user.store";
 import styles from "@styles/Auth/Login.Component.module.scss";
-import {UserApiResponse} from "@typing/api-response.interface";
-import {IUserCreate} from "@typing/user.interface";
-import {getAxiosErrorMessage} from "../../utils/get-axios-error.utils";
+import { UserApiResponse } from "@typing/api-response.interface";
+import { IUserCreate } from "@typing/user.interface";
+import { getAxiosErrorMessage } from "../../utils/get-axios-error.utils";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import {FormikHelpers} from "formik/dist/types";
+import { FormikHelpers } from "formik/dist/types";
 
 const userCreateSchema = yup.object({
   email: yup
@@ -57,7 +57,7 @@ const SignupForm: FunctionComponent = () => {
 
   const onSubmit = async (
     values: UserCreateSchema,
-    {setSubmitting}: FormikHelpers<UserCreateSchema>
+    { setSubmitting }: FormikHelpers<UserCreateSchema>
   ): Promise<void> => {
     const user: IUserCreate = {
       email: values.email,
@@ -72,12 +72,12 @@ const SignupForm: FunctionComponent = () => {
 
     axios
       .post<UserApiResponse>("/api/user/signup", user)
-      .then(({data: response}: AxiosResponse<UserApiResponse>) => {
+      .then(({ data: response }: AxiosResponse<UserApiResponse>) => {
         setSubmitting(false);
 
         success = true;
         message = "Inscription réussie !";
-        dispatch(addAlert({message, success, ttl: 2000}));
+        dispatch(addAlert({ message, success, ttl: 2000 }));
 
         router.push("/");
         dispatch(setUser(response.data?.user));
@@ -88,7 +88,7 @@ const SignupForm: FunctionComponent = () => {
         success = false;
         setButtonMessage("Inscription échouée.");
         message = `L'inscription a échouée : ${getAxiosErrorMessage(error)}`;
-        dispatch(addAlert({message, success}));
+        dispatch(addAlert({ message, success }));
       });
   };
 
@@ -98,11 +98,11 @@ const SignupForm: FunctionComponent = () => {
       initialValues={initialValues}
       onSubmit={onSubmit}
     >
-      {({handleSubmit, handleChange, touched, isValid, errors, dirty}) => (
+      {({ handleSubmit, handleChange, touched, isValid, errors, dirty }) => (
         <div className={styles.cardWrapper}>
           <div className={styles.cardContainer}>
             <Link href="/">
-              <FontAwesomeIcon icon={faTimes} className={styles.cancelIcon}/>
+              <FontAwesomeIcon icon={faTimes} className={styles.cancelIcon} />
             </Link>
             <h2>Nous rejoindre</h2>
             <Form

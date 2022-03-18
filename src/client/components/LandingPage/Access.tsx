@@ -6,7 +6,7 @@ const Access = () => {
     <div className={styles.accessContainer}>
       <div className={styles.accessContent}>
         <h2 className={styles.accessTitle}>
-          En vous inscrivant, <br/>
+          En vous inscrivant, <br />
           <span> vous aurez accès à</span>
         </h2>
         <ul>
@@ -30,7 +30,7 @@ const Access = () => {
           </button>
         </div>
       </div>
-      <div className={styles.accessImgWrapper}/>
+      <div className={styles.accessImgWrapper} />
     </div>
   );
 };

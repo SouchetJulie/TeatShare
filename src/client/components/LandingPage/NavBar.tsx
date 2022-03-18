@@ -7,7 +7,7 @@ const NavBar = (): JSX.Element => {
   return (
     <div className={styles.container}>
       <div className={styles.img_container}>
-        <Image src={logo} alt="Logo" layout="responsive"/>
+        <Image src={logo} alt="Logo" layout="responsive" />
       </div>
 
       <div className={styles.navigationLink}>

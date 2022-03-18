@@ -9,7 +9,7 @@ const Accueil = () => {
           <h1> Vous êtes instituteur ?</h1>
           <p>
             {" "}
-            Vous voudriez partager vos cours ou vous êtes <br/>à la recherche
+            Vous voudriez partager vos cours ou vous êtes <br />à la recherche
             de l&apos;inspiration ?
           </p>
           <Link href={`/user/login`}>
@@ -25,9 +25,9 @@ const Accueil = () => {
             <div className={styles.imessage}>
               <p className={styles.fromMe}>
                 Je n&apos;ai pas
-                <br/> d&apos;inspiration...
+                <br /> d&apos;inspiration...
               </p>
-              <div className={styles.queue}/>
+              <div className={styles.queue} />
             </div>
             <h2>Non, facile!</h2>
           </div>
@@ -37,7 +37,7 @@ const Accueil = () => {
             <div className={styles.imessage}>
               <p className={styles.fromMe}>
                 Créer un cours
-                <br/> c&apos;est compliqué !!
+                <br /> c&apos;est compliqué !!
               </p>
             </div>
           </div>

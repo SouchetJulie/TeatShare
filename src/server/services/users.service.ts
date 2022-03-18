@@ -1,10 +1,15 @@
 import bcrypt from "bcryptjs";
-import {ObjectId} from "bson";
-import {InsertOneResult} from "mongodb";
+import { ObjectId } from "bson";
+import { InsertOneResult } from "mongodb";
 
-import {createEmptyUser} from "@utils/create-empty-user";
-import {IUserAuth, IUserCreate, IUserDB, IUserPublic,} from "@typing/user.interface";
-import {getDatabase} from "./database.service";
+import { createEmptyUser } from "@utils/create-empty-user";
+import {
+  IUserAuth,
+  IUserCreate,
+  IUserDB,
+  IUserPublic,
+} from "@typing/user.interface";
+import { getDatabase } from "./database.service";
 
 export const getAllUsers = async () => {
   try {
@@ -14,7 +19,7 @@ export const getAllUsers = async () => {
     users.forEach((user) => delete user.password);
     return users;
   } catch (e) {
-    return {error: e};
+    return { error: e };
   }
 };
 
@@ -22,7 +27,7 @@ export const getUserByEmail = async (
   email: string
 ): Promise<IUserPublic | null> => {
   const collection = (await getDatabase()).collection<IUserDB>("User");
-  const user = await collection.findOne({email: email});
+  const user = await collection.findOne({ email: email });
   if (!user) {
     return null;
   }
@@ -35,16 +40,16 @@ export const getUserByEmail = async (
 export const getOneUser = async (userId: string) => {
   try {
     const collection = (await getDatabase()).collection<IUserDB>("User");
-    const user = await collection.findOne({_id: new ObjectId(userId)});
+    const user = await collection.findOne({ _id: new ObjectId(userId) });
     if (!user) {
-      return {error: `Utilisateur n° ${userId} inconnu.`};
+      return { error: `Utilisateur n° ${userId} inconnu.` };
     }
 
     // remove password before sending it back
     delete user.password;
     return user;
   } catch (e) {
-    return {error: e};
+    return { error: e };
   }
 };
 
@@ -53,15 +58,15 @@ export const createNewUser = async (
 ): Promise<{ error: string } | InsertOneResult<IUserDB>> => {
   try {
     if (!user.password || !user.email) {
-      return {error: "Données manquantes."};
+      return { error: "Données manquantes." };
     }
     const collection = (await getDatabase()).collection<IUserDB>("User");
 
     // Is email already taken?
-    const foundInDB = await collection.findOne<IUserDB>({email: user.email});
+    const foundInDB = await collection.findOne<IUserDB>({ email: user.email });
 
     if (foundInDB) {
-      return {error: "Cet e-mail est déjà utilisé."};
+      return { error: "Cet e-mail est déjà utilisé." };
     }
 
     const hashedPassword = bcrypt.hashSync(user.password, 15);
@@ -75,7 +80,7 @@ export const createNewUser = async (
     };
     return await collection.insertOne(userDB);
   } catch (e) {
-    return {error: (e as Error).message};
+    return { error: (e as Error).message };
   }
 };
 
@@ -121,7 +126,7 @@ export const addLessonToUser = async (
 ) => {
   const collection = (await getDatabase()).collection<IUserDB>("User");
   return collection.updateOne(
-    {email: user.email},
-    {$push: {lessonIds: lessonId}}
+    { email: user.email },
+    { $push: { lessonIds: lessonId } }
   );
 };

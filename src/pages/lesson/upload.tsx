@@ -1,5 +1,5 @@
-import axios, {AxiosError} from "axios";
-import {FormEvent, FunctionComponent, useState} from "react";
+import axios, { AxiosError } from "axios";
+import { FormEvent, FunctionComponent, useState } from "react";
 import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
@@ -7,13 +7,13 @@ import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 
-import {useAppDispatch} from "@hooks/store-hook";
-import {useLoginRedirect} from "@hooks/useLoginRedirect.hook";
-import {addAlert} from "@stores/alert.store";
+import { useAppDispatch } from "@hooks/store-hook";
+import { useLoginRedirect } from "@hooks/useLoginRedirect.hook";
+import { addAlert } from "@stores/alert.store";
 
-import {SingleResourceApiResponse} from "@typing/api-response.interface";
+import { SingleResourceApiResponse } from "@typing/api-response.interface";
 import styles from "@styles/Lesson/upload.module.scss";
-import {getAxiosErrorMessage} from "../../client/utils/get-axios-error.utils";
+import { getAxiosErrorMessage } from "../../client/utils/get-axios-error.utils";
 
 const requiredFields = ["title", "file"];
 
@@ -49,20 +49,20 @@ const upload: FunctionComponent = () => {
       return;
     }
 
-    const {data} = await axios
+    const { data } = await axios
       .post<SingleResourceApiResponse>("/api/lesson", formData)
       .catch((error: AxiosError) => {
         const response: SingleResourceApiResponse = {
           success: false,
           error: getAxiosErrorMessage(error),
         };
-        return {data: response};
+        return { data: response };
       });
 
-    const {success} = data;
+    const { success } = data;
 
     if (success) {
-      const {id} = data;
+      const { id } = data;
       const message = (
         <span>
           Leçon {isDraft ? "sauvegardée" : "créée"} avec succès !
@@ -70,9 +70,9 @@ const upload: FunctionComponent = () => {
         </span>
       );
 
-      dispatch(addAlert({message, success}));
+      dispatch(addAlert({ message, success }));
     } else {
-      const {error} = data;
+      const { error } = data;
       dispatch(
         addAlert({
           message: `Création de la leçon échouée : ${error}`,

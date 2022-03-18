@@ -1,12 +1,12 @@
-import React, {FunctionComponent, useEffect, useState,} from "react";
+import React, { FunctionComponent, useEffect, useState } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 import Nav from "react-bootstrap/Nav";
 import Link from "next/link";
 
 import styles from "@styles/Menu/navbar.module.scss";
-import {IUserPublic} from "@typing/user.interface";
-import {useLogout} from "@hooks/useLogout.hook";
-import {NavDropdown} from "react-bootstrap";
+import { IUserPublic } from "@typing/user.interface";
+import { useLogout } from "@hooks/useLogout.hook";
+import { NavDropdown } from "react-bootstrap";
 
 interface Props {
   user?: IUserPublic;
@@ -16,7 +16,7 @@ interface Props {
  * Links relative to the current user.
  * @constructor
  */
-const UserLinks: FunctionComponent<Props> = ({user}: Props) => {
+const UserLinks: FunctionComponent<Props> = ({ user }: Props) => {
   const logout = useLogout();
   const [username, setUsername] = useState("");
 
@@ -40,11 +40,11 @@ const UserLinks: FunctionComponent<Props> = ({user}: Props) => {
       <NavDropdown.Item>
         <Link href={"/user"}>Mon profil</Link>
       </NavDropdown.Item>
-      <Dropdown.Divider/>
+      <Dropdown.Divider />
       <NavDropdown.Item>
         <Link href={"/settings"}>Paramètres</Link>
       </NavDropdown.Item>
-      <Dropdown.Divider/>
+      <Dropdown.Divider />
       <NavDropdown.Item onClick={logout}>Déconnexion</NavDropdown.Item>
     </NavDropdown>
   ) : (

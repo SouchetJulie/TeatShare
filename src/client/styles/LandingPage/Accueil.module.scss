@@ -9,7 +9,7 @@
     z-index: 0;
     width: 100%;
     height: 90vh;
-    background-image: url('../../../../public/landingPage/background.png');
+    background-image: url("../../../../public/landingPage/background.png");
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
@@ -71,7 +71,6 @@
       width: 45%;
       margin: auto 1% 0 auto;
       transform: rotate(-6deg);
-
 
       .imessage {
         display: flex;
@@ -191,7 +190,6 @@
             font-weight: bold;
             margin: 0;
             color: $white;
-
           }
         }
       }
@@ -225,7 +223,6 @@
         margin: auto;
         text-align: center;
 
-
         h1 {
           font-size: 40px;
           text-align: center;
@@ -242,7 +239,6 @@
         width: 80%;
         // this padding fix the box border cutted
         padding-top: 2%;
-
       }
 
       .leftSide {
@@ -401,7 +397,6 @@
         }
       }
 
-
       .bottomSide {
         width: 70%;
         height: 100%;
@@ -450,7 +445,6 @@
               font-weight: bold;
               margin: 0;
               color: $white;
-
             }
           }
         }

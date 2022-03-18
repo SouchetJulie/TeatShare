@@ -1,5 +1,5 @@
-import {NextApiHandler, NextApiRequest, NextApiResponse} from "next";
-import {notImplementedHandler} from "@common/not-implemented.handler";
+import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
+import { notImplementedHandler } from "@common/not-implemented.handler";
 
 /**
  * Aiguille la requête vers la bonne méthode pour exécuter le traitant approprié.
@@ -8,8 +8,13 @@ import {notImplementedHandler} from "@common/not-implemented.handler";
  * @param {string|undefined} method Méthode HTTP appelée par la requête.
  * @return {NextApiHandler}
  */
-export default (handlers: Record<string, NextApiHandler>, method: string | undefined): NextApiHandler =>
+export default (
+    handlers: Record<string, NextApiHandler>,
+    method: string | undefined
+  ): NextApiHandler =>
   async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
-    const handler = (method ? handlers[method] : notImplementedHandler) || notImplementedHandler;
+    const handler =
+      (method ? handlers[method] : notImplementedHandler) ||
+      notImplementedHandler;
     return handler(req, res);
-  }
+  };
