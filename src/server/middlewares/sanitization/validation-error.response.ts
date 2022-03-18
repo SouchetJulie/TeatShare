@@ -1,11 +1,16 @@
 import { ValidationError } from "express-validator";
 import { NextApiResponse } from "next";
 
+/**
+ * Converts the validation errors to a readable format
+ * @param {NextApiResponse} res
+ * @param {ValidationError[]} errors
+ * @return {void}
+ */
 export const validationErrorResponse = (
   res: NextApiResponse,
   errors: ValidationError[]
-) => {
-  // Converts the errors to a readable format
+): void => {
   const errorMap: {
     [k: string]: {
       value: string;
@@ -13,6 +18,7 @@ export const validationErrorResponse = (
     };
   } = {};
 
+  // Group all error messages by parameter
   errors.forEach((error: ValidationError) => {
     if (!errorMap[error.param]) {
       errorMap[error.param] = {
@@ -20,7 +26,6 @@ export const validationErrorResponse = (
         messages: [],
       };
     }
-
     errorMap[error.param].messages.push(error.msg);
   });
 
