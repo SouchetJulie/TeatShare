@@ -3,7 +3,12 @@ import { ObjectId } from "bson";
 import { InsertOneResult } from "mongodb";
 
 import { createEmptyUser } from "@utils/create-empty-user";
-import { IUserAuth,IUserCreate, IUserDB, IUserPublic ,} from "@typing/user.interface";
+import {
+  IUserAuth,
+  IUserCreate,
+  IUserDB,
+  IUserPublic,
+} from "@typing/user.interface";
 import { getDatabase } from "./database.service";
 
 export const getAllUsers = async () => {
@@ -11,7 +16,6 @@ export const getAllUsers = async () => {
     const collection = (await getDatabase()).collection<IUserDB>("User");
     const users = await collection.find({}).toArray();
     // remove password before sending it back
-    // @ts-ignore
     users.forEach((user) => delete user.password);
     return users;
   } catch (e) {
@@ -21,33 +25,27 @@ export const getAllUsers = async () => {
 
 export const getUserByEmail = async (
   email: string
-): Promise<IUserPublic | { error: any }> => {
-  try {
-    const collection = (await getDatabase()).collection<IUserDB>("User");
-    const user = await collection.findOne({ email: email });
-if (!user) {
-      return { error: `Utilisateur ${email} inconnu.` };
-    }
-    // remove password before sending it back
-    // @ts-ignore
-    delete user.password;
-    console.log(`[DB] Retrieved user ${user.email} from DB.`);
-    return user;
-  } catch (e) {
-    return { error: e };
+): Promise<IUserPublic | null> => {
+  const collection = (await getDatabase()).collection<IUserDB>("User");
+  const user = await collection.findOne({ email: email });
+  if (!user) {
+    return null;
   }
+  // remove password before sending it back
+  delete user.password;
+  console.log(`[DB] Retrieved user ${user.email} from DB.`);
+  return user;
 };
 
 export const getOneUser = async (userId: string) => {
   try {
     const collection = (await getDatabase()).collection<IUserDB>("User");
     const user = await collection.findOne({ _id: new ObjectId(userId) });
-if (!user) {
+    if (!user) {
       return { error: `Utilisateur n° ${userId} inconnu.` };
     }
 
     // remove password before sending it back
-    // @ts-ignore
     delete user.password;
     return user;
   } catch (e) {
@@ -80,17 +78,16 @@ export const createNewUser = async (
       lastName: user.lastName,
       password: hashedPassword,
     };
-      // @ts-ignore
     return await collection.insertOne(userDB);
   } catch (e) {
-    return { error: (e as Error).message};
+    return { error: (e as Error).message };
   }
 };
 
 /**
  * Checks whether the given user credentials are valid or not.
  * @param {IUserAuth} user
- * @return {Promise<{error} | boolean>}
+ * @return {Promise<boolean>}
  */
 export const checkCredentials = async (user: IUserAuth): Promise<boolean> => {
   try {
@@ -99,8 +96,11 @@ export const checkCredentials = async (user: IUserAuth): Promise<boolean> => {
       email: user.email,
     });
 
-    // @ts-ignore
-    return await bcrypt.compare(user.password, userDB.password);
+    if (!userDB?.password || !user?.password) {
+      return false;
+    }
+
+    return bcrypt.compare(user.password, userDB.password);
   } catch (e) {
     return false;
   }

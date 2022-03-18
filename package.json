@@ -3,9 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "npm run prettier & next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "prettier": "prettier -l -w ./src"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.36",

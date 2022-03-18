@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { notImplementedHandler } from "@common/not-implemented.handler";
 import { logoutHandler } from "@handlers/user/logout/logout.handler";
+import routerMiddleware from "@middlewares/router.middleware";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const handlers = {
@@ -8,7 +8,5 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     // add here handlers for other methods
   };
 
-  const handler = handlers[req.method] || notImplementedHandler;
-
-  await handler(req, res);
+  await routerMiddleware(handlers, req.method)(req, res);
 };

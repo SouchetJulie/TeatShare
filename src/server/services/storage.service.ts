@@ -1,5 +1,12 @@
 import { Storage } from "@google-cloud/storage";
 
+if (!process.env.gcs_credentials) {
+  throw new Error("gcs_credentials must be defined in environment");
+}
+if (!process.env.BUCKET_NAME) {
+  throw new Error("BUCKET_NAME must be defined in environment");
+}
+
 const credentials = JSON.parse(process.env.gcs_credentials);
 
 const storage = new Storage({

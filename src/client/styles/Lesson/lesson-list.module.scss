@@ -3,7 +3,6 @@
 @import "../../../../node_modules/bootstrap/scss/variables";
 
 .lessonContainer {
-
   overflow-x: hidden;
   overflow-y: scroll;
   height: 500px;
@@ -18,7 +17,7 @@
 
 .filterButton {
   border: none;
-  background-color: #F96F5D;
+  background-color: #f96f5d;
 }
 
 .inputGroup > * {

@@ -16,7 +16,7 @@ export const signupHandler = async (
   }
 
   const result = await createNewUser(user);
-  if (!result["error"]) {
+  if (!("error" in result)) {
     return res.status(200).json({
       success: true,
       result,

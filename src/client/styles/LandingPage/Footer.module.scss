@@ -1,7 +1,6 @@
 @import "src/client/styles/variables";
 
 .landing_footer_container {
-
   font-weight: bold;
   width: 100%;
   height: auto;
@@ -101,7 +100,6 @@
       }
 
       .spaceText {
-
         width: 50%;
         margin: auto;
 
@@ -115,15 +113,12 @@
 }
 
 @media screen and (max-width: 500px) {
-
-
   .landing_footer_content {
     .landing_footer_bloc1 {
       display: block;
       width: 70%;
       height: 30%;
       padding: 5% 0;
-
 
       h2 {
         font-size: 30px;

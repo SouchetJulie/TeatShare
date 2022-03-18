@@ -33,7 +33,6 @@
         font-weight: 600;
         text-align: center;
         color: $white;
-
       }
 
       .temoignagePeopleName {
@@ -59,17 +58,13 @@
   }
 }
 
-
 @media screen and (max-width: 500px) {
-
   .temoignageContainer {
     width: 110%;
     height: 50vh;
 
     .temoignageContent {
-
       .temoignageText {
-
         h2 {
           font-size: 32px;
         }

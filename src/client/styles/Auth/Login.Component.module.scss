@@ -2,8 +2,7 @@
 
 .cardWrapper {
   display: flex;
-  height: calc(100vh - #{$navbarHeight
-});
+  height: calc(100vh - #{$navbarHeight});
   background-color: $secondary;
 }
 
@@ -122,4 +121,3 @@
     height: 100%;
   }
 }
-

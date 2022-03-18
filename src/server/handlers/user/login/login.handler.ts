@@ -1,16 +1,19 @@
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
-import {
-  checkCredentials,
-  getUserByEmail,
-  isUser,
-} from "@services/users.service";
+import { checkCredentials, getUserByEmail } from "@services/users.service";
 import { withSession } from "@middlewares/session.middleware";
 import { LoginRequest } from "@typing/login-request.interface";
+import { UserApiResponse } from "@typing/api-response.interface";
 
-const handler = async (req: NextApiRequest, res: NextApiResponse) => {
+const handler = async (
+  req: NextApiRequest,
+  res: NextApiResponse<UserApiResponse>
+): Promise<void> => {
   const userCredentials = req.body as LoginRequest;
   if (!userCredentials.password || !userCredentials.email) {
-    return res.status(400).json({ error: "Identifiants manquants." });
+    return res.status(400).json({
+      success: false,
+      error: "Identifiants manquants.",
+    });
   }
 
   const result = await checkCredentials(userCredentials);
@@ -18,10 +21,10 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     console.log(`[LOGIN] Credentials OK for ${userCredentials.email}.`);
     const user = await getUserByEmail(userCredentials.email);
 
-    if (!isUser(user)) {
+    if (!user) {
       return res.status(400).json({
         success: false,
-        error: user["error"] || "Login failed",
+        error: "Utilisateur inconnu",
       });
     }
 
@@ -31,12 +34,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
     return res.status(200).json({
       success: true,
-      user,
+      data: { user },
     });
   } else {
     return res.status(400).json({
       success: false,
-      error: result["error"] || "Login failed",
+      error: "Connexion échouée",
     });
   }
 };

@@ -1,8 +1,8 @@
-import {FunctionComponent} from "react";
+import { FunctionComponent } from "react";
 import styles from "../../styles/LandingPage/Card.module.scss";
 import Link from "next/link";
 import Image from "next/image";
-import {ILandingPageCardInterface} from "@typing/ILandingPageCard.interface";
+import { ILandingPageCardInterface } from "@typing/ILandingPageCard.interface";
 
 import img1 from "@imgCours/cours1.png";
 import img2 from "@imgCours/cours2.png";
@@ -14,25 +14,25 @@ import img6 from "@imgCours/cours6.png";
 import Timer from "../../../../public/landingPage/timer.svg";
 
 const LandingCard: FunctionComponent<ILandingPageCardInterface> = ({
-                                                                     course,
-                                                                     date,
-                                                                     img,
-                                                                     matiere,
-                                                                     time,
-                                                                     title,
-                                                                   }) => {
-  const imgArray = [img1, img2, img3, img4, img5, img6];
+  course,
+  date,
+  img,
+  matiere,
+  time,
+  title,
+}) => {
+  const imgArray: StaticImageData[] = [img1, img2, img3, img4, img5, img6];
   return (
     <div className={styles.cardContainer}>
       <div className={styles.cardImg}>
-        <Image src={imgArray[img]} alt="Cours" layout="responsive"/>
+        <Image src={imgArray[img]} alt="Cours" layout="responsive" />
       </div>
       <div className={styles.thematic}>
         <span className={styles.matiere}>{matiere}</span>
         <span className={styles.course}>{course}</span>
       </div>
       <div className={styles.cardDate}>
-        <Timer/>
+        <Timer />
         <p>
           {time} , {date}
         </p>

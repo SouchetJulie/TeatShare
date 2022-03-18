@@ -4,7 +4,7 @@
 
 @import "../variables";
 
-$gray: #474A57;
+$gray: #474a57;
 
 .navbar {
   position: fixed !important;
@@ -103,8 +103,9 @@ div.popover {
       content: "";
       background: $bleu;
       -webkit-mask-composite: destination-out;
-      mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1 1" preserveAspectRatio="none"><circle cx="1" cy="1" r="1" fill="black"/></svg>') 0/100% 100%,
-      linear-gradient(#fff, #fff);
+      mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1 1" preserveAspectRatio="none"><circle cx="1" cy="1" r="1" fill="black"/></svg>')
+          0/100% 100%,
+        linear-gradient(#fff, #fff);
       mask-composite: exclude;
     }
 

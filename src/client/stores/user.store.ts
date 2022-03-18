@@ -8,7 +8,7 @@ interface UserState {
 }
 
 const initialState: UserState = {
-  authenticatedUser: null,
+  authenticatedUser: undefined,
 };
 
 // Reducers
@@ -16,17 +16,20 @@ const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    setUser: (state: UserState, action: PayloadAction<IUserPublic>) => {
+    setUser: (
+      state: UserState,
+      action: PayloadAction<IUserPublic | undefined>
+    ) => {
       state.authenticatedUser = action.payload;
     },
     resetUser: (state: UserState) => {
-      state.authenticatedUser = null;
+      state.authenticatedUser = undefined;
     },
   },
 });
 
 // Selector
-const selectAuthenticatedUser = (state: RootState): IUserPublic =>
+const selectAuthenticatedUser = (state: RootState): IUserPublic | undefined =>
   state.user.authenticatedUser;
 const selectIsAuthenticated = (state: RootState): boolean =>
   !!state.user.authenticatedUser;
