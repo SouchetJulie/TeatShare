@@ -92,7 +92,7 @@ export const createNewUser = async (
     throw new Error("Cet e-mail est déjà utilisé.");
   }
 
-  const hashedPassword = bcrypt.hashSync(user.password, 15);
+  const hashedPassword = bcrypt.hashSync(user.password, 13);
 
   const userDB: IUserDB = {
     ...createEmptyUser(),

@@ -16,9 +16,8 @@ const handler = async (
     });
   }
 
-  const result = await createNewUser(userCreate);
-
   try {
+    const result = await createNewUser(userCreate);
     const user: IUserPublic | null = await getOneUser(
       result.insertedId.toString()
     );
@@ -43,7 +42,8 @@ const handler = async (
     console.log("[SIGNUP] Error while recording newly created user:");
     return res.status(400).json({
       success: false,
-      error: "Erreur lors de la création de l'utilisateur",
+      error:
+        "Erreur lors de la création de l'utilisateur : " + (e as Error).message,
     });
   }
 };
