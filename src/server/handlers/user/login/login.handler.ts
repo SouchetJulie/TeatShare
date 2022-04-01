@@ -17,9 +17,7 @@ const handler = async (
     });
   }
 
-  console.log(new Date().toLocaleTimeString());
   const result = await checkCredentials(userCredentials);
-  console.log(new Date().toLocaleTimeString());
   if (result) {
     console.log(`[LOGIN] Credentials OK for ${userCredentials.email}.`);
     const user = await getUserByEmail(userCredentials.email);
