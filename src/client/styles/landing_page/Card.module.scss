@@ -1,0 +1,98 @@
+@import "../../styles/variables";
+
+.cardContainer {
+  overflow-x: hidden;
+  width: 100%;
+  height: auto;
+  margin: 10% 0;
+  border-radius: 15px;
+  box-shadow: 10px 10px 50px 4px $greyc;
+
+  .cardImg {
+    width: 100%;
+    height: auto;
+  }
+
+  .thematic {
+    font-size: calc(100% - 2px);
+    font-weight: bold;
+    display: inline-flex;
+    width: 100%;
+    margin: 5% 5%;
+    color: $white;
+
+    .matiere {
+      width: 30%;
+      text-align: center;
+      border-radius: 12px;
+      background-color: $bleu;
+    }
+
+    .course {
+      width: 30%;
+      margin-left: 5%;
+      text-align: center;
+      border-radius: 12px;
+      background-color: $orange;
+    }
+  }
+
+  .cardDate {
+    display: inline-flex;
+    width: 100%;
+    margin: 2% 5%;
+
+    p {
+      font-weight: bold;
+      margin-bottom: 0;
+      margin-left: 1%;
+    }
+  }
+
+  .cardTitle {
+    margin: 2% 5%;
+
+    p {
+      font-size: 30px;
+      font-weight: 600;
+    }
+  }
+
+  .landingCardbtn {
+    font-size: 150%;
+    font-weight: bolder;
+    display: block;
+    width: 60%;
+    margin: 15% auto 5%;
+    padding: 2% 0px 2% 0px;
+    text-align: center;
+    color: $orange;
+    border: 3px solid $orange;
+    border-radius: 40px;
+    background-color: $white;
+    &:hover {
+      color: $orange;
+    }
+    a {
+      &:hover {
+        color: $orange;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1100px) {
+}
+
+@media screen and (max-width: 500px) {
+  .cardContainer {
+    .cardTitle {
+      margin: 2% 5%;
+
+      p {
+        font-size: 30px;
+        font-weight: 600;
+      }
+    }
+  }
+}

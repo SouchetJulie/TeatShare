@@ -1,17 +1,25 @@
-import {withSession} from '@middlewares/session.middleware';
+import { NextApiRequest, NextApiResponse } from "next";
+import { ApiResponse } from "@typing/api-response.interface";
+import { IUserPublic } from "@typing/user.interface";
+import { withSession } from "@middlewares/session.middleware";
 
-export default withSession(async (req, res) => {
-    const {user} = req.session;
+export default withSession(
+  async (
+    req: NextApiRequest,
+    res: NextApiResponse<ApiResponse<{ user?: IUserPublic }>>
+  ) => {
+    const { user } = req.session;
 
     if (!user) {
-        return res.status(401).json({
-            success: false,
-            error: 'Il faut être connecté.'
-        })
+      return res.status(401).json({
+        success: false,
+        error: "Il faut être connecté.",
+      });
     }
 
     return res.status(200).json({
-        success: true,
-        user
+      success: true,
+      data: { user },
     });
-})
+  }
+);

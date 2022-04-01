@@ -1,7 +1,7 @@
 import { FunctionComponent } from "react";
 import Nav from "react-bootstrap/Nav";
 
-import styles from "@styles/Menu/navbar.module.scss";
+import styles from "@styles/menu/navbar.module.scss";
 import Link from "next/link";
 
 interface Props {

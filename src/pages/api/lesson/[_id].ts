@@ -1,16 +1,17 @@
-import { NextApiRequest, NextApiResponse } from "next";
-import { notImplementedHandler } from "@common/not-implemented.handler";
+import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 import { lessonGetOneHandler } from "@handlers/lesson/get.handler";
+import routerMiddleware from "@middlewares/router.middleware";
+import { ApiResponse } from "@typing/api-response.interface";
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+export default async (
+  req: NextApiRequest,
+  res: NextApiResponse<ApiResponse>
+) => {
   const { _id } = req.query as { _id: string };
-  const handlers = {
+  const handlers: Record<string, NextApiHandler<ApiResponse>> = {
     GET: lessonGetOneHandler(_id),
     // add here handlers for other methods
   };
 
-  // @ts-ignore
-  const handler = handlers[req.method] || notImplementedHandler;
-
-  await handler(req, res);
+  await routerMiddleware(handlers, req.method)(req, res);
 };
