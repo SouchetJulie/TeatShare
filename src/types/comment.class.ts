@@ -10,7 +10,7 @@ export class Comment {
   lessonFileId: string;
 
   /**
-   * Initializes a new comment, created by this user, on this lessonPost file
+   * Initializes a new comment, created by this user, on this lessonDetails file
    * @param {string} authorId
    * @param {string} lessonFileId
    */

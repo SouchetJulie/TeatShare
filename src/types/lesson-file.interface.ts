@@ -2,7 +2,7 @@ import { ObjectId } from "bson";
 import { CleanFile } from "@typing/clean-file.interface";
 
 /**
- * Data about a lessonPost.
+ * Data about a lessonDetails.
  */
 export interface ILesson {
   file: CleanFile;

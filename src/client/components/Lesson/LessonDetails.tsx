@@ -9,7 +9,8 @@ interface PostComponentProps {
   lesson: ILesson;
 }
 
-const lessonPost: FunctionComponent<PostComponentProps> = ({ lesson }) => {
+const lessonDetails: FunctionComponent<PostComponentProps> = ({ lesson }) => {
+  console.log(lesson);
   return (
     <div className={styles.lessonContainer}>
       <div className={styles.lessonBlock1}>
@@ -64,4 +65,4 @@ const lessonPost: FunctionComponent<PostComponentProps> = ({ lesson }) => {
     </div>
   );
 };
-export default lessonPost;
+export default lessonDetails;

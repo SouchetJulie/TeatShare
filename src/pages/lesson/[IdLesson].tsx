@@ -1,29 +1,50 @@
 import { useRouter } from "next/router";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import LessonPost from "@components/Lesson/LessonPost";
+import LessonPost from "@components/lesson/LessonDetails";
+import { ApiResponse } from "@typing/api-response.interface";
+import { ILesson } from "@typing/lesson-file.interface";
+import LessonPlaceholder from "@components/lesson/LessonPlaceholder";
+import { addAlert } from "@stores/alert.store";
+import { useAppDispatch } from "@hooks/store-hook";
 
 const IdLesson = () => {
   const router = useRouter();
-  const [lesson, setlesson] = useState<any>(null);
+  const [lesson, setlesson] = useState<ILesson | undefined>(undefined);
   const [loading, setloading] = useState<boolean>(true);
-  const id = router.query.IdPost;
+  const id = router.query.IdLesson;
+  const dispatch = useAppDispatch();
+
   useEffect(() => {
     if (router.isReady) {
       axios
-        .get(`/api/lesson/${id}`)
-        .then((res) => {
-          setlesson(res.data.lesson);
-          setloading(false);
+        .get<ApiResponse<{ lesson: ILesson }>>(`/api/lesson/${id}`)
+        .then(({ data }) => {
+          if (data.success) {
+            setlesson(data.data?.lesson);
+          } else {
+            addAlert({ message: data.error, success: false, ttl: 2000 });
+          }
         })
-        .catch((err) => {
-          console.log(err);
+        .catch((err: Error) => {
+          dispatch(
+            addAlert({ message: err.message, success: false, ttl: 2000 })
+          );
+        })
+        .finally(() => {
+          setloading(false);
         });
     }
   }, [router.isReady]);
   console.log();
   return (
-    <>{loading ? <p>Votre cours arrive</p> : <LessonPost lesson={lesson} />}</>
+    <>
+      {loading || !lesson ? (
+        <LessonPlaceholder />
+      ) : (
+        <LessonPost lesson={lesson} />
+      )}
+    </>
   );
 };
 
