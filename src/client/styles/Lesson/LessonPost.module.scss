@@ -1,24 +1,46 @@
 @import "../variables";
 
-.lessonContainer {
-  width: 80%;
-  margin: auto;
-}
+.lessonHeader {
+  margin-top: 2%;
 
-.lessonBlock1 {
-  display: flex;
-  background: green;
-  justify-content: space-between;
   border-bottom: solid 1px black;
+  padding-bottom: 2%;
+
+  & > :first-child {
+    text-align: center;
+
+    .blockImage {
+      border: solid 1px black !important;
+      border-radius: 50%;
+    }
+  }
+
+  .headerAction {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    text-align: center;
+
+    button {
+      width: 190px;
+    }
+
+    & > :last-child {
+      width: fit-content;
+    }
+  }
 
   h1 {
     font-size: 34px;
     color: $grey;
-    font-weight: bold;
+    font-weight: 400;
+    margin-bottom: 3%;
   }
 
   h3 {
     text-align: center;
+    color: $grey;
+    font-weight: 300;
   }
 
   div {
@@ -29,14 +51,13 @@
       width: auto;
       height: auto;
       padding: 2% 15%;
-      background: $orange;
       font-size: 15px;
       font-weight: bold;
       margin: auto;
     }
 
     .downloadButton {
-      background: $bgc;
+      background: $bleu-clair;
     }
   }
 }

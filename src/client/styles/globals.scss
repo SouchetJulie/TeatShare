@@ -10,6 +10,7 @@ $enable-negative-margins: true;
 // adding new colors
 $custom-colors: (
   "primary-light": $primary-light,
+  "secondary-light": $secondary-light,
 );
 
 $theme-colors: map-merge($theme-colors, $custom-colors);

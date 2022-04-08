@@ -1,17 +1,16 @@
 import { useRouter } from "next/router";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import LessonPost from "@components/lesson/LessonDetails";
 import { ApiResponse } from "@typing/api-response.interface";
 import { ILesson } from "@typing/lesson-file.interface";
-import LessonPlaceholder from "@components/lesson/LessonPlaceholder";
 import { addAlert } from "@stores/alert.store";
 import { useAppDispatch } from "@hooks/store-hook";
+import LessonDetails from "@components/lesson/LessonDetails";
 
 const IdLesson = () => {
   const router = useRouter();
-  const [lesson, setlesson] = useState<ILesson | undefined>(undefined);
-  const [loading, setloading] = useState<boolean>(true);
+  const [lesson, setlesson] = useState<ILesson | undefined>();
+  // const [loading, setloading] = useState<boolean>(true);
   const id = router.query.IdLesson;
   const dispatch = useAppDispatch();
 
@@ -32,18 +31,19 @@ const IdLesson = () => {
           );
         })
         .finally(() => {
-          setloading(false);
+          // setloading(false);
         });
     }
   }, [router.isReady]);
-  console.log();
+
   return (
     <>
-      {loading || !lesson ? (
+      {/* loading || !lesson ? (
         <LessonPlaceholder />
       ) : (
         <LessonPost lesson={lesson} />
-      )}
+      ) */}
+      <LessonDetails lesson={lesson} />
     </>
   );
 };

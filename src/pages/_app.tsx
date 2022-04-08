@@ -12,6 +12,7 @@ import "@styles/globals.scss";
 import { selectIsAuthenticated } from "@stores/user.store";
 import { useAppSelector } from "@hooks/store-hook";
 import { useAutoLogin } from "@hooks/auto-login.hook";
+import Container from "react-bootstrap/Container";
 
 /**
  * Main application component: contains the parts that are shared for the whole app.
@@ -41,7 +42,10 @@ const App = ({ Component, pageProps }: AppProps) => {
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
 
-      <div className="container-fluid p-0 min-vh-100 d-flex justify-content-between flex-column">
+      <Container
+        fluid
+        className=" p-0 min-vh-100 d-flex justify-content-between flex-column"
+      >
         <header>
           <NavBar />
           <SideBar />
@@ -53,7 +57,7 @@ const App = ({ Component, pageProps }: AppProps) => {
           <Component {...pageProps} />
         </main>
         <Footer />
-      </div>
+      </Container>
       <div className="d-flex flex-column position-fixed bottom-0 w-100 onTop">
         {alerts}
       </div>

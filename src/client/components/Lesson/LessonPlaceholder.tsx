@@ -2,17 +2,19 @@ import { FunctionComponent } from "react";
 import styles from "@styles/Lesson/LessonPost.module.scss";
 import Image from "next/image";
 import sparkles from "@public/icones/sparkles.png";
-import { Placeholder } from "react-bootstrap";
+import Placeholder from "react-bootstrap/Placeholder";
 
 const LessonPlaceholder: FunctionComponent = (props) => {
   return (
     <div className={styles.lessonContainer}>
       <div className={styles.lessonBlock1}>
         <div>
-          <Placeholder size="lg" />
+          <p aria-hidden="true">
+            <Placeholder animation="glow" bg={"primary"} />
+          </p>
         </div>
         <div>
-          <h3>Matiere du cours</h3>
+          <Placeholder.Button size="lg" animation="glow" />
         </div>
         <div>
           <button className={styles.printButton}>Imprimer</button>

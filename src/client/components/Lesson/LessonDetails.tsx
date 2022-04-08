@@ -2,31 +2,19 @@ import { FunctionComponent } from "react";
 import styles from "@styles/Lesson/LessonPost.module.scss";
 import { ILesson } from "@typing/lesson-file.interface";
 import Image from "next/image";
-
 import sparkles from "../../../../public/icones/sparkles.png";
+import Container from "react-bootstrap/Container";
+import LessonDetailsHeader from "@components/lesson/LessonDetailsHeader";
 
-interface PostComponentProps {
-  lesson: ILesson;
+interface LessonComponentProps {
+  lesson?: ILesson;
 }
 
-const lessonDetails: FunctionComponent<PostComponentProps> = ({ lesson }) => {
+const lessonDetails: FunctionComponent<LessonComponentProps> = ({ lesson }) => {
   console.log(lesson);
   return (
-    <div className={styles.lessonContainer}>
-      <div className={styles.lessonBlock1}>
-        <div>
-          <Image src={"/"} width="50px" height="50px" />
-          <p>publié le {lesson.publicationDate}</p>
-        </div>
-        <div>
-          <h1>{lesson.title}</h1>
-          <h3>Matiere du cours</h3>
-        </div>
-        <div>
-          <button className={styles.printButton}>Imprimer</button>
-          <button className={styles.downloadButton}>Télécharger PDF</button>
-        </div>
-      </div>
+    <Container>
+      <LessonDetailsHeader lesson={lesson} />
       <div className={styles.lessonBlock2}>
         <span>Emplacement du cours</span>
       </div>
@@ -62,7 +50,7 @@ const lessonDetails: FunctionComponent<PostComponentProps> = ({ lesson }) => {
           <button className={styles.registerButton}>Je m&apos;inscris</button>
         </div>
       </div>
-    </div>
+    </Container>
   );
 };
 export default lessonDetails;
