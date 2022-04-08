@@ -1,0 +1,162 @@
+@import "../../styles/variables";
+
+.landing_footer_container {
+  font-weight: bold;
+  width: 100vw;
+  height: auto;
+  color: white;
+  background-color: $grbk;
+}
+
+.landing_footer_content {
+  width: 70%;
+  height: 100%;
+  margin: auto;
+
+  .landing_footer_bloc1 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 30%;
+    padding: 5% 0;
+
+    & > *:first-child {
+      font-size: calc(20px + 1.5vmin);
+    }
+
+    .socialIconsLogos {
+      display: flex;
+      justify-content: space-evenly;
+      width: 20%;
+    }
+  }
+
+  .landing_footer_bloc2 {
+    font-size: 1rem;
+    display: flex;
+    justify-content: space-between;
+    height: 65%;
+    margin: auto;
+    padding: 5% 0;
+
+    div {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      .link {
+        font-weight: bold;
+      }
+    }
+
+    .spaceText {
+      p {
+        margin: 10% 0;
+      }
+    }
+  }
+
+  .landing_footer_bloc3 {
+    padding: 1% 0;
+    text-align: center;
+  }
+}
+
+@media screen and (max-width: 1100px) {
+  .landing_footer_content {
+    .landing_footer_bloc1 {
+      display: block;
+      width: 50%;
+      height: 30%;
+      margin: auto;
+      padding: 5% 0;
+
+      h2 {
+        font-size: 30px;
+        text-align: center;
+      }
+
+      .socialIconsLogos {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        margin: auto;
+      }
+    }
+
+    .landing_footer_bloc2 {
+      font-size: 15px;
+      display: flex;
+      flex-direction: column;
+      height: auto;
+      margin: auto;
+      padding: 5% 0;
+      text-align: center;
+
+      div {
+        a {
+          margin-bottom: 3%;
+        }
+      }
+
+      .spaceText {
+        width: 50%;
+        margin: auto;
+
+        p {
+          margin-top: 6%;
+          margin-bottom: 3%;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .landing_footer_content {
+    .landing_footer_bloc1 {
+      display: block;
+      width: 70%;
+      height: 30%;
+      padding: 5% 0;
+
+      h2 {
+        font-size: 30px;
+        margin-bottom: 10%;
+        text-align: center;
+      }
+
+      .socialIconsLogos {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        margin: auto;
+      }
+    }
+
+    .landing_footer_bloc2 {
+      font-size: 15px;
+      display: flex;
+      flex-direction: column;
+      height: auto;
+      margin: auto;
+      padding: 5% 0;
+      text-align: center;
+
+      div {
+        a {
+          margin-bottom: 3%;
+        }
+      }
+
+      .spaceText {
+        width: 70%;
+
+        p {
+          margin-top: 6%;
+          margin-bottom: 3%;
+        }
+      }
+    }
+  }
+}

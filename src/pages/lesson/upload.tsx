@@ -8,19 +8,25 @@ import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 
 import { useAppDispatch } from "@hooks/store-hook";
+import { useLoginRedirect } from "@hooks/login-redirect.hook";
 import { addAlert } from "@stores/alert.store";
 
 import { ResourceApiResponse } from "@typing/api-response.interface";
-import styles from "@styles/Lesson/upload.module.scss";
+import styles from "@styles/lesson/upload.module.scss";
+import { getAxiosErrorMessage } from "../../client/utils/get-axios-error.utils";
 
 const requiredFields = ["title", "file"];
 
 const upload: FunctionComponent = () => {
-  // store
   const dispatch = useAppDispatch();
+  const user = useLoginRedirect(); // Route guard
 
   const [isDraft, setIsDraft] = useState(false);
   const [validated, setValidated] = useState(false);
+
+  if (!user) {
+    return <></>;
+  }
 
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -46,7 +52,7 @@ const upload: FunctionComponent = () => {
       .catch((error: AxiosError) => {
         const response: ResourceApiResponse = {
           success: false,
-          error: error.response.data.error || error.request || error.message,
+          error: getAxiosErrorMessage(error),
         };
         return { data: response };
       });

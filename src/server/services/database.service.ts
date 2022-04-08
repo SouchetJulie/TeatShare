@@ -1,34 +1,42 @@
-import { Db, MongoClient } from 'mongodb';
+import { Db, MongoClient } from "mongodb";
 
-const uri = process.env.MONGODB_URI;
+const uri = process.env.MONGODB_URI || "";
 
-let cachedClient: MongoClient = null;
-let cachedDb: Db = null;
+declare global {
+  // This needs to be a "var" instead of "const" or "let" to work
+  // Also, it's used just below 👇👇 despite ESLint saying otherwise
+  // eslint-disable-next-line no-unused-vars,no-var
+  var mongo: MongoClient;
+}
+
+// Using global to keep the connection across hot reloads
+// See https://www.mongodb.com/community/forums/t/connections-not-closed-with-nextjs/115037/3
+let cachedClient: MongoClient = global.mongo;
+let cachedDb: Db | undefined = global.mongo?.db();
 
 /**
  * Connect to MongoDB client and our database
  */
-export const connectToDatabase = async () => {
+const connectToDatabase = async () => {
   if (cachedClient && cachedDb) {
-    return {client: cachedClient, db: cachedDb}
+    return { client: cachedClient, db: cachedDb };
   }
 
-  const client = cachedClient || await MongoClient.connect(uri, {});
+  const client = (global.mongo =
+    cachedClient || (await MongoClient.connect(uri, {})));
+  console.log("[DB] Opened new connection to database");
 
-  const db = cachedDb || client.db('TeatShare');
+  const db = cachedDb || client.db();
 
   cachedClient = client;
   cachedDb = db;
 
-  return {client, db};
-}
+  return { client, db };
+};
 
-export const getDatabase = async (): Promise<Db> => {
-  const {db} = await connectToDatabase();
+const getDatabase = async (): Promise<Db> => {
+  const { db } = await connectToDatabase();
   return db;
-}
+};
 
-export const getClient = async (): Promise<MongoClient> => {
-  const {client} = await connectToDatabase();
-  return client;
-}
+export { getDatabase };

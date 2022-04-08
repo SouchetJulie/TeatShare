@@ -1,0 +1,156 @@
+@import "../../styles/variables";
+
+.accessContainer {
+  position: relative;
+  width: 100%;
+  height: auto;
+  padding-top: 13%;
+  padding-bottom: 13%;
+
+  .accessContent {
+    width: 27%;
+    margin-left: 17%;
+
+    .accessTitle {
+      font-size: 52px;
+      font-weight: bold;
+      margin-bottom: 5%;
+      margin-left: 2rem;
+      color: $orange;
+
+      span {
+        color: $bleu;
+      }
+    }
+
+    ul {
+      width: 100%;
+      margin-bottom: 5%;
+      list-style-position: outside;
+
+      li {
+        font-size: 25px;
+        font-weight: bold;
+        width: 100%;
+        margin-bottom: 3%;
+        text-align: justify;
+        color: $grey;
+      }
+    }
+
+    div {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+
+      .accessButton {
+        font-size: 24px;
+        font-weight: bold;
+        width: 271px;
+        height: 43px;
+        color: $white;
+        border: none;
+        border-radius: 40px;
+        background: $orange;
+        a {
+          &:hover {
+            color: $white;
+          }
+        }
+      }
+    }
+  }
+
+  .accessImgWrapper {
+    position: absolute;
+    z-index: 1;
+    top: 20%;
+    right: 2%;
+    width: 40%;
+    height: 100%;
+    background-image: url("../../../../public/landingPage/phone2.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+  }
+}
+
+@media screen and (max-width: 1100px) {
+  .accessContainer {
+    .accessContent {
+      .accessTitle {
+        font-size: 35px;
+      }
+
+      ul {
+        li {
+          font-size: 20px;
+          margin-bottom: 8%;
+        }
+      }
+    }
+
+    .accessImgWrapper {
+      top: 20%;
+      right: 5%;
+      width: 50%;
+      height: 100%;
+    }
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .accessContainer {
+    display: flex;
+    flex-wrap: wrap;
+
+    .accessContent {
+      width: 70%;
+
+      margin: auto;
+      padding: 0;
+
+      .accessTitle {
+        font-size: 30px;
+        margin-bottom: 10%;
+        margin-left: 0;
+        text-align: center;
+      }
+
+      ul {
+        padding: 0;
+
+        li {
+          font-size: 20px;
+          margin-bottom: 8%;
+          margin-left: 0px;
+          list-style: none;
+        }
+      }
+
+      div {
+        .accessButton {
+          font-size: 24px;
+          font-weight: bold;
+          width: 271px;
+          height: 43px;
+          margin-bottom: 10%;
+          color: $white;
+          border: none;
+          border-radius: 40px;
+          background: $orange;
+        }
+      }
+    }
+
+    .accessImgWrapper {
+      position: relative;
+
+      right: 0;
+      width: 70%;
+      height: 200px;
+      margin: auto;
+
+      background-position: center;
+    }
+  }
+}

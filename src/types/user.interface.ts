@@ -1,13 +1,19 @@
-import { EGrade } from './grade.enum';
-import { ESubject } from './subject.enum';
+import { EGrade } from "./grade.enum";
+import { ESubject } from "./subject.enum";
 import { ObjectId } from "bson";
 
 /**
- * Used for authentication and sign-up
+ * Used for authentication
  */
 export interface IUserAuth {
-  email: string,
-  password: string, // to be removed outside of auth
+  email: string;
+  password?: string; // to be removed outside of auth
+}
+
+/**
+ * Used for creating a new User
+ */
+export interface IUserCreate extends IUserAuth {
   firstName?: string;
   lastName?: string;
 }
@@ -28,7 +34,7 @@ export interface IUserAuth {
  * @property {string[]} bookmarkIds
  * @property {string[]} commentIds
  */
-export interface IUserDB extends IUserAuth {
+export interface IUserDB extends IUserCreate {
   _id?: ObjectId; // used in database
   avatar?: File;
   joinDate: Date;
@@ -43,6 +49,6 @@ export interface IUserDB extends IUserAuth {
 }
 
 /**
- * Used for sending data to the client about an User
+ * Used for sending data to the client about a User
  */
-export type IUserPublic = Omit<IUserDB, 'password'>;
+export type IUserPublic = Omit<IUserDB, "password">;

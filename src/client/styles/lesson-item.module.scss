@@ -1,0 +1,35 @@
+@import "../styles/variables";
+
+.card {
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.main {
+  flex-grow: 1;
+  padding-right: 20px;
+  padding-left: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  margin: 0;
+  border: none;
+  background-color: transparent;
+
+  & *:first-child {
+    font-weight: bold;
+    text-transform: capitalize;
+  }
+}
+
+.subtitle {
+  margin-top: 5px;
+}
+
+.authorLink {
+  z-index: 5;
+}
