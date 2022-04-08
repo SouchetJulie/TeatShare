@@ -9,7 +9,7 @@ $enable-negative-margins: true;
 
 // adding new colors
 $custom-colors: (
-  "primary-light": $primary-light,
+        "primary-light": $primary-light,
 );
 
 $theme-colors: map-merge($theme-colors, $custom-colors);
@@ -26,7 +26,7 @@ html,
 body,
 #__next {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   min-height: 100vh;
   margin: 0;
   padding: 0;
@@ -34,7 +34,6 @@ body,
 
 #__next_page {
   overflow-x: hidden;
-  height: 100%;
   padding-top: $navbarHeight;
 
   @include media-breakpoint-up(md) {
@@ -57,6 +56,7 @@ h1 {
   text-align: center;
   color: white;
 }
+
 .round-button {
   margin: 5px;
   padding-right: 40px;
@@ -67,6 +67,7 @@ h1 {
 .onTop {
   z-index: 2000;
 }
+
 .cardContainer {
   display: block;
   width: 400px;

@@ -40,17 +40,23 @@ const App = ({ Component, pageProps }: AppProps) => {
         <title>TeatShare</title>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
-      <header>
-        <NavBar />
-        <SideBar />
-      </header>
-      <main id="__next_page" className={isAuthenticated ? "authenticated" : ""}>
-        <Component {...pageProps} />
-      </main>
+
+      <div className="container-fluid p-0 min-vh-100 d-flex justify-content-between flex-column">
+        <header>
+          <NavBar />
+          <SideBar />
+        </header>
+        <main
+          id="__next_page"
+          className={isAuthenticated ? "authenticated" : ""}
+        >
+          <Component {...pageProps} />
+        </main>
+        <Footer />
+      </div>
       <div className="d-flex flex-column position-fixed bottom-0 w-100 onTop">
         {alerts}
       </div>
-      <Footer />
     </>
   );
 };
