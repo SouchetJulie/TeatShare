@@ -28,7 +28,7 @@ export const getOneLesson = async (id: string): Promise<ILesson | null> => {
 };
 
 /**
- * Creates a new Lesson by uploading it to the necessary services, with the relevant updates to the author as well.
+ * Creates a new lesson by uploading it to the necessary services, with the relevant updates to the author as well.
  * @param {IUserPublic} user
  * @param {File} uploadedFile
  * @param {ILessonCreate} uploadedLesson

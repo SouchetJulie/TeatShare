@@ -40,7 +40,7 @@ const parseForm = (req: NextApiRequest): Promise<LessonFormData> =>
   );
 
 /**
- * Parses the incoming request to record a new Lesson.
+ * Parses the incoming request to record a new lesson.
  * @param {NextApiRequest} req Incoming request.
  * @param {NextApiResponse} res Whether the recording succeeded, and the reasons why not otherwise.
  */
