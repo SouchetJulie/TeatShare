@@ -23,17 +23,15 @@ const App = ({ Component, pageProps }: AppProps) => {
   const isAuthenticated: boolean = useAppSelector(selectIsAuthenticated);
   const alertList: IAlert[] = useAppSelector(selectAlerts);
 
-  const alerts = alertList.map((alert: IAlert) => {
-    return (
-      <Alert
-        key={`alert-${alert.id}`}
-        message={alert.message}
-        success={alert.success}
-        id={alert.id}
-        ttl={alert.ttl}
-      />
-    );
-  });
+  const alerts = alertList.map((alert: IAlert) => (
+    <Alert
+      key={`alert-${alert.id}`}
+      message={alert.message}
+      success={alert.success}
+      id={alert.id}
+      ttl={alert.ttl}
+    />
+  ));
 
   return (
     <>
@@ -56,7 +54,7 @@ const App = ({ Component, pageProps }: AppProps) => {
         >
           <Component {...pageProps} />
         </main>
-        <Footer />
+        <Footer isAuthenticated={isAuthenticated} />
       </Container>
       <div className="d-flex flex-column position-fixed bottom-0 w-100 onTop">
         {alerts}

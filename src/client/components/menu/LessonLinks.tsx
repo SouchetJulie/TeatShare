@@ -60,7 +60,7 @@ const LessonLinks: FunctionComponent<Props> = ({ className = "" }: Props) => {
       <Nav.Link as={Link} href={"/lesson"} passHref>
         <a className="nav-link bi bi-file-richtext">Mes fiches de cours</a>
       </Nav.Link>
-      <Nav.Link as={Link} href={"/for_later"} passHref>
+      <Nav.Link as={Link} href={"/user/for_later"} passHref>
         <a className="nav-link bi bi-journal-bookmark">A lire plus tard</a>
       </Nav.Link>
       <Nav.Link as={Link} href={"/lesson/upload"} passHref>
