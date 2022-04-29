@@ -14,8 +14,8 @@ export interface ILesson {
   lastModifiedDate: Date;
   publicationDate?: Date;
   isDraft: boolean;
-  // foreign keys
-  authorId: ObjectId;
+  // foreign keys (needs to accept string so that filtered queries work)
+  authorId: ObjectId | string;
   categoryIds: ObjectId[];
   tagIds: ObjectId[];
   commentIds: ObjectId[];
@@ -23,6 +23,6 @@ export interface ILesson {
 
 /**
  *
- * Data for creation of a Lesson.
+ * Data for creation of a lesson.
  */
 export type ILessonCreate = Partial<ILesson>;

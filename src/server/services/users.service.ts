@@ -11,13 +11,16 @@ import {
 } from "@typing/user.interface";
 import { getDatabase } from "./database.service";
 
+const collection = (await getDatabase()).collection<IUserDB>("User");
+// Create index for speeding up search
+collection.createIndex({ email: 1 });
+
 /**
  * Fetches all users from database.
  *
  * @return {Promise<IUserDB[]>} The list (possibly empty) of all users found.
  */
 export const getAllUsers: () => Promise<IUserDB[]> = async () => {
-  const collection = (await getDatabase()).collection<IUserDB>("User");
   const users = await collection.find({}).toArray();
   // remove password before sending it back
   users.forEach((user: IUserDB) => delete user.password);
@@ -34,7 +37,6 @@ export const getAllUsers: () => Promise<IUserDB[]> = async () => {
 export const getUserByEmail = async (
   email: string
 ): Promise<IUserPublic | null> => {
-  const collection = (await getDatabase()).collection<IUserDB>("User");
   const user = await collection.findOne({ email: email });
 
   if (!user) {
@@ -55,7 +57,6 @@ export const getUserByEmail = async (
 export const getOneUser = async (
   userId: string
 ): Promise<IUserPublic | null> => {
-  const collection = (await getDatabase()).collection<IUserDB>("User");
   const user: IUserDB | null = await collection.findOne({
     _id: new ObjectId(userId),
   });
@@ -83,8 +84,6 @@ export const createNewUser = async (
   if (!user.password || !user.email) {
     throw new Error("Données manquantes.");
   }
-  const collection = (await getDatabase()).collection<IUserDB>("User");
-
   // Is email already taken?
   const foundInDB = await collection.findOne<IUserDB>({ email: user.email });
 
@@ -94,7 +93,7 @@ export const createNewUser = async (
 
   const hashedPassword = bcrypt.hashSync(user.password, 15);
 
-  const userDB: IUserDB = {
+  const userDB: Omit<IUserDB, "_id"> = {
     ...createEmptyUser(),
     email: user.email,
     firstName: user.firstName,
@@ -111,7 +110,6 @@ export const createNewUser = async (
  */
 export const checkCredentials = async (user: IUserAuth): Promise<boolean> => {
   try {
-    const collection = (await getDatabase()).collection<IUserDB>("User");
     const userDB = await collection.findOne<IUserDB>({
       email: user.email,
     });
@@ -145,7 +143,6 @@ export const addLessonToUser = async (
   user: IUserPublic,
   lessonId: ObjectId
 ) => {
-  const collection = (await getDatabase()).collection<IUserDB>("User");
   return collection.updateOne(
     { email: user.email },
     { $push: { lessonIds: lessonId } }
