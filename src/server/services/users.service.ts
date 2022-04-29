@@ -44,7 +44,7 @@ export const getUserByEmail = async (
   }
   // remove password before sending it back
   delete user.password;
-  console.log(`[DB] Retrieved user ${user.email} from DB.`);
+  console.log(`[USER] Retrieved user ${user.email} from DB.`);
   return user;
 };
 
@@ -67,7 +67,7 @@ export const getOneUser = async (
 
   // remove password before sending it back
   delete user.password;
-  console.log(`[DB] Retrieved user ${user.email} from DB.`);
+  console.log(`[USER] Retrieved user ${user.email} from DB.`);
   return user;
 };
 
