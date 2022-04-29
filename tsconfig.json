@@ -34,7 +34,7 @@
         "client/assets/*"
       ],
       "@components/*": [
-        "client/componentsTodo/*"
+        "client/components/*"
       ],
       "@hooks/*": [
         "client/hooks/*"
