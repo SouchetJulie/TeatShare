@@ -2,7 +2,7 @@ import React, { FunctionComponent } from "react";
 import Nav from "react-bootstrap/Nav";
 import styles from "@styles/menu/navbar.module.scss";
 import { selectIsAuthenticated } from "@stores/user.store";
-import LessonLinks from "@components/menu/LessonLinks";
+import LessonLinks from "../menu/LessonLinks";
 import { useAppSelector } from "@hooks/store-hook";
 
 const SideBar: FunctionComponent = (): JSX.Element => {

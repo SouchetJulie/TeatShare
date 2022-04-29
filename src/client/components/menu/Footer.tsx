@@ -11,6 +11,7 @@ import { FunctionComponent } from "react";
 interface FooterProps {
   isAuthenticated: boolean;
 }
+
 const classes = ["CP", "CE1", "CE2", "CM1", "CM2"];
 
 const Footer: FunctionComponent<FooterProps> = ({ isAuthenticated }) => {
@@ -24,7 +25,7 @@ const FooterLanding: FunctionComponent = (): JSX.Element => {
   return (
     <footer className={styles.landing_footer_container}>
       <div className={styles.landing_footer_content}>
-        <div className={styles.landing_footer_bloc1}>
+        <div className={styles.landingFooterSocial}>
           <h6>Suivez nous sur les réseaux !</h6>
           <div className={styles.socialIconsLogos}>
             <Facebook color="#009FB7" size={40} />
@@ -32,7 +33,7 @@ const FooterLanding: FunctionComponent = (): JSX.Element => {
             <Twitter color="#009FB7" size={40} />
           </div>
         </div>
-        <div className={styles.landing_footer_bloc2}>
+        <div className={styles.landingFooterContact}>
           <div className={styles.spaceText}>
             <Image src={logo} layout="responsive" className={styles.test} />
             <p>+1 (7635) 547-12-97</p>
@@ -60,21 +61,21 @@ const FooterLanding: FunctionComponent = (): JSX.Element => {
  */
 const FooterAuthenticated: FunctionComponent = (): JSX.Element => {
   return (
-    <footer className={styles.landing_footer_container}>
-      <div className={styles.landing_footer_content}>
-        <div>
+    <footer className={styles.menu_footer_container}>
+      <div className={styles.menu_footer_content}>
+        <div className={styles.menu_footer_bibliotheque}>
           <p>Bibliothèque</p>
           {classes.map((classLabel: string) => (
             <Link href={`/lesson?subject=${classLabel}`}>{classLabel}</Link>
           ))}
         </div>
-        <div>
+        <div className={styles.menu_footer_profile}>
           <p>Profil</p>
           <Link href={"/user/for_later"}>À lire plus tard</Link>
           <Link href={"/user/settings"}>Paramètres</Link>
           <Link href={"/lesson"}>Mes contributions</Link>
         </div>
-        <div>
+        <div className={styles.menu_footer_link}>
           <p>Liens</p>
           <Link href={"/contact"}>Contact</Link>
           <Link href={"/mentions"}>Mentions légales</Link>

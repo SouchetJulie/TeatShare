@@ -1,5 +1,6 @@
 @import "../../styles/variables";
 
+// LANDING PAGE FOOTER
 .landing_footer_container {
   font-weight: bold;
   width: 100%;
@@ -10,23 +11,15 @@
 
 .landing_footer_content {
   width: 70%;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: stretch;
   height: 100%;
   margin: auto;
 
-  & > div {
+  .landingFooterSocial {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    flex-direction: column;
-  }
-
-  .landing_footer_bloc1 {
     height: 30%;
-    padding: 5% 0;
+    margin: 5% 0;
 
     & > *:first-child {
       font-size: calc(20px + 1.5vmin);
@@ -34,19 +27,27 @@
 
     .socialIconsLogos {
       display: flex;
-      justify-content: space-evenly;
+      justify-content: space-between;
       width: 20%;
     }
   }
 
-  .landing_footer_bloc2 {
+  .landingFooterContact {
     font-size: 1rem;
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
     height: 65%;
-    margin: auto;
-    padding: 5% 0;
+    margin-bottom: 5%;
+    text-align: center;
+
+    & :nth-child(3) {
+      align-self: center;
+    }
 
     div {
       display: flex;
+      flex-direction: column;
       justify-content: space-between;
 
       .link {
@@ -67,18 +68,51 @@
   }
 }
 
+// AUTHENTICATED FOOTER
+.menu_footer_container {
+  font-weight: bold;
+  width: 100%;
+  height: auto;
+  color: white;
+  background-color: $grbk;
+}
+
+.menu_footer_content {
+  display: flex;
+  justify-content: space-between;
+  width: calc(70% - 90px);
+  height: 100%;
+  margin: auto;
+
+  .menu_footer_bibliotheque,
+  .menu_footer_profile,
+  .menu_footer_link {
+    margin: 3% 0;
+
+    p {
+      font-size: 22px;
+    }
+
+    a {
+      margin-top: 4px;
+      font-size: 16px;
+      font-weight: lighter;
+      display: block;
+    }
+  }
+}
+
 @media screen and (max-width: 1100px) {
   .landing_footer_content {
-    .landing_footer_bloc1 {
-      display: block;
-      width: 50%;
-      height: 30%;
-      margin: auto;
-      padding: 5% 0;
+    .landingFooterSocial {
+      flex-direction: column;
+      width: 80%;
+      margin: 5% auto;
 
-      h2 {
+      h6 {
         font-size: 30px;
         text-align: center;
+        margin-bottom: 5%;
       }
 
       .socialIconsLogos {
@@ -89,7 +123,7 @@
       }
     }
 
-    .landing_footer_bloc2 {
+    .landingFooterContact {
       font-size: 15px;
       display: flex;
       flex-direction: column;
@@ -119,7 +153,7 @@
 
 @media screen and (max-width: 500px) {
   .landing_footer_content {
-    .landing_footer_bloc1 {
+    .landingFooterSocial {
       display: block;
       width: 70%;
       height: 30%;
@@ -139,7 +173,7 @@
       }
     }
 
-    .landing_footer_bloc2 {
+    .landingFooterContact {
       font-size: 15px;
       display: flex;
       flex-direction: column;
