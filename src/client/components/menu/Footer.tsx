@@ -4,8 +4,7 @@ import Link from "next/link";
 import logo from "@public/logos/name.png";
 // Social icons
 import { Facebook, Twitter, Instagram } from "react-bootstrap-icons";
-import insta from "@socialIcons/insta.png";
-import twitter from "@socialIcons/twitter.png";
+
 import styles from "@styles/landing_page/Footer.module.scss";
 import { FunctionComponent } from "react";
 
