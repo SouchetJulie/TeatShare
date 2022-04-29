@@ -1,7 +1,5 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { Formik } from "formik";
-import { faTimes } from "@fortawesome/free-solid-svg-icons/faTimes";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import { FunctionComponent, useEffect, useState } from "react";
@@ -19,6 +17,7 @@ import { getAxiosErrorMessage } from "../../utils/get-axios-error.utils";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import { FormikHelpers } from "formik/dist/types";
+import { XLg } from "react-bootstrap-icons";
 
 const userCreateSchema = yup.object({
   email: yup
@@ -111,7 +110,7 @@ const SignupForm: FunctionComponent = () => {
         <div className={styles.cardWrapper}>
           <div className={styles.cardContainer}>
             <Link href="/">
-              <FontAwesomeIcon icon={faTimes} className={styles.cancelIcon} />
+              <XLg className={styles.cancelIcon} color={"grey"} size={40} />
             </Link>
             <h2>Nous rejoindre</h2>
             <Form

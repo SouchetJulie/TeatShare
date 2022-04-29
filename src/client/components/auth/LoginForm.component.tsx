@@ -4,8 +4,6 @@ import {
   useEffect,
   useState,
 } from "react";
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import styles from "@styles/auth/Login.Component.module.scss";
 import Link from "next/link";
 import { Button, Form } from "react-bootstrap";
@@ -16,6 +14,7 @@ import { addAlert } from "@stores/alert.store";
 import { setUser } from "@stores/user.store";
 import { ApiResponse } from "@typing/api-response.interface";
 import { IUserAuth, IUserPublic } from "@typing/user.interface";
+import { XLg } from "react-bootstrap-icons";
 
 const LoginForm: FunctionComponent = () => {
   // store
@@ -92,7 +91,7 @@ const LoginForm: FunctionComponent = () => {
     <div className={styles.cardWrapper}>
       <div className={styles.cardContainer}>
         <Link href="/">
-          <FontAwesomeIcon icon={faTimes} className={styles.cancelIcon} />
+          <XLg className={styles.cancelIcon} color={"grey"} size={40} />
         </Link>
         <h2>Se connecter</h2>
         <Form
