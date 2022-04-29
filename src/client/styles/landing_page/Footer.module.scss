@@ -149,7 +149,9 @@
     }
   }
   // AUTHENTICATED FOOTER
-
+  .authenticated {
+    padding-left: 0;
+  }
 
   .menu_footer_content {
     display: flex;
@@ -228,6 +230,9 @@
     }
   }
   // AUTHENTICATED FOOTER
+  .authenticated {
+    padding-left: 0;
+  }
 
   .menu_footer_content {
     display: flex;
