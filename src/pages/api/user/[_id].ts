@@ -8,7 +8,7 @@ export default async (
   res: NextApiResponse<ApiResponse>
 ) => {
   const { _id } = req.query as { _id: string };
-  const handlers: Record<string, NextApiHandler> = {
+  const handlers: Record<string, NextApiHandler<ApiResponse>> = {
     GET: userGetOneHandler(_id),
     // add here handlers for other methods
   };
