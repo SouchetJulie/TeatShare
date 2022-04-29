@@ -4,17 +4,16 @@ import { ILesson } from "@typing/lesson-file.interface";
 import Image from "next/image";
 import sparkles from "../../../../public/icones/sparkles.png";
 import Container from "react-bootstrap/Container";
-import LessonDetailsHeader from "@components/lesson/LessonDetailsHeader";
+import LessonTest from "@components/lesson/lessonTest";
 
 interface LessonComponentProps {
   lesson?: ILesson;
 }
 
 const lessonDetails: FunctionComponent<LessonComponentProps> = ({ lesson }) => {
-  console.log(lesson);
   return (
     <Container>
-      <LessonDetailsHeader lesson={lesson} />
+      <LessonTest lesson={lesson} />
       <div className={styles.lessonBlock2}>
         <span>Emplacement du cours</span>
       </div>
