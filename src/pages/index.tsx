@@ -27,9 +27,9 @@ const Home: FunctionComponent = () => {
         .get<ApiResponse<{ lessons: ILesson[] }>>("/api/lesson")
         .then(
           ({
-            data: response,
+            data: { data, success },
           }: AxiosResponse<ApiResponse<{ lessons: ILesson[] }>>) => {
-            if (!response.success) {
+            if (!success) {
               dispatch(
                 addAlert({
                   message: "Impossible de récupérer la liste des leçons",
@@ -37,14 +37,14 @@ const Home: FunctionComponent = () => {
                   ttl: 3000,
                 })
               );
-            } else if (isSubscribed && !!response.data) {
-              setLessons(response.data.lessons);
+            } else if (isSubscribed) {
+              setLessons(data?.lessons ?? []);
             }
           }
         )
         .catch((reason: AxiosError) => {
           console.log(
-            `Erreur récupération des leçons`,
+            "Erreur récupération des leçons",
             getAxiosErrorMessage(reason)
           );
           dispatch(
