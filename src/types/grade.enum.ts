@@ -6,4 +6,3 @@ export enum EGrade {
   "CM1" = "CM1",
   "CM2" = "CM2",
 }
-// TODO put in config file
