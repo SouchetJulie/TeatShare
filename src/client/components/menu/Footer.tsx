@@ -3,7 +3,7 @@ import Link from "next/link";
 
 import logo from "@public/logos/name.png";
 // Social icons
-import { Facebook, Twitter, Instagram } from "react-bootstrap-icons";
+import { Facebook, Instagram, Twitter } from "react-bootstrap-icons";
 
 import styles from "@styles/landing_page/Footer.module.scss";
 import { FunctionComponent } from "react";
@@ -23,7 +23,7 @@ const Footer: FunctionComponent<FooterProps> = ({ isAuthenticated }) => {
  */
 const FooterLanding: FunctionComponent = (): JSX.Element => {
   return (
-    <footer className={styles.landing_footer_container}>
+    <footer className={styles.footer_container}>
       <div className={styles.landing_footer_content}>
         <div className={styles.landingFooterSocial}>
           <h6>Suivez nous sur les réseaux !</h6>
@@ -61,7 +61,7 @@ const FooterLanding: FunctionComponent = (): JSX.Element => {
  */
 const FooterAuthenticated: FunctionComponent = (): JSX.Element => {
   return (
-    <footer className={styles.menu_footer_container}>
+    <footer className={`${styles.footer_container} ${styles.authenticated}`}>
       <div className={styles.menu_footer_content}>
         <div className={styles.menu_footer_bibliotheque}>
           <p>Bibliothèque</p>
