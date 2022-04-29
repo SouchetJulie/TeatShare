@@ -6,8 +6,42 @@ import insta from "@socialIcons/insta.png";
 import facebook from "@socialIcons/facebook.png";
 import twitter from "@socialIcons/twitter.png";
 import styles from "@styles/landing_page/Footer.module.scss";
+import { FunctionComponent } from "react";
 
-const Footer = () => {
+interface FooterProps {
+  isAuthenticated: boolean;
+}
+const classes = ["CP", "CE1", "CE2", "CM1", "CM2"];
+
+const Footer: FunctionComponent<FooterProps> = ({ isAuthenticated }) => {
+  if (isAuthenticated) {
+    return (
+      <footer className={styles.landing_footer_container}>
+        <div className={styles.landing_footer_content}>
+          <div>
+            <p>Bibliothèque</p>
+            {classes.map((classLabel: string) => (
+              <Link href={`/lesson?subject=${classLabel}`}>{classLabel}</Link>
+            ))}
+          </div>
+          <div>
+            <p>Profil</p>
+            <Link href={"/user/for_later"}>À lire plus tard</Link>
+            <Link href={"/user/settings"}>Paramètres</Link>
+            <Link href={"/lesson"}>Mes contributions</Link>
+          </div>
+          <div>
+            <p>Liens</p>
+            <Link href={"/contact"}>Contact</Link>
+            <Link href={"/mentions"}>Mentions légales</Link>
+            <Link href={"/a_propos"}>À propos</Link>
+            <Link href={"/faq"}>FAQ</Link>
+          </div>
+        </div>
+      </footer>
+    );
+  }
+
   return (
     <footer className={styles.landing_footer_container}>
       <div className={styles.landing_footer_content}>

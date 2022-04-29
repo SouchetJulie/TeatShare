@@ -1,5 +1,5 @@
 /**
- * Meta data about a lesson file
+ * Meta data about a lessonDetails file
  */
 export class LessonFile {
   _id: string = "";
@@ -16,7 +16,7 @@ export class LessonFile {
   commentIds: string[] = [];
 
   /**
-   * Initializes a new lesson file, created by this user
+   * Initializes a new lessonDetails file, created by this user
    * @param {string} authorId
    */
   constructor(authorId: string) {
