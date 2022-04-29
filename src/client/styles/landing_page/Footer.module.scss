@@ -71,7 +71,6 @@
 
 // AUTHENTICATED FOOTER
 .menu_footer_container {
-
   font-weight: bold;
   width: 100%;
   height: auto;
@@ -90,6 +89,10 @@
   .menu_footer_profile,
   .menu_footer_link {
     margin: 3% 0;
+
+    p {
+      font-size: 22px;
+    }
 
     a {
       margin-top: 4px;
