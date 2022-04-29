@@ -19,7 +19,7 @@ interface LessonHeaderComponentProps {
   lesson?: ILesson;
 }
 
-const LessonTest: FunctionComponent<LessonHeaderComponentProps> = ({
+const LessonDetailsHeader: FunctionComponent<LessonHeaderComponentProps> = ({
   lesson,
 }) => {
   const [author, setAuthor] = useState<IUserPublic | undefined>(undefined);
@@ -82,4 +82,4 @@ const LessonTest: FunctionComponent<LessonHeaderComponentProps> = ({
   );
 };
 
-export default LessonTest;
+export default LessonDetailsHeader;

@@ -4,7 +4,7 @@ import { ILesson } from "@typing/lesson-file.interface";
 import Image from "next/image";
 import sparkles from "../../../../public/icones/sparkles.png";
 import Container from "react-bootstrap/Container";
-import LessonTest from "@components/lesson/lessonTest";
+import LessonDetailsHeader from "@components/lesson/LessonDetailsHeader";
 
 interface LessonComponentProps {
   lesson?: ILesson;
@@ -13,7 +13,7 @@ interface LessonComponentProps {
 const lessonDetails: FunctionComponent<LessonComponentProps> = ({ lesson }) => {
   return (
     <Container>
-      <LessonTest lesson={lesson} />
+      <LessonDetailsHeader lesson={lesson} />
       <div className={styles.lessonBlock2}>
         <span>Emplacement du cours</span>
       </div>
