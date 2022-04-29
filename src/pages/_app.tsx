@@ -2,16 +2,17 @@ import { AppProps } from "next/app";
 import Head from "next/head";
 import { Provider } from "react-redux";
 
-import Footer from "@components/menu/Footer";
-import NavBar from "@components/menu/NavBar";
-import SideBar from "@components/menu/SideBar";
-import Alert from "@components/ui/AlertComponent";
+import Footer from "../client/components/menu/Footer";
+import NavBar from "../client/components/menu/NavBar";
+import SideBar from "../client/components/menu/SideBar";
+import Alert from "../client/components/ui/AlertComponent";
 import { store } from "@stores/store";
 import { IAlert, selectAlerts } from "@stores/alert.store";
 import "@styles/globals.scss";
 import { selectIsAuthenticated } from "@stores/user.store";
 import { useAppSelector } from "@hooks/store-hook";
 import { useAutoLogin } from "@hooks/auto-login.hook";
+import Container from "react-bootstrap/Container";
 
 /**
  * Main application component: contains the parts that are shared for the whole app.
@@ -22,17 +23,15 @@ const App = ({ Component, pageProps }: AppProps) => {
   const isAuthenticated: boolean = useAppSelector(selectIsAuthenticated);
   const alertList: IAlert[] = useAppSelector(selectAlerts);
 
-  const alerts = alertList.map((alert: IAlert) => {
-    return (
-      <Alert
-        key={`alert-${alert.id}`}
-        message={alert.message}
-        success={alert.success}
-        id={alert.id}
-        ttl={alert.ttl}
-      />
-    );
-  });
+  const alerts = alertList.map((alert: IAlert) => (
+    <Alert
+      key={`alert-${alert.id}`}
+      message={alert.message}
+      success={alert.success}
+      id={alert.id}
+      ttl={alert.ttl}
+    />
+  ));
 
   return (
     <>
@@ -41,7 +40,10 @@ const App = ({ Component, pageProps }: AppProps) => {
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
 
-      <div className="container-fluid p-0 min-vh-100 d-flex justify-content-between flex-column">
+      <Container
+        fluid
+        className=" p-0 min-vh-100 d-flex justify-content-between flex-column"
+      >
         <header>
           <NavBar />
           <SideBar />
@@ -52,8 +54,8 @@ const App = ({ Component, pageProps }: AppProps) => {
         >
           <Component {...pageProps} />
         </main>
-        <Footer />
-      </div>
+        <Footer isAuthenticated={isAuthenticated} />
+      </Container>
       <div className="d-flex flex-column position-fixed bottom-0 w-100 onTop">
         {alerts}
       </div>

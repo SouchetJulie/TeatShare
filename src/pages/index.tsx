@@ -1,8 +1,8 @@
 import Head from "next/head";
 import { FunctionComponent, useEffect, useState } from "react";
 import { selectIsAuthenticated } from "@stores/user.store";
-import { LessonList } from "@components/lesson/LessonList";
-import LandingPage from "@components/landing_page/LandingPage";
+import { LessonList } from "../client/components/lesson/LessonList";
+import LandingPage from "../client/components/landing_page/LandingPage";
 import { useAppDispatch, useAppSelector } from "@hooks/store-hook";
 import { ILesson } from "@typing/lesson-file.interface";
 import { ApiResponse } from "@typing/api-response.interface";

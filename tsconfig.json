@@ -21,20 +21,49 @@
     "incremental": true,
     "baseUrl": "src",
     "paths": {
-      "@imgCours/*": ["../public/landingPage/cours/*"],
-      "@socialIcons/*": ["../public/landingPage/socialIcons/*"],
-      "@public/*": ["../public/*"],
-      "@assets/*": ["client/assets/*"],
-      "@components/*": ["client/components/*"],
-      "@hooks/*": ["client/hooks/*"],
-      "@stores/*": ["client/stores/*"],
-      "@styles/*": ["client/styles/*"],
-      "@services/*": ["server/services/*"],
-      "@middlewares/*": ["server/middlewares/*"],
-      "@handlers/*": ["server/handlers/*"],
-      "@common/*": ["server/common/*"],
-      "@utils/*": ["utils/*"],
-      "@typing/*": ["types/*"], // aliased to typing to avoid @types keyword
+      "@imgCours/*": [
+        "../public/landingPage/cours/*"
+      ],
+      "@socialIcons/*": [
+        "../public/landingPage/socialIcons/*"
+      ],
+      "@public/*": [
+        "../public/*"
+      ],
+      "@assets/*": [
+        "client/assets/*"
+      ],
+      "@components/*": [
+        "client/components/*"
+      ],
+      "@hooks/*": [
+        "client/hooks/*"
+      ],
+      "@stores/*": [
+        "client/stores/*"
+      ],
+      "@styles/*": [
+        "client/styles/*"
+      ],
+      "@services/*": [
+        "server/services/*"
+      ],
+      "@middlewares/*": [
+        "server/middlewares/*"
+      ],
+      "@handlers/*": [
+        "server/handlers/*"
+      ],
+      "@common/*": [
+        "server/common/*"
+      ],
+      "@utils/*": [
+        "utils/*"
+      ],
+      "@typing/*": [
+        "types/*"
+      ]
+      // aliased to typing to avoid @types keyword
     }
   },
   "include": [

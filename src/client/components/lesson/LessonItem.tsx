@@ -64,7 +64,7 @@ const LessonItem: FunctionComponent<Props> = ({ lesson }: Props) => {
       <div className={styles.main}>
         <h6 className={styles.header}>
           <NavLink
-            href={`/api/lesson/${lesson._id}`}
+            href={`/lesson/${lesson._id}`}
             className="p-0 stretched-link text-dark"
           >
             {lesson.title}
@@ -72,7 +72,7 @@ const LessonItem: FunctionComponent<Props> = ({ lesson }: Props) => {
           <span>{/* hashtags */}</span>
           <span className={styles.authorLink}>
             Écrit par{" "}
-            <Link href={`/api/user/${lesson.authorId}`}>{authorName}</Link>
+            <Link href={`/user/${lesson.authorId}`}>{authorName}</Link>
           </span>
         </h6>
         {lesson.subtitle && (
