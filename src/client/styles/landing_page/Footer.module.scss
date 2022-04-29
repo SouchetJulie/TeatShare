@@ -1,5 +1,6 @@
 @import "../../styles/variables";
 
+// LANDING PAGE FOOTER
 .landing_footer_container {
   font-weight: bold;
   width: 100%;
@@ -66,6 +67,41 @@
     text-align: center;
   }
 }
+
+
+// AUTHENTICATED FOOTER
+.menu_footer_container {
+
+  font-weight: bold;
+  width: 100%;
+  height: auto;
+  color: white;
+  background-color: $grbk;
+}
+
+.menu_footer_content {
+  display: flex;
+  justify-content: space-between;
+  width: calc(70% - 90px);
+  height: 100%;
+  margin: auto;
+
+  .menu_footer_bibliotheque,
+  .menu_footer_profile,
+  .menu_footer_link {
+    margin: 3% 0;
+
+    a {
+      margin-top: 4px;
+      font-size: 16px;
+      font-weight: lighter;
+      display: block;
+    }
+
+  }
+
+}
+
 
 @media screen and (max-width: 1100px) {
   .landing_footer_content {

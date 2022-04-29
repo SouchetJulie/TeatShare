@@ -11,26 +11,27 @@ import { FunctionComponent } from "react";
 interface FooterProps {
   isAuthenticated: boolean;
 }
+
 const classes = ["CP", "CE1", "CE2", "CM1", "CM2"];
 
 const Footer: FunctionComponent<FooterProps> = ({ isAuthenticated }) => {
   if (isAuthenticated) {
     return (
-      <footer className={styles.landing_footer_container}>
-        <div className={styles.landing_footer_content}>
-          <div>
+      <footer className={styles.menu_footer_container}>
+        <div className={styles.menu_footer_content}>
+          <div className={styles.menu_footer_bibliotheque}>
             <p>Bibliothèque</p>
             {classes.map((classLabel: string) => (
               <Link href={`/lesson?subject=${classLabel}`}>{classLabel}</Link>
             ))}
           </div>
-          <div>
+          <div className={styles.menu_footer_profile}>
             <p>Profil</p>
             <Link href={"/user/for_later"}>À lire plus tard</Link>
             <Link href={"/user/settings"}>Paramètres</Link>
             <Link href={"/lesson"}>Mes contributions</Link>
           </div>
-          <div>
+          <div className={styles.menu_footer_link}>
             <p>Liens</p>
             <Link href={"/contact"}>Contact</Link>
             <Link href={"/mentions"}>Mentions légales</Link>
