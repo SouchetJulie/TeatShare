@@ -1,4 +1,4 @@
-import { FunctionComponent } from "react";
+import { FunctionComponent, Ref, RefObject, useRef } from "react";
 import styles from "@styles/lesson/LessonPost.module.scss";
 import { ILesson } from "@typing/lesson-file.interface";
 // import Image from "next/image";
@@ -12,12 +12,16 @@ interface LessonComponentProps {
 }
 
 const LessonDetails: FunctionComponent<LessonComponentProps> = ({ lesson }) => {
+  const pdfViewerBlock: RefObject<HTMLDivElement> = useRef(null);
   return (
     <Container>
       <LessonDetailsHeader lesson={lesson} />
-      <div className={styles.lessonBlock2}>
-        <LessonDetailsPDFViewer lesson={lesson} />
-      </div>
+      <Container ref={pdfViewerBlock} className={styles.lessonBlock2}>
+        <LessonDetailsPDFViewer
+          lesson={lesson}
+          viewerWidth={pdfViewerBlock.current?.offsetWidth ?? 0}
+        />
+      </Container>
       {/*
       <div className={styles.lessonBlock3}>
         <div className={styles.forbiden}>

@@ -1,22 +1,22 @@
-import React, { FunctionComponent, useEffect, useState } from "react";
+import React, { FunctionComponent, useState } from "react";
 import { ILesson } from "@typing/lesson-file.interface";
+// import styles from "@styles/lesson/LessonPost.module.scss";
 // PDF VIEWER
 import { Document, Page, pdfjs } from "react-pdf";
 import { PDFDocumentProxy } from "pdfjs-dist";
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
-import axios from "axios";
-
 interface LessonDetailsPDFProps {
   lesson?: ILesson;
+  viewerWidth: number;
 }
 
 const LessonDetailsPDFViewer: FunctionComponent<LessonDetailsPDFProps> = ({
   lesson,
+  viewerWidth,
 }: LessonDetailsPDFProps): JSX.Element => {
   const [numPages, setNumPages] = useState<number>(1);
-  const [pageNumber, setPageNumber] = useState<number>(1);
-
+  console.log(viewerWidth);
   /**
    * On load
    * @param {PDFDocumentProxy} pdfProperties Data about the downloaded pdf
@@ -30,13 +30,20 @@ const LessonDetailsPDFViewer: FunctionComponent<LessonDetailsPDFProps> = ({
   return (
     <>
       <Document file={fileURL} onLoadSuccess={onDocumentLoadSuccess}>
-        <Page pageNumber={1} />
+        {setPages(numPages, viewerWidth)}
       </Document>
-      <p>
-        Page {pageNumber} of {numPages}
-      </p>
     </>
   );
 };
 
 export default LessonDetailsPDFViewer;
+
+const setPages = (nbrPage: number, width: number): JSX.Element => {
+  return (
+    <>
+      {Array.from(new Array(nbrPage), (el, index) => (
+        <Page width={width} key={`page_${index + 1}`} pageNumber={index + 1} />
+      ))}
+    </>
+  );
+};
