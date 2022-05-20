@@ -110,7 +110,7 @@ const SignupForm: FunctionComponent = () => {
         <div className={styles.cardWrapper}>
           <div className={styles.cardContainer}>
             <Link href="/">
-              <XLg className={styles.cancelIcon} color={"grey"} size={40} />
+              <XLg className={styles.cancelIcon} color="grey" size={40} />
             </Link>
             <h2>Nous rejoindre</h2>
             <Form

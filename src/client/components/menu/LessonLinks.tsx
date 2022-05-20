@@ -44,7 +44,7 @@ const LessonLinks: FunctionComponent<Props> = ({ className = "" }: Props) => {
             onChange={(event) => setSearchTerm(event.target.value)}
           />
           <Button type="submit" variant="secondary">
-            <Search aria-label="recherche" size={25} color={"white"} />
+            <Search aria-label="recherche" size={25} color="white" />
           </Button>
         </InputGroup>
       </Form>
