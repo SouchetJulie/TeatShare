@@ -16,7 +16,6 @@ const LessonDetailsPDFViewer: FunctionComponent<LessonDetailsPDFProps> = ({
   viewerWidth,
 }: LessonDetailsPDFProps): JSX.Element => {
   const [numPages, setNumPages] = useState<number>(1);
-  console.log(viewerWidth);
   /**
    * On load
    * @param {PDFDocumentProxy} pdfProperties Data about the downloaded pdf
