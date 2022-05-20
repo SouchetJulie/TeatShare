@@ -90,7 +90,6 @@ export const createNewLesson = async (
     publicationDate: uploadedLesson.isDraft ? undefined : new Date(),
     // foreign keys
     authorId: user._id ?? "",
-    categoryIds: [],
     tagIds: [],
     commentIds: [],
     ...uploadedLesson,
