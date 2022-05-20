@@ -16,7 +16,6 @@ const IdLesson = () => {
 
   useEffect(() => {
     if (router.isReady) {
-      console.log("test");
       axios
         .get<ApiResponse<{ lesson: ILesson }>>(`/api/lesson/${id}`)
         .then(({ data }) => {
