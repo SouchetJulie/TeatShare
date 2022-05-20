@@ -26,32 +26,10 @@ const LessonDetailsPDFViewer: FunctionComponent<LessonDetailsPDFProps> = ({
   }
 
   const fileURL: string = `https://storage.googleapis.com/${process.env.NEXT_PUBLIC_BUCKET_NAME}/${lesson?.file.filepath}`;
-  useEffect(() => {
-    if (lesson) {
-      axios
-        .get(fileURL, {
-          headers: {
-            "Access-Control-Allow-Origin": "*",
-          },
-        })
-        .then((res) => {
-          console.log(res);
-          // function fileToBase64() {}
-        });
-    }
-  }, [lesson?.file]);
 
   return (
     <>
-      <Document
-        file={{
-          url: fileURL,
-          httpHeaders: {
-            "Access-Control-Allow-Origin": "*",
-          },
-        }}
-        onLoadSuccess={onDocumentLoadSuccess}
-      >
+      <Document file={fileURL} onLoadSuccess={onDocumentLoadSuccess}>
         <Page pageNumber={1} />
       </Document>
       <p>
@@ -62,20 +40,3 @@ const LessonDetailsPDFViewer: FunctionComponent<LessonDetailsPDFProps> = ({
 };
 
 export default LessonDetailsPDFViewer;
-/**
- *
- // eslint-disable-next-line valid-jsdoc
- * @param {any} image
- */
-export async function fileToBase64(image: any) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = (value) => {
-      resolve({ success: true, data: reader.result });
-    };
-    reader.onerror = (error) => {
-      resolve({ success: false, error });
-    };
-    reader.readAsDataURL(image);
-  });
-}
