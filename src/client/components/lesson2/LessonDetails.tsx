@@ -1,5 +1,5 @@
 import { FunctionComponent } from "react";
-import styles from "@styles/Lesson/LessonPost.module.scss";
+import styles from "@styles/lesson2/LessonPost.module.scss";
 import { ILesson } from "@typing/lesson-file.interface";
 // import Image from "next/image";
 // import sparkles from "../../../../public/icones/sparkles.png";
