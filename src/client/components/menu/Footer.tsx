@@ -2,22 +2,38 @@ import Image from "next/image";
 import Link from "next/link";
 
 import logo from "@public/logos/name.png";
-import insta from "@socialIcons/insta.png";
-import twitter from "@socialIcons/twitter.png";
-import styles from "@styles/landing_page/Footer.module.scss";
+// Social icons
+import { Facebook, Instagram, Twitter } from "react-bootstrap-icons";
 
-const Footer = () => {
+import styles from "@styles/landing_page/Footer.module.scss";
+import { FunctionComponent } from "react";
+
+interface FooterProps {
+  isAuthenticated: boolean;
+}
+
+const classes = ["CP", "CE1", "CE2", "CM1", "CM2"];
+
+const Footer: FunctionComponent<FooterProps> = ({ isAuthenticated }) => {
+  return <>{isAuthenticated ? <FooterAuthenticated /> : <FooterLanding />}</>;
+};
+/**
+ * Footer used on the landing page only
+ * @return {JSX}
+ */
+const FooterLanding: FunctionComponent = (): JSX.Element => {
   return (
-    <footer className={styles.landing_footer_container}>
+    <footer className={styles.footer_container}>
       <div className={styles.landing_footer_content}>
-        <div className={styles.landing_footer_bloc1}>
+        <div className={styles.landingFooterSocial}>
           <h6>Suivez nous sur les réseaux !</h6>
           <div className={styles.socialIconsLogos}>
-            <Image src={twitter} width="40" height="40" />
-            <Image src={insta} width="40" height="40" />
+            <Facebook color="#009FB7" size={40} />
+            <Instagram color="#009FB7" size={40} />
+            <Twitter color="#009FB7" size={40} />
           </div>
         </div>
-        <div className={styles.landing_footer_bloc2}>
+        <div className={styles.landingFooterContact}>
           <div className={styles.spaceText}>
             <Image src={logo} layout="responsive" className={styles.test} />
             <p>+1 (7635) 547-12-97</p>
@@ -34,6 +50,37 @@ const Footer = () => {
         </div>
         <div className={styles.landing_footer_bloc3}>
           © 2022. Tous droits réservés
+        </div>
+      </div>
+    </footer>
+  );
+};
+/**
+ * Footer used on every other pages/routes
+ * @return {JSX}
+ */
+const FooterAuthenticated: FunctionComponent = (): JSX.Element => {
+  return (
+    <footer className={`${styles.footer_container} ${styles.authenticated}`}>
+      <div className={styles.menu_footer_content}>
+        <div className={styles.menu_footer_bibliotheque}>
+          <p>Bibliothèque</p>
+          {classes.map((classLabel: string) => (
+            <Link href={`/lesson?subject=${classLabel}`}>{classLabel}</Link>
+          ))}
+        </div>
+        <div className={styles.menu_footer_profile}>
+          <p>Profil</p>
+          <Link href={"/user/for_later"}>À lire plus tard</Link>
+          <Link href={"/user/settings"}>Paramètres</Link>
+          <Link href={"/lesson"}>Mes contributions</Link>
+        </div>
+        <div className={styles.menu_footer_link}>
+          <p>Liens</p>
+          <Link href={"/contact"}>Contact</Link>
+          <Link href={"/mentions"}>Mentions légales</Link>
+          <Link href={"/a_propos"}>À propos</Link>
+          <Link href={"/faq"}>FAQ</Link>
         </div>
       </div>
     </footer>

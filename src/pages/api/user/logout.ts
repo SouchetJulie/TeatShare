@@ -1,4 +1,4 @@
-import { NextApiRequest, NextApiResponse } from "next";
+import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 import { logoutHandler } from "@handlers/user/logout/logout.handler";
 import routerMiddleware from "@middlewares/router.middleware";
 import { ApiResponse } from "@typing/api-response.interface";
@@ -7,7 +7,7 @@ export default async (
   req: NextApiRequest,
   res: NextApiResponse<ApiResponse>
 ) => {
-  const handlers = {
+  const handlers: Record<string, NextApiHandler<ApiResponse>> = {
     POST: logoutHandler,
     // add here handlers for other methods
   };

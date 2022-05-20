@@ -5,6 +5,12 @@ import Popover from "react-bootstrap/Popover";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import Button from "react-bootstrap/Button";
+import {
+  FileEarmarkRichtext,
+  JournalBookmark,
+  PlusCircleFill,
+  Search,
+} from "react-bootstrap-icons";
 
 import styles from "@styles/menu/navbar.module.scss";
 import Link from "next/link";
@@ -38,7 +44,7 @@ const LessonLinks: FunctionComponent<Props> = ({ className = "" }: Props) => {
             onChange={(event) => setSearchTerm(event.target.value)}
           />
           <Button type="submit" variant="secondary">
-            <i className="bi bi-search" aria-label="Recherche" />
+            <Search aria-label="recherche" size={25} color="white" />
           </Button>
         </InputGroup>
       </Form>
@@ -55,16 +61,46 @@ const LessonLinks: FunctionComponent<Props> = ({ className = "" }: Props) => {
         overlay={popover}
         defaultShow={false}
       >
-        <Nav.Link className="bi bi-search">Recherche</Nav.Link>
+        <Nav.Link>
+          <Search
+            aria-label="recherche"
+            size={25}
+            className={styles.sidebar_icon}
+          />
+          Recherche
+        </Nav.Link>
       </OverlayTrigger>
       <Nav.Link as={Link} href={"/lesson"} passHref>
-        <a className="nav-link bi bi-file-richtext">Mes fiches de cours</a>
+        <a className="nav-link">
+          <FileEarmarkRichtext
+            size={25}
+            className={styles.sidebar_icon}
+            aria-label="file icon"
+          />
+          <br />
+          Mes fiches de cours
+        </a>
       </Nav.Link>
-      <Nav.Link as={Link} href={"/for_later"} passHref>
-        <a className="nav-link bi bi-journal-bookmark">A lire plus tard</a>
+      <Nav.Link as={Link} href={"/user/for_later"} passHref>
+        <a className="nav-link">
+          <JournalBookmark
+            size={25}
+            className={styles.sidebar_icon}
+            aria-label="journal icon"
+          />
+          <br />A lire plus tard
+        </a>
       </Nav.Link>
       <Nav.Link as={Link} href={"/lesson/upload"} passHref>
-        <a className={"nav-link bi bi-plus-circle-fill"}>Création de fiche</a>
+        <a className={"nav-link"}>
+          <PlusCircleFill
+            size={25}
+            className={styles.sidebar_icon}
+            aria-label="plus icon"
+          />
+          <br />
+          Création de fiche
+        </a>
       </Nav.Link>
     </div>
   );

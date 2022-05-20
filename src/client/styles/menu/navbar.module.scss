@@ -53,8 +53,9 @@ div.popover {
     flex-direction: column;
   }
 
-  .sidebarContent a:before {
-    display: none;
+  // BOOTSTRAP ICONS
+  .sidebar_icon {
+    display: none !important;
   }
 
   .sidebar {
@@ -118,7 +119,6 @@ div.popover {
         color: $light;
       }
 
-      // SVG icons
       &:before {
         font-size: 1.75em;
         display: block;

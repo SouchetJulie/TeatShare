@@ -10,6 +10,7 @@ import { ILesson } from "@typing/lesson-file.interface";
 import styles from "@styles/lesson/lesson-list.module.scss";
 
 import LessonItem from "./LessonItem";
+import { Search, SortUp } from "react-bootstrap-icons";
 
 interface Props {
   lessons: ILesson[];
@@ -44,7 +45,7 @@ export const LessonList: FunctionComponent<Props> = ({ lessons }: Props) => (
             <option>Marqués</option>
           </Form.Select>
           <InputGroup.Text>
-            <i className="bi bi-sort-up" />
+            <SortUp />
           </InputGroup.Text>
         </InputGroup>
         <InputGroup as={Col} md="auto" className={styles.inputGroup}>
@@ -58,7 +59,7 @@ export const LessonList: FunctionComponent<Props> = ({ lessons }: Props) => (
             placeholder="Recherche par mots-clés"
           />
           <InputGroup.Text>
-            <i className="bi bi-search" />
+            <Search />
           </InputGroup.Text>
         </InputGroup>
       </Form>

@@ -7,6 +7,7 @@ import { ApiResponse } from "@typing/api-response.interface";
 // Disable the default body parser
 export const config = {
   api: {
+    externalResolver: true,
     bodyParser: false,
   },
 };
@@ -15,7 +16,7 @@ export default async (
   req: NextApiRequest,
   res: NextApiResponse<ApiResponse>
 ) => {
-  const handlers: Record<string, NextApiHandler> = {
+  const handlers: Record<string, NextApiHandler<ApiResponse>> = {
     GET: lessonGetAllHandler,
     POST: lessonPostHandler,
     // add here handlers for other methods

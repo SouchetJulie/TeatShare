@@ -1,24 +1,19 @@
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 import { createNewUser, getOneUser } from "@services/users.service";
-import { withSession } from "@middlewares/session.middleware";
-import { ApiResponse } from "@typing/api-response.interface";
 import { IUserCreate, IUserPublic } from "@typing/user.interface";
+import { body, ValidationChain } from "express-validator";
+import { validate } from "@middlewares/sanitization/validate.middleware";
+import { ApiResponse } from "@typing/api-response.interface";
+import { withSession } from "@middlewares/session.middleware";
 
 const handler = async (
   req: NextApiRequest,
   res: NextApiResponse<ApiResponse<{ user: IUserPublic }>>
 ) => {
-  const userCreate = req.body as IUserCreate;
-  if (!userCreate.password || !userCreate.email) {
-    return res.status(400).json({
-      success: false,
-      error: "Veuillez remplir le formulaire.",
-    });
-  }
-
-  const result = await createNewUser(userCreate);
+  const userCreate = req.body.sanitized as IUserCreate;
 
   try {
+    const result = await createNewUser(userCreate);
     const user: IUserPublic | null = await getOneUser(
       result.insertedId.toString()
     );
@@ -43,9 +38,21 @@ const handler = async (
     console.log("[SIGNUP] Error while recording newly created user:");
     return res.status(400).json({
       success: false,
-      error: "Erreur lors de la création de l'utilisateur",
+      error:
+        "Erreur lors de la création de l'utilisateur : " + (e as Error).message,
     });
   }
 };
 
-export const signupHandler: NextApiHandler = withSession(handler);
+const signupValidationChain: ValidationChain[] = [
+  body("firstName").optional({ checkFalsy: true }),
+  body("lastName").optional({ checkFalsy: true }),
+  body("email").isEmail().withMessage("Ce doit être un email"),
+  body("password")
+    .isStrongPassword()
+    .withMessage("Le mot de passe n'est pas assez fort"),
+];
+
+export const signupHandler: NextApiHandler = withSession(
+  validate(signupValidationChain, handler)
+);
