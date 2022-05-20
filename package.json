@@ -9,10 +9,6 @@
     "prettier": "prettier -l -w ./src"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^1.2.36",
-    "@fortawesome/free-brands-svg-icons": "^5.15.4",
-    "@fortawesome/free-solid-svg-icons": "^5.15.4",
-    "@fortawesome/react-fontawesome": "^0.1.16",
     "@google-cloud/storage": "^5.16.1",
     "@reduxjs/toolkit": "^1.7.1",
     "@types/styled-components": "^5.1.17",
