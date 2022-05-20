@@ -34,7 +34,6 @@ const LessonDetailsHeader: FunctionComponent<LessonHeaderComponentProps> = ({
     () => dayjs(lesson?.publicationDate).format("DD/MM/YYYY"),
     [lesson?.publicationDate]
   );
-  console.log("data: ", lesson);
   const sparkles = undefined;
   const avatar = sparkles ? sparkles : avatarLogo;
 
@@ -43,7 +42,6 @@ const LessonDetailsHeader: FunctionComponent<LessonHeaderComponentProps> = ({
       axios
         .get<ApiResponse<{ user: IUserPublic }>>(`/api/user/${lesson.authorId}`)
         .then(({ data }) => {
-          console.log(data.data);
           setAuthor(data.data?.user);
           // TODO  addAlert({ message: data.error, success: false, ttl: 2000 });
         })
