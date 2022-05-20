@@ -4,6 +4,12 @@ import routerMiddleware from "@middlewares/router.middleware";
 import { ApiResponse } from "@typing/api-response.interface";
 import { autoLoginHandler } from "@handlers/user/login/auto-login.handler";
 
+export const config = {
+  api: {
+    externalResolver: true,
+  },
+};
+
 export default async (
   req: NextApiRequest,
   res: NextApiResponse<ApiResponse>

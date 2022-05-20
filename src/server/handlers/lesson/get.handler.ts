@@ -1,8 +1,9 @@
 import { NextApiRequest, NextApiResponse } from "next";
-
+import { validate } from "@middlewares/sanitization/validate.middleware";
 import { getAllLessons, getOneLesson } from "@services/lessons.service";
 import { ApiResponse } from "@typing/api-response.interface";
 import { ILesson } from "@typing/lesson-file.interface";
+import { getOneByIdValidationChain } from "@middlewares/sanitization/validation-chains";
 import { Filter } from "@services/database.service";
 
 // A [key, value] tuple
@@ -183,24 +184,25 @@ const lessonGetAllHandler = async (
   }
 };
 
-const lessonGetOneHandler =
+const baseLessonGetOneHandler =
   (_id: string) =>
   async (
     req: NextApiRequest,
     res: NextApiResponse<ApiResponse<{ lesson: ILesson }>>
   ) => {
-    try {
-      const lesson = await getOneLesson(_id);
+    const { _id: id } = req.body.sanitized as { _id: string };
 
+    try {
+      const lesson = await getOneLesson(id);
       if (!lesson) {
-        console.log(`[LESSON] Lesson ${_id} not found`);
+        console.log(`[LESSON] Lesson ${id} not found`);
         return res.status(404).json({
           success: false,
           error: "Leçon non trouvée",
         });
       }
 
-      console.log(`[LESSON] Lesson ${_id} found`);
+      console.log(`[LESSON] Lesson ${id} found`);
       return res.status(200).json({
         success: true,
         data: { lesson },
@@ -213,5 +215,8 @@ const lessonGetOneHandler =
       });
     }
   };
+
+const lessonGetOneHandler = (_id: string) =>
+  validate(getOneByIdValidationChain, baseLessonGetOneHandler(_id));
 
 export { lessonGetAllHandler, lessonGetOneHandler };

@@ -1,16 +1,13 @@
 import { NextApiHandler } from "next";
 import { withIronSessionApiRoute } from "iron-session/next";
 import { IUserPublic } from "@typing/user.interface";
-import { ApiResponse } from "@typing/api-response.interface";
 
 /**
  * Adds a `IronSession` to the request before it is handled (under `req.session`).
  * @param {NextApiHandler} apiHandler
  * @return {NextApiHandler}
  */
-export const withSession = <T = ApiResponse>(
-  apiHandler: NextApiHandler<T>
-): NextApiHandler<T> => {
+export const withSession = (apiHandler: NextApiHandler): NextApiHandler => {
   if (!process.env.SESSION_SECRET) {
     throw new Error("SESSION_SECRET must be defined in environment");
   }

@@ -1,21 +1,16 @@
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 import { checkCredentials, getUserByEmail } from "@services/users.service";
-import { withSession } from "@middlewares/session.middleware";
-import { LoginRequest } from "@typing/login-request.interface";
+import { IUserAuth, IUserPublic } from "@typing/user.interface";
+import { body, ValidationChain } from "express-validator";
+import { validate } from "@middlewares/sanitization/validate.middleware";
 import { ApiResponse } from "@typing/api-response.interface";
-import { IUserPublic } from "@typing/user.interface";
+import { withSession } from "@middlewares/session.middleware";
 
 const handler = async (
   req: NextApiRequest,
   res: NextApiResponse<ApiResponse<{ user: IUserPublic }>>
-): Promise<void> => {
-  const userCredentials = req.body as LoginRequest;
-  if (!userCredentials.password || !userCredentials.email) {
-    return res.status(400).json({
-      success: false,
-      error: "Identifiants manquants.",
-    });
-  }
+) => {
+  const userCredentials = req.body.sanitized as IUserAuth;
 
   const result = await checkCredentials(userCredentials);
   if (result) {
@@ -45,4 +40,13 @@ const handler = async (
   }
 };
 
-export const loginHandler: NextApiHandler = withSession(handler);
+const loginValidationChain: ValidationChain[] = [
+  body("email").isEmail().withMessage("Ce doit être un email"),
+  body("password")
+    .exists()
+    .withMessage("Le mot de passe ne doit pas être vide"),
+];
+
+export const loginHandler: NextApiHandler = withSession(
+  validate(loginValidationChain, handler)
+);
