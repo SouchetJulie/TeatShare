@@ -24,7 +24,7 @@ const Home: FunctionComponent = () => {
 
     if (isAuthenticated) {
       axios
-        .get<ApiResponse<{ lessons: ILesson[] }>>("/api/lesson")
+        .get<ApiResponse<{ lessons: ILesson[] }>>("/api/lesson?isDraft=false")
         .then(
           ({
             data: { data, success },

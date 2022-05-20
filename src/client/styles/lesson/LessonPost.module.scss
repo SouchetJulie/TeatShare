@@ -2,7 +2,6 @@
 
 .lessonHeader {
   margin-top: 2%;
-
   border-bottom: solid 1px black;
   padding-bottom: 2%;
 
@@ -12,23 +11,24 @@
     .blockImage {
       border: solid 1px black !important;
       border-radius: 50%;
+
+    }
+    p{
+      margin-bottom: 5%;
     }
   }
 
   .headerAction {
     display: flex;
     justify-content: space-between;
-    flex-direction: column;
     text-align: center;
-
-    button {
-      width: 190px;
-    }
-
-    & > :last-child {
-      width: fit-content;
+    flex-wrap: wrap;
+    button{
+      border-radius: 100%;
+      padding: 0;
     }
   }
+
 
   h1 {
     font-size: 34px;
@@ -68,7 +68,7 @@
   padding: 2% 2% 2% 2%;
   max-height: 80vh;
   overflow-y: scroll;
-  border: dashed 5px black;
+
   border-radius: 2%;
   display: flex;
   justify-content: center;

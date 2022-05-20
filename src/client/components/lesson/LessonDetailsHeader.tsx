@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useEffect, useState } from "react";
+import React, { FunctionComponent, useEffect, useMemo, useState } from "react";
 import styles from "@styles/lesson/LessonPost.module.scss";
 import Image from "next/image";
 
@@ -6,7 +6,12 @@ import { ILesson } from "@typing/lesson-file.interface";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
-import { BookmarkCheck } from "react-bootstrap-icons";
+import {
+  BookmarkCheck,
+  BookmarkCheckFill,
+  Download,
+  Printer,
+} from "react-bootstrap-icons";
 import dayjs from "dayjs";
 import avatarLogo from "@assets/logos/avatar_placeholder.png";
 import axios from "axios";
@@ -14,6 +19,7 @@ import { IUserPublic } from "@typing/user.interface";
 import { addAlert } from "@stores/alert.store";
 import { ApiResponse } from "@typing/api-response.interface";
 import { useAppDispatch } from "@hooks/store-hook";
+import LessonBookmark from "@components/lesson/LessonBookmark";
 
 interface LessonHeaderComponentProps {
   lesson?: ILesson;
@@ -24,10 +30,11 @@ const LessonDetailsHeader: FunctionComponent<LessonHeaderComponentProps> = ({
 }) => {
   const [author, setAuthor] = useState<IUserPublic | undefined>(undefined);
   const dispatch = useAppDispatch();
-  const formatDate: string = dayjs(lesson?.publicationDate).format(
-    "DD/MM/YYYY"
+  const formatDate: string = useMemo(
+    () => dayjs(lesson?.publicationDate).format("DD/MM/YYYY"),
+    [lesson?.publicationDate]
   );
-
+  console.log("data: ", lesson);
   const sparkles = undefined;
   const avatar = sparkles ? sparkles : avatarLogo;
 
@@ -36,8 +43,9 @@ const LessonDetailsHeader: FunctionComponent<LessonHeaderComponentProps> = ({
       axios
         .get<ApiResponse<{ user: IUserPublic }>>(`/api/user/${lesson.authorId}`)
         .then(({ data }) => {
+          console.log(data.data);
           setAuthor(data.data?.user);
-          addAlert({ message: data.error, success: false, ttl: 2000 });
+          // TODO  addAlert({ message: data.error, success: false, ttl: 2000 });
         })
         .catch((err: Error) => {
           dispatch(
@@ -45,7 +53,7 @@ const LessonDetailsHeader: FunctionComponent<LessonHeaderComponentProps> = ({
           );
         });
     }
-  }, []);
+  }, [lesson?.authorId]);
 
   return (
     <Row className={styles.lessonHeader}>
@@ -60,7 +68,11 @@ const LessonDetailsHeader: FunctionComponent<LessonHeaderComponentProps> = ({
         <p>
           {author?.firstName ?? ""} {author?.lastName ?? ""}
         </p>
-        <p>Professeur de {author?.subjects.join(", ") ?? ""} </p>
+        {author?.subjects.length ? (
+          <p>Professeur de {author?.subjects.join(", ")} </p>
+        ) : (
+          <></>
+        )}
         <p>publié le {formatDate ?? ""}</p>
       </Col>
       <Col
@@ -72,10 +84,16 @@ const LessonDetailsHeader: FunctionComponent<LessonHeaderComponentProps> = ({
         {/* <h3>{lesson}</h3> */}
       </Col>
       <Col xs={12} md={3} className={styles.headerAction}>
-        <Button variant="primary">Imprimer</Button>
-        <Button variant="secondary-light">Télécharger PDF</Button>
         <Button variant="none">
-          <BookmarkCheck color="black" size={40} />
+          <Download color="black" size={30} />
+        </Button>
+        <Button variant="none">
+          <Printer color="black" size={30} />
+        </Button>
+        <Button variant="none">
+          <LessonBookmark
+            isBookmarked={lesson && author?.bookmarkIds.includes(lesson._id!)}
+          />
         </Button>
       </Col>
     </Row>
