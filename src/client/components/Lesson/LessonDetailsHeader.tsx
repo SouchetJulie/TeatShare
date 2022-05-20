@@ -69,7 +69,7 @@ const LessonDetailsHeader: FunctionComponent<LessonHeaderComponentProps> = ({
         className=" d-flex justify-content-center align-items-center flex-column"
       >
         <h1>{lesson?.title ?? ""}</h1>
-        {/* <h3>{lessssssson}</h3> */}
+        {/* <h3>{lesson}</h3> */}
       </Col>
       <Col xs={12} md={3} className={styles.headerAction}>
         <Button variant="primary">Imprimer</Button>

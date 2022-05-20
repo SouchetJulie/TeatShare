@@ -26,6 +26,6 @@ export interface ILesson {
 
 /**
  *
- * Data for creation of a lessssssson.
+ * Data for creation of a lesson.
  */
 export type ILessonCreate = Partial<ILesson>;

@@ -40,7 +40,7 @@ const parseForm = (req: NextApiRequest): Promise<LessonFormData> =>
   );
 
 /**
- * Parses the incoming request to record a new lessssssson.
+ * Parses the incoming request to record a new lesson.
  * @param {NextApiRequest} req Incoming request.
  * @param {NextApiResponse} res Whether the recording succeeded, and the reasons why not otherwise.
  */
@@ -123,7 +123,7 @@ export const lessonPostHandler: NextApiHandler = async (
 
     if (!uploadedLesson) {
       console.log(
-        "[LESSON] Upload of lessssssson failed: uploaded lessssssson not found"
+        "[LESSON] Upload of lesson failed: uploaded lesson not found"
       );
       return res.status(500).json({
         success: false,

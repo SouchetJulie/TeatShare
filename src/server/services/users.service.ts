@@ -135,7 +135,7 @@ export const isUser = (user: Record<string, any>): user is IUserDB => {
 };
 
 /**
- * Adds the given lessssssson id to the list of lessons published by this user.
+ * Adds the given lesson id to the list of lessons published by this user.
  * @param {IUserPublic} user
  * @param {ObjectId} lessonId
  */

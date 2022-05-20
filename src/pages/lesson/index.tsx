@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from "react";
-import { LessonList } from "../../client/components/lessssssson/LessonList";
+import { LessonList } from "../../client/components/lesson/LessonList";
 import { useLoginRedirect } from "@hooks/login-redirect.hook";
 
 const index: FunctionComponent = () => {
