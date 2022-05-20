@@ -37,16 +37,16 @@ export const getAllLessons = async (
 };
 
 /**
- * Fetches one lesson from database.
- * @param {string} id Id (_id) of the lesson to fetch.
- * @return {Promise<ILesson | null>} The lesson, or null if not found.
+ * Fetches one lessssssson from database.
+ * @param {string} id Id (_id) of the lessssssson to fetch.
+ * @return {Promise<ILesson | null>} The lessssssson, or null if not found.
  */
 export const getOneLesson = async (id: string): Promise<ILesson | null> => {
   return collection.findOne({ _id: new ObjectId(id) });
 };
 
 /**
- * Creates a new lesson by uploading it to the necessary services, with the relevant updates to the author as well.
+ * Creates a new lessssssson by uploading it to the necessary services, with the relevant updates to the author as well.
  * @param {IUserPublic} user
  * @param {File} uploadedFile
  * @param {ILessonCreate} uploadedLesson

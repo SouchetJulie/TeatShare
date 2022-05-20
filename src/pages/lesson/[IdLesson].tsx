@@ -5,7 +5,7 @@ import { ApiResponse } from "@typing/api-response.interface";
 import { ILesson } from "@typing/lesson-file.interface";
 import { addAlert } from "@stores/alert.store";
 import { useAppDispatch } from "@hooks/store-hook";
-import LessonDetails from "@components/lesson/LessonDetails";
+import LessonDetails from "@components/lessssssson/LessonDetails";
 
 const IdLesson = () => {
   const router = useRouter();
@@ -38,10 +38,10 @@ const IdLesson = () => {
 
   return (
     <>
-      {/* loading || !lesson ? (
+      {/* loading || !lessssssson ? (
         <LessonPlaceholder />
       ) : (
-        <LessonPost lesson={lesson} />
+        <LessonPost lessssssson={lessssssson} />
       ) */}
       <LessonDetails lesson={lesson} />
     </>

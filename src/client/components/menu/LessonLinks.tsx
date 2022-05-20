@@ -70,7 +70,7 @@ const LessonLinks: FunctionComponent<Props> = ({ className = "" }: Props) => {
           Recherche
         </Nav.Link>
       </OverlayTrigger>
-      <Nav.Link as={Link} href={"/lesson"} passHref>
+      <Nav.Link as={Link} href={"/lessssssson"} passHref>
         <a className="nav-link">
           <FileEarmarkRichtext
             size={25}
@@ -91,7 +91,7 @@ const LessonLinks: FunctionComponent<Props> = ({ className = "" }: Props) => {
           <br />A lire plus tard
         </a>
       </Nav.Link>
-      <Nav.Link as={Link} href={"/lesson/upload"} passHref>
+      <Nav.Link as={Link} href={"/lessssssson/upload"} passHref>
         <a className={"nav-link"}>
           <PlusCircleFill
             size={25}
