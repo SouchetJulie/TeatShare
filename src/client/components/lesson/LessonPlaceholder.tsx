@@ -1,24 +1,29 @@
 import { FunctionComponent } from "react";
-import styles from "@styles/lesson2/LessonPost.module.scss";
-import { ILesson } from "@typing/lesson-file.interface";
-// import Image from "next/image";
-// import sparkles from "../../../../public/icones/sparkles.png";
-import Container from "react-bootstrap/Container";
-import LessonDetailsHeader from "@components/lesson2/LessonDetailsHeader";
-import LessonDetailsPDFViewer from "@components/lesson2/LessonDetailsPDFViewer";
+import styles from "@styles/lesson/LessonPost.module.scss";
+import Image from "next/image";
+import sparkles from "@public/icones/sparkles.png";
+import Placeholder from "react-bootstrap/Placeholder";
 
-interface LessonComponentProps {
-  lesson?: ILesson;
-}
-
-const LessonDetails: FunctionComponent<LessonComponentProps> = ({ lesson }) => {
+const LessonPlaceholder: FunctionComponent = () => {
   return (
-    <Container>
-      <LessonDetailsHeader lesson={lesson} />
-      <div className={styles.lessonBlock2}>
-        <LessonDetailsPDFViewer lesson={lesson} />
+    <div className={styles.lessonContainer}>
+      <div className={styles.lessonBlock1}>
+        <div>
+          <p aria-hidden="true">
+            <Placeholder animation="glow" bg={"primary"} />
+          </p>
+        </div>
+        <div>
+          <Placeholder.Button size="lg" animation="glow" />
+        </div>
+        <div>
+          <button className={styles.printButton}>Imprimer</button>
+          <button className={styles.downloadButton}>Télécharger PDF</button>
+        </div>
       </div>
-      {/*
+      <div className={styles.lessonBlock2}>
+        <span>Emplacement du cours</span>
+      </div>
       <div className={styles.lessonBlock3}>
         <div className={styles.forbiden}>
           <h3>Cet article est uniquement réservé aux inscrits</h3>
@@ -50,8 +55,9 @@ const LessonDetails: FunctionComponent<LessonComponentProps> = ({ lesson }) => {
         <div className={styles.callToAction}>
           <button className={styles.registerButton}>Je m&apos;inscris</button>
         </div>
-      </div>*/}
-    </Container>
+      </div>
+    </div>
   );
 };
-export default LessonDetails;
+
+export default LessonPlaceholder;

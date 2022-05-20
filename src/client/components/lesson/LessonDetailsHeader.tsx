@@ -1,5 +1,5 @@
 import React, { FunctionComponent, useEffect, useState } from "react";
-import styles from "@styles/lesson2/LessonPost.module.scss";
+import styles from "@styles/lesson/LessonPost.module.scss";
 import Image from "next/image";
 
 import { ILesson } from "@typing/lesson-file.interface";

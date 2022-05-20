@@ -1,29 +1,24 @@
 import { FunctionComponent } from "react";
-import styles from "@styles/lesson2/LessonPost.module.scss";
-import Image from "next/image";
-import sparkles from "@public/icones/sparkles.png";
-import Placeholder from "react-bootstrap/Placeholder";
+import styles from "@styles/lesson/LessonPost.module.scss";
+import { ILesson } from "@typing/lesson-file.interface";
+// import Image from "next/image";
+// import sparkles from "../../../../public/icones/sparkles.png";
+import Container from "react-bootstrap/Container";
+import LessonDetailsHeader from "@components/lesson/LessonDetailsHeader";
+import LessonDetailsPDFViewer from "@components/lesson/LessonDetailsPDFViewer";
 
-const LessonPlaceholder: FunctionComponent = (props) => {
+interface LessonComponentProps {
+  lesson?: ILesson;
+}
+
+const LessonDetails: FunctionComponent<LessonComponentProps> = ({ lesson }) => {
   return (
-    <div className={styles.lessonContainer}>
-      <div className={styles.lessonBlock1}>
-        <div>
-          <p aria-hidden="true">
-            <Placeholder animation="glow" bg={"primary"} />
-          </p>
-        </div>
-        <div>
-          <Placeholder.Button size="lg" animation="glow" />
-        </div>
-        <div>
-          <button className={styles.printButton}>Imprimer</button>
-          <button className={styles.downloadButton}>Télécharger PDF</button>
-        </div>
-      </div>
+    <Container>
+      <LessonDetailsHeader lesson={lesson} />
       <div className={styles.lessonBlock2}>
-        <span>Emplacement du cours</span>
+        <LessonDetailsPDFViewer lesson={lesson} />
       </div>
+      {/*
       <div className={styles.lessonBlock3}>
         <div className={styles.forbiden}>
           <h3>Cet article est uniquement réservé aux inscrits</h3>
@@ -55,9 +50,8 @@ const LessonPlaceholder: FunctionComponent = (props) => {
         <div className={styles.callToAction}>
           <button className={styles.registerButton}>Je m&apos;inscris</button>
         </div>
-      </div>
-    </div>
+      </div>*/}
+    </Container>
   );
 };
-
-export default LessonPlaceholder;
+export default LessonDetails;

@@ -7,7 +7,7 @@ import InputGroup from "react-bootstrap/InputGroup";
 import Row from "react-bootstrap/Row";
 
 import { ILesson } from "@typing/lesson-file.interface";
-import styles from "@styles/lesson2/lesson-list.module.scss";
+import styles from "@styles/lesson/lesson-list.module.scss";
 
 import LessonItem from "./LessonItem";
 import { Search, SortUp } from "react-bootstrap-icons";
