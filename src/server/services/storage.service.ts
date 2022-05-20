@@ -3,8 +3,8 @@ import { Storage } from "@google-cloud/storage";
 if (!process.env.GCS_CREDENTIALS) {
   throw new Error("GCS_CREDENTIALS must be defined in environment");
 }
-if (!process.env.BUCKET_NAME) {
-  throw new Error("BUCKET_NAME must be defined in environment");
+if (!process.env.NEXT_PUBLIC_BUCKET_NAME) {
+  throw new Error("NEXT_PUBLIC_BUCKET_NAME must be defined in environment");
 }
 
 const credentials = JSON.parse(process.env.GCS_CREDENTIALS);
@@ -17,6 +17,6 @@ const storage = new Storage({
   },
   projectId: credentials.project_id,
 });
-const bucket = process.env.BUCKET_NAME;
+const bucket = process.env.NEXT_PUBLIC_BUCKET_NAME;
 
 export default storage.bucket(bucket);

@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "rm -rf .next & npm run prettier & next dev",
+    "dev": "npm run prettier & next dev",
     "build": "next build",
     "start": "next start",
     "prettier": "prettier -l -w ./src"
@@ -27,6 +27,7 @@
     "react-bootstrap-icons": "^1.8.1",
     "react-dom": "17.0.2",
     "react-masonry-css": "^1.0.16",
+    "react-pdf": "^5.7.2",
     "react-redux": "^7.2.6",
     "yup": "^0.32.11"
   },
@@ -39,6 +40,7 @@
     "@types/formidable": "^2.0.3",
     "@types/node": "^16.10.2",
     "@types/react": "^17.0.25",
+    "@types/react-pdf": "^5.7.2",
     "@typescript-eslint/eslint-plugin": "^4.32.0",
     "@typescript-eslint/parser": "^4.32.0",
     "eslint": "^7.32.0",

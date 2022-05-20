@@ -30,10 +30,13 @@ export const validationErrorResponse = (
   });
 
   const message = Object.entries(errorMap).map(
-    ([param, { value, messages }]) =>
-      `La valeur de "${param}" ("${value}") est invalide : ${messages.join(
+    ([param, { value, messages }]) => {
+      const valueToDisplay =
+        param === "password" ? value.replaceAll(/./g, "●") : value;
+      return `La valeur de "${param}" ("${valueToDisplay}") est invalide : ${messages.join(
         ", "
-      )}`
+      )}`;
+    }
   );
 
   return res.status(400).send(message.join(". "));

@@ -8,7 +8,7 @@
   color: $grey;
   border: none;
   border-bottom: solid 1px black;
-  border-radius: 0px;
+  border-radius: 0;
 
   .badge {
     padding: 0 2%;
@@ -28,7 +28,6 @@
   justify-content: space-between;
   margin: 0;
   border: none;
-  background: green;
   background-color: transparent;
 
   & *:first-child {

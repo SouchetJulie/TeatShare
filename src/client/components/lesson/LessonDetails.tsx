@@ -1,22 +1,28 @@
-import { FunctionComponent } from "react";
-import styles from "@styles/Lesson/LessonPost.module.scss";
+import { FunctionComponent, RefObject, useRef } from "react";
+import styles from "@styles/lesson/LessonPost.module.scss";
 import { ILesson } from "@typing/lesson-file.interface";
-import Image from "next/image";
-import sparkles from "../../../../public/icones/sparkles.png";
+// import Image from "next/image";
+// import sparkles from "../../../../public/icones/sparkles.png";
 import Container from "react-bootstrap/Container";
-import LessonDetailsHeader from "../lesson/LessonDetailsHeader";
+import LessonDetailsHeader from "@components/lesson/LessonDetailsHeader";
+import LessonDetailsPDFViewer from "@components/lesson/LessonDetailsPDFViewer";
 
 interface LessonComponentProps {
   lesson?: ILesson;
 }
 
-const lessonDetails: FunctionComponent<LessonComponentProps> = ({ lesson }) => {
+const LessonDetails: FunctionComponent<LessonComponentProps> = ({ lesson }) => {
+  const pdfViewerBlock: RefObject<HTMLDivElement> = useRef(null);
   return (
     <Container>
       <LessonDetailsHeader lesson={lesson} />
-      <div className={styles.lessonBlock2}>
-        <span>Emplacement du cours</span>
-      </div>
+      <Container ref={pdfViewerBlock} className={styles.lessonBlock2}>
+        <LessonDetailsPDFViewer
+          lesson={lesson}
+          viewerWidth={pdfViewerBlock.current?.offsetWidth ?? 0}
+        />
+      </Container>
+      {/*
       <div className={styles.lessonBlock3}>
         <div className={styles.forbiden}>
           <h3>Cet article est uniquement réservé aux inscrits</h3>
@@ -48,8 +54,8 @@ const lessonDetails: FunctionComponent<LessonComponentProps> = ({ lesson }) => {
         <div className={styles.callToAction}>
           <button className={styles.registerButton}>Je m&apos;inscris</button>
         </div>
-      </div>
+      </div>*/}
     </Container>
   );
 };
-export default lessonDetails;
+export default LessonDetails;

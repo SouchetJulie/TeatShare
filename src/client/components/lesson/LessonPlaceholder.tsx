@@ -1,10 +1,10 @@
 import { FunctionComponent } from "react";
-import styles from "@styles/Lesson/LessonPost.module.scss";
+import styles from "@styles/lesson/LessonPost.module.scss";
 import Image from "next/image";
 import sparkles from "@public/icones/sparkles.png";
 import Placeholder from "react-bootstrap/Placeholder";
 
-const LessonPlaceholder: FunctionComponent = (props) => {
+const LessonPlaceholder: FunctionComponent = () => {
   return (
     <div className={styles.lessonContainer}>
       <div className={styles.lessonBlock1}>
