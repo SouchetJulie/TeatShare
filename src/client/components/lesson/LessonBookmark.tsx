@@ -1,13 +1,13 @@
 import React, { FunctionComponent } from "react";
 import { BookmarkCheck, BookmarkCheckFill } from "react-bootstrap-icons";
 
-interface Props {
+interface LessonBookmarkProps {
   isBookmarked?: boolean;
 }
 
-const LessonBookmark: FunctionComponent<Props> = ({
+const LessonBookmark: FunctionComponent<LessonBookmarkProps> = ({
   isBookmarked,
-}: Props): JSX.Element => {
+}: LessonBookmarkProps): JSX.Element => {
   return (
     <>
       {isBookmarked ? (

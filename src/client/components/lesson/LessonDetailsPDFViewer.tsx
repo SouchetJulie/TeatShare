@@ -7,15 +7,16 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/$
 
 import axios from "axios";
 
-interface OwnProps {
+interface LessonDetailsPDFProps {
   lesson?: ILesson;
 }
 
-const LessonDetailsPDFViewer: FunctionComponent<OwnProps> = ({
+const LessonDetailsPDFViewer: FunctionComponent<LessonDetailsPDFProps> = ({
   lesson,
-}: OwnProps): JSX.Element => {
+}: LessonDetailsPDFProps): JSX.Element => {
   const [numPages, setNumPages] = useState<number>(1);
   const [pageNumber, setPageNumber] = useState<number>(1);
+
   /**
    * On load
    * @param {PDFDocumentProxy} pdfProperties Data about the downloaded pdf
@@ -24,9 +25,8 @@ const LessonDetailsPDFViewer: FunctionComponent<OwnProps> = ({
     setNumPages(numPages);
   }
 
-  /*  console.log(lesson?.file);
+  const fileURL: string = `https://storage.googleapis.com/${process.env.NEXT_PUBLIC_BUCKET_NAME}/${lesson?.file.filepath}`;
   useEffect(() => {
-    const fileURL: string = `https://storage.googleapis.com/${process.env.NEXT_PUBLIC_BUCKET_NAME}/${lesson?.file.filepath}`;
     if (lesson) {
       axios
         .get(fileURL, {
@@ -36,15 +36,16 @@ const LessonDetailsPDFViewer: FunctionComponent<OwnProps> = ({
         })
         .then((res) => {
           console.log(res);
+          // function fileToBase64() {}
         });
     }
   }, [lesson?.file]);
-  //  function fetchPDF() {}*/
+
   return (
     <>
       <Document
         file={{
-          url: "/MBTI.pdf",
+          url: fileURL,
           httpHeaders: {
             "Access-Control-Allow-Origin": "*",
           },
@@ -64,7 +65,7 @@ export default LessonDetailsPDFViewer;
 /**
  *
  // eslint-disable-next-line valid-jsdoc
- * @param image
+ * @param {any} image
  */
 export async function fileToBase64(image: any) {
   return new Promise((resolve, reject) => {
