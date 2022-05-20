@@ -1,4 +1,4 @@
-import { FunctionComponent, Ref, RefObject, useRef } from "react";
+import { FunctionComponent, RefObject, useRef } from "react";
 import styles from "@styles/lesson/LessonPost.module.scss";
 import { ILesson } from "@typing/lesson-file.interface";
 // import Image from "next/image";

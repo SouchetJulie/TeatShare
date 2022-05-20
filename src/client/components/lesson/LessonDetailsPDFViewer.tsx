@@ -1,6 +1,5 @@
 import React, { FunctionComponent, useState } from "react";
 import { ILesson } from "@typing/lesson-file.interface";
-// import styles from "@styles/lesson/LessonPost.module.scss";
 // PDF VIEWER
 import { Document, Page, pdfjs } from "react-pdf";
 import { PDFDocumentProxy } from "pdfjs-dist";
