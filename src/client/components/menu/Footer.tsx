@@ -65,8 +65,13 @@ const FooterAuthenticated: FunctionComponent = (): JSX.Element => {
       <div className={styles.menu_footer_content}>
         <div className={styles.menu_footer_bibliotheque}>
           <p>Bibliothèque</p>
-          {classes.map((classLabel: string) => (
-            <Link href={`/lesson?subject=${classLabel}`}>{classLabel}</Link>
+          {classes.map((classLabel: string, index: number) => (
+            <Link
+              href={`/lesson?subject=${classLabel}`}
+              key={`footer-classe-${index}`}
+            >
+              {classLabel}
+            </Link>
           ))}
         </div>
         <div className={styles.menu_footer_profile}>
