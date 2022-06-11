@@ -209,7 +209,7 @@ const baseLessonGetOneHandler =
       });
     } catch (e) {
       console.log("[LESSON] Error while fetching lesson:", e);
-      return res.status(200).json({
+      return res.status(500).json({
         success: false,
         error: "Erreur lors de la récupération de la leçon",
       });
