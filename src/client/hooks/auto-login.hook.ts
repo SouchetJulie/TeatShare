@@ -6,8 +6,10 @@ import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { IUserPublic } from "@typing/user.interface";
 
-export const useAutoLogin = () => {
-  const currentUser = useAppSelector(selectAuthenticatedUser);
+export const useAutoLogin = (): IUserPublic | undefined => {
+  const currentUser: IUserPublic | undefined = useAppSelector(
+    selectAuthenticatedUser
+  );
   const dispatch = useAppDispatch();
   const router = useRouter();
 
@@ -39,4 +41,6 @@ export const useAutoLogin = () => {
       )
       .catch(() => console.warn("Erreur autologin"));
   }, [currentUser, dispatch, router]);
+
+  return currentUser;
 };

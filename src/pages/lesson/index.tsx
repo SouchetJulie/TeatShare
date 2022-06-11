@@ -1,10 +1,10 @@
 import React, { FunctionComponent } from "react";
 import { LessonList } from "@components/lesson/LessonList";
-import { useLoginRedirect } from "@hooks/login-redirect.hook";
+import { useAutoLogin } from "@hooks/auto-login.hook";
 // TODO DISPLAY LESSON MADE BY CURRENT USER
 
 const index: FunctionComponent = () => {
-  const user = useLoginRedirect();
+  const user = useAutoLogin();
 
   return user ? <LessonList lessons={[]} /> : <></>;
 };

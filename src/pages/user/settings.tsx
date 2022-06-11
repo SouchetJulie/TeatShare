@@ -1,8 +1,8 @@
 import React, { FunctionComponent } from "react";
-import { useLoginRedirect } from "@hooks/login-redirect.hook";
+import { useAutoLogin } from "@hooks/auto-login.hook";
 
 const settings: FunctionComponent = () => {
-  const user = useLoginRedirect();
+  const user = useAutoLogin();
 
   return user ? <div>TODO</div> : <></>;
 };
