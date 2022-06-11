@@ -15,9 +15,9 @@ import { addAlert } from "@stores/alert.store";
 import { ApiResponse } from "@typing/api-response.interface";
 import { useAppDispatch, useAppSelector } from "@hooks/store-hook";
 import LessonBookmark from "@components/lesson/LessonBookmark";
-import { getUser } from "../../services/user.service";
-import { getAxiosErrorMessage } from "../../utils/get-axios-error.utils";
-import { toggleBookmark } from "../../services/lesson.service";
+import { getUser } from "../../../services/user.service";
+import { getAxiosErrorMessage } from "../../../utils/get-axios-error.utils";
+import { toggleBookmark } from "../../../services/lesson.service";
 import {
   addBookmark,
   removeBookmark,
@@ -78,11 +78,9 @@ const LessonDetailsHeader: FunctionComponent<LessonHeaderComponentProps> = ({
             );
 
             if (isBookmarked) {
-              // remove bookmark
               dispatch(removeBookmark(lesson!._id));
               // lesson!.bookmarkCount -= 1;
             } else {
-              // add bookmark
               dispatch(addBookmark(lesson!._id));
               // lesson!.bookmarkCount += 1;
             }

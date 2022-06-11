@@ -4,8 +4,8 @@ import { ILesson } from "@typing/lesson.interface";
 // import Image from "next/image";
 // import sparkles from "../../../../public/icones/sparkles.png";
 import Container from "react-bootstrap/Container";
-import LessonDetailsHeader from "@components/lesson/LessonDetailsHeader";
-import LessonDetailsPDFViewer from "@components/lesson/LessonDetailsPDFViewer";
+import LessonDetailsHeader from "@components/lesson/detail/LessonDetailsHeader";
+import LessonDetailsPDFViewer from "@components/lesson/detail/LessonDetailsPDFViewer";
 
 interface LessonComponentProps {
   lesson?: ILesson;

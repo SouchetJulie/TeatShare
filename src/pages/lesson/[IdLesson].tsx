@@ -5,7 +5,7 @@ import { ApiResponse } from "@typing/api-response.interface";
 import { ILesson } from "@typing/lesson.interface";
 import { addAlert } from "@stores/alert.store";
 import { useAppDispatch } from "@hooks/store-hook";
-import LessonDetails from "@components/lesson/LessonDetails";
+import LessonDetails from "@components/lesson/detail/LessonDetails";
 
 const IdLesson = () => {
   const router = useRouter();
