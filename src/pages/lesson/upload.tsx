@@ -11,8 +11,9 @@ import { useAppDispatch } from "@hooks/store-hook";
 import { useLoginRedirect } from "@hooks/login-redirect.hook";
 import { addAlert } from "@stores/alert.store";
 
-import { ResourceApiResponse } from "@typing/api-response.interface";
+import { ApiResponse } from "@typing/api-response.interface";
 import styles from "@styles/lesson/upload.module.scss";
+import { ILesson } from "@typing/lesson-file.interface";
 import { getAxiosErrorMessage } from "../../client/utils/get-axios-error.utils";
 
 const requiredFields = ["title", "file"];
@@ -35,7 +36,7 @@ const upload: FunctionComponent = () => {
     setValidated(true);
 
     const form = event.target as HTMLFormElement;
-    const formData = new FormData(form);
+    const formData: FormData = new FormData(form);
     formData.append("isDraft", isDraft + "");
 
     // Check all required fields are filled
@@ -48,29 +49,29 @@ const upload: FunctionComponent = () => {
     }
 
     const { data } = await axios
-      .post<ResourceApiResponse>("/api/lesson", formData)
+      .post<ApiResponse<{ lesson: ILesson }>>("/api/lesson", formData)
       .catch((error: AxiosError) => {
-        const response: ResourceApiResponse = {
+        const response: ApiResponse<{ lesson: ILesson }> = {
           success: false,
           error: getAxiosErrorMessage(error),
         };
         return { data: response };
       });
 
-    const { success } = data;
+    const success = data.success;
 
     if (success) {
-      const { id } = data;
+      const _id = data?.data?.lesson._id;
       const message = (
         <span>
           Leçon {isDraft ? "sauvegardée" : "créée"} avec succès !
-          <Alert.Link href={`/api/lesson/${id}`}>(Voir la leçon)</Alert.Link>
+          <Alert.Link href={`/lesson/${_id}`}>(Voir la leçon)</Alert.Link>
         </span>
       );
 
       dispatch(addAlert({ message, success }));
     } else {
-      const { error } = data;
+      const error = data.error;
       dispatch(
         addAlert({
           message: `Création de la leçon échouée : ${error}`,

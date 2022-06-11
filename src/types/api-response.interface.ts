@@ -3,7 +3,3 @@ export interface ApiResponse<DataType = unknown> {
   error?: string;
   data?: DataType;
 }
-
-export interface ResourceApiResponse extends ApiResponse {
-  id?: string;
-}
