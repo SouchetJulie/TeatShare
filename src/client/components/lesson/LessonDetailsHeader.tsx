@@ -6,20 +6,23 @@ import { ILesson } from "@typing/lesson-file.interface";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
-import {
-  BookmarkCheck,
-  BookmarkCheckFill,
-  Download,
-  Printer,
-} from "react-bootstrap-icons";
+import { Download, Printer } from "react-bootstrap-icons";
 import dayjs from "dayjs";
 import avatarLogo from "@assets/logos/avatar_placeholder.png";
-import axios from "axios";
+import { AxiosError, AxiosResponse } from "axios";
 import { IUserPublic } from "@typing/user.interface";
 import { addAlert } from "@stores/alert.store";
 import { ApiResponse } from "@typing/api-response.interface";
 import { useAppDispatch } from "@hooks/store-hook";
 import LessonBookmark from "@components/lesson/LessonBookmark";
+import { getUser } from "../../services/user.service";
+import { getAxiosErrorMessage } from "../../utils/get-axios-error.utils";
+import { toggleBookmark } from "../../services/lesson.service";
+import {
+  addBookmark,
+  removeBookmark,
+  selectAuthenticatedUser,
+} from "@stores/user.store";
 
 interface LessonHeaderComponentProps {
   lesson?: ILesson;
@@ -30,6 +33,7 @@ const LessonDetailsHeader: FunctionComponent<LessonHeaderComponentProps> = ({
 }) => {
   const [author, setAuthor] = useState<IUserPublic | undefined>(undefined);
   const dispatch = useAppDispatch();
+
   const formatDate: string = useMemo(
     () => dayjs(lesson?.publicationDate).format("DD/MM/YYYY"),
     [lesson?.publicationDate]
@@ -39,15 +43,17 @@ const LessonDetailsHeader: FunctionComponent<LessonHeaderComponentProps> = ({
 
   useEffect(() => {
     if (lesson?.authorId) {
-      axios
-        .get<ApiResponse<{ user: IUserPublic }>>(`/api/user/${lesson.authorId}`)
-        .then(({ data }) => {
+      getUser(lesson.authorId)
+        .then(({ data }: AxiosResponse<ApiResponse<{ user: IUserPublic }>>) => {
           setAuthor(data.data?.user);
-          // TODO  addAlert({ message: data.error, success: false, ttl: 2000 });
         })
-        .catch((err: Error) => {
+        .catch((err: AxiosError) => {
           dispatch(
-            addAlert({ message: err.message, success: false, ttl: 2000 })
+            addAlert({
+              message: getAxiosErrorMessage(err),
+              success: false,
+              ttl: 2000,
+            })
           );
         });
     }
@@ -59,7 +65,7 @@ const LessonDetailsHeader: FunctionComponent<LessonHeaderComponentProps> = ({
         <Image
           placeholder={"blur"}
           className={styles.blockImage}
-          src={avatar}
+          src={avatarLogo}
           width="70px"
           height="70px"
         />
@@ -79,7 +85,6 @@ const LessonDetailsHeader: FunctionComponent<LessonHeaderComponentProps> = ({
         className=" d-flex justify-content-center align-items-center flex-column"
       >
         <h1>{lesson?.title ?? ""}</h1>
-        {/* <h3>{lesson}</h3> */}
       </Col>
       <Col xs={12} md={3} className={styles.headerAction}>
         <Button variant="none">
