@@ -148,3 +148,33 @@ export const addLessonToUser = async (
     { $push: { lessonIds: lessonId } }
   );
 };
+
+/**
+ * Adds the given lesson id to the list of lessons bookmarked by this user.
+ * @param {IUserPublic} user
+ * @param {ObjectId} lessonId
+ */
+export const addBookmarkToUser = async (
+  user: IUserPublic,
+  lessonId: ObjectId
+) => {
+  return collection.updateOne(
+    { email: user.email },
+    { $push: { bookmarkIds: lessonId } }
+  );
+};
+
+/**
+ * Removes the given lesson id from the list of lessons bookmarked by this user.
+ * @param {IUserPublic} user
+ * @param {ObjectId} lessonId
+ */
+export const removeBookmarkFromUser = async (
+  user: IUserPublic,
+  lessonId: ObjectId
+) => {
+  return collection.updateOne(
+    { email: user.email },
+    { $pull: { bookmarkIds: lessonId } }
+  );
+};

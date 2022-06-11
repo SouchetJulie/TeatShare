@@ -18,6 +18,7 @@ export interface ILesson {
   isDraft: boolean;
   grade?: EGrade;
   course?: ECourse;
+  bookmarkCount: number;
   // foreign keys (needs to accept string so that filtered queries work)
   authorId: ObjectId | string;
   tagIds: ObjectId[];

@@ -86,6 +86,7 @@ export const createNewLesson = async (
     isDraft: true,
     creationDate: new Date(),
     lastModifiedDate: new Date(),
+    bookmarkCount: 0,
     // set the pub. date if necessary
     publicationDate: uploadedLesson.isDraft ? undefined : new Date(),
     // foreign keys
@@ -109,4 +110,19 @@ export const createNewLesson = async (
       "L'upload de la leçon a échoué ! L'opération d'écriture a été ignorée."
     );
   }
+};
+
+/**
+ * Update this lesson's update counter by the given amount
+ * @param {ObjectId} lessonId
+ * @param {number} amount
+ */
+export const updateBookmarkCounter = async (
+  lessonId: ObjectId,
+  amount: number
+) => {
+  return collection.updateOne(
+    { _id: lessonId },
+    { $inc: { bookmarkCount: amount } }
+  );
 };
