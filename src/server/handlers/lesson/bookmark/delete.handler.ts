@@ -25,7 +25,7 @@ const handler =
       }
 
       if (!user!.bookmarkIds.includes(_id)) {
-        return res.status(400).json({
+        return res.status(404).json({
           success: false,
           error: "Cette leçon est absente des marques-pages",
         });
@@ -36,10 +36,9 @@ const handler =
       await removeBookmarkFromUser(user!, lessonId.toHexString());
       await updateBookmarkCounter(lessonId, -1);
       // Update session
-      const bookmarkIndex = req.session.user?.bookmarkIds.findIndex(
-        (id: string) => _id === id
-      );
-      if (bookmarkIndex) {
+      const bookmarkIndex: number | undefined =
+        req.session.user?.bookmarkIds.findIndex((id: string) => _id === id);
+      if (bookmarkIndex !== undefined && bookmarkIndex >= 0) {
         req.session.user?.bookmarkIds.splice(bookmarkIndex, 1);
         await req.session.save();
       }

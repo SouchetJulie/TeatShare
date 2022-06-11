@@ -35,10 +35,11 @@ const userSlice = createSlice({
       state: UserState,
       action: PayloadAction<string> // lesson id
     ) => {
-      const bookmarkIndex = state.authenticatedUser?.bookmarkIds.findIndex(
-        (lessonId: string) => lessonId === action.payload
-      );
-      if (bookmarkIndex)
+      const bookmarkIndex: number | undefined =
+        state.authenticatedUser?.bookmarkIds.findIndex(
+          (lessonId: string) => lessonId === action.payload
+        );
+      if (bookmarkIndex !== undefined && bookmarkIndex >= 0)
         state.authenticatedUser?.bookmarkIds.splice(bookmarkIndex, 1);
     },
   },
