@@ -4,7 +4,6 @@ import { IUserAuth, IUserPublic } from "@typing/user.interface";
 import { body, ValidationChain } from "express-validator";
 import { validate } from "@middlewares/sanitization/validate.middleware";
 import { ApiResponse } from "@typing/api-response.interface";
-import { withSession } from "@middlewares/session.middleware";
 
 const handler = async (
   req: NextApiRequest,
@@ -47,6 +46,4 @@ const loginValidationChain: ValidationChain[] = [
     .withMessage("Le mot de passe ne doit pas être vide"),
 ];
 
-export const loginHandler: NextApiHandler = withSession(
-  validate(loginValidationChain, handler)
-);
+export const loginHandler: NextApiHandler = validate(loginValidationChain, handler);

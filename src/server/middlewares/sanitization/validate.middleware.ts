@@ -6,7 +6,7 @@ import {
 } from "express-validator";
 import { validationErrorResponse } from "@middlewares/sanitization/validation-error.response";
 import { sendError } from "next/dist/server/api-utils";
-import { runMiddleware } from "@common/run-middleware.helper";
+import { runMiddleware } from "@middlewares/run-middleware.helper";
 
 /**
  * Next API middleware for completing the validation process,

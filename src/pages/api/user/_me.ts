@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { ApiResponse } from "@typing/api-response.interface";
 import { IUserPublic } from "@typing/user.interface";
-import { withSession } from "@middlewares/session.middleware";
+import { withSession } from "@middlewares/authentication/session.middleware";
 
 export default withSession(
   async (

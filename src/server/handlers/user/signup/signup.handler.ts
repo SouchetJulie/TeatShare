@@ -4,7 +4,6 @@ import { IUserCreate, IUserPublic } from "@typing/user.interface";
 import { body, ValidationChain } from "express-validator";
 import { validate } from "@middlewares/sanitization/validate.middleware";
 import { ApiResponse } from "@typing/api-response.interface";
-import { withSession } from "@middlewares/session.middleware";
 
 const handler = async (
   req: NextApiRequest,
@@ -53,6 +52,4 @@ const signupValidationChain: ValidationChain[] = [
     .withMessage("Le mot de passe n'est pas assez fort"),
 ];
 
-export const signupHandler: NextApiHandler = withSession(
-  validate(signupValidationChain, handler)
-);
+export const signupHandler: NextApiHandler = validate(signupValidationChain, handler);
