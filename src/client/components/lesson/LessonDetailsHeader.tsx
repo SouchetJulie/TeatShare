@@ -2,7 +2,7 @@ import React, { FunctionComponent, useEffect, useMemo, useState } from "react";
 import styles from "@styles/lesson/LessonPost.module.scss";
 import Image from "next/image";
 
-import { ILesson } from "@typing/lesson-file.interface";
+import { ILesson } from "@typing/lesson.interface";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
@@ -13,7 +13,7 @@ import { AxiosError, AxiosResponse } from "axios";
 import { IUserPublic } from "@typing/user.interface";
 import { addAlert } from "@stores/alert.store";
 import { ApiResponse } from "@typing/api-response.interface";
-import { useAppDispatch } from "@hooks/store-hook";
+import { useAppDispatch, useAppSelector } from "@hooks/store-hook";
 import LessonBookmark from "@components/lesson/LessonBookmark";
 import { getUser } from "../../services/user.service";
 import { getAxiosErrorMessage } from "../../utils/get-axios-error.utils";
@@ -23,6 +23,8 @@ import {
   removeBookmark,
   selectAuthenticatedUser,
 } from "@stores/user.store";
+// eslint-disable-next-line camelcase
+import { unstable_batchedUpdates } from "react-dom";
 
 interface LessonHeaderComponentProps {
   lesson?: ILesson;
@@ -32,14 +34,15 @@ const LessonDetailsHeader: FunctionComponent<LessonHeaderComponentProps> = ({
   lesson,
 }) => {
   const [author, setAuthor] = useState<IUserPublic | undefined>(undefined);
+  const user: IUserPublic | undefined = useAppSelector(selectAuthenticatedUser);
   const dispatch = useAppDispatch();
 
   const formatDate: string = useMemo(
     () => dayjs(lesson?.publicationDate).format("DD/MM/YYYY"),
     [lesson?.publicationDate]
   );
-  const sparkles = undefined;
-  const avatar = sparkles ? sparkles : avatarLogo;
+  const isBookmarked: boolean =
+    user?.bookmarkIds.includes(lesson?._id ?? "") ?? false;
 
   useEffect(() => {
     if (lesson?.authorId) {
@@ -58,6 +61,50 @@ const LessonDetailsHeader: FunctionComponent<LessonHeaderComponentProps> = ({
         });
     }
   }, [lesson?.authorId]);
+
+  const onBookmarkClick = () => {
+    toggleBookmark(lesson?._id ?? "", isBookmarked)
+      .then(({ data: response }: AxiosResponse<ApiResponse>) => {
+        if (response.success) {
+          unstable_batchedUpdates(() => {
+            dispatch(
+              addAlert({
+                success: true,
+                message: `Marque-page ${
+                  isBookmarked ? "supprimé" : "ajouté"
+                } !`,
+                ttl: 1500,
+              })
+            );
+
+            if (isBookmarked) {
+              // remove bookmark
+              dispatch(removeBookmark(lesson!._id));
+              // lesson!.bookmarkCount -= 1;
+            } else {
+              // add bookmark
+              dispatch(addBookmark(lesson!._id));
+              // lesson!.bookmarkCount += 1;
+            }
+          });
+        } else {
+          addAlert({
+            success: false,
+            message: `Échec lors de ${
+              isBookmarked ? "la suppression" : "l'ajout"
+            } du marque-page : ${response.error}`,
+          });
+        }
+      })
+      .catch((e: AxiosError) =>
+        addAlert({
+          success: false,
+          message: `Échec lors de ${
+            isBookmarked ? "la suppression" : "l'ajout"
+          } du marque-page : ${getAxiosErrorMessage(e)}`,
+        })
+      );
+  };
 
   return (
     <Row className={styles.lessonHeader}>
@@ -93,10 +140,8 @@ const LessonDetailsHeader: FunctionComponent<LessonHeaderComponentProps> = ({
         <Button variant="none">
           <Printer color="black" size={30} />
         </Button>
-        <Button variant="none">
-          <LessonBookmark
-            isBookmarked={lesson && author?.bookmarkIds.includes(lesson._id!)}
-          />
+        <Button variant="none" onClick={onBookmarkClick}>
+          <LessonBookmark isBookmarked={isBookmarked} />
         </Button>
       </Col>
     </Row>

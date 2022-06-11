@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { ApiResponse } from "@typing/api-response.interface";
-import { ILesson } from "@typing/lesson-file.interface";
+import { ILesson } from "@typing/lesson.interface";
 import { addAlert } from "@stores/alert.store";
 import { useAppDispatch } from "@hooks/store-hook";
 import LessonDetails from "@components/lesson/LessonDetails";

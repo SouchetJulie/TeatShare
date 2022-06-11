@@ -46,4 +46,7 @@ const loginValidationChain: ValidationChain[] = [
     .withMessage("Le mot de passe ne doit pas être vide"),
 ];
 
-export const loginHandler: NextApiHandler = validate(loginValidationChain, handler);
+export const loginHandler: NextApiHandler = validate(
+  loginValidationChain,
+  handler
+);

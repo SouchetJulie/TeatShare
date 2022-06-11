@@ -137,12 +137,9 @@ export const isUser = (user: Record<string, any>): user is IUserDB => {
 /**
  * Adds the given lesson id to the list of lessons published by this user.
  * @param {IUserPublic} user
- * @param {ObjectId} lessonId
+ * @param {string} lessonId
  */
-export const addLessonToUser = async (
-  user: IUserPublic,
-  lessonId: ObjectId
-) => {
+export const addLessonToUser = async (user: IUserPublic, lessonId: string) => {
   return collection.updateOne(
     { email: user.email },
     { $push: { lessonIds: lessonId } }
@@ -152,11 +149,11 @@ export const addLessonToUser = async (
 /**
  * Adds the given lesson id to the list of lessons bookmarked by this user.
  * @param {IUserPublic} user
- * @param {ObjectId} lessonId
+ * @param {string} lessonId
  */
 export const addBookmarkToUser = async (
   user: IUserPublic,
-  lessonId: ObjectId
+  lessonId: string
 ) => {
   return collection.updateOne(
     { email: user.email },
@@ -167,11 +164,11 @@ export const addBookmarkToUser = async (
 /**
  * Removes the given lesson id from the list of lessons bookmarked by this user.
  * @param {IUserPublic} user
- * @param {ObjectId} lessonId
+ * @param {string} lessonId
  */
 export const removeBookmarkFromUser = async (
   user: IUserPublic,
-  lessonId: ObjectId
+  lessonId: string
 ) => {
   return collection.updateOne(
     { email: user.email },

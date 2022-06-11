@@ -4,7 +4,7 @@ import { getOneByIdValidationChain } from "@middlewares/sanitization/validation-
 import { getOneLesson, updateBookmarkCounter } from "@services/lessons.service";
 import { ApiResponse } from "@typing/api-response.interface";
 import { IUserPublic } from "@typing/user.interface";
-import { ILesson } from "@typing/lesson-file.interface";
+import { ILessonDB } from "@typing/lesson.interface";
 import { ObjectId } from "bson";
 import { addBookmarkToUser } from "@services/users.service";
 
@@ -15,7 +15,7 @@ const handler =
     const user: IUserPublic | undefined = req.session.user;
 
     try {
-      const lesson: ILesson | null = await getOneLesson(_id);
+      const lesson: ILessonDB | null = await getOneLesson(_id);
 
       if (!lesson) {
         return res.status(404).json({
@@ -24,9 +24,7 @@ const handler =
         });
       }
 
-      const lessonId = new ObjectId(_id);
-
-      if (user!.bookmarkIds.includes(lessonId)) {
+      if (user!.bookmarkIds.includes(_id)) {
         return res.status(400).json({
           success: false,
           error: "Cette leçon est déjà dans les marques-pages",
@@ -34,8 +32,14 @@ const handler =
       }
 
       // Add the bookmark
-      await addBookmarkToUser(user!, lessonId);
+      const lessonId = new ObjectId(_id);
+      await addBookmarkToUser(user!, lessonId.toHexString());
       await updateBookmarkCounter(lessonId, 1);
+      // Update session
+      req.session.user?.bookmarkIds.push(_id);
+      await req.session.save();
+
+      console.log(`[LESSON] Added lesson ${_id} to user's bookmarks`);
 
       return res.status(200).json({ success: true });
     } catch (e) {

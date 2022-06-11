@@ -4,7 +4,7 @@ import { getOneByIdValidationChain } from "@middlewares/sanitization/validation-
 import { getOneLesson, updateBookmarkCounter } from "@services/lessons.service";
 import { ApiResponse } from "@typing/api-response.interface";
 import { IUserPublic } from "@typing/user.interface";
-import { ILesson } from "@typing/lesson-file.interface";
+import { ILessonDB } from "@typing/lesson.interface";
 import { ObjectId } from "bson";
 import { removeBookmarkFromUser } from "@services/users.service";
 
@@ -15,7 +15,7 @@ const handler =
     const user: IUserPublic | undefined = req.session.user;
 
     try {
-      const lesson: ILesson | null = await getOneLesson(_id);
+      const lesson: ILessonDB | null = await getOneLesson(_id);
 
       if (!lesson) {
         return res.status(404).json({
@@ -24,18 +24,27 @@ const handler =
         });
       }
 
-      const lessonId = new ObjectId(_id);
-
-      if (user!.bookmarkIds.includes(lessonId)) {
+      if (!user!.bookmarkIds.includes(_id)) {
         return res.status(400).json({
           success: false,
           error: "Cette leçon est absente des marques-pages",
         });
       }
 
-      // Add the bookmark
-      await removeBookmarkFromUser(user!, lessonId);
+      // Remove the bookmark
+      const lessonId = new ObjectId(_id);
+      await removeBookmarkFromUser(user!, lessonId.toHexString());
       await updateBookmarkCounter(lessonId, -1);
+      // Update session
+      const bookmarkIndex = req.session.user?.bookmarkIds.findIndex(
+        (id: string) => _id === id
+      );
+      if (bookmarkIndex) {
+        req.session.user?.bookmarkIds.splice(bookmarkIndex, 1);
+        await req.session.save();
+      }
+
+      console.log(`[LESSON] Removed lesson ${_id} from user's bookmarks`);
 
       return res.status(200).json({ success: true });
     } catch (e) {

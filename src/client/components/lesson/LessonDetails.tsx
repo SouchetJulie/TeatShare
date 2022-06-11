@@ -1,6 +1,6 @@
 import { FunctionComponent, RefObject, useRef } from "react";
 import styles from "@styles/lesson/LessonPost.module.scss";
-import { ILesson } from "@typing/lesson-file.interface";
+import { ILesson } from "@typing/lesson.interface";
 // import Image from "next/image";
 // import sparkles from "../../../../public/icones/sparkles.png";
 import Container from "react-bootstrap/Container";

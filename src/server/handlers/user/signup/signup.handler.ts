@@ -52,4 +52,7 @@ const signupValidationChain: ValidationChain[] = [
     .withMessage("Le mot de passe n'est pas assez fort"),
 ];
 
-export const signupHandler: NextApiHandler = validate(signupValidationChain, handler);
+export const signupHandler: NextApiHandler = validate(
+  signupValidationChain,
+  handler
+);

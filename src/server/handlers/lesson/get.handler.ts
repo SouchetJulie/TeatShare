@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { validate } from "@middlewares/sanitization/validate.middleware";
 import { getAllLessons, getOneLesson } from "@services/lessons.service";
 import { ApiResponse } from "@typing/api-response.interface";
-import { ILesson } from "@typing/lesson-file.interface";
+import { ILessonDB } from "@typing/lesson.interface";
 import { getOneByIdValidationChain } from "@middlewares/sanitization/validation-chains";
 import { Filter } from "@services/database.service";
 
@@ -43,14 +43,14 @@ const lessonGetAllHandler = async (
 
   // No filters -> get all lessons
   if (query.length === 0) {
-    const lessons: ILesson[] = await getAllLessons();
+    const lessons: ILessonDB[] = await getAllLessons();
     return res.status(200).json({
       success: true,
       data: { lessons },
     });
   }
 
-  const filters: Filter<ILesson> = {};
+  const filters: Filter<ILessonDB> = {};
 
   try {
     for (const [key, value] of query) {
@@ -171,7 +171,7 @@ const lessonGetAllHandler = async (
     }
 
     // Read lessons from database & send result
-    const lessons: ILesson[] = await getAllLessons(filters);
+    const lessons: ILessonDB[] = await getAllLessons(filters);
     res.status(200).json({
       success: true,
       data: { lessons },
@@ -188,7 +188,7 @@ const baseLessonGetOneHandler =
   (_id: string) =>
   async (
     req: NextApiRequest,
-    res: NextApiResponse<ApiResponse<{ lesson: ILesson }>>
+    res: NextApiResponse<ApiResponse<{ lesson: ILessonDB }>>
   ) => {
     const { _id: id } = req.body.sanitized as { _id: string };
 
