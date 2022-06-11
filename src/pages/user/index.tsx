@@ -6,7 +6,7 @@ const index: FunctionComponent = () => {
 
   return user ? (
     <div>
-      TODO debug
+      TODO for debug
       <table>
         {Object.entries(user).map(([key, value]) => {
           return (
