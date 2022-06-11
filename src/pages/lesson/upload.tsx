@@ -12,7 +12,7 @@ import { addAlert } from "@stores/alert.store";
 
 import { ApiResponse } from "@typing/api-response.interface";
 import styles from "@styles/lesson/upload.module.scss";
-import { ILesson } from "@typing/lesson-file.interface";
+import { ILesson } from "@typing/lesson.interface";
 import { getAxiosErrorMessage } from "../../client/utils/get-axios-error.utils";
 import { useAutoLogin } from "@hooks/auto-login.hook";
 
