@@ -40,7 +40,7 @@ const baseUserGetOneHandler =
         console.warn(`[USER] Failed to get user ${id}: not found`);
         return res.status(404).json({
           success: false,
-          error: `User ${id} not found`,
+          error: `Utilisateur ${id} non trouvé`,
         });
       }
 
