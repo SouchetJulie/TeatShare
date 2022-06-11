@@ -17,7 +17,7 @@ const handler = async (
     const user = await getUserByEmail(userCredentials.email);
 
     if (!user) {
-      return res.status(400).json({
+      return res.status(404).json({
         success: false,
         error: "Utilisateur inconnu",
       });

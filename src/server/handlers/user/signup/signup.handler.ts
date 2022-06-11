@@ -19,7 +19,7 @@ const handler = async (
     if (!user) {
       console.log("[SIGNUP] Error while reading newly created user");
 
-      return res.status(500).json({
+      return res.status(400).json({
         success: false,
         error: "Erreur lors de l'enregistrement",
       });

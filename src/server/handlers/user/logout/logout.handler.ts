@@ -10,7 +10,7 @@ export const logoutHandler: NextApiHandler = async (
 
   if (!user) {
     console.log("[LOGOUT] Logout failed: no user was logged in.");
-    return res.status(400).json({
+    return res.status(404).json({
       success: false,
       error: "Logout failed.",
     });

@@ -10,8 +10,9 @@ import Row from "react-bootstrap/Row";
 import { useAppDispatch } from "@hooks/store-hook";
 import { addAlert } from "@stores/alert.store";
 
-import { ResourceApiResponse } from "@typing/api-response.interface";
+import { ApiResponse } from "@typing/api-response.interface";
 import styles from "@styles/lesson/upload.module.scss";
+import { ILesson } from "@typing/lesson-file.interface";
 import { getAxiosErrorMessage } from "../../client/utils/get-axios-error.utils";
 import { useAutoLogin } from "@hooks/auto-login.hook";
 
@@ -35,7 +36,7 @@ const upload: FunctionComponent = () => {
     setValidated(true);
 
     const form = event.target as HTMLFormElement;
-    const formData = new FormData(form);
+    const formData: FormData = new FormData(form);
     formData.append("isDraft", isDraft + "");
 
     // Check all required fields are filled
@@ -48,32 +49,32 @@ const upload: FunctionComponent = () => {
     }
 
     const { data } = await axios
-      .post<ResourceApiResponse>("/api/lesson", formData)
+      .post<ApiResponse<{ lesson: ILesson }>>("/api/lesson", formData)
       .catch((error: AxiosError) => {
-        const response: ResourceApiResponse = {
+        const response: ApiResponse<{ lesson: ILesson }> = {
           success: false,
           error: getAxiosErrorMessage(error),
         };
         return { data: response };
       });
 
-    const { success } = data;
+    const success = data.success;
 
     if (success) {
-      const { id } = data;
-      const message = (
+      // ID est de type ObjectId
+      const _id = data?.data?.lesson._id;
+      const message: JSX.Element = (
         <span>
-          Leçon {isDraft ? "sauvegardée" : "créée"} avec succès !
-          <Alert.Link href={`/api/lesson/${id}`}>(Voir la leçon)</Alert.Link>
+          Leçon {isDraft ? "sauvegardée" : "créée"} avec succès ! &nbsp;
+          <Alert.Link href={`/lesson/${_id}`}>(Voir la leçon)</Alert.Link>
         </span>
       );
 
       dispatch(addAlert({ message, success }));
     } else {
-      const { error } = data;
       dispatch(
         addAlert({
-          message: `Création de la leçon échouée : ${error}`,
+          message: `Création de la leçon échouée : ${data.error}`,
           success,
         })
       );
