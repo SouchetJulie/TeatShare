@@ -61,20 +61,20 @@ const upload: FunctionComponent = () => {
     const success = data.success;
 
     if (success) {
+      // ID est de type ObjectId
       const _id = data?.data?.lesson._id;
-      const message = (
+      const message: JSX.Element = (
         <span>
-          Leçon {isDraft ? "sauvegardée" : "créée"} avec succès !
+          Leçon {isDraft ? "sauvegardée" : "créée"} avec succès ! &nbsp;
           <Alert.Link href={`/lesson/${_id}`}>(Voir la leçon)</Alert.Link>
         </span>
       );
 
       dispatch(addAlert({ message, success }));
     } else {
-      const error = data.error;
       dispatch(
         addAlert({
-          message: `Création de la leçon échouée : ${error}`,
+          message: `Création de la leçon échouée : ${data.error}`,
           success,
         })
       );
