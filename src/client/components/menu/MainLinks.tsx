@@ -1,8 +1,7 @@
-import { FunctionComponent } from "react";
-import Nav from "react-bootstrap/Nav";
-
 import styles from "@styles/menu/navbar.module.scss";
 import Link from "next/link";
+import { FunctionComponent } from "react";
+import Nav from "react-bootstrap/Nav";
 
 interface Props {
   show?: boolean;

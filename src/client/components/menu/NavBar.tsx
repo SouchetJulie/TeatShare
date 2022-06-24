@@ -1,17 +1,16 @@
-import { FunctionComponent } from "react";
-import Container from "react-bootstrap/Container";
-import Navbar from "react-bootstrap/Navbar";
-import Nav from "react-bootstrap/Nav";
-import Link from "next/link";
-
 import Logo from "@assets/logos/logo-full-horizontal.svg";
-import GradeLinks from "../menu/GradeLinks";
-import UserLinks from "../menu/UserLinks";
+import { useAppSelector } from "@hooks/store-hook";
 import { selectAuthenticatedUser } from "@stores/user.store";
 import styles from "@styles/menu/navbar.module.scss";
 import { NavbarVariant } from "@typing/navbar-variant.enum";
+import Link from "next/link";
+import { FunctionComponent } from "react";
+import Container from "react-bootstrap/Container";
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
+import GradeLinks from "../menu/GradeLinks";
 import LessonLinks from "../menu/LessonLinks";
-import { useAppSelector } from "@hooks/store-hook";
+import UserLinks from "../menu/UserLinks";
 
 interface Props {
   variant?: NavbarVariant;

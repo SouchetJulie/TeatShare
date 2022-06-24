@@ -1,9 +1,3 @@
-import React, { FunctionComponent, useEffect, useState } from "react";
-import axios from "axios";
-import Link from "next/link";
-import Card from "react-bootstrap/Card";
-import NavLink from "react-bootstrap/NavLink";
-
 import { useAppDispatch } from "@hooks/store-hook";
 import { addAlert } from "@stores/alert.store";
 import styles from "@styles/lesson-item.module.scss";
@@ -11,6 +5,11 @@ import { ApiResponse } from "@typing/api-response.interface";
 import { ILesson } from "@typing/lesson-file.interface";
 import { IUserPublic } from "@typing/user.interface";
 import { createEmptyUser } from "@utils/create-empty-user";
+import axios from "axios";
+import Link from "next/link";
+import React, { FunctionComponent, useEffect, useState } from "react";
+import Card from "react-bootstrap/Card";
+import NavLink from "react-bootstrap/NavLink";
 
 interface Props {
   lesson: ILesson;

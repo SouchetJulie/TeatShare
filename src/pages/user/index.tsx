@@ -1,5 +1,5 @@
-import React, { FunctionComponent } from "react";
 import { useLoginRedirect } from "@hooks/login-redirect.hook";
+import React, { FunctionComponent } from "react";
 
 const index: FunctionComponent = () => {
   const user = useLoginRedirect();

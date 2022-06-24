@@ -1,5 +1,5 @@
-import { FunctionComponent } from "react";
 import LoginForm from "@components/auth/LoginForm.component";
+import { FunctionComponent } from "react";
 
 const login: FunctionComponent = () => {
   return <LoginForm />;

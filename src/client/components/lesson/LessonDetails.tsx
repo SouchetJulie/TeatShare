@@ -1,11 +1,11 @@
-import { FunctionComponent, RefObject, useRef } from "react";
+import LessonDetailsHeader from "@components/lesson/LessonDetailsHeader";
+import LessonDetailsPDFViewer from "@components/lesson/LessonDetailsPDFViewer";
 import styles from "@styles/lesson/LessonPost.module.scss";
 import { ILesson } from "@typing/lesson-file.interface";
+import { FunctionComponent, RefObject, useRef } from "react";
 // import Image from "next/image";
 // import sparkles from "../../../../public/icones/sparkles.png";
 import Container from "react-bootstrap/Container";
-import LessonDetailsHeader from "@components/lesson/LessonDetailsHeader";
-import LessonDetailsPDFViewer from "@components/lesson/LessonDetailsPDFViewer";
 
 interface LessonComponentProps {
   lesson?: ILesson;

@@ -1,6 +1,6 @@
-import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
-import { IUserPublic } from "@typing/user.interface";
 import { ApiResponse } from "@typing/api-response.interface";
+import { IUserPublic } from "@typing/user.interface";
+import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 
 export const logoutHandler: NextApiHandler = async (
   req: NextApiRequest,

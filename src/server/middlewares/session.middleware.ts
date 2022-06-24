@@ -1,6 +1,6 @@
-import { NextApiHandler } from "next";
-import { withIronSessionApiRoute } from "iron-session/next";
 import { IUserPublic } from "@typing/user.interface";
+import { withIronSessionApiRoute } from "iron-session/next";
+import { NextApiHandler } from "next";
 
 /**
  * Adds a `IronSession` to the request before it is handled (under `req.session`).

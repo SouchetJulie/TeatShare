@@ -1,20 +1,19 @@
+import styles from "@styles/menu/navbar.module.scss";
+import Link from "next/link";
+import { useRouter } from "next/router";
 import React, { FunctionComponent, useState } from "react";
-import OverlayTrigger from "react-bootstrap/OverlayTrigger";
-import Nav from "react-bootstrap/Nav";
-import Popover from "react-bootstrap/Popover";
-import Form from "react-bootstrap/Form";
-import InputGroup from "react-bootstrap/InputGroup";
-import Button from "react-bootstrap/Button";
 import {
   FileEarmarkRichtext,
   JournalBookmark,
   PlusCircleFill,
   Search,
 } from "react-bootstrap-icons";
-
-import styles from "@styles/menu/navbar.module.scss";
-import Link from "next/link";
-import { useRouter } from "next/router";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import InputGroup from "react-bootstrap/InputGroup";
+import Nav from "react-bootstrap/Nav";
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import Popover from "react-bootstrap/Popover";
 
 interface Props {
   className?: string;

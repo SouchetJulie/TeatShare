@@ -1,10 +1,9 @@
-import { useRouter } from "next/router";
-import { useEffect } from "react";
-
 import { useAppDispatch, useAppSelector } from "@hooks/store-hook";
 import { addAlert } from "@stores/alert.store";
 import { selectAuthenticatedUser } from "@stores/user.store";
 import { IUserPublic } from "@typing/user.interface";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 /**
  * Hook for blocking access to a page when unauthenticated.

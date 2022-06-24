@@ -1,7 +1,7 @@
-import { FunctionComponent } from "react";
+import sparkles from "@public/icones/sparkles.png";
 import styles from "@styles/lesson/LessonPost.module.scss";
 import Image from "next/image";
-import sparkles from "@public/icones/sparkles.png";
+import { FunctionComponent } from "react";
 import Placeholder from "react-bootstrap/Placeholder";
 
 const LessonPlaceholder: FunctionComponent = () => {

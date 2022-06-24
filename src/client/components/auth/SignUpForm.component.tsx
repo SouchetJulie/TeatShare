@@ -1,23 +1,22 @@
-import axios, { AxiosError, AxiosResponse } from "axios";
-import { Formik } from "formik";
-import { useRouter } from "next/router";
-import Link from "next/link";
-import { FunctionComponent, useEffect, useState } from "react";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
-
-import * as yup from "yup";
 import { useAppDispatch } from "@hooks/store-hook";
 import { addAlert } from "@stores/alert.store";
 import { setUser } from "@stores/user.store";
 import styles from "@styles/auth/Login.Component.module.scss";
 import { ApiResponse } from "@typing/api-response.interface";
 import { IUserCreate, IUserPublic } from "@typing/user.interface";
-import { getAxiosErrorMessage } from "../../utils/get-axios-error.utils";
-import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
+import axios, { AxiosError, AxiosResponse } from "axios";
+import { Formik } from "formik";
 import { FormikHelpers } from "formik/dist/types";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { FunctionComponent, useEffect, useState } from "react";
 import { XLg } from "react-bootstrap-icons";
+import Button from "react-bootstrap/Button";
+import Col from "react-bootstrap/Col";
+import Form from "react-bootstrap/Form";
+import Row from "react-bootstrap/Row";
+import * as yup from "yup";
+import { getAxiosErrorMessage } from "../../utils/get-axios-error.utils";
 
 const userCreateSchema = yup.object({
   email: yup
