@@ -1,12 +1,11 @@
-import React, { FunctionComponent, useEffect, useState } from "react";
-import Dropdown from "react-bootstrap/Dropdown";
-import Nav from "react-bootstrap/Nav";
-import Link from "next/link";
-
+import { useLogout } from "@hooks/logout.hook";
 import styles from "@styles/menu/navbar.module.scss";
 import { IUserPublic } from "@typing/user.interface";
-import { useLogout } from "@hooks/logout.hook";
+import Link from "next/link";
+import React, { FunctionComponent, useEffect, useState } from "react";
 import { NavDropdown } from "react-bootstrap";
+import Dropdown from "react-bootstrap/Dropdown";
+import Nav from "react-bootstrap/Nav";
 
 interface Props {
   user?: IUserPublic;

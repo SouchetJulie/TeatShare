@@ -1,12 +1,10 @@
+import logo from "@public/logos/name.png";
+import styles from "@styles/landing_page/Footer.module.scss";
 import Image from "next/image";
 import Link from "next/link";
-
-import logo from "@public/logos/name.png";
+import { FunctionComponent } from "react";
 // Social icons
 import { Facebook, Instagram, Twitter } from "react-bootstrap-icons";
-
-import styles from "@styles/landing_page/Footer.module.scss";
-import { FunctionComponent } from "react";
 
 interface FooterProps {
   isAuthenticated: boolean;

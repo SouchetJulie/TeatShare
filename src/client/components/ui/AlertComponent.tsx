@@ -1,8 +1,7 @@
-import React, { FunctionComponent, useEffect, useState } from "react";
-import { Alert } from "react-bootstrap";
-
 import { useAppDispatch } from "@hooks/store-hook";
 import { IAlert, removeAlert } from "@stores/alert.store";
+import React, { FunctionComponent, useEffect, useState } from "react";
+import { Alert } from "react-bootstrap";
 
 const AlertComponent: FunctionComponent<IAlert> = ({
   message,

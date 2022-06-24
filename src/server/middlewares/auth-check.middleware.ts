@@ -1,5 +1,5 @@
-import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 import { ApiResponse } from "@typing/api-response.interface";
+import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 
 /**
  * Checks for authenticated status before allowing or not the request handling to continue.
