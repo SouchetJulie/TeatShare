@@ -1,8 +1,10 @@
+import { useCategoryList } from "@hooks/category-list.hook";
 import { useLoginRedirect } from "@hooks/login-redirect.hook";
 import { useAppDispatch } from "@hooks/store-hook";
 import { addAlert } from "@stores/alert.store";
 import styles from "@styles/lesson/upload.module.scss";
 import { ApiResponse } from "@typing/api-response.interface";
+import { ICategory } from "@typing/category.interface";
 import { ILesson } from "@typing/lesson-file.interface";
 import axios, { AxiosError } from "axios";
 import { FormEvent, FunctionComponent, useState } from "react";
@@ -20,6 +22,7 @@ const upload: FunctionComponent = () => {
   const dispatch = useAppDispatch();
   const user = useLoginRedirect(); // Route guard
 
+  const categories = useCategoryList();
   const [isDraft, setIsDraft] = useState(false);
   const [validated, setValidated] = useState(false);
 
@@ -35,7 +38,7 @@ const upload: FunctionComponent = () => {
 
     const form = event.target as HTMLFormElement;
     const formData: FormData = new FormData(form);
-    formData.append("isDraft", isDraft + "");
+    formData.append("isDraft", isDraft + ""); // force conversion to string
 
     // Check all required fields are filled
     if (
@@ -46,6 +49,9 @@ const upload: FunctionComponent = () => {
       return;
     }
 
+    console.log(formData.getAll("category"));
+
+    // Post the request
     const { data } = await axios
       .post<ApiResponse<{ lesson: ILesson }>>("/api/lesson", formData)
       .catch((error: AxiosError) => {
@@ -125,21 +131,22 @@ const upload: FunctionComponent = () => {
         </Col>
 
         <Col className="d-flex flex-column justify-content-center" sm="3">
+          <Form.Select multiple name="category">
+            <option>Choisir une ou des catégories</option>
+            {categories.map((category: ICategory) => (
+              <option key={"category-" + category._id} value={category._id}>
+                {category.label}
+              </option>
+            ))}
+          </Form.Select>
+
           <Button
             className="round-button"
             variant="primary"
             type="submit"
             onClick={() => setIsDraft(false)}
           >
-            Soumettre
-          </Button>
-          <Button
-            className="round-button"
-            variant="secondary"
-            type="submit"
-            onClick={() => setIsDraft(true)}
-          >
-            Sauvegarder
+            Publier
           </Button>
         </Col>
       </Form>
