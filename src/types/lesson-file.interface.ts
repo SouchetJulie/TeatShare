@@ -1,7 +1,7 @@
-import { ObjectId } from "bson";
 import { CleanFile } from "@typing/clean-file.interface";
 import { EGrade } from "@typing/grade.enum";
-import { ECourse } from "@typing/course.enum";
+import { ESubject } from "@typing/subject.enum";
+import { ObjectId } from "bson";
 
 /**
  * Data about a lessonDetails.
@@ -17,10 +17,10 @@ export interface ILesson {
   publicationDate?: Date;
   isDraft: boolean;
   grade?: EGrade;
-  course?: ECourse;
+  subject?: ESubject;
   // foreign keys (needs to accept string so that filtered queries work)
   authorId: ObjectId | string;
-  tagIds: ObjectId[];
+  categoryIds: ObjectId[];
   commentIds: ObjectId[];
 }
 
