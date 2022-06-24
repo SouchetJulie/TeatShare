@@ -1,10 +1,10 @@
-import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
+import { validate } from "@middlewares/sanitization/validate.middleware";
+import { withSession } from "@middlewares/session.middleware";
 import { checkCredentials, getUserByEmail } from "@services/users.service";
+import { ApiResponse } from "@typing/api-response.interface";
 import { IUserAuth, IUserPublic } from "@typing/user.interface";
 import { body, ValidationChain } from "express-validator";
-import { validate } from "@middlewares/sanitization/validate.middleware";
-import { ApiResponse } from "@typing/api-response.interface";
-import { withSession } from "@middlewares/session.middleware";
+import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 
 const handler = async (
   req: NextApiRequest,

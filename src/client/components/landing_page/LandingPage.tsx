@@ -1,9 +1,9 @@
 import { FunctionComponent } from "react";
 import styles from "../../styles/landing_page/LandingPage.module.scss";
-import Accueil from "./Accueil";
 import Access from "./Access";
-import Temoignage from "./Temoignage";
+import Accueil from "./Accueil";
 import Actualites from "./Actualites";
+import Temoignage from "./Temoignage";
 
 const LandingPage: FunctionComponent = () => (
   <div className={styles.container}>

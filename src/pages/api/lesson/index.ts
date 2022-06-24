@@ -1,8 +1,8 @@
-import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 import { lessonGetAllHandler } from "@handlers/lesson/get.handler";
 import { lessonPostHandler } from "@handlers/lesson/post.handler";
 import routerMiddleware from "@middlewares/router.middleware";
 import { ApiResponse } from "@typing/api-response.interface";
+import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 
 // Disable the default body parser
 export const config = {

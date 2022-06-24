@@ -1,18 +1,17 @@
+import { useAutoLogin } from "@hooks/auto-login.hook";
+import { useAppSelector } from "@hooks/store-hook";
+import { IAlert, selectAlerts } from "@stores/alert.store";
+import { store } from "@stores/store";
+import { selectIsAuthenticated } from "@stores/user.store";
+import "@styles/globals.scss";
 import { AppProps } from "next/app";
 import Head from "next/head";
+import Container from "react-bootstrap/Container";
 import { Provider } from "react-redux";
-
 import Footer from "../client/components/menu/Footer";
 import NavBar from "../client/components/menu/NavBar";
 import SideBar from "../client/components/menu/SideBar";
 import Alert from "../client/components/ui/AlertComponent";
-import { store } from "@stores/store";
-import { IAlert, selectAlerts } from "@stores/alert.store";
-import "@styles/globals.scss";
-import { selectIsAuthenticated } from "@stores/user.store";
-import { useAppSelector } from "@hooks/store-hook";
-import { useAutoLogin } from "@hooks/auto-login.hook";
-import Container from "react-bootstrap/Container";
 
 /**
  * Main application component: contains the parts that are shared for the whole app.

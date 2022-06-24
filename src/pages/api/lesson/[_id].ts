@@ -1,7 +1,7 @@
-import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 import { lessonGetOneHandler } from "@handlers/lesson/get.handler";
 import routerMiddleware from "@middlewares/router.middleware";
 import { ApiResponse } from "@typing/api-response.interface";
+import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 
 export const config = {
   api: {

@@ -1,11 +1,11 @@
-import { useRouter } from "next/router";
-import axios from "axios";
-import { useEffect, useState } from "react";
+import LessonDetails from "@components/lesson/LessonDetails";
+import { useAppDispatch } from "@hooks/store-hook";
+import { addAlert } from "@stores/alert.store";
 import { ApiResponse } from "@typing/api-response.interface";
 import { ILesson } from "@typing/lesson-file.interface";
-import { addAlert } from "@stores/alert.store";
-import { useAppDispatch } from "@hooks/store-hook";
-import LessonDetails from "@components/lesson/LessonDetails";
+import axios from "axios";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 const IdLesson = () => {
   const router = useRouter();

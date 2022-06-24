@@ -1,25 +1,19 @@
-import React, { FunctionComponent, useEffect, useMemo, useState } from "react";
-import styles from "@styles/lesson/LessonPost.module.scss";
-import Image from "next/image";
-
-import { ILesson } from "@typing/lesson-file.interface";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Button from "react-bootstrap/Button";
-import {
-  BookmarkCheck,
-  BookmarkCheckFill,
-  Download,
-  Printer,
-} from "react-bootstrap-icons";
-import dayjs from "dayjs";
 import avatarLogo from "@assets/logos/avatar_placeholder.png";
-import axios from "axios";
-import { IUserPublic } from "@typing/user.interface";
-import { addAlert } from "@stores/alert.store";
-import { ApiResponse } from "@typing/api-response.interface";
-import { useAppDispatch } from "@hooks/store-hook";
 import LessonBookmark from "@components/lesson/LessonBookmark";
+import { useAppDispatch } from "@hooks/store-hook";
+import { addAlert } from "@stores/alert.store";
+import styles from "@styles/lesson/LessonPost.module.scss";
+import { ApiResponse } from "@typing/api-response.interface";
+import { ILesson } from "@typing/lesson-file.interface";
+import { IUserPublic } from "@typing/user.interface";
+import axios from "axios";
+import dayjs from "dayjs";
+import Image from "next/image";
+import React, { FunctionComponent, useEffect, useMemo, useState } from "react";
+import { Download, Printer } from "react-bootstrap-icons";
+import Button from "react-bootstrap/Button";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
 
 interface LessonHeaderComponentProps {
   lesson?: ILesson;
