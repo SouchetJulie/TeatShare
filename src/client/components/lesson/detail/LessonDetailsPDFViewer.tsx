@@ -1,4 +1,4 @@
-import { ILesson } from "@typing/lesson.interface"; // PDF VIEWER
+import { ILesson } from "@typing/lesson.interface";
 import { PDFDocumentProxy } from "pdfjs-dist";
 import React, { FunctionComponent, useState } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
