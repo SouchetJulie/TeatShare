@@ -4,7 +4,6 @@ import {
   IUserDB,
   IUserPublic,
 } from "@typing/user.interface";
-import { createEmptyUser } from "@utils/create-empty-user";
 import bcrypt from "bcryptjs";
 import { ObjectId } from "bson";
 import { InsertOneResult } from "mongodb";
@@ -93,7 +92,7 @@ export const createNewUser = async (
   const hashedPassword = bcrypt.hashSync(user.password, 13);
 
   const userDB: Omit<IUserDB, "_id"> = {
-    ...createEmptyUser(),
+    ...initEmptyUser(),
     email: user.email,
     firstName: user.firstName,
     lastName: user.lastName,
@@ -146,4 +145,27 @@ export const addLessonToUser = async (
     { email: user.email },
     { $push: { lessonIds: lessonId } }
   );
+};
+
+/**
+ * Creates an empty User with default values.
+ * @return {IUserDB}
+ */
+const initEmptyUser = (): IUserDB => {
+  return {
+    // set default values
+    joinDate: new Date(),
+    description: "",
+    location: "",
+    // foreign keys
+    grades: [],
+    subjects: [],
+    lessonIds: [],
+    bookmarkIds: [],
+    commentIds: [],
+    // authentication parameters
+    email: "",
+    firstName: "",
+    lastName: "",
+  };
 };
