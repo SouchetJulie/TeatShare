@@ -1,3 +1,4 @@
+import { getAxiosErrorMessage } from "@client/utils/get-axios-error.utils";
 import { useCategoryList } from "@hooks/category-list.hook";
 import { useLoginRedirect } from "@hooks/login-redirect.hook";
 import { useAppDispatch } from "@hooks/store-hook";
@@ -14,7 +15,7 @@ import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
-import { getAxiosErrorMessage } from "../../client/utils/get-axios-error.utils";
+import Select from "react-select";
 
 const requiredFields = ["title", "file"];
 
@@ -22,9 +23,9 @@ const upload: FunctionComponent = () => {
   const dispatch = useAppDispatch();
   const user = useLoginRedirect(); // Route guard
 
-  const categories = useCategoryList();
   const [isDraft, setIsDraft] = useState(false);
   const [validated, setValidated] = useState(false);
+  const categories = useCategoryList();
 
   if (!user) {
     return <></>;
@@ -85,6 +86,10 @@ const upload: FunctionComponent = () => {
     }
   };
 
+  const categoryOptions = categories.map((category: ICategory) => ({
+    value: category._id,
+    label: category.label,
+  }));
   return (
     <Container className="min-vh-100">
       <Row>
@@ -131,14 +136,7 @@ const upload: FunctionComponent = () => {
         </Col>
 
         <Col className="d-flex flex-column justify-content-center" sm="3">
-          <Form.Select multiple name="category">
-            <option>Choisir une ou des catégories</option>
-            {categories.map((category: ICategory) => (
-              <option key={"category-" + category._id} value={category._id}>
-                {category.label}
-              </option>
-            ))}
-          </Form.Select>
+          <Select isMulti options={categoryOptions} name="category" />
 
           <Button
             className="round-button"
