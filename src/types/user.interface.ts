@@ -1,4 +1,5 @@
 import { ESubject } from "@typing/subject.enum";
+import { Replace } from "@typing/utility-types";
 import { ObjectId } from "bson";
 import { EGrade } from "./grade.enum";
 
@@ -51,4 +52,9 @@ export interface IUserDB extends IUserCreate {
 /**
  * Used for sending data to the client about a User
  */
-export type IUserPublic = Omit<IUserDB, "password">;
+export type IUserPublic = Replace<
+  // replace all ObjectId by string
+  Replace<Omit<IUserDB, "password">, ObjectId | undefined, string | undefined>,
+  ObjectId[],
+  string[]
+>;

@@ -5,8 +5,7 @@ import {
   IUserPublic,
 } from "@typing/user.interface";
 import bcrypt from "bcryptjs";
-import { ObjectId } from "bson";
-import { InsertOneResult } from "mongodb";
+import { InsertOneResult, ObjectId } from "mongodb";
 import { getDatabase } from "./database.service";
 
 const collection = (await getDatabase()).collection<IUserDB>("User");
@@ -16,14 +15,14 @@ collection.createIndex({ email: 1 });
 /**
  * Fetches all users from database.
  *
- * @return {Promise<IUserDB[]>} The list (possibly empty) of all users found.
+ * @return {Promise<IUserPublic[]>} The list (possibly empty) of all users found.
  */
-export const getAllUsers: () => Promise<IUserDB[]> = async () => {
+export const getAllUsers: () => Promise<IUserPublic[]> = async () => {
   const users = await collection.find({}).toArray();
   // remove password before sending it back
   users.forEach((user: IUserDB) => delete user.password);
   console.log(`[DB] Retrieved ${users.length} users from DB.`);
-  return users;
+  return users.map(fromDatabase);
 };
 
 /**
@@ -43,7 +42,7 @@ export const getUserByEmail = async (
   // remove password before sending it back
   delete user.password;
   console.log(`[USER] Retrieved user ${user.email} from DB.`);
-  return user;
+  return fromDatabase(user);
 };
 
 /**
@@ -60,13 +59,14 @@ export const getOneUser = async (
   });
 
   if (!user) {
+    console.warn(`[USER] Failed to get user ${userId}: not found`);
     return null;
   }
 
   // remove password before sending it back
   delete user.password;
   console.log(`[USER] Retrieved user ${user.email} from DB.`);
-  return user;
+  return fromDatabase(user);
 };
 
 /**
@@ -169,3 +169,11 @@ const initEmptyUser = (): IUserDB => {
     lastName: "",
   };
 };
+
+const fromDatabase = (user: IUserDB): IUserPublic => ({
+  ...user,
+  _id: user._id?.toString(),
+  lessonIds: user.lessonIds?.map((id) => id.toString()),
+  bookmarkIds: user.bookmarkIds?.map((id) => id.toString()),
+  commentIds: user.commentIds?.map((id) => id.toString()),
+});

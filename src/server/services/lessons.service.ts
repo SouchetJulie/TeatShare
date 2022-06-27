@@ -1,13 +1,17 @@
 import { cleanFileMetadata } from "@common/file.utils";
 import storageService from "@services/storage.service";
 import { addLessonToUser, isUser } from "@services/users.service";
-import { ILesson, ILessonCreate } from "@typing/lesson-file.interface";
+import {
+  ILesson,
+  ILessonCreate,
+  ILessonDB,
+} from "@typing/lesson-file.interface";
 import { IUserPublic } from "@typing/user.interface";
-import { ObjectId } from "bson";
 import { File } from "formidable";
+import { InsertOneResult, ObjectId } from "mongodb";
 import { Filter, getDatabase } from "./database.service";
 
-const collection = (await getDatabase()).collection<ILesson>("LessonFile");
+const collection = (await getDatabase()).collection<ILessonDB>("LessonFile");
 // Create text index for later text search
 if (!collection.indexExists("title_text_subtitle_text")) {
   void collection.createIndex(
@@ -23,25 +27,26 @@ if (!collection.indexExists("title_text_subtitle_text")) {
 /**
  * Fetches all Lessons from database (optionally, with filters).
  *
- * @param {Filter<ILesson>} filters (optional)
+ * @param {Filter<ILessonDB>} filters (optional)
  */
 export const getAllLessons = async (
-  filters?: Filter<ILesson>
+  filters?: Filter<ILessonDB>
 ): Promise<ILesson[]> => {
   const cursor = collection.find(filters ?? {});
-  const lessons: ILesson[] = await cursor.toArray();
+  const lessons: ILessonDB[] = await cursor.toArray();
   // Free cursor resources
   cursor.close();
-  return lessons;
+  return lessons.map(fromDatabase);
 };
 
 /**
  * Fetches one lesson from database.
- * @param {string} id Id (_id) of the lesson to fetch.
+ * @param {ObjectId} id Id (_id) of the lesson to fetch.
  * @return {Promise<ILesson | null>} The lesson, or null if not found.
  */
-export const getOneLesson = async (id: string): Promise<ILesson | null> => {
-  return collection.findOne({ _id: new ObjectId(id) });
+export const getOneLesson = async (id: ObjectId): Promise<ILesson | null> => {
+  const lesson: ILessonDB | null = await collection.findOne({ _id: id });
+  return lesson === null ? null : fromDatabase(lesson);
 };
 
 /**
@@ -77,24 +82,25 @@ export const createNewLesson = async (
   console.log(`[LESSON] Uploaded ${file.originalFilename} to ${destination}.`);
 
   // Add to database
-  const lesson: ILesson = {
+  const lesson: ILessonDB = {
     file,
     // default values
-    title: "",
-    subtitle: "",
-    isDraft: true,
-    creationDate: new Date(),
-    lastModifiedDate: new Date(),
+    title: uploadedLesson.title ?? "",
+    subtitle: uploadedLesson.subtitle ?? "",
+    isDraft: uploadedLesson.isDraft ?? true,
+    creationDate: uploadedLesson.creationDate ?? new Date(),
+    lastModifiedDate: uploadedLesson.lastModifiedDate ?? new Date(),
     // set the pub. date if necessary
     publicationDate: uploadedLesson.isDraft ? undefined : new Date(),
     // foreign keys
-    authorId: user._id ?? "",
+    authorId: user._id!,
     categoryIds: [],
     commentIds: [],
-    ...uploadedLesson,
+    // other data
+    bookmarkCount: 0,
   };
 
-  const result = await collection.insertOne(lesson);
+  const result: InsertOneResult<ILessonDB> = await collection.insertOne(lesson);
 
   if (result.acknowledged) {
     // Adding it to the user's lessons
@@ -109,3 +115,10 @@ export const createNewLesson = async (
     );
   }
 };
+
+const fromDatabase = (lesson: ILessonDB): ILesson => ({
+  ...lesson,
+  _id: lesson._id?.toString(),
+  categoryIds: lesson.categoryIds?.map((id) => id.toString()),
+  commentIds: lesson.commentIds?.map((id) => id.toString()),
+});

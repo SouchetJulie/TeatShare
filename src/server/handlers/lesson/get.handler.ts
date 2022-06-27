@@ -3,7 +3,8 @@ import { getOneByIdValidationChain } from "@middlewares/sanitization/validation-
 import { Filter } from "@services/database.service";
 import { getAllLessons, getOneLesson } from "@services/lessons.service";
 import { ApiResponse } from "@typing/api-response.interface";
-import { ILesson } from "@typing/lesson-file.interface";
+import { ILesson, ILessonDB } from "@typing/lesson-file.interface";
+import { ObjectId } from "mongodb";
 import { NextApiRequest, NextApiResponse } from "next";
 
 // A [key, value] tuple
@@ -50,14 +51,16 @@ const lessonGetAllHandler = async (
     });
   }
 
-  const filters: Filter<ILesson> = {};
+  const filters: Filter<ILessonDB> = {};
 
   try {
     for (const [key, value] of query) {
       switch (key) {
         // Search by author id (multiple values are treated as "or")
         case "author":
-          filters.authorId = { $in: toArray(value) };
+          filters.authorId = {
+            $in: toArray(value).map((id: string) => id), // value = ["<id1>", "<id2>", etc] so it needs to be converted
+          };
           break;
 
         // Text search (in title and subtitle)
@@ -177,9 +180,11 @@ const lessonGetAllHandler = async (
       data: { lessons },
     });
   } catch (e) {
+    const error = `Requête malformée: ${(e as Error).message}`;
+    console.log(`[LESSON] Lesson fetch failed: ${error}`);
     res.status(400).json({
       success: false,
-      error: `Requête malformée: ${(e as Error).message}`,
+      error,
     });
   }
 };
@@ -193,7 +198,7 @@ const baseLessonGetOneHandler =
     const { _id: id } = req.body.sanitized as { _id: string };
 
     try {
-      const lesson = await getOneLesson(id);
+      const lesson = await getOneLesson(new ObjectId(id));
       if (!lesson) {
         console.log(`[LESSON] Lesson ${id} not found`);
         return res.status(404).json({

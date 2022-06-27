@@ -113,13 +113,13 @@ export const lessonPostHandler: NextApiHandler = async (
 
     const { id } = await createNewLesson(currentUser, file, lessonCreate);
 
-    currentUser.lessonIds.push(id);
+    currentUser.lessonIds.push(id.toString());
     await req.session.save();
 
     console.log(`[LESSON] Upload of lesson ${id} successful`);
 
     // Read what was uploaded
-    const uploadedLesson: ILesson | null = await getOneLesson(id.toString());
+    const uploadedLesson: ILesson | null = await getOneLesson(id);
 
     if (!uploadedLesson) {
       console.log(

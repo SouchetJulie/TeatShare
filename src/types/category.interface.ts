@@ -1,12 +1,10 @@
-import { ObjectId } from "bson";
-
 /**
  * Categories are "tags" defined by the admins to avoid duplicates.
  * Categories can be added at the users' request.
  * The list is stored in database.
  */
 interface ICategoryDB {
-  _id: ObjectId;
+  _id: string;
   label: string;
 }
 
