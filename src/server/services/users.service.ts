@@ -1,3 +1,5 @@
+import { getAllLessons } from "@services/lessons.service";
+import { ILessonDB } from "@typing/lesson.interface";
 import {
   IUserAuth,
   IUserCreate,
@@ -8,7 +10,7 @@ import { createEmptyUser } from "@utils/create-empty-user";
 import bcrypt from "bcryptjs";
 import { ObjectId } from "bson";
 import { InsertOneResult } from "mongodb";
-import { getDatabase } from "./database.service";
+import { Filter, getDatabase } from "./database.service";
 
 const collection = (await getDatabase()).collection<IUserDB>("User");
 // Create index for speeding up search
@@ -19,7 +21,7 @@ collection.createIndex({ email: 1 });
  *
  * @return {Promise<IUserDB[]>} The list (possibly empty) of all users found.
  */
-export const getAllUsers: () => Promise<IUserDB[]> = async () => {
+const getAllUsers: () => Promise<IUserDB[]> = async () => {
   const users = await collection.find({}).toArray();
   // remove password before sending it back
   users.forEach((user: IUserDB) => delete user.password);
@@ -33,9 +35,7 @@ export const getAllUsers: () => Promise<IUserDB[]> = async () => {
  * @param {string} email Email of the user to fetch.
  * @return {Promise<IUserPublic | null>} The user, or null if not found.
  */
-export const getUserByEmail = async (
-  email: string
-): Promise<IUserPublic | null> => {
+const getUserByEmail = async (email: string): Promise<IUserPublic | null> => {
   const user = await collection.findOne({ email: email });
 
   if (!user) {
@@ -53,9 +53,7 @@ export const getUserByEmail = async (
  * @param {string} userId Id (_id) of the user to fetch.
  * @return {Promise<IUserPublic | null>} The user, or null if not found.
  */
-export const getOneUser = async (
-  userId: string
-): Promise<IUserPublic | null> => {
+const getOneUser = async (userId: string): Promise<IUserPublic | null> => {
   const user: IUserDB | null = await collection.findOne({
     _id: new ObjectId(userId),
   });
@@ -77,7 +75,7 @@ export const getOneUser = async (
  * @return {Promise<InsertOneResult<IUserDB>>} The result of the insertion.
  * @throws {Error} If the credentials are invalid or already in use.
  */
-export const createNewUser = async (
+const createNewUser = async (
   user: IUserCreate
 ): Promise<InsertOneResult<IUserDB>> => {
   if (!user.password || !user.email) {
@@ -107,7 +105,7 @@ export const createNewUser = async (
  * @param {IUserAuth} user
  * @return {Promise<boolean>}
  */
-export const checkCredentials = async (user: IUserAuth): Promise<boolean> => {
+const checkCredentials = async (user: IUserAuth): Promise<boolean> => {
   try {
     const userDB = await collection.findOne<IUserDB>({
       email: user.email,
@@ -129,7 +127,7 @@ export const checkCredentials = async (user: IUserAuth): Promise<boolean> => {
  * @param {Record<string, any>} user
  * @return {boolean}
  */
-export const isUser = (user: Record<string, any>): user is IUserDB => {
+const isUser = (user: Record<string, any>): user is IUserDB => {
   return user && user["error"] === undefined && user["email"];
 };
 
@@ -138,7 +136,7 @@ export const isUser = (user: Record<string, any>): user is IUserDB => {
  * @param {IUserPublic} user
  * @param {string} lessonId
  */
-export const addLessonToUser = async (user: IUserPublic, lessonId: string) => {
+const addLessonToUser = async (user: IUserPublic, lessonId: string) => {
   return collection.updateOne(
     { email: user.email },
     { $push: { lessonIds: lessonId } }
@@ -150,10 +148,7 @@ export const addLessonToUser = async (user: IUserPublic, lessonId: string) => {
  * @param {IUserPublic} user
  * @param {string} lessonId
  */
-export const addBookmarkToUser = async (
-  user: IUserPublic,
-  lessonId: string
-) => {
+const addBookmarkToUser = async (user: IUserPublic, lessonId: string) => {
   return collection.updateOne(
     { email: user.email },
     { $push: { bookmarkIds: lessonId } }
@@ -165,12 +160,40 @@ export const addBookmarkToUser = async (
  * @param {IUserPublic} user
  * @param {string} lessonId
  */
-export const removeBookmarkFromUser = async (
-  user: IUserPublic,
-  lessonId: string
-) => {
+const removeBookmarkFromUser = async (user: IUserPublic, lessonId: string) => {
   return collection.updateOne(
     { email: user.email },
     { $pull: { bookmarkIds: lessonId } }
   );
+};
+
+/**
+ * Gets all lessons bookmarked by this user.
+ *
+ * @param {IUserPublic} user The user whose bookmarks will be read
+ */
+const getAllUserBookmark = async (user: IUserPublic): Promise<ILessonDB[]> => {
+  // No bookmark -> skip DB call
+  if (user.lessonIds.length === 0) return [];
+
+  const filters: Filter<ILessonDB> = {
+    _id: {
+      $in: user.lessonIds.map((id: string) => new ObjectId(id)),
+    },
+  };
+
+  return getAllLessons(filters);
+};
+
+export {
+  getAllUsers,
+  getUserByEmail,
+  getOneUser,
+  createNewUser,
+  checkCredentials,
+  isUser,
+  addLessonToUser,
+  addBookmarkToUser,
+  removeBookmarkFromUser,
+  getAllUserBookmark,
 };
