@@ -118,7 +118,7 @@ export const createNewLesson = async (
 
 const fromDatabase = (lesson: ILessonDB): ILesson => ({
   ...lesson,
-  _id: lesson._id?.toString(),
-  categoryIds: lesson.categoryIds?.map((id) => id.toString()),
-  commentIds: lesson.commentIds?.map((id) => id.toString()),
+  _id: lesson._id!.toString(),
+  categoryIds: lesson.categoryIds.map((id) => id.toString()),
+  commentIds: lesson.commentIds.map((id) => id.toString()),
 });

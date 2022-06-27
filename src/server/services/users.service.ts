@@ -172,8 +172,8 @@ const initEmptyUser = (): IUserDB => {
 
 const fromDatabase = (user: IUserDB): IUserPublic => ({
   ...user,
-  _id: user._id?.toString(),
-  lessonIds: user.lessonIds?.map((id) => id.toString()),
-  bookmarkIds: user.bookmarkIds?.map((id) => id.toString()),
-  commentIds: user.commentIds?.map((id) => id.toString()),
+  _id: user._id!.toString(),
+  lessonIds: user.lessonIds.map((id) => id.toString()),
+  bookmarkIds: user.bookmarkIds.map((id) => id.toString()),
+  commentIds: user.commentIds.map((id) => id.toString()),
 });
