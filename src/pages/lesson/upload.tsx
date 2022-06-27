@@ -1,3 +1,9 @@
+import { useAutoLogin } from "@hooks/auto-login.hook";
+import { useAppDispatch } from "@hooks/store-hook";
+import { addAlert } from "@stores/alert.store";
+import styles from "@styles/lesson/upload.module.scss";
+import { ApiResponse } from "@typing/api-response.interface";
+import { ILesson } from "@typing/lesson.interface";
 import axios, { AxiosError } from "axios";
 import { FormEvent, FunctionComponent, useState } from "react";
 import Alert from "react-bootstrap/Alert";
@@ -6,15 +12,7 @@ import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
-
-import { useAppDispatch } from "@hooks/store-hook";
-import { addAlert } from "@stores/alert.store";
-
-import { ApiResponse } from "@typing/api-response.interface";
-import styles from "@styles/lesson/upload.module.scss";
-import { ILesson } from "@typing/lesson.interface";
 import { getAxiosErrorMessage } from "../../client/utils/get-axios-error.utils";
-import { useAutoLogin } from "@hooks/auto-login.hook";
 
 const requiredFields = ["title", "file"];
 

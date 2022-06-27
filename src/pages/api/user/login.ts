@@ -1,8 +1,8 @@
-import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
+import { autoLoginHandler } from "@handlers/user/login/auto-login.handler";
 import { loginHandler } from "@handlers/user/login/login.handler";
 import routerMiddleware from "@middlewares/router.middleware";
 import { ApiResponse } from "@typing/api-response.interface";
-import { autoLoginHandler } from "@handlers/user/login/auto-login.handler";
+import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 
 export const config = {
   api: {

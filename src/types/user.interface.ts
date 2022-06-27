@@ -1,6 +1,6 @@
+import { ObjectId } from "bson";
 import { EGrade } from "./grade.enum";
 import { ESubject } from "./subject.enum";
-import { ObjectId } from "bson";
 
 /**
  * Used for authentication

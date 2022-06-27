@@ -1,8 +1,8 @@
-import { NextApiHandler } from "next";
 import { notImplementedHandler } from "@common/not-implemented.handler";
 import authCheckMiddleware from "@middlewares/authentication/auth-check.middleware";
 import { withSession } from "@middlewares/authentication/session.middleware";
 import { ApiResponse } from "@typing/api-response.interface";
+import { NextApiHandler } from "next";
 
 /**
  * Aiguille la requête vers la bonne méthode pour exécuter le traitant approprié.

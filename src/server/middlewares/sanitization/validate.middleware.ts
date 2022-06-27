@@ -1,12 +1,12 @@
-import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
+import { runMiddleware } from "@middlewares/run-middleware.helper";
+import { validationErrorResponse } from "@middlewares/sanitization/validation-error.response";
 import {
   matchedData,
   ValidationChain,
   validationResult,
 } from "express-validator";
-import { validationErrorResponse } from "@middlewares/sanitization/validation-error.response";
+import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 import { sendError } from "next/dist/server/api-utils";
-import { runMiddleware } from "@middlewares/run-middleware.helper";
 
 /**
  * Next API middleware for completing the validation process,

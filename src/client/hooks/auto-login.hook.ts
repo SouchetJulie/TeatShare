@@ -1,10 +1,10 @@
 import { useAppDispatch, useAppSelector } from "@hooks/store-hook";
 import { selectAuthenticatedUser, setUser } from "@stores/user.store";
-import axios, { AxiosResponse } from "axios";
 import { ApiResponse } from "@typing/api-response.interface";
+import { IUserPublic } from "@typing/user.interface";
+import axios, { AxiosResponse } from "axios";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
-import { IUserPublic } from "@typing/user.interface";
 
 export const useAutoLogin = (): IUserPublic | undefined => {
   const currentUser: IUserPublic | undefined = useAppSelector(

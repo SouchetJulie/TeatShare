@@ -1,6 +1,6 @@
-import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 import { ApiResponse } from "@typing/api-response.interface";
 import { IUserPublic } from "@typing/user.interface";
+import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 
 const handler = async (
   req: NextApiRequest,

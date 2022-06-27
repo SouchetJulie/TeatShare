@@ -1,9 +1,9 @@
-import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
-import { Fields, File, Files, IncomingForm, Part } from "formidable";
 import { createNewLesson, getOneLesson } from "@services/lessons.service";
-import { IUserPublic } from "@typing/user.interface";
-import { ILessonCreate, ILessonDB } from "@typing/lesson.interface";
 import { ApiResponse } from "@typing/api-response.interface";
+import { ILessonCreate, ILessonDB } from "@typing/lesson.interface";
+import { IUserPublic } from "@typing/user.interface";
+import { Fields, File, Files, IncomingForm, Part } from "formidable";
+import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 
 interface LessonFormData {
   fields?: Fields;

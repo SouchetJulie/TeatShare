@@ -1,5 +1,5 @@
-import axios, { AxiosResponse } from "axios";
 import { ApiResponse } from "@typing/api-response.interface";
+import axios, { AxiosResponse } from "axios";
 
 const lessonApiUrl = "/api/lesson";
 

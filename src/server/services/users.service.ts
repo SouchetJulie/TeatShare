@@ -1,14 +1,13 @@
-import bcrypt from "bcryptjs";
-import { ObjectId } from "bson";
-import { InsertOneResult } from "mongodb";
-
-import { createEmptyUser } from "@utils/create-empty-user";
 import {
   IUserAuth,
   IUserCreate,
   IUserDB,
   IUserPublic,
 } from "@typing/user.interface";
+import { createEmptyUser } from "@utils/create-empty-user";
+import bcrypt from "bcryptjs";
+import { ObjectId } from "bson";
+import { InsertOneResult } from "mongodb";
 import { getDatabase } from "./database.service";
 
 const collection = (await getDatabase()).collection<IUserDB>("User");

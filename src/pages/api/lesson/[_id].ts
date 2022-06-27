@@ -1,9 +1,9 @@
-import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 import { bookmarkAddHandler } from "@handlers/lesson/bookmark/add.handler";
+import { bookmarkDeleteHandler } from "@handlers/lesson/bookmark/delete.handler";
 import { lessonGetOneHandler } from "@handlers/lesson/get.handler";
 import routerMiddleware from "@middlewares/router.middleware";
 import { ApiResponse } from "@typing/api-response.interface";
-import { bookmarkDeleteHandler } from "@handlers/lesson/bookmark/delete.handler";
+import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 
 export const config = {
   api: {

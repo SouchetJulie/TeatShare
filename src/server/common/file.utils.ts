@@ -1,5 +1,5 @@
-import { File } from "formidable";
 import { CleanFile } from "@typing/clean-file.interface";
+import { File } from "formidable";
 
 /**
  * Returns a new File with only the relevant metadata.

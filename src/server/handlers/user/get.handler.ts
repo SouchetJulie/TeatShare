@@ -1,9 +1,9 @@
-import { NextApiRequest, NextApiResponse } from "next";
+import { validate } from "@middlewares/sanitization/validate.middleware";
+import { getOneByIdValidationChain } from "@middlewares/sanitization/validation-chains";
 import { getAllUsers, getOneUser } from "@services/users.service";
 import { ApiResponse } from "@typing/api-response.interface";
 import { IUserPublic } from "@typing/user.interface";
-import { validate } from "@middlewares/sanitization/validate.middleware";
-import { getOneByIdValidationChain } from "@middlewares/sanitization/validation-chains";
+import { NextApiRequest, NextApiResponse } from "next";
 
 const userGetAllHandler = async (
   req: NextApiRequest,

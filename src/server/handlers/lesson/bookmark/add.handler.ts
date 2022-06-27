@@ -1,12 +1,12 @@
-import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 import { validate } from "@middlewares/sanitization/validate.middleware";
 import { getOneByIdValidationChain } from "@middlewares/sanitization/validation-chains";
 import { getOneLesson, updateBookmarkCounter } from "@services/lessons.service";
-import { ApiResponse } from "@typing/api-response.interface";
-import { IUserPublic } from "@typing/user.interface";
-import { ILessonDB } from "@typing/lesson.interface";
-import { ObjectId } from "bson";
 import { addBookmarkToUser } from "@services/users.service";
+import { ApiResponse } from "@typing/api-response.interface";
+import { ILessonDB } from "@typing/lesson.interface";
+import { IUserPublic } from "@typing/user.interface";
+import { ObjectId } from "bson";
+import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 
 const handler =
   (_id: string) =>

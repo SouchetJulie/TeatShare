@@ -1,16 +1,14 @@
+import styles from "@styles/lesson/lesson-list.module.scss";
+import { ILesson } from "@typing/lesson.interface";
 import React, { FunctionComponent } from "react";
+import { Search, SortUp } from "react-bootstrap-icons";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import Row from "react-bootstrap/Row";
-
-import { ILesson } from "@typing/lesson.interface";
-import styles from "@styles/lesson/lesson-list.module.scss";
-
 import LessonItem from "./LessonItem";
-import { Search, SortUp } from "react-bootstrap-icons";
 
 interface Props {
   lessons: ILesson[];

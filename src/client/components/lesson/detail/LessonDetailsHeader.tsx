@@ -1,30 +1,29 @@
-import React, { FunctionComponent, useEffect, useMemo, useState } from "react";
-import styles from "@styles/lesson/LessonPost.module.scss";
-import Image from "next/image";
-
-import { ILesson } from "@typing/lesson.interface";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Button from "react-bootstrap/Button";
-import { Download, Printer } from "react-bootstrap-icons";
-import dayjs from "dayjs";
 import avatarLogo from "@assets/logos/avatar_placeholder.png";
-import { AxiosError, AxiosResponse } from "axios";
-import { IUserPublic } from "@typing/user.interface";
-import { addAlert } from "@stores/alert.store";
-import { ApiResponse } from "@typing/api-response.interface";
-import { useAppDispatch, useAppSelector } from "@hooks/store-hook";
 import LessonBookmark from "@components/lesson/LessonBookmark";
-import { getUser } from "../../../services/user.service";
-import { getAxiosErrorMessage } from "../../../utils/get-axios-error.utils";
-import { toggleBookmark } from "../../../services/lesson.service";
+import { useAppDispatch, useAppSelector } from "@hooks/store-hook";
+import { addAlert } from "@stores/alert.store";
 import {
   addBookmark,
   removeBookmark,
   selectAuthenticatedUser,
 } from "@stores/user.store";
+import styles from "@styles/lesson/LessonPost.module.scss";
+import { ApiResponse } from "@typing/api-response.interface";
+import { ILesson } from "@typing/lesson.interface";
+import { IUserPublic } from "@typing/user.interface";
+import { AxiosError, AxiosResponse } from "axios";
+import dayjs from "dayjs";
+import Image from "next/image";
+import React, { FunctionComponent, useEffect, useMemo, useState } from "react";
+import { Download, Printer } from "react-bootstrap-icons";
+import Button from "react-bootstrap/Button";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
 // eslint-disable-next-line camelcase
 import { unstable_batchedUpdates } from "react-dom";
+import { toggleBookmark } from "../../../services/lesson.service";
+import { getUser } from "../../../services/user.service";
+import { getAxiosErrorMessage } from "../../../utils/get-axios-error.utils";
 
 interface LessonHeaderComponentProps {
   lesson?: ILesson;

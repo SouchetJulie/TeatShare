@@ -1,10 +1,10 @@
-import { NextApiRequest, NextApiResponse } from "next";
 import { validate } from "@middlewares/sanitization/validate.middleware";
+import { getOneByIdValidationChain } from "@middlewares/sanitization/validation-chains";
+import { Filter } from "@services/database.service";
 import { getAllLessons, getOneLesson } from "@services/lessons.service";
 import { ApiResponse } from "@typing/api-response.interface";
 import { ILessonDB } from "@typing/lesson.interface";
-import { getOneByIdValidationChain } from "@middlewares/sanitization/validation-chains";
-import { Filter } from "@services/database.service";
+import { NextApiRequest, NextApiResponse } from "next";
 
 // A [key, value] tuple
 type QueryEntry = [string, string | string[]];

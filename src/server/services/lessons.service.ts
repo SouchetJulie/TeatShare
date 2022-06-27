@@ -1,12 +1,11 @@
-import { ObjectId } from "bson";
-import { File } from "formidable";
-
-import { Filter, getDatabase } from "./database.service";
+import { cleanFileMetadata } from "@common/file.utils";
+import storageService from "@services/storage.service";
 import { addLessonToUser, isUser } from "@services/users.service";
 import { ILessonCreate, ILessonDB } from "@typing/lesson.interface";
 import { IUserPublic } from "@typing/user.interface";
-import storageService from "@services/storage.service";
-import { cleanFileMetadata } from "@common/file.utils";
+import { ObjectId } from "bson";
+import { File } from "formidable";
+import { Filter, getDatabase } from "./database.service";
 
 const collection = (await getDatabase()).collection<ILessonDB>("LessonFile");
 // Create text index for later text search

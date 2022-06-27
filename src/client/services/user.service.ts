@@ -1,6 +1,6 @@
-import axios, { AxiosResponse } from "axios";
 import { ApiResponse } from "@typing/api-response.interface";
 import { IUserPublic } from "@typing/user.interface";
+import axios, { AxiosResponse } from "axios";
 
 /**
  * Gets the user data from the server API.

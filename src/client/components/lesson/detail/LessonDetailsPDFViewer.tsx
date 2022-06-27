@@ -1,7 +1,7 @@
-import React, { FunctionComponent, useState } from "react";
 import { ILesson } from "@typing/lesson.interface"; // PDF VIEWER
-import { Document, Page, pdfjs } from "react-pdf";
 import { PDFDocumentProxy } from "pdfjs-dist";
+import React, { FunctionComponent, useState } from "react";
+import { Document, Page, pdfjs } from "react-pdf";
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 

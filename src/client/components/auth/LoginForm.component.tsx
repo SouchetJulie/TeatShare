@@ -1,19 +1,19 @@
+import { useAppDispatch } from "@hooks/store-hook";
+import { addAlert } from "@stores/alert.store";
+import { setUser } from "@stores/user.store";
+import styles from "@styles/auth/Login.Component.module.scss";
+import { ApiResponse } from "@typing/api-response.interface";
+import { IUserAuth, IUserPublic } from "@typing/user.interface";
+import axios, { AxiosResponse } from "axios";
+import Link from "next/link";
+import { useRouter } from "next/router";
 import {
   FormEventHandler,
   FunctionComponent,
   useEffect,
   useState,
 } from "react";
-import styles from "@styles/auth/Login.Component.module.scss";
-import Link from "next/link";
 import { Button, Form } from "react-bootstrap";
-import axios, { AxiosResponse } from "axios";
-import { useAppDispatch } from "@hooks/store-hook";
-import { useRouter } from "next/router";
-import { addAlert } from "@stores/alert.store";
-import { setUser } from "@stores/user.store";
-import { ApiResponse } from "@typing/api-response.interface";
-import { IUserAuth, IUserPublic } from "@typing/user.interface";
 import { XLg } from "react-bootstrap-icons";
 
 const LoginForm: FunctionComponent = () => {
