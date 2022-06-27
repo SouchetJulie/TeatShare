@@ -158,10 +158,12 @@ const toArray = (value: string | string[]): string[] =>
  * Converts the query to an object containing filters to use with the database.
  *
  * @param {Record<string, string|string[]>} rawQuery The query from the request
+ * @param {IUserPublic} user The user at the origin of the request
  * @return {Filter<ILessonDB>} Filters
  */
 export const getFiltersFromQuery = (
-  rawQuery: Record<string, string | string[]>
+  rawQuery: Record<string, string | string[]>,
+  user?: IUserPublic
 ): Filter<ILessonDB> => {
   const query: QueryEntry[] = Object.entries(rawQuery);
   const filters: Filter<ILessonDB> = {};
@@ -271,7 +273,9 @@ export const getFiltersFromQuery = (
         };
         break;
       case "bookmarks":
-        // TODO restrict the lessons to those in the current user's bookmarks
+        filters._id = {
+          $in: user?.bookmarkIds.map((id: string) => new ObjectId(id)),
+        };
         break;
 
       default:

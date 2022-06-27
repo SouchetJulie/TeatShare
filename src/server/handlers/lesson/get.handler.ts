@@ -14,7 +14,8 @@ const lessonGetAllHandler = async (
   res: NextApiResponse<ApiResponse>
 ) => {
   try {
-    const filters = getFiltersFromQuery(req.query);
+    const user = req.session.user;
+    const filters = getFiltersFromQuery(req.query, user);
 
     // Read lessons from database & send result
     const lessons: ILessonDB[] = await getAllLessons(filters);
