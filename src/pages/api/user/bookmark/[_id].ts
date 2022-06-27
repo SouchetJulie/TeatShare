@@ -1,5 +1,5 @@
-import { bookmarkAddHandler } from "@handlers/lesson/bookmark/add.handler";
-import { bookmarkDeleteHandler } from "@handlers/lesson/bookmark/delete.handler";
+import { bookmarkAddHandler } from "@handlers/user/bookmark/add.handler";
+import { bookmarkDeleteHandler } from "@handlers/user/bookmark/delete.handler";
 import routerMiddleware from "@middlewares/router.middleware";
 import { ApiResponse } from "@typing/api-response.interface";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
