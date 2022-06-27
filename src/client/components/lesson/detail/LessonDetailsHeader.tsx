@@ -21,8 +21,7 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 // eslint-disable-next-line camelcase
 import { unstable_batchedUpdates } from "react-dom";
-import { toggleBookmark } from "../../../services/lesson.service";
-import { getUser } from "../../../services/user.service";
+import { getUser, toggleBookmark } from "../../../services/user.service";
 import { getAxiosErrorMessage } from "../../../utils/get-axios-error.utils";
 
 interface LessonHeaderComponentProps {
