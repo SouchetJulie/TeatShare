@@ -1,6 +1,6 @@
 import { getAxiosErrorMessage } from "@client/utils/get-axios-error.utils";
+import { useAutoLogin } from "@hooks/auto-login.hook";
 import { useCategoryList } from "@hooks/category-list.hook";
-import { useLoginRedirect } from "@hooks/login-redirect.hook";
 import { useAppDispatch } from "@hooks/store-hook";
 import { addAlert } from "@stores/alert.store";
 import styles from "@styles/lesson/upload.module.scss";
@@ -21,15 +21,11 @@ const requiredFields = ["title", "file"];
 
 const upload: FunctionComponent = () => {
   const dispatch = useAppDispatch();
-  const user = useLoginRedirect(); // Route guard
+  useAutoLogin(); // Route guard
 
   const [isDraft, setIsDraft] = useState(false);
   const [validated, setValidated] = useState(false);
   const categories = useCategoryList();
-
-  if (!user) {
-    return <></>;
-  }
 
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -49,8 +45,6 @@ const upload: FunctionComponent = () => {
     ) {
       return;
     }
-
-    console.log(formData.getAll("category"));
 
     // Post the request
     const { data } = await axios
@@ -138,7 +132,7 @@ const upload: FunctionComponent = () => {
           <Select
             isMulti
             options={categoryOptions}
-            name="categories"
+            name="categoryIds"
             aria-label="Catégories"
             placeholder="Catégories"
           />

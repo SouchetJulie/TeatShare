@@ -94,7 +94,8 @@ export const createNewLesson = async (
     publicationDate: uploadedLesson.isDraft ? undefined : new Date(),
     // foreign keys
     authorId: user._id!,
-    categoryIds: [],
+    categoryIds:
+      uploadedLesson.categoryIds?.map((id: string) => new ObjectId(id)) ?? [],
     commentIds: [],
     // other data
     bookmarkCount: 0,

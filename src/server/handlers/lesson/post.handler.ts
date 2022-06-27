@@ -25,7 +25,7 @@ const parseForm = (req: NextApiRequest): Promise<LessonFormData> =>
       const form = new IncomingForm({
         keepExtensions: false,
         hashAlgorithm: "sha256",
-        multiples: false,
+        multiples: true,
         filter: ({ mimetype }: Part): boolean =>
           !!mimetype && mimetype.includes("pdf"), // keep only pdf
       });
