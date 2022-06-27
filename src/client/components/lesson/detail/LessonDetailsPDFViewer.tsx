@@ -1,8 +1,8 @@
-import { ILesson } from "@typing/lesson-file.interface";
+import { ILesson } from "@typing/lesson.interface";
 import { PDFDocumentProxy } from "pdfjs-dist";
 import React, { FunctionComponent, useState } from "react";
-// PDF VIEWER
 import { Document, Page, pdfjs } from "react-pdf";
+
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 interface LessonDetailsPDFProps {

@@ -1,4 +1,3 @@
-import { withSession } from "@middlewares/session.middleware";
 import { ApiResponse } from "@typing/api-response.interface";
 import { IUserPublic } from "@typing/user.interface";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
@@ -22,4 +21,4 @@ const handler = async (
   });
 };
 
-export const autoLoginHandler: NextApiHandler = withSession(handler);
+export const autoLoginHandler: NextApiHandler = handler;

@@ -7,16 +7,16 @@ import { NextApiRequest, NextApiResponse } from "next";
  *
  * @param {NextApiRequest} req Request
  * @param {NextApiResponse} res Response
- * @param {Function} fn Connect-compatible middleware
+ * @param {NextHandleFunction} next Connect-compatible middleware
  * @return {Promise<never>} The result of the middleware (ignored)
  */
 export const runMiddleware = (
   req: NextApiRequest,
   res: NextApiResponse,
-  fn: NextHandleFunction
+  next: NextHandleFunction
 ): Promise<never> =>
   new Promise((resolve, reject) => {
-    fn(req, res, (result) => {
+    next(req, res, (result) => {
       if (result instanceof Error) {
         return reject(result);
       }

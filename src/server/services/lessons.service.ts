@@ -1,13 +1,13 @@
 import { cleanFileMetadata } from "@common/file.utils";
 import storageService from "@services/storage.service";
 import { addLessonToUser, isUser } from "@services/users.service";
-import { ILesson, ILessonCreate } from "@typing/lesson-file.interface";
+import { ILessonCreate, ILessonDB } from "@typing/lesson.interface";
 import { IUserPublic } from "@typing/user.interface";
 import { ObjectId } from "bson";
 import { File } from "formidable";
 import { Filter, getDatabase } from "./database.service";
 
-const collection = (await getDatabase()).collection<ILesson>("LessonFile");
+const collection = (await getDatabase()).collection<ILessonDB>("LessonFile");
 // Create text index for later text search
 if (!collection.indexExists("title_text_subtitle_text")) {
   void collection.createIndex(
@@ -23,13 +23,13 @@ if (!collection.indexExists("title_text_subtitle_text")) {
 /**
  * Fetches all Lessons from database (optionally, with filters).
  *
- * @param {Filter<ILesson>} filters (optional)
+ * @param {Filter<ILessonDB>} filters (optional)
  */
 export const getAllLessons = async (
-  filters?: Filter<ILesson>
-): Promise<ILesson[]> => {
+  filters?: Filter<ILessonDB>
+): Promise<ILessonDB[]> => {
   const cursor = collection.find(filters ?? {});
-  const lessons: ILesson[] = await cursor.toArray();
+  const lessons: ILessonDB[] = await cursor.toArray();
   // Free cursor resources
   cursor.close();
   return lessons;
@@ -38,9 +38,9 @@ export const getAllLessons = async (
 /**
  * Fetches one lesson from database.
  * @param {string} id Id (_id) of the lesson to fetch.
- * @return {Promise<ILesson | null>} The lesson, or null if not found.
+ * @return {Promise<ILessonDB | null>} The lesson, or null if not found.
  */
-export const getOneLesson = async (id: string): Promise<ILesson | null> => {
+export const getOneLesson = async (id: string): Promise<ILessonDB | null> => {
   return collection.findOne({ _id: new ObjectId(id) });
 };
 
@@ -77,7 +77,7 @@ export const createNewLesson = async (
   console.log(`[LESSON] Uploaded ${file.originalFilename} to ${destination}.`);
 
   // Add to database
-  const lesson: ILesson = {
+  const lesson: ILessonDB = {
     file,
     // default values
     title: "",
@@ -85,10 +85,11 @@ export const createNewLesson = async (
     isDraft: true,
     creationDate: new Date(),
     lastModifiedDate: new Date(),
+    bookmarkCount: 0,
     // set the pub. date if necessary
     publicationDate: uploadedLesson.isDraft ? undefined : new Date(),
     // foreign keys
-    authorId: user._id ?? "",
+    authorId: user._id?.toHexString() ?? "",
     tagIds: [],
     commentIds: [],
     ...uploadedLesson,
@@ -98,7 +99,7 @@ export const createNewLesson = async (
 
   if (result.acknowledged) {
     // Adding it to the user's lessons
-    await addLessonToUser(user, result.insertedId);
+    await addLessonToUser(user, result.insertedId.toHexString());
     console.log(
       `[LESSON] L'upload de la leçon a réussi! id: ${result.insertedId}`
     );
@@ -108,4 +109,19 @@ export const createNewLesson = async (
       "L'upload de la leçon a échoué ! L'opération d'écriture a été ignorée."
     );
   }
+};
+
+/**
+ * Update this lesson's update counter by the given amount
+ * @param {ObjectId} lessonId
+ * @param {number} amount
+ */
+export const updateBookmarkCounter = async (
+  lessonId: ObjectId,
+  amount: number
+) => {
+  return collection.updateOne(
+    { _id: lessonId },
+    { $inc: { bookmarkCount: amount } }
+  );
 };

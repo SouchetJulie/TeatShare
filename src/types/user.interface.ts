@@ -43,9 +43,9 @@ export interface IUserDB extends IUserCreate {
   grades: EGrade[];
   subjects: ESubject[];
   // foreign keys
-  lessonIds: ObjectId[];
-  bookmarkIds: ObjectId[];
-  commentIds: ObjectId[];
+  lessonIds: string[];
+  bookmarkIds: string[];
+  commentIds: string[];
 }
 
 /**

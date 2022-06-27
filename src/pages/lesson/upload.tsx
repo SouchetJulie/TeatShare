@@ -1,9 +1,9 @@
-import { useLoginRedirect } from "@hooks/login-redirect.hook";
+import { useAutoLogin } from "@hooks/auto-login.hook";
 import { useAppDispatch } from "@hooks/store-hook";
 import { addAlert } from "@stores/alert.store";
 import styles from "@styles/lesson/upload.module.scss";
 import { ApiResponse } from "@typing/api-response.interface";
-import { ILesson } from "@typing/lesson-file.interface";
+import { ILesson } from "@typing/lesson.interface";
 import axios, { AxiosError } from "axios";
 import { FormEvent, FunctionComponent, useState } from "react";
 import Alert from "react-bootstrap/Alert";
@@ -18,7 +18,7 @@ const requiredFields = ["title", "file"];
 
 const upload: FunctionComponent = () => {
   const dispatch = useAppDispatch();
-  const user = useLoginRedirect(); // Route guard
+  const user = useAutoLogin(); // Route guard
 
   const [isDraft, setIsDraft] = useState(false);
   const [validated, setValidated] = useState(false);

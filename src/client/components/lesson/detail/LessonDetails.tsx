@@ -1,7 +1,7 @@
-import LessonDetailsHeader from "@components/lesson/LessonDetailsHeader";
-import LessonDetailsPDFViewer from "@components/lesson/LessonDetailsPDFViewer";
+import LessonDetailsHeader from "@components/lesson/detail/LessonDetailsHeader";
+import LessonDetailsPDFViewer from "@components/lesson/detail/LessonDetailsPDFViewer";
 import styles from "@styles/lesson/LessonPost.module.scss";
-import { ILesson } from "@typing/lesson-file.interface";
+import { ILesson } from "@typing/lesson.interface";
 import { FunctionComponent, RefObject, useRef } from "react";
 // import Image from "next/image";
 // import sparkles from "../../../../public/icones/sparkles.png";

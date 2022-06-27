@@ -1,5 +1,4 @@
 import { validate } from "@middlewares/sanitization/validate.middleware";
-import { withSession } from "@middlewares/session.middleware";
 import { createNewUser, getOneUser } from "@services/users.service";
 import { ApiResponse } from "@typing/api-response.interface";
 import { IUserCreate, IUserPublic } from "@typing/user.interface";
@@ -53,6 +52,7 @@ const signupValidationChain: ValidationChain[] = [
     .withMessage("Le mot de passe n'est pas assez fort"),
 ];
 
-export const signupHandler: NextApiHandler = withSession(
-  validate(signupValidationChain, handler)
+export const signupHandler: NextApiHandler = validate(
+  signupValidationChain,
+  handler
 );
