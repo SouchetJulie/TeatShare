@@ -3,8 +3,10 @@
  * Categories can be added at the users' request.
  * The list is stored in database.
  */
+import { ObjectId } from "mongodb";
+
 interface ICategoryDB {
-  _id: string;
+  _id: ObjectId;
   label: string;
 }
 

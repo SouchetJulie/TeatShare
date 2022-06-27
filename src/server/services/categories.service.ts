@@ -1,4 +1,5 @@
 import { ICategoryDB } from "@typing/category.interface";
+import { ObjectId } from "mongodb";
 import { getDatabase } from "./database.service";
 
 const collection = (await getDatabase()).collection<ICategoryDB>("Category");
@@ -16,11 +17,11 @@ export const getAllCategories = async (): Promise<ICategoryDB[]> => {
 
 /**
  * Fetches one category from database.
- * @param {string} id Id (_id) of the category to fetch.
+ * @param {ObjectId} id Id (_id) of the category to fetch.
  * @return {Promise<ICategoryDB | null>} The category, or null if not found.
  */
 export const getOneCategory = async (
-  id: string
+  id: ObjectId
 ): Promise<ICategoryDB | null> => {
   return collection.findOne({ _id: id });
 };

@@ -3,6 +3,7 @@ import { getOneByIdValidationChain } from "@middlewares/sanitization/validation-
 import { getAllCategories, getOneCategory } from "@services/categories.service";
 import { ApiResponse } from "@typing/api-response.interface";
 import { ICategoryDB } from "@typing/category.interface";
+import { ObjectId } from "mongodb";
 import { NextApiRequest, NextApiResponse } from "next";
 
 const categoryGetAllHandler = async (
@@ -34,7 +35,7 @@ const baseCategoryGetOneHandler =
     const { _id: id } = req.body.sanitized as { _id: string };
 
     try {
-      const category = await getOneCategory(id);
+      const category = await getOneCategory(new ObjectId(id));
 
       if (!category) {
         console.warn(`[CATEGORY] Failed to get category ${id}: not found`);
