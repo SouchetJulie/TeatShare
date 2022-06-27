@@ -273,9 +273,10 @@ export const getFiltersFromQuery = (
         };
         break;
       case "bookmarks":
-        filters._id = {
-          $in: user?.bookmarkIds.map((id: string) => new ObjectId(id)),
-        };
+        if (value)
+          filters._id = {
+            $in: user?.bookmarkIds.map((id: string) => new ObjectId(id)),
+          };
         break;
 
       default:
