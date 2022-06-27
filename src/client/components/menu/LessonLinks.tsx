@@ -80,14 +80,15 @@ const LessonLinks: FunctionComponent<Props> = ({ className = "" }: Props) => {
           Mes fiches de cours
         </a>
       </Nav.Link>
-      <Nav.Link as={Link} href={"/user/for_later"} passHref>
+      <Nav.Link as={Link} href={"/user/bookmarks"} passHref>
         <a className="nav-link">
           <JournalBookmark
             size={25}
             className={styles.sidebar_icon}
             aria-label="journal icon"
           />
-          <br />A lire plus tard
+          <br />
+          Mes signets
         </a>
       </Nav.Link>
       <Nav.Link as={Link} href={"/lesson/upload"} passHref>
