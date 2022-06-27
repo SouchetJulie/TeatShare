@@ -46,6 +46,11 @@ const upload: FunctionComponent = () => {
       return;
     }
 
+    // Clear empty values
+    if (formData.get("categoryIds") === "") {
+      formData.delete("categoryIds");
+    }
+
     // Post the request
     const { data } = await axios
       .post<ApiResponse<{ lesson: ILesson }>>("/api/lesson", formData)
