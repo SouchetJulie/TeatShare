@@ -66,7 +66,6 @@ const upload: FunctionComponent = () => {
     const success = data.success;
 
     if (success) {
-      // ID est de type ObjectId
       const _id = data?.data?.lesson._id;
       const message: JSX.Element = (
         <span>
@@ -135,8 +134,14 @@ const upload: FunctionComponent = () => {
           </Form.Group>
         </Col>
 
-        <Col className="d-flex flex-column justify-content-center" sm="3">
-          <Select isMulti options={categoryOptions} name="category" />
+        <Col className="d-flex flex-column justify-content-around" sm="3">
+          <Select
+            isMulti
+            options={categoryOptions}
+            name="categories"
+            aria-label="Catégories"
+            placeholder="Catégories"
+          />
 
           <Button
             className="round-button"
