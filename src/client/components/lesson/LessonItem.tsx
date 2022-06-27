@@ -4,7 +4,6 @@ import styles from "@styles/lesson-item.module.scss";
 import { ApiResponse } from "@typing/api-response.interface";
 import { ILesson } from "@typing/lesson-file.interface";
 import { IUserPublic } from "@typing/user.interface";
-import { createEmptyUser } from "@utils/create-empty-user";
 import axios from "axios";
 import Link from "next/link";
 import React, { FunctionComponent, useEffect, useState } from "react";
@@ -17,7 +16,7 @@ interface Props {
 
 const LessonItem: FunctionComponent<Props> = ({ lesson }: Props) => {
   const dispatch = useAppDispatch();
-  const [author, setAuthor] = useState<IUserPublic>(createEmptyUser());
+  const [author, setAuthor] = useState<IUserPublic | undefined>(undefined);
 
   useEffect(() => {
     let isSubscribed = true;
@@ -55,7 +54,9 @@ const LessonItem: FunctionComponent<Props> = ({ lesson }: Props) => {
   }, [setAuthor]);
 
   const authorName =
-    `${author.firstName} ${author.lastName}`.trim() || author.email;
+    `${author?.firstName ?? ""} ${author?.lastName ?? ""}`.trim() ||
+    author?.email ||
+    "";
 
   return (
     <Card className={styles.card}>
