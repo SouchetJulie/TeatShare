@@ -1,4 +1,3 @@
-import { getAllLessons } from "@services/lessons.service";
 import { ILessonDB } from "@typing/lesson.interface";
 import {
   IUserAuth,
@@ -168,21 +167,20 @@ const removeBookmarkFromUser = async (user: IUserPublic, lessonId: string) => {
 };
 
 /**
- * Gets all lessons bookmarked by this user.
+ * Gets the filter to fetch all lessons bookmarked by this user.
  *
  * @param {IUserPublic} user The user whose bookmarks will be read
+ * @return {Filter<ILessonDB>} Filter
  */
-const getAllUserBookmark = async (user: IUserPublic): Promise<ILessonDB[]> => {
+const getUserBookmarkFilter = (user: IUserPublic): Filter<ILessonDB> => {
   // No bookmark -> skip DB call
-  if (user.lessonIds.length === 0) return [];
+  if (user.lessonIds.length === 0) return {};
 
-  const filters: Filter<ILessonDB> = {
+  return {
     _id: {
       $in: user.lessonIds.map((id: string) => new ObjectId(id)),
     },
   };
-
-  return getAllLessons(filters);
 };
 
 export {
@@ -195,5 +193,5 @@ export {
   addLessonToUser,
   addBookmarkToUser,
   removeBookmarkFromUser,
-  getAllUserBookmark,
+  getUserBookmarkFilter,
 };
