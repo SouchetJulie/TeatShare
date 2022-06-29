@@ -195,7 +195,6 @@ const updateUser = async (
 ): Promise<boolean> => {
   const result = await collection.updateOne({ _id }, { $set: updatedUser });
 
-  console.log(result); // TODO debug
   return result.acknowledged && result.matchedCount === 1;
 };
 

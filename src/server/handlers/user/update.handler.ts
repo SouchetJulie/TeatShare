@@ -1,6 +1,7 @@
 import { updateUser } from "@services/users.service";
 import { ApiResponse } from "@typing/api-response.interface";
 import { IUserDB, IUserPublic } from "@typing/user.interface";
+import { ObjectId } from "bson";
 import { NextApiRequest, NextApiResponse } from "next";
 
 const userUpdateHandler = async (
@@ -18,14 +19,22 @@ const userUpdateHandler = async (
 
     const updateData: Partial<IUserDB> = req.body; // TODO sanitization (+formidable?)
 
-    console.log(currentUser._id, updateData); // TODO debug
     const updateSuccess: boolean = await updateUser(
-      currentUser._id,
+      new ObjectId(currentUser._id),
       updateData
     );
 
     if (updateSuccess) {
       console.log(`[USER] ${currentUser.email} successfully updated profile`);
+
+      // Update session
+      req.session.user = {
+        ...currentUser,
+        ...updateData,
+      };
+      await req.session.save();
+
+      // Response
       res.status(200).json({
         success: true,
       });
