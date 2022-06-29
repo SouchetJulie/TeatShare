@@ -1,43 +1,10 @@
+import { parseForm, RequestFormData } from "@common/parse-form.utils";
 import { createNewLesson, getOneLesson } from "@services/lessons.service";
 import { ApiResponse } from "@typing/api-response.interface";
 import { ILessonCreate, ILessonDB } from "@typing/lesson.interface";
 import { IUserPublic } from "@typing/user.interface";
-import { Fields, File, Files, IncomingForm, Part } from "formidable";
+import { File } from "formidable";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
-
-interface LessonFormData {
-  fields?: Fields;
-  files?: Files;
-}
-
-/**
- * Reads the form's value from the request and puts them into a Formidable object.
- * @param {NextApiRequest} req The incoming request.
- * @return {Promise<LessonFormData>} The form's values.
- * @throws {Error} If the parsing fails.
- */
-const parseForm = (req: NextApiRequest): Promise<LessonFormData> =>
-  new Promise(
-    (
-      resolve: (value: { fields: Fields; files: Files }) => void,
-      reject: (reason: Error) => void
-    ) => {
-      const form = new IncomingForm({
-        keepExtensions: false,
-        hashAlgorithm: "sha256",
-        multiples: false,
-        filter: ({ mimetype }: Part): boolean =>
-          !!mimetype && mimetype.includes("pdf"), // keep only pdf
-      });
-
-      form.parse(req, (err, fields: Fields, files: Files) => {
-        if (err) {
-          return reject(err);
-        }
-        resolve({ fields, files });
-      });
-    }
-  );
 
 /**
  * Parses the incoming request to record a new lesson.
@@ -60,9 +27,9 @@ export const lessonPostHandler: NextApiHandler = async (
     }
 
     // Read form
-    let formData: LessonFormData;
+    let formData: RequestFormData;
     try {
-      formData = await parseForm(req);
+      formData = await parseForm(req, ["application/pdf"]);
     } catch (e) {
       console.log(`[LESSON] Parsing the lesson upload failed`, e);
       return res.status(400).json({

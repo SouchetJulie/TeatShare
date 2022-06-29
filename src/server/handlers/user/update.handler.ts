@@ -1,23 +1,21 @@
+import { validate } from "@middlewares/sanitization/validate.middleware";
 import { updateUser } from "@services/users.service";
 import { ApiResponse } from "@typing/api-response.interface";
 import { IUserDB, IUserPublic } from "@typing/user.interface";
 import { ObjectId } from "bson";
-import { NextApiRequest, NextApiResponse } from "next";
+import { body, ValidationChain } from "express-validator";
+import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 
-const userUpdateHandler = async (
+const handler = async (
   req: NextApiRequest,
   res: NextApiResponse<ApiResponse>
 ) => {
-  const currentUser: IUserPublic | undefined = req.session.user;
-  try {
-    if (!currentUser?._id) {
-      return res.status(401).json({
-        success: false,
-        error: "Il faut être connecté pour cette opération",
-      });
-    }
+  const currentUser: IUserPublic = req.session.user!;
 
-    const updateData: Partial<IUserDB> = req.body; // TODO sanitization (+formidable?)
+  try {
+    const updateData: Partial<IUserDB> = req.body.sanitized; // TODO sanitization (+formidable for avatar?)
+
+    console.log(updateData); // TODO debug
 
     const updateSuccess: boolean = await updateUser(
       new ObjectId(currentUser._id),
@@ -35,12 +33,12 @@ const userUpdateHandler = async (
       await req.session.save();
 
       // Response
-      res.status(200).json({
+      return res.status(200).json({
         success: true,
       });
     } else {
       console.log(`[USER] ${currentUser.email} failed to update profile`);
-      res.status(400).json({
+      return res.status(400).json({
         success: false,
       });
     }
@@ -53,4 +51,17 @@ const userUpdateHandler = async (
   }
 };
 
-export { userUpdateHandler };
+const updateValidationChain: ValidationChain[] = [
+  body("firstName").optional({ checkFalsy: true }),
+  body("lastName").optional({ checkFalsy: true }),
+  body("email")
+    .optional({ checkFalsy: true })
+    .bail()
+    .isEmail()
+    .withMessage("Ce doit être un email"),
+];
+
+export const userUpdateHandler: NextApiHandler = validate(
+  updateValidationChain,
+  handler
+);

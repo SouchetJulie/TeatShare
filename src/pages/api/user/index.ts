@@ -4,6 +4,13 @@ import routerMiddleware from "@middlewares/router.middleware";
 import { ApiResponse } from "@typing/api-response.interface";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 
+// Disable the default body parser
+export const config = {
+  api: {
+    externalResolver: true, // for `connect` middlewares
+  },
+};
+
 export default async (
   req: NextApiRequest,
   res: NextApiResponse<ApiResponse>
