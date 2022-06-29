@@ -17,6 +17,7 @@ export const withSession = (apiHandler: NextApiHandler): NextApiHandler => {
     cookieOptions: {
       httpOnly: true,
       sameSite: "strict",
+      secure: process.env.NODE_ENV === "production",
     },
     password: process.env.SESSION_SECRET,
   });
