@@ -174,3 +174,19 @@ export const removeBookmarkFromUser = async (
     { $pull: { bookmarkIds: lessonId } }
   );
 };
+
+/**
+ * Updates the given user in database.
+ *
+ * @param {ObjectId} _id ID of the user to update
+ * @param {Partial<IUserDB>} updatedUser Data to update
+ */
+export const updateUser = async (
+  _id: ObjectId,
+  updatedUser: Partial<IUserDB>
+): Promise<boolean> => {
+  const result = await collection.updateOne({ _id }, { $set: updatedUser });
+
+  console.log(result); // TODO debug
+  return result.acknowledged && result.matchedCount === 1;
+};
