@@ -22,11 +22,12 @@ export const useProfileOnSubmit = (): ((
 
     const form = event.currentTarget as HTMLFormElement;
     const formData: FormData = new FormData(form);
-    // remove empty fields
+    // Clean-up the fields
     const entriesToDelete: string[] = [];
+    // can't use forEach, since entries() returns an iterator instead of an array
     for (const [key, value] of formData.entries()) {
-      // can't use forEach, since entries() returns an iterator instead of an array
       if (value === "" || value === undefined || (value as File).size === 0)
+        // remove empty fields
         entriesToDelete.push(key);
     }
     entriesToDelete.forEach((key: string) => formData.delete(key));
