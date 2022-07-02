@@ -41,3 +41,18 @@ export const parseForm = (
       });
     }
   );
+
+/**
+ * Copies the given data, with the fields equal to "", undefined or null removed.
+ * @param {Record<string, any>} data Object to filter
+ * @return {Record<string, any>} A filtered copy of the object
+ */
+export const removeEmptyFields = (data: Record<string, unknown>) => {
+  const result: Record<string, unknown> = {};
+  Object.entries(data).forEach(([key, value]: [string, unknown]) => {
+    if (value !== "" && value !== undefined && value !== null) {
+      result[key] = value;
+    }
+  });
+  return result;
+};
