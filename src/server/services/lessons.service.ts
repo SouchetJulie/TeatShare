@@ -1,5 +1,4 @@
-import { cleanFileMetadata } from "@common/file.utils";
-import storageService from "@services/storage.service";
+import { uploadFile } from "@services/storage.service";
 import { addLessonToUser, isUser } from "@services/users.service";
 import { ILessonCreate, ILessonDB } from "@typing/lesson.interface";
 import { IUserPublic } from "@typing/user.interface";
@@ -65,16 +64,19 @@ export const createNewLesson = async (
   if (!isUser(user)) {
     throw new Error("Auteur invalide.");
   }
+  if (!process.env.LESSON_UPLOAD_DIRECTORY) {
+    throw new Error("Impossible d'upload le fichier.");
+  }
 
   // Add to cloud storage
-  const file = cleanFileMetadata(uploadedFile);
-  const destination = `${process.env.LESSON_UPLOAD_DIRECTORY}/${file.newFilename}`;
-  await storageService.upload(file.filepath, {
-    destination,
-  });
-  file.filepath = destination;
+  const file = await uploadFile(
+    uploadedFile,
+    process.env.LESSON_UPLOAD_DIRECTORY
+  );
 
-  console.log(`[LESSON] Uploaded ${file.originalFilename} to ${destination}.`);
+  console.log(
+    `[LESSON] Uploaded ${file.originalFilename} to ${file.filepath}.`
+  );
 
   // Add to database
   const lesson: ILessonDB = {

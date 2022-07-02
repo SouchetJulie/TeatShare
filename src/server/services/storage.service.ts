@@ -1,4 +1,6 @@
+import { cleanFileMetadata } from "@common/file.utils";
 import { Storage } from "@google-cloud/storage";
+import { File } from "formidable";
 
 if (!process.env.GCS_CREDENTIALS) {
   throw new Error("GCS_CREDENTIALS must be defined in environment");
@@ -17,6 +19,21 @@ const storage = new Storage({
   },
   projectId: credentials.project_id,
 });
-const bucket = process.env.NEXT_PUBLIC_BUCKET_NAME;
+const bucketName = process.env.NEXT_PUBLIC_BUCKET_NAME;
 
-export default storage.bucket(bucket);
+const bucket = storage.bucket(bucketName);
+
+/**
+ * Uploads the given file to cloud storage.
+ * @param {File} uploadFile File to upload
+ * @param {string} uploadDirectory Where to store the file
+ */
+export async function uploadFile(uploadFile: File, uploadDirectory: string) {
+  const file = cleanFileMetadata(uploadFile);
+  const destination = `${uploadDirectory}/${file.newFilename}`;
+  await bucket.upload(file.filepath, {
+    destination,
+  });
+  file.filepath = destination;
+  return file;
+}
