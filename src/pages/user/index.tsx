@@ -3,7 +3,9 @@ import { useRefreshUser } from "@hooks/refresh-user.hook";
 import { useAppDispatch } from "@hooks/store-hook";
 import { addAlert } from "@stores/alert.store";
 import { ApiResponse } from "@typing/api-response.interface";
+import { CleanFile } from "@typing/clean-file.interface";
 import axios, { AxiosError, AxiosResponse } from "axios";
+import Image from "next/image";
 import React, { FunctionComponent } from "react";
 import { getAxiosErrorMessage } from "../../client/utils/get-axios-error.utils";
 
@@ -64,26 +66,35 @@ const index: FunctionComponent = () => {
       );
   };
 
+  const entries = user
+    ? Object.entries(user).map(([key, value]) => (
+        <tr key={`row-${key}`}>
+          <td>{key}</td>
+          <td>
+            {Array.isArray(value) ? ( // arrays
+              value.join(", ")
+            ) : typeof value === "object" ? ( // avatar
+              <Image
+                width={80}
+                height={80}
+                src={`https://storage.googleapis.com/${
+                  process.env.NEXT_PUBLIC_BUCKET_NAME
+                }/${(value as CleanFile).filepath}`}
+                alt="avatar"
+              />
+            ) : (
+              value // primitive values
+            )}
+          </td>
+        </tr>
+      ))
+    : null;
+
   return user ? (
     <div>
       <h3>TODO for debug</h3>
       <table>
-        <tbody>
-          {Object.entries(user).map(([key, value]) => {
-            return (
-              <tr key={`row-${key}`}>
-                <td>{key}</td>
-                <td>
-                  {Array.isArray(value)
-                    ? value.join(", ")
-                    : typeof value === "object"
-                    ? "<object>"
-                    : value}
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
+        <tbody>{entries}</tbody>
       </table>
       <hr />
       <h3>Modifier</h3>
