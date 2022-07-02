@@ -231,6 +231,11 @@ const prepareUserUpdate = async ({
     isAscii,
     "Liste de sujet invalide"
   );
+  validateArrayStringField(
+    fields?.grades,
+    isAscii,
+    "Liste de classes invalide"
+  );
   // Avatar
   const avatarExists = !!files?.avatar;
   const avatarIsArray = Array.isArray(files?.avatar);
@@ -254,6 +259,7 @@ const prepareUserUpdate = async ({
     email: fields?.email as string,
     description: fields?.description as string,
     location: fields?.location as string,
+    grades: fields?.grades as string[],
     subjects: fields?.subjects as string[],
     avatar,
   });

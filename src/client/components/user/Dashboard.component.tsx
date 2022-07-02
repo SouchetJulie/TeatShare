@@ -2,10 +2,25 @@ import { useProfileOnSubmit } from "@components/user/profile-on-submit.hook";
 import { useAutoLogin } from "@hooks/auto-login.hook";
 import { CleanFile } from "@typing/clean-file.interface";
 import { ECourse } from "@typing/course.enum";
+import { EGrade } from "@typing/grade.enum";
 import Image from "next/image";
 import React, { FunctionComponent } from "react";
 import { Button, Form, ListGroup, Table } from "react-bootstrap";
 import Select from "react-select";
+
+const subjects = Object.entries(ECourse).map(
+  ([value, label]: [string, string]) => ({
+    value,
+    label,
+  })
+);
+
+const grades = Object.entries(EGrade).map(
+  ([value, label]: [string, string]) => ({
+    value,
+    label,
+  })
+);
 
 const Dashboard: FunctionComponent = () => {
   const user = useAutoLogin();
@@ -40,13 +55,6 @@ const Dashboard: FunctionComponent = () => {
         </tr>
       ))
     : null;
-
-  const subjects = Object.entries(ECourse).map(
-    ([value, label]: [string, string]) => ({
-      value,
-      label,
-    })
-  );
 
   return user ? (
     <div>
@@ -96,6 +104,19 @@ const Dashboard: FunctionComponent = () => {
           <Form.Control
             name="location"
             placeholder={user.location || "location"}
+          />
+        </Form.Group>
+        {/* Grades */}
+        <Form.Group controlId="grades">
+          <Form.Label>grades</Form.Label>
+          <Select
+            id="grades"
+            name="grades"
+            aria-labelledby="grades"
+            placeholder="grades"
+            isMulti
+            options={grades}
+            hideSelectedOptions={true}
           />
         </Form.Group>
         {/* Subjects */}
