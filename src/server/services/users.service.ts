@@ -1,4 +1,9 @@
-import { removeEmptyFields, RequestFormData } from "@common/parse-form.utils";
+import {
+  isFrenchAlpha,
+  removeEmptyFields,
+  RequestFormData,
+  validateStringField,
+} from "@common/parse-form.utils";
 import { uploadFile } from "@services/storage.service";
 import { CleanFile } from "@typing/clean-file.interface";
 import { ILessonDB } from "@typing/lesson.interface";
@@ -16,7 +21,7 @@ import { InsertOneResult } from "mongodb";
 import validator from "validator";
 import { Filter, getDatabase } from "./database.service";
 import isEmail = validator.isEmail;
-import isAlpha = validator.isAlpha;
+import isAscii = validator.isAscii;
 
 const collection = (await getDatabase()).collection<IUserDB>("User");
 // Create index for speeding up search
@@ -215,31 +220,11 @@ const prepareUserUpdate = async ({
   files,
 }: RequestFormData): Promise<Partial<IUserDB>> => {
   // Validation
-  const emailExists = !!fields?.email;
-  const emailIsArray = Array.isArray(fields?.email);
-  const emailIsValid =
-    emailExists && !emailIsArray && isEmail(fields?.email as string);
-  if (emailExists && !emailIsValid) {
-    throw new Error("Email invalide");
-  }
-  const firstNameExists = !!fields?.firstName;
-  const firstNameIsArray = Array.isArray(fields?.firstName);
-  const firstNameIsValid =
-    firstNameExists &&
-    !firstNameIsArray &&
-    isAlpha(fields?.firstName as string, "fr-FR");
-  if (firstNameExists && !firstNameIsValid) {
-    throw new Error("Prénom invalide");
-  }
-  const lastNameExists = !!fields?.lastName;
-  const lastNameIsArray = Array.isArray(fields?.lastName);
-  const lastNameIsValid =
-    lastNameExists &&
-    !lastNameIsArray &&
-    isAlpha(fields?.lastName as string, "fr-FR");
-  if (lastNameExists && !lastNameIsValid) {
-    throw new Error("Nom de famille invalide");
-  }
+  validateStringField(fields?.email, isEmail, "Email invalide");
+  validateStringField(fields?.firstName, isFrenchAlpha, "Prénom invalide");
+  validateStringField(fields?.lastName, isFrenchAlpha, "Nom invalide");
+  validateStringField(fields?.description, isAscii, "Description invalide");
+  // Avatar
   const avatarExists = !!files?.avatar;
   const avatarIsArray = Array.isArray(files?.avatar);
   const avatarIsValid = !avatarIsArray;
@@ -260,6 +245,7 @@ const prepareUserUpdate = async ({
     firstName: fields?.firstName as string,
     lastName: fields?.lastName as string,
     email: fields?.email as string,
+    description: fields?.description as string,
     avatar,
   });
 };

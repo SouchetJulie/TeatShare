@@ -7,6 +7,7 @@ import { CleanFile } from "@typing/clean-file.interface";
 import axios, { AxiosError, AxiosResponse } from "axios";
 import Image from "next/image";
 import React, { FunctionComponent } from "react";
+import { Button, Form, ListGroup, Table } from "react-bootstrap";
 import { getAxiosErrorMessage } from "../../client/utils/get-axios-error.utils";
 
 const index: FunctionComponent = () => {
@@ -72,7 +73,11 @@ const index: FunctionComponent = () => {
           <td>{key}</td>
           <td>
             {Array.isArray(value) ? ( // arrays
-              value.join(", ")
+              <ListGroup>
+                {value.map((item) => (
+                  <ListGroup.Item>{item}</ListGroup.Item>
+                ))}
+              </ListGroup>
             ) : typeof value === "object" ? ( // avatar
               <Image
                 width={80}
@@ -93,19 +98,30 @@ const index: FunctionComponent = () => {
   return user ? (
     <div>
       <h3>TODO for debug</h3>
-      <table>
+      <Table>
         <tbody>{entries}</tbody>
-      </table>
+      </Table>
       <hr />
       <h3>Modifier</h3>
-      <form onSubmit={onSubmit}>
-        <input name="email" placeholder={user.email || "email"} />
-        <input name="firstName" placeholder={user.firstName || "firstName"} />
-        <input name="lastName" placeholder={user.lastName || "lastName"} />
-        <input name="avatar" type="file" accept="image/*" />
+      <Form onSubmit={onSubmit}>
+        <Form.Group controlId="email">
+          <Form.Control placeholder={user.email || "email"} />
+        </Form.Group>
+        <Form.Group controlId="firstName">
+          <Form.Control placeholder={user.firstName || "firstName"} />
+        </Form.Group>
+        <Form.Group controlId="lastName">
+          <Form.Control placeholder={user.lastName || "lastName"} />
+        </Form.Group>
+        <Form.Group controlId="description">
+          <Form.Control placeholder={user.description || "description"} />
+        </Form.Group>
+        <Form.Group controlId="avatar">
+          <Form.Control type="file" accept="image/*" />
+        </Form.Group>
 
-        <button type="submit">Envoyer</button>
-      </form>
+        <Button type="submit">Envoyer</Button>
+      </Form>
     </div>
   ) : (
     <></>

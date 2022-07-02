@@ -1,5 +1,7 @@
 import { Fields, Files, IncomingForm, Part } from "formidable";
 import { NextApiRequest } from "next";
+import validator from "validator";
+import isAlpha = validator.isAlpha;
 
 /**
  * Object containing the data uploaded by a form after parsing by `formidable`.
@@ -56,3 +58,29 @@ export const removeEmptyFields = (data: Record<string, unknown>) => {
   });
   return result;
 };
+
+/**
+ * Validates that the given field :
+ * - contains a single value
+ * - respects the constraint as given by the validator function
+ * The field is possibly undefined.
+ *
+ * @param {string | string[] | undefined} value Value to validate
+ * @param {Function} validator Validating function
+ * @param {string} errorMessage Error message to show in case the value is invalid
+ * @throws {Error} If the value is invalid
+ */
+export const validateStringField = (
+  value: string | string[] | undefined,
+  validator: (s: string) => boolean,
+  errorMessage: string
+): void => {
+  const valueExists = !!value;
+  const valueIsArray = Array.isArray(value);
+  const valueIsValid = valueExists && !valueIsArray && validator(value);
+  if (valueExists && !valueIsValid) {
+    throw new Error(errorMessage);
+  }
+};
+
+export const isFrenchAlpha = (s: string) => isAlpha(s, "fr-FR");
