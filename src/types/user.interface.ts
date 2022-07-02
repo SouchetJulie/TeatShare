@@ -1,3 +1,4 @@
+import { CleanFile } from "@typing/clean-file.interface";
 import { ObjectId } from "bson";
 import { EGrade } from "./grade.enum";
 import { ESubject } from "./subject.enum";
@@ -24,7 +25,7 @@ export interface IUserCreate extends IUserAuth {
  * @property {string} email
  * @property {string} firstName
  * @property {string} lastName
- * @property {File} avatar
+ * @property {CleanFile} avatar
  * @property {Date} joinDate
  * @property {string} description
  * @property {string} location
@@ -36,7 +37,7 @@ export interface IUserCreate extends IUserAuth {
  */
 export interface IUserDB extends IUserCreate {
   _id?: ObjectId; // used in database
-  avatar?: File;
+  avatar?: CleanFile;
   joinDate: Date;
   description: string;
   location: string;

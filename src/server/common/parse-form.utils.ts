@@ -1,6 +1,9 @@
 import { Fields, Files, IncomingForm, Part } from "formidable";
 import { NextApiRequest } from "next";
 
+/**
+ * Object containing the data uploaded by a form after parsing by `formidable`.
+ */
 export interface RequestFormData {
   fields?: Fields;
   files?: Files;
