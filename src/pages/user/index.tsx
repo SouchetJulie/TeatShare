@@ -18,10 +18,14 @@ const index: FunctionComponent = () => {
 
     const form = event.target as HTMLFormElement;
     const formData: FormData = new FormData(form);
-    const data: Record<string, any> = {};
-    for (const [key, value] of formData) {
-      data[key] = value;
+    // remove empty fields
+    const entriesToDelete: string[] = [];
+    for (const [key, value] of formData.entries()) {
+      // can't use forEach, since entries() returns an iterator instead of an array
+      if (value === "" || value === undefined || (value as File).size === 0)
+        entriesToDelete.push(key);
     }
+    entriesToDelete.forEach((key: string) => formData.delete(key));
 
     axios
       .patch<ApiResponse>("/api/user", formData, {
