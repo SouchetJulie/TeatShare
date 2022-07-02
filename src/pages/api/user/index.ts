@@ -8,6 +8,7 @@ import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 export const config = {
   api: {
     externalResolver: true, // for `connect` middlewares
+    bodyParser: false, // for file upload
   },
 };
 
