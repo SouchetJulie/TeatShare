@@ -24,7 +24,11 @@ const index: FunctionComponent = () => {
     }
 
     axios
-      .patch<ApiResponse>("/api/user", data)
+      .patch<ApiResponse>("/api/user", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data", // for file upload
+        },
+      })
       .then(({ data: response }: AxiosResponse<ApiResponse>) => {
         if (response.success) {
           dispatch(
@@ -60,22 +64,30 @@ const index: FunctionComponent = () => {
     <div>
       <h3>TODO for debug</h3>
       <table>
-        {Object.entries(user).map(([key, value]) => {
-          return (
-            <tr>
-              <td>{key}</td>
-              <td>{Array.isArray(value) ? value.join(", ") : value}</td>
-            </tr>
-          );
-        })}
+        <tbody>
+          {Object.entries(user).map(([key, value]) => {
+            return (
+              <tr key={`row-${key}`}>
+                <td>{key}</td>
+                <td>
+                  {Array.isArray(value)
+                    ? value.join(", ")
+                    : typeof value === "object"
+                    ? "<object>"
+                    : value}
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
       </table>
       <hr />
       <h3>Modifier</h3>
       <form onSubmit={onSubmit}>
-        <input name="email" placeholder={user.email ?? "email"} />
-        <input name="firstName" placeholder={user.firstName ?? "firstName"} />
-        <input name="lastName" placeholder={user.lastName ?? "lastName"} />
-        <input name="avatar" type="file" />
+        <input name="email" placeholder={user.email || "email"} />
+        <input name="firstName" placeholder={user.firstName || "firstName"} />
+        <input name="lastName" placeholder={user.lastName || "lastName"} />
+        <input name="avatar" type="file" accept="image/*" />
 
         <button type="submit">Envoyer</button>
       </form>
