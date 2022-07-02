@@ -2,6 +2,7 @@ import {
   isFrenchAlpha,
   removeEmptyFields,
   RequestFormData,
+  validateArrayStringField,
   validateStringField,
 } from "@common/parse-form.utils";
 import { uploadFile } from "@services/storage.service";
@@ -225,6 +226,11 @@ const prepareUserUpdate = async ({
   validateStringField(fields?.lastName, isFrenchAlpha, "Nom invalide");
   validateStringField(fields?.description, isAscii, "Description invalide");
   validateStringField(fields?.location, isAscii, "Localisation invalide");
+  validateArrayStringField(
+    fields?.subjects,
+    isAscii,
+    "Liste de sujet invalide"
+  );
   // Avatar
   const avatarExists = !!files?.avatar;
   const avatarIsArray = Array.isArray(files?.avatar);
@@ -248,6 +254,7 @@ const prepareUserUpdate = async ({
     email: fields?.email as string,
     description: fields?.description as string,
     location: fields?.location as string,
+    subjects: fields?.subjects as string[],
     avatar,
   });
 };

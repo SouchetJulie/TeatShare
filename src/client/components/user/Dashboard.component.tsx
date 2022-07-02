@@ -1,9 +1,11 @@
 import { useProfileOnSubmit } from "@components/user/profile-on-submit.hook";
 import { useAutoLogin } from "@hooks/auto-login.hook";
 import { CleanFile } from "@typing/clean-file.interface";
+import { ECourse } from "@typing/course.enum";
 import Image from "next/image";
 import React, { FunctionComponent } from "react";
 import { Button, Form, ListGroup, Table } from "react-bootstrap";
+import Select from "react-select";
 
 const Dashboard: FunctionComponent = () => {
   const user = useAutoLogin();
@@ -39,6 +41,13 @@ const Dashboard: FunctionComponent = () => {
       ))
     : null;
 
+  const subjects = Object.entries(ECourse).map(
+    ([value, label]: [string, string]) => ({
+      value,
+      label,
+    })
+  );
+
   return user ? (
     <div>
       <h3>TODO for debug</h3>
@@ -48,6 +57,7 @@ const Dashboard: FunctionComponent = () => {
       <hr />
       <h3>Modifier</h3>
       <Form onSubmit={onSubmit}>
+        {/* Email */}
         <Form.Group controlId="email">
           <Form.Label>email</Form.Label>
           <Form.Control
@@ -56,6 +66,7 @@ const Dashboard: FunctionComponent = () => {
             placeholder={user.email || "email"}
           />
         </Form.Group>
+        {/* First name */}
         <Form.Group controlId="firstName">
           <Form.Label>firstName</Form.Label>
           <Form.Control
@@ -63,6 +74,7 @@ const Dashboard: FunctionComponent = () => {
             placeholder={user.firstName || "firstName"}
           />
         </Form.Group>
+        {/* Last name */}
         <Form.Group controlId="lastName">
           <Form.Label>lastName</Form.Label>
           <Form.Control
@@ -70,6 +82,7 @@ const Dashboard: FunctionComponent = () => {
             placeholder={user.lastName || "lastName"}
           />
         </Form.Group>
+        {/* Description */}
         <Form.Group controlId="description">
           <Form.Label>description</Form.Label>
           <Form.Control
@@ -77,6 +90,7 @@ const Dashboard: FunctionComponent = () => {
             placeholder={user.description || "description"}
           />
         </Form.Group>
+        {/* Location */}
         <Form.Group controlId="location">
           <Form.Label>location</Form.Label>
           <Form.Control
@@ -84,6 +98,20 @@ const Dashboard: FunctionComponent = () => {
             placeholder={user.location || "location"}
           />
         </Form.Group>
+        {/* Subjects */}
+        <Form.Group controlId="subjects">
+          <Form.Label>subjects</Form.Label>
+          <Select
+            id="subjects"
+            name="subjects"
+            aria-labelledby="subjects"
+            placeholder="subjects"
+            isMulti
+            options={subjects}
+            hideSelectedOptions={true}
+          />
+        </Form.Group>
+        {/* Avatar */}
         <Form.Group controlId="avatar">
           <Form.Label>avatar</Form.Label>
           <Form.Control name="avatar" type="file" accept="image/*" />
