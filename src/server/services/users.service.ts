@@ -224,6 +224,7 @@ const prepareUserUpdate = async ({
   validateStringField(fields?.firstName, isFrenchAlpha, "Prénom invalide");
   validateStringField(fields?.lastName, isFrenchAlpha, "Nom invalide");
   validateStringField(fields?.description, isAscii, "Description invalide");
+  validateStringField(fields?.location, isAscii, "Localisation invalide");
   // Avatar
   const avatarExists = !!files?.avatar;
   const avatarIsArray = Array.isArray(files?.avatar);
@@ -246,6 +247,7 @@ const prepareUserUpdate = async ({
     lastName: fields?.lastName as string,
     email: fields?.email as string,
     description: fields?.description as string,
+    location: fields?.location as string,
     avatar,
   });
 };

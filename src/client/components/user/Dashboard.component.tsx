@@ -77,6 +77,13 @@ const Dashboard: FunctionComponent = () => {
             placeholder={user.description || "description"}
           />
         </Form.Group>
+        <Form.Group controlId="location">
+          <Form.Label>location</Form.Label>
+          <Form.Control
+            name="location"
+            placeholder={user.location || "location"}
+          />
+        </Form.Group>
         <Form.Group controlId="avatar">
           <Form.Label>avatar</Form.Label>
           <Form.Control name="avatar" type="file" accept="image/*" />
