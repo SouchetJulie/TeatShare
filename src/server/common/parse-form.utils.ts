@@ -30,7 +30,7 @@ export const parseForm = (
       const form = new IncomingForm({
         keepExtensions: false,
         hashAlgorithm: "sha256",
-        multiples: false,
+        multiples: true,
         filter: ({ mimetype }: Part): boolean =>
           !!mimetype && !!allowedFilesTypes?.test(mimetype), // keep only allowed file types
       });
@@ -63,24 +63,56 @@ export const removeEmptyFields = (data: Record<string, unknown>) => {
  * Validates that the given field :
  * - contains a single value
  * - respects the constraint as given by the validator function
- * The field is possibly undefined.
+ * The field is optional.
  *
  * @param {string | string[] | undefined} value Value to validate
  * @param {Function} validator Validating function
  * @param {string} errorMessage Error message to show in case the value is invalid
+ * @return {string|undefined} The validated value
  * @throws {Error} If the value is invalid
  */
 export const validateStringField = (
   value: string | string[] | undefined,
   validator: (s: string) => boolean,
   errorMessage: string
-): void => {
-  const valueExists = !!value;
+): string | undefined => {
+  const valueExists = value !== undefined && value !== null && value !== "";
+  if (!valueExists) return undefined;
+
   const valueIsArray = Array.isArray(value);
-  const valueIsValid = valueExists && !valueIsArray && validator(value);
+  const valueIsValid = !valueIsArray && validator(value);
   if (valueExists && !valueIsValid) {
     throw new Error(errorMessage);
   }
+  return value;
+};
+
+/**
+ * Validates that the given field :
+ * - contains an array
+ * - each member respects the constraint as given by the validator function
+ * The field is optional.
+ *
+ * @param {string | string[] | undefined} value Value to validate
+ * @param {Function} validator Validating function
+ * @param {string} errorMessage Error message to show in case the value is invalid
+ * @return {string[]|undefined} The validated value
+ * @throws {Error} If the value is invalid
+ */
+export const validateArrayStringField = (
+  value: string | string[] | undefined,
+  validator: (s: string) => boolean,
+  errorMessage: string
+): string[] | undefined => {
+  const valueExists = value !== undefined && value !== null && value !== "";
+  if (!valueExists) return undefined;
+
+  const arrayValue = Array.isArray(value) ? value : [value];
+  const valueIsValid = arrayValue.every((item: string) => validator(item));
+  if (valueExists && !valueIsValid) {
+    throw new Error(errorMessage);
+  }
+  return arrayValue;
 };
 
 export const isFrenchAlpha = (s: string) => isAlpha(s, "fr-FR");
