@@ -1,21 +1,19 @@
-import { validate } from "@middlewares/sanitization/validate.middleware";
-import { updateUser } from "@services/users.service";
+import { parseForm, RequestFormData } from "@common/parse-form.utils";
+import { prepareUserUpdate, updateUser } from "@services/users.service";
 import { ApiResponse } from "@typing/api-response.interface";
 import { IUserDB, IUserPublic } from "@typing/user.interface";
 import { ObjectId } from "bson";
-import { body, ValidationChain } from "express-validator";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 
-const handler = async (
+export const userUpdateHandler: NextApiHandler = async (
   req: NextApiRequest,
   res: NextApiResponse<ApiResponse>
-) => {
+): Promise<void> => {
   const currentUser: IUserPublic = req.session.user!;
 
   try {
-    const updateData: Partial<IUserDB> = req.body.sanitized; // TODO sanitization (+formidable for avatar?)
-
-    console.log(updateData); // TODO debug
+    const formData: RequestFormData = await parseForm(req, ["application/pdf"]);
+    const updateData: Partial<IUserDB> = await prepareUserUpdate(formData);
 
     const updateSuccess: boolean = await updateUser(
       new ObjectId(currentUser._id),
@@ -50,18 +48,3 @@ const handler = async (
     });
   }
 };
-
-const updateValidationChain: ValidationChain[] = [
-  body("firstName").optional({ checkFalsy: true }),
-  body("lastName").optional({ checkFalsy: true }),
-  body("email")
-    .optional({ checkFalsy: true })
-    .bail()
-    .isEmail()
-    .withMessage("Ce doit être un email"),
-];
-
-export const userUpdateHandler: NextApiHandler = validate(
-  updateValidationChain,
-  handler
-);

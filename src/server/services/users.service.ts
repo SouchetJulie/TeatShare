@@ -1,3 +1,6 @@
+import { removeEmptyFields, RequestFormData } from "@common/parse-form.utils";
+import { uploadFile } from "@services/storage.service";
+import { CleanFile } from "@typing/clean-file.interface";
 import { ILessonDB } from "@typing/lesson.interface";
 import {
   IUserAuth,
@@ -8,8 +11,12 @@ import {
 import { createEmptyUser } from "@utils/create-empty-user";
 import bcrypt from "bcryptjs";
 import { ObjectId } from "bson";
+import { File } from "formidable";
 import { InsertOneResult } from "mongodb";
+import validator from "validator";
 import { Filter, getDatabase } from "./database.service";
+import isEmail = validator.isEmail;
+import isAlpha = validator.isAlpha;
 
 const collection = (await getDatabase()).collection<IUserDB>("User");
 // Create index for speeding up search
@@ -198,6 +205,65 @@ const updateUser = async (
   return result.acknowledged && result.matchedCount === 1;
 };
 
+/**
+ * Transforms the raw data from the form into a User.
+ * @param {RequestFormData} formData Data from the form.
+ * @return {Partial<IUserDB>} User data.
+ */
+const prepareUserUpdate = async ({
+  fields,
+  files,
+}: RequestFormData): Promise<Partial<IUserDB>> => {
+  // Validation
+  const emailExists = !!fields?.email;
+  const emailIsArray = Array.isArray(fields?.email);
+  const emailIsValid =
+    emailExists && !emailIsArray && isEmail(fields?.email as string);
+  if (emailExists && !emailIsValid) {
+    throw new Error("Email invalide");
+  }
+  const firstNameExists = !!fields?.firstName;
+  const firstNameIsArray = Array.isArray(fields?.firstName);
+  const firstNameIsValid =
+    firstNameExists &&
+    !firstNameIsArray &&
+    isAlpha(fields?.firstName as string, "fr-FR");
+  if (firstNameExists && !firstNameIsValid) {
+    throw new Error("Prénom invalide");
+  }
+  const lastNameExists = !!fields?.lastName;
+  const lastNameIsArray = Array.isArray(fields?.lastName);
+  const lastNameIsValid =
+    lastNameExists &&
+    !lastNameIsArray &&
+    isAlpha(fields?.lastName as string, "fr-FR");
+  if (lastNameExists && !lastNameIsValid) {
+    throw new Error("Nom de famille invalide");
+  }
+  const avatarExists = !!files?.avatar;
+  const avatarIsArray = Array.isArray(files?.avatar);
+  const avatarIsValid = !avatarIsArray;
+  let avatar: CleanFile | undefined = undefined;
+  if (avatarExists) {
+    if (!avatarIsValid) throw new Error("Avatar invalide");
+    if (!process.env.AVATAR_UPLOAD_DIRECTORY)
+      throw new Error("Upload de l'avatar échoué");
+
+    avatar = await uploadFile(
+      files!.avatar as File,
+      process.env.AVATAR_UPLOAD_DIRECTORY
+    );
+    console.log("[USER] Avatar upload");
+  }
+
+  return removeEmptyFields({
+    firstName: fields?.firstName as string,
+    lastName: fields?.lastName as string,
+    email: fields?.email as string,
+    avatar,
+  });
+};
+
 export {
   getAllUsers,
   getUserByEmail,
@@ -210,4 +276,5 @@ export {
   removeBookmarkFromUser,
   getUserBookmarkFilter,
   updateUser,
+  prepareUserUpdate,
 };
