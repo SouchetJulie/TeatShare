@@ -12,13 +12,13 @@ export interface RequestFormData {
 /**
  * Reads the form's value from the request and puts them into a Formidable object.
  * @param {NextApiRequest} req The incoming request.
- * @param {string[]} allowedFilesTypes (optional) Whitelist for file mimetypes. If none, block all files.
+ * @param {RegExp} allowedFilesTypes (optional) Whitelist for file mimetypes. If none, block all files.
  * @return {Promise<RequestFormData>} The form's values.
  * @throws {Error} If the parsing fails.
  */
 export const parseForm = (
   req: NextApiRequest,
-  allowedFilesTypes?: string[]
+  allowedFilesTypes?: RegExp
 ): Promise<RequestFormData> =>
   new Promise(
     (
@@ -30,7 +30,7 @@ export const parseForm = (
         hashAlgorithm: "sha256",
         multiples: false,
         filter: ({ mimetype }: Part): boolean =>
-          !!mimetype && !!allowedFilesTypes?.includes(mimetype), // keep only allowed file types
+          !!mimetype && !!allowedFilesTypes?.test(mimetype), // keep only allowed file types
       });
 
       form.parse(req, (err, fields: Fields, files: Files) => {

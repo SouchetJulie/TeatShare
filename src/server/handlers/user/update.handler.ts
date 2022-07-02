@@ -12,7 +12,7 @@ export const userUpdateHandler: NextApiHandler = async (
   const currentUser: IUserPublic = req.session.user!;
 
   try {
-    const formData: RequestFormData = await parseForm(req, ["application/pdf"]);
+    const formData: RequestFormData = await parseForm(req, /^image\/.*/);
     const updateData: Partial<IUserDB> = await prepareUserUpdate(formData);
 
     const updateSuccess: boolean = await updateUser(
