@@ -1,10 +1,12 @@
 import { getAxiosErrorMessage } from "@client/utils/get-axios-error.utils";
 import { useAutoLogin } from "@hooks/auto-login.hook";
 import { useCategoryList } from "@hooks/category-list.hook";
+import { useAutoLogin } from "@hooks/auto-login.hook";
 import { useAppDispatch } from "@hooks/store-hook";
 import { addAlert } from "@stores/alert.store";
 import styles from "@styles/lesson/upload.module.scss";
 import { ApiResponse } from "@typing/api-response.interface";
+import { ILesson } from "@typing/lesson.interface";
 import { ICategory } from "@typing/category.interface";
 import { ILesson } from "@typing/lesson-file.interface";
 import axios, { AxiosError } from "axios";

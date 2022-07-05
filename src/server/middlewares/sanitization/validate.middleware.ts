@@ -1,4 +1,4 @@
-import { runMiddleware } from "@common/run-middleware.helper";
+import { runMiddleware } from "@middlewares/run-middleware.helper";
 import { validationErrorResponse } from "@middlewares/sanitization/validation-error.response";
 import {
   matchedData,

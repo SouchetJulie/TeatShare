@@ -1,5 +1,4 @@
 import { validate } from "@middlewares/sanitization/validate.middleware";
-import { withSession } from "@middlewares/session.middleware";
 import { checkCredentials, getUserByEmail } from "@services/users.service";
 import { ApiResponse } from "@typing/api-response.interface";
 import { IUserAuth, IUserPublic } from "@typing/user.interface";
@@ -47,6 +46,7 @@ const loginValidationChain: ValidationChain[] = [
     .withMessage("Le mot de passe ne doit pas être vide"),
 ];
 
-export const loginHandler: NextApiHandler = withSession(
-  validate(loginValidationChain, handler)
+export const loginHandler: NextApiHandler = validate(
+  loginValidationChain,
+  handler
 );

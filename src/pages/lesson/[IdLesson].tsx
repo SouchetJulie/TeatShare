@@ -1,8 +1,8 @@
-import LessonDetails from "@components/lesson/LessonDetails";
+import LessonDetails from "@components/lesson/detail/LessonDetails";
 import { useAppDispatch } from "@hooks/store-hook";
 import { addAlert } from "@stores/alert.store";
 import { ApiResponse } from "@typing/api-response.interface";
-import { ILesson } from "@typing/lesson-file.interface";
+import { ILesson } from "@typing/lesson.interface";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";

@@ -1,3 +1,4 @@
+import { ILessonDB } from "@typing/lesson.interface";
 import {
   IUserAuth,
   IUserCreate,
@@ -5,6 +6,9 @@ import {
   IUserPublic,
 } from "@typing/user.interface";
 import bcrypt from "bcryptjs";
+import { ObjectId } from "bson";
+import { InsertOneResult } from "mongodb";
+import { Filter, getDatabase } from "./database.service";
 import { InsertOneResult, ObjectId } from "mongodb";
 import { getDatabase } from "./database.service";
 
@@ -31,9 +35,7 @@ export const getAllUsers: () => Promise<IUserPublic[]> = async () => {
  * @param {string} email Email of the user to fetch.
  * @return {Promise<IUserPublic | null>} The user, or null if not found.
  */
-export const getUserByEmail = async (
-  email: string
-): Promise<IUserPublic | null> => {
+const getUserByEmail = async (email: string): Promise<IUserPublic | null> => {
   const user = await collection.findOne({ email: email });
 
   if (!user) {
@@ -51,9 +53,7 @@ export const getUserByEmail = async (
  * @param {string} userId Id (_id) of the user to fetch.
  * @return {Promise<IUserPublic | null>} The user, or null if not found.
  */
-export const getOneUser = async (
-  userId: string
-): Promise<IUserPublic | null> => {
+const getOneUser = async (userId: string): Promise<IUserPublic | null> => {
   const user: IUserDB | null = await collection.findOne({
     _id: new ObjectId(userId),
   });
@@ -76,7 +76,7 @@ export const getOneUser = async (
  * @return {Promise<InsertOneResult<IUserDB>>} The result of the insertion.
  * @throws {Error} If the credentials are invalid or already in use.
  */
-export const createNewUser = async (
+const createNewUser = async (
   user: IUserCreate
 ): Promise<InsertOneResult<IUserDB>> => {
   if (!user.password || !user.email) {
@@ -106,7 +106,7 @@ export const createNewUser = async (
  * @param {IUserAuth} user
  * @return {Promise<boolean>}
  */
-export const checkCredentials = async (user: IUserAuth): Promise<boolean> => {
+const checkCredentials = async (user: IUserAuth): Promise<boolean> => {
   try {
     const userDB = await collection.findOne<IUserDB>({
       email: user.email,
@@ -128,23 +128,74 @@ export const checkCredentials = async (user: IUserAuth): Promise<boolean> => {
  * @param {Record<string, any>} user
  * @return {boolean}
  */
-export const isUser = (user: Record<string, any>): user is IUserDB => {
+const isUser = (user: Record<string, any>): user is IUserDB => {
   return user && user["error"] === undefined && user["email"];
 };
 
 /**
  * Adds the given lesson id to the list of lessons published by this user.
  * @param {IUserPublic} user
- * @param {ObjectId} lessonId
+ * @param {string} lessonId
  */
-export const addLessonToUser = async (
-  user: IUserPublic,
-  lessonId: ObjectId
-) => {
+const addLessonToUser = async (user: IUserPublic, lessonId: string) => {
   return collection.updateOne(
     { email: user.email },
     { $push: { lessonIds: lessonId } }
   );
+};
+
+/**
+ * Adds the given lesson id to the list of lessons bookmarked by this user.
+ * @param {IUserPublic} user
+ * @param {string} lessonId
+ */
+const addBookmarkToUser = async (user: IUserPublic, lessonId: string) => {
+  return collection.updateOne(
+    { email: user.email },
+    { $push: { bookmarkIds: lessonId } }
+  );
+};
+
+/**
+ * Removes the given lesson id from the list of lessons bookmarked by this user.
+ * @param {IUserPublic} user
+ * @param {string} lessonId
+ */
+const removeBookmarkFromUser = async (user: IUserPublic, lessonId: string) => {
+  return collection.updateOne(
+    { email: user.email },
+    { $pull: { bookmarkIds: lessonId } }
+  );
+};
+
+/**
+ * Gets the filter to fetch all lessons bookmarked by this user.
+ *
+ * @param {IUserPublic} user The user whose bookmarks will be read
+ * @return {Filter<ILessonDB>} Filter
+ */
+const getUserBookmarkFilter = (user: IUserPublic): Filter<ILessonDB> => {
+  // No bookmark -> skip DB call
+  if (user.lessonIds.length === 0) return {};
+
+  return {
+    _id: {
+      $in: user.lessonIds.map((id: string) => new ObjectId(id)),
+    },
+  };
+};
+
+export {
+  getAllUsers,
+  getUserByEmail,
+  getOneUser,
+  createNewUser,
+  checkCredentials,
+  isUser,
+  addLessonToUser,
+  addBookmarkToUser,
+  removeBookmarkFromUser,
+  getUserBookmarkFilter,
 };
 
 /**

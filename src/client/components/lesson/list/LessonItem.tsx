@@ -3,7 +3,7 @@ import { useAppDispatch } from "@hooks/store-hook";
 import { addAlert } from "@stores/alert.store";
 import styles from "@styles/lesson-item.module.scss";
 import { ApiResponse } from "@typing/api-response.interface";
-import { ILesson } from "@typing/lesson-file.interface";
+import { ILesson } from "@typing/lesson.interface";
 import { IUserPublic } from "@typing/user.interface";
 import axios from "axios";
 import Link from "next/link";
