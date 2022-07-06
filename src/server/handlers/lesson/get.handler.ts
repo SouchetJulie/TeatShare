@@ -6,20 +6,20 @@ import {
   getOneLesson,
 } from "@services/lessons.service";
 import { ApiResponse } from "@typing/api-response.interface";
-import { ILesson, ILessonDB } from "@typing/lesson-file.interface";
+import { ILesson } from "@typing/lesson.interface";
 import { ObjectId } from "mongodb";
 import { NextApiRequest, NextApiResponse } from "next";
 
 const lessonGetAllHandler = async (
   req: NextApiRequest,
-  res: NextApiResponse<ApiResponse>
+  res: NextApiResponse<ApiResponse<{ lessons: ILesson[] }>>
 ) => {
   try {
     const user = req.session.user;
     const filters = getFiltersFromQuery(req.query, user);
 
     // Read lessons from database & send result
-    const lessons: ILessonDB[] = await getAllLessons(filters);
+    const lessons: ILesson[] = await getAllLessons(filters);
     res.status(200).json({
       success: true,
       data: { lessons },
@@ -38,7 +38,7 @@ const baseLessonGetOneHandler =
   (_id: string) =>
   async (
     req: NextApiRequest,
-    res: NextApiResponse<ApiResponse<{ lesson: ILessonDB }>>
+    res: NextApiResponse<ApiResponse<{ lesson: ILesson }>>
   ) => {
     const { _id: id } = req.body.sanitized as { _id: string };
 

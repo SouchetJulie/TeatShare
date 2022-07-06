@@ -1,6 +1,6 @@
 import { createNewLesson, getOneLesson } from "@services/lessons.service";
 import { ApiResponse } from "@typing/api-response.interface";
-import { ILessonCreate, ILessonDB } from "@typing/lesson.interface";
+import { ILesson, ILessonCreate } from "@typing/lesson.interface";
 import { IUserPublic } from "@typing/user.interface";
 import { Fields, File, Files, IncomingForm, Part } from "formidable";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
@@ -46,7 +46,7 @@ const parseForm = (req: NextApiRequest): Promise<LessonFormData> =>
  */
 export const lessonPostHandler: NextApiHandler = async (
   req: NextApiRequest,
-  res: NextApiResponse<ApiResponse<{ lesson: ILessonDB }>>
+  res: NextApiResponse<ApiResponse<{ lesson: ILesson }>>
 ) => {
   try {
     // Get author
@@ -119,7 +119,7 @@ export const lessonPostHandler: NextApiHandler = async (
     console.log(`[LESSON] Upload of lesson ${id} successful`);
 
     // Read what was uploaded
-    const uploadedLesson: ILessonDB | null = await getOneLesson(id);
+    const uploadedLesson: ILesson | null = await getOneLesson(id);
 
     if (!uploadedLesson) {
       console.log(

@@ -9,8 +9,6 @@ import bcrypt from "bcryptjs";
 import { ObjectId } from "bson";
 import { InsertOneResult } from "mongodb";
 import { Filter, getDatabase } from "./database.service";
-import { InsertOneResult, ObjectId } from "mongodb";
-import { getDatabase } from "./database.service";
 
 const collection = (await getDatabase()).collection<IUserDB>("User");
 // Create index for speeding up search
@@ -21,7 +19,7 @@ collection.createIndex({ email: 1 });
  *
  * @return {Promise<IUserPublic[]>} The list (possibly empty) of all users found.
  */
-export const getAllUsers: () => Promise<IUserPublic[]> = async () => {
+const getAllUsers: () => Promise<IUserPublic[]> = async () => {
   const users = await collection.find({}).toArray();
   // remove password before sending it back
   users.forEach((user: IUserDB) => delete user.password);
@@ -135,9 +133,9 @@ const isUser = (user: Record<string, any>): user is IUserDB => {
 /**
  * Adds the given lesson id to the list of lessons published by this user.
  * @param {IUserPublic} user
- * @param {string} lessonId
+ * @param {ObjectId} lessonId
  */
-const addLessonToUser = async (user: IUserPublic, lessonId: string) => {
+const addLessonToUser = async (user: IUserPublic, lessonId: ObjectId) => {
   return collection.updateOne(
     { email: user.email },
     { $push: { lessonIds: lessonId } }
@@ -147,9 +145,9 @@ const addLessonToUser = async (user: IUserPublic, lessonId: string) => {
 /**
  * Adds the given lesson id to the list of lessons bookmarked by this user.
  * @param {IUserPublic} user
- * @param {string} lessonId
+ * @param {ObjectId} lessonId
  */
-const addBookmarkToUser = async (user: IUserPublic, lessonId: string) => {
+const addBookmarkToUser = async (user: IUserPublic, lessonId: ObjectId) => {
   return collection.updateOne(
     { email: user.email },
     { $push: { bookmarkIds: lessonId } }

@@ -1,11 +1,7 @@
 import { cleanFileMetadata } from "@common/file.utils";
 import storageService from "@services/storage.service";
 import { addLessonToUser, isUser } from "@services/users.service";
-import {
-  ILesson,
-  ILessonCreate,
-  ILessonDB,
-} from "@typing/lesson-file.interface";
+import { ILesson, ILessonCreate, ILessonDB } from "@typing/lesson.interface";
 import { IUserPublic } from "@typing/user.interface";
 import { File } from "formidable";
 import { InsertOneResult, ObjectId } from "mongodb";
@@ -31,7 +27,7 @@ if (!collection.indexExists("title_text_subtitle_text")) {
  */
 export const getAllLessons = async (
   filters?: Filter<ILessonDB>
-): Promise<ILessonDB[]> => {
+): Promise<ILesson[]> => {
   const cursor = collection.find(filters ?? {});
   const lessons: ILessonDB[] = await cursor.toArray();
   // Free cursor resources
@@ -81,6 +77,13 @@ export const createNewLesson = async (
 
   console.log(`[LESSON] Uploaded ${file.originalFilename} to ${destination}.`);
 
+  const categoryIds: ObjectId[] =
+    uploadedLesson.categoryIds === undefined
+      ? []
+      : toArray(uploadedLesson.categoryIds).map(
+          (id: string) => new ObjectId(id)
+        );
+
   // Add to database
   const lesson: ILessonDB = {
     file,
@@ -94,8 +97,7 @@ export const createNewLesson = async (
     publicationDate: uploadedLesson.isDraft ? undefined : new Date(),
     // foreign keys
     authorId: user._id!,
-    categoryIds:
-      uploadedLesson.categoryIds?.map((id: string) => new ObjectId(id)) ?? [],
+    categoryIds,
     commentIds: [],
     // other data
     bookmarkCount: 0,
@@ -178,7 +180,9 @@ export const getFiltersFromQuery = (
     switch (key) {
       // Search by author id (multiple values are treated as "or")
       case "author":
-        filters.authorId = { $in: toArray(value) };
+        filters.authorId = {
+          $in: toArray(value).map((id: string) => new ObjectId(id)),
+        };
         break;
 
       // Text search (in title and subtitle)
@@ -296,6 +300,7 @@ export const getFiltersFromQuery = (
 const fromDatabase = (lesson: ILessonDB): ILesson => ({
   ...lesson,
   _id: lesson._id!.toString(),
+  authorId: lesson.authorId.toString(),
   categoryIds: lesson.categoryIds.map((id) => id.toString()),
   commentIds: lesson.commentIds.map((id) => id.toString()),
 });

@@ -20,9 +20,8 @@ export interface ILessonDB {
   grade?: EGrade;
   subject?: ESubject;
   bookmarkCount: number;
-  bookmarkCount: number;
   // foreign keys (needs to accept string so that filtered queries work)
-  authorId: ObjectId | string;
+  authorId: ObjectId;
   categoryIds: ObjectId[];
   commentIds: ObjectId[];
 }
@@ -32,7 +31,7 @@ export interface ILessonDB {
  */
 export type ILesson = Replace<
   // replace all string by string
-  Replace<ILessonDB, ObjectId | undefined, string | undefined>,
+  Replace<ILessonDB, ObjectId | undefined, string>,
   ObjectId[],
   string[]
 >;
