@@ -20,6 +20,7 @@ import Image from "next/image";
 import React, { FunctionComponent, useEffect, useMemo, useState } from "react";
 import { ListGroup } from "react-bootstrap";
 import { Download, Printer } from "react-bootstrap-icons";
+import Badge from "react-bootstrap/Badge";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
@@ -131,6 +132,11 @@ const LessonDetailsHeader: FunctionComponent<LessonHeaderComponentProps> = ({
       >
         <h1>{lesson?.title ?? ""}</h1>
         <ListGroup horizontal>
+          {lesson?.subject && (
+            <Badge className="mx-2" pill bg="secondary">
+              {lesson?.subject}
+            </Badge>
+          )}
           {lesson?.categoryIds.map((id: string) => (
             <CategoryBadge key={`category-${id}`} id={id} />
           ))}
