@@ -9,8 +9,8 @@ $enable-negative-margins: true;
 
 // adding new colors
 $custom-colors: (
-  "primary-light": $primary-light,
-  "secondary-light": $secondary-light,
+        "primary-light": $primary-light,
+        "secondary-light": $secondary-light,
 );
 
 $theme-colors: map-merge($theme-colors, $custom-colors);
@@ -21,16 +21,18 @@ $theme-colors: map-merge($theme-colors, $custom-colors);
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+
 }
 
 html,
 body,
 #__next {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   min-height: 100vh;
   margin: 0;
   padding: 0;
+  background: $background;
 }
 
 #__next_page {
