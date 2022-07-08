@@ -1,6 +1,7 @@
+import { ESubject } from "@typing/subject.enum";
+import { Replace } from "@typing/utility-types";
 import { ObjectId } from "bson";
 import { EGrade } from "./grade.enum";
-import { ESubject } from "./subject.enum";
 
 /**
  * Used for authentication
@@ -43,12 +44,17 @@ export interface IUserDB extends IUserCreate {
   grades: EGrade[];
   subjects: ESubject[];
   // foreign keys
-  lessonIds: string[];
-  bookmarkIds: string[];
-  commentIds: string[];
+  lessonIds: ObjectId[];
+  bookmarkIds: ObjectId[];
+  commentIds: ObjectId[];
 }
 
 /**
  * Used for sending data to the client about a User
  */
-export type IUserPublic = Omit<IUserDB, "password">;
+export type IUserPublic = Replace<
+  // replace all ObjectId by string
+  Replace<Omit<IUserDB, "password">, ObjectId | undefined, string | undefined>,
+  ObjectId[],
+  string[]
+>;

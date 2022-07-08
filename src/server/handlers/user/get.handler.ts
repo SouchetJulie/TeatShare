@@ -37,7 +37,6 @@ const baseUserGetOneHandler =
       const user = await getOneUser(id);
 
       if (!user) {
-        console.warn(`[USER] Failed to get user ${id}: not found`);
         return res.status(404).json({
           success: false,
           error: `Utilisateur ${id} non trouvé`,

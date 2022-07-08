@@ -6,27 +6,30 @@ import {
   getOneLesson,
 } from "@services/lessons.service";
 import { ApiResponse } from "@typing/api-response.interface";
-import { ILessonDB } from "@typing/lesson.interface";
+import { ILesson } from "@typing/lesson.interface";
+import { ObjectId } from "mongodb";
 import { NextApiRequest, NextApiResponse } from "next";
 
 const lessonGetAllHandler = async (
   req: NextApiRequest,
-  res: NextApiResponse<ApiResponse>
+  res: NextApiResponse<ApiResponse<{ lessons: ILesson[] }>>
 ) => {
   try {
     const user = req.session.user;
     const filters = getFiltersFromQuery(req.query, user);
 
     // Read lessons from database & send result
-    const lessons: ILessonDB[] = await getAllLessons(filters);
+    const lessons: ILesson[] = await getAllLessons(filters);
     res.status(200).json({
       success: true,
       data: { lessons },
     });
   } catch (e) {
+    const error = `Requête malformée : ${(e as Error).message}`;
+    console.log(`[LESSON] Lesson fetch failed: ${error}`);
     res.status(400).json({
       success: false,
-      error: `Requête malformée : ${(e as Error).message}`,
+      error,
     });
   }
 };
@@ -35,12 +38,12 @@ const baseLessonGetOneHandler =
   (_id: string) =>
   async (
     req: NextApiRequest,
-    res: NextApiResponse<ApiResponse<{ lesson: ILessonDB }>>
+    res: NextApiResponse<ApiResponse<{ lesson: ILesson }>>
   ) => {
     const { _id: id } = req.body.sanitized as { _id: string };
 
     try {
-      const lesson = await getOneLesson(id);
+      const lesson = await getOneLesson(new ObjectId(id));
       if (!lesson) {
         console.log(`[LESSON] Lesson ${id} not found`);
         return res.status(404).json({

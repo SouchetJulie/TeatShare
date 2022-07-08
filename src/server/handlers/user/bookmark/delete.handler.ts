@@ -3,7 +3,7 @@ import { getOneByIdValidationChain } from "@middlewares/sanitization/validation-
 import { getOneLesson, updateBookmarkCounter } from "@services/lessons.service";
 import { removeBookmarkFromUser } from "@services/users.service";
 import { ApiResponse } from "@typing/api-response.interface";
-import { ILessonDB } from "@typing/lesson.interface";
+import { ILesson } from "@typing/lesson.interface";
 import { IUserPublic } from "@typing/user.interface";
 import { ObjectId } from "bson";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
@@ -15,7 +15,7 @@ const handler =
     const user: IUserPublic | undefined = req.session.user;
 
     try {
-      const lesson: ILessonDB | null = await getOneLesson(_id);
+      const lesson: ILesson | null = await getOneLesson(new ObjectId(_id));
 
       if (!lesson) {
         return res.status(404).json({

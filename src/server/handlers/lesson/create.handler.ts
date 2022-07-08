@@ -1,6 +1,6 @@
 import { createNewLesson, getOneLesson } from "@services/lessons.service";
 import { ApiResponse } from "@typing/api-response.interface";
-import { ILessonCreate, ILessonDB } from "@typing/lesson.interface";
+import { ILesson, ILessonCreate } from "@typing/lesson.interface";
 import { IUserPublic } from "@typing/user.interface";
 import { Fields, File, Files, IncomingForm, Part } from "formidable";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
@@ -25,7 +25,7 @@ const parseForm = (req: NextApiRequest): Promise<LessonFormData> =>
       const form = new IncomingForm({
         keepExtensions: false,
         hashAlgorithm: "sha256",
-        multiples: false,
+        multiples: true,
         filter: ({ mimetype }: Part): boolean =>
           !!mimetype && mimetype.includes("pdf"), // keep only pdf
       });
@@ -46,7 +46,7 @@ const parseForm = (req: NextApiRequest): Promise<LessonFormData> =>
  */
 export const lessonPostHandler: NextApiHandler = async (
   req: NextApiRequest,
-  res: NextApiResponse<ApiResponse<{ lesson: ILessonDB }>>
+  res: NextApiResponse<ApiResponse<{ lesson: ILesson }>>
 ) => {
   try {
     // Get author
@@ -113,13 +113,13 @@ export const lessonPostHandler: NextApiHandler = async (
 
     const { id } = await createNewLesson(currentUser, file, lessonCreate);
 
-    currentUser.lessonIds.push(id.toHexString());
+    currentUser.lessonIds.push(id.toString());
     await req.session.save();
 
     console.log(`[LESSON] Upload of lesson ${id} successful`);
 
     // Read what was uploaded
-    const uploadedLesson: ILessonDB | null = await getOneLesson(id.toString());
+    const uploadedLesson: ILesson | null = await getOneLesson(id);
 
     if (!uploadedLesson) {
       console.log(
