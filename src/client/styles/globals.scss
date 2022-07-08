@@ -31,6 +31,8 @@ body,
   min-height: 100vh;
   margin: 0;
   padding: 0;
+  background-color: $light;
+  scrollbar-color: $primary lightgray;
 }
 
 #__next_page {

@@ -1,11 +1,13 @@
-@import "../../../../node_modules/bootstrap/scss/functions";
-@import "../../../../node_modules/bootstrap/scss/mixins";
-@import "../../../../node_modules/bootstrap/scss/variables";
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/mixins";
+@import "~bootstrap/scss/variables";
+@import "../variables";
+
 
 .lessonContainer {
   overflow-x: hidden;
-  overflow-y: scroll;
-  height: 500px;
+  max-height: max(400px, calc(100vh - $navbarHeight - $footerHeight - 300px));
+  padding-right: 30px;
 }
 
 .form {
