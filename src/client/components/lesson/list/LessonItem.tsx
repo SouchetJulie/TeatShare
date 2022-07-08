@@ -58,8 +58,8 @@ const LessonItem: FunctionComponent<Props> = ({ lesson }: Props) => {
   }, [setAuthor]);
 
   return (
-    <Row className={styles.card}>
-      <Link href={`/lesson/${lesson._id}`}>
+    <Link href={`/lesson/${lesson._id}`}>
+      <Row className={styles.card}>
         <>
           {/* Subject */}
           <Col sm={1}>
@@ -92,17 +92,15 @@ const LessonItem: FunctionComponent<Props> = ({ lesson }: Props) => {
             )}
           </Col>
         </>
-      </Link>
-      {/* Author */}
-      <Col sm={2} className={styles.authorLink}>
-        Écrit par{" "}
-        <Link href={`/user/${lesson.authorId}`}>{getUsername(author)}</Link>
-      </Col>
-      <Link href={`/lesson/${lesson._id}`}>
+        {/* Author */}
+        <Col sm={2} className={styles.authorLink}>
+          Écrit par{" "}
+          <Link href={`/user/${lesson.authorId}`}>{getUsername(author)}</Link>
+        </Col>
         {/* marque-page & aperçu */}
         <Col sm={1}>(TODO)</Col>
-      </Link>
-    </Row>
+      </Row>
+    </Link>
   );
 };
 

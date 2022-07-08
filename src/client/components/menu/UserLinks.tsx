@@ -6,7 +6,6 @@ import Link from "next/link";
 import React, { FunctionComponent } from "react";
 import { NavDropdown } from "react-bootstrap";
 import Dropdown from "react-bootstrap/Dropdown";
-import Nav from "react-bootstrap/Nav";
 
 interface Props {
   user?: IUserPublic;
@@ -25,11 +24,11 @@ const UserLinks: FunctionComponent<Props> = ({ user }: Props) => {
       title={getUsername(user)}
       menuVariant="dark"
     >
-      <NavDropdown.Item>
+      <NavDropdown.Item as="div">
         <Link href={"/user"}>Mon profil</Link>
       </NavDropdown.Item>
       <Dropdown.Divider />
-      <NavDropdown.Item>
+      <NavDropdown.Item as="div">
         <Link href={"/user/settings"}>Paramètres</Link>
       </NavDropdown.Item>
       <Dropdown.Divider />
@@ -37,12 +36,12 @@ const UserLinks: FunctionComponent<Props> = ({ user }: Props) => {
     </NavDropdown>
   ) : (
     <div className={"ms-md-5 mb-2 my-md-auto " + styles.navSection}>
-      <Nav.Link as={Link} href={"/user/login"}>
+      <Link className="nav-link" href={"/user/login"}>
         Connexion
-      </Nav.Link>
-      <Nav.Link as={Link} href={"/user/signup"}>
+      </Link>
+      <Link className="nav-link" href={"/user/signup"}>
         Inscription
-      </Nav.Link>
+      </Link>
     </div>
   );
 };
