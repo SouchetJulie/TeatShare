@@ -1,3 +1,4 @@
+import { getUsername } from "@client/utils/get-username.utils";
 import CategoryBadge from "@components/lesson/category-badge.component";
 import { useAppDispatch } from "@hooks/store-hook";
 import { addAlert } from "@stores/alert.store";
@@ -57,11 +58,6 @@ const LessonItem: FunctionComponent<Props> = ({ lesson }: Props) => {
     };
   }, [setAuthor]);
 
-  const authorName =
-    `${author?.firstName ?? ""} ${author?.lastName ?? ""}`.trim() ||
-    author?.email ||
-    "";
-
   return (
     <NavLink href={`/lesson/${lesson._id}`} className="p-0 text-dark">
       <Row className={styles.card + " border rounded bg-white"}>
@@ -97,7 +93,8 @@ const LessonItem: FunctionComponent<Props> = ({ lesson }: Props) => {
         </Col>
         {/* Author */}
         <Col sm={2} className={styles.authorLink}>
-          Écrit par <Link href={`/user/${lesson.authorId}`}>{authorName}</Link>
+          Écrit par{" "}
+          <Link href={`/user/${lesson.authorId}`}>{getUsername(author)}</Link>
         </Col>
         {/* marque-page & aperçu */}
         <Col sm={1}>(TODO)</Col>
