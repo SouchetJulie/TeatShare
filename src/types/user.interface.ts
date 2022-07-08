@@ -21,6 +21,17 @@ export interface IUserCreate extends IUserAuth {
 }
 
 /**
+ * Data about a user's profile
+ */
+export interface IUserProfile extends IUserCreate {
+  description: string;
+  location: string;
+  grades: EGrade[];
+  subjects: ESubject[];
+  avatar?: CleanFile;
+}
+
+/**
  * **All** data about a user.
  * @property {string} _id optional
  * @property {string} email
@@ -36,14 +47,9 @@ export interface IUserCreate extends IUserAuth {
  * @property {string[]} bookmarkIds
  * @property {string[]} commentIds
  */
-export interface IUserDB extends IUserCreate {
+export interface IUserDB extends IUserProfile {
   _id?: ObjectId; // used in database
-  avatar?: CleanFile;
   joinDate: Date;
-  description: string;
-  location: string;
-  grades: EGrade[];
-  subjects: ESubject[];
   // foreign keys
   lessonIds: ObjectId[];
   bookmarkIds: ObjectId[];

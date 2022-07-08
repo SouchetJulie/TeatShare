@@ -7,11 +7,14 @@ import {
 } from "@common/parse-form.utils";
 import { uploadFile } from "@services/storage.service";
 import { CleanFile } from "@typing/clean-file.interface";
+import { EGrade } from "@typing/grade.enum";
 import { ILessonDB } from "@typing/lesson.interface";
+import { ESubject } from "@typing/subject.enum";
 import {
   IUserAuth,
   IUserCreate,
   IUserDB,
+  IUserProfile,
   IUserPublic,
 } from "@typing/user.interface";
 import bcrypt from "bcryptjs";
@@ -214,12 +217,12 @@ const updateUser = async (
 /**
  * Transforms the raw data from the form into a User.
  * @param {RequestFormData} formData Data from the form.
- * @return {Partial<IUserDB>} User data.
+ * @return {IUserProfile} User data.
  */
 const prepareUserUpdate = async ({
   fields,
   files,
-}: RequestFormData): Promise<Partial<IUserDB>> => {
+}: RequestFormData): Promise<IUserProfile> => {
   // Validation
   validateStringField(fields?.email, isEmail, "Email invalide");
   validateStringField(fields?.firstName, isFrenchAlpha, "Prénom invalide");
@@ -259,8 +262,8 @@ const prepareUserUpdate = async ({
     email: fields?.email as string,
     description: fields?.description as string,
     location: fields?.location as string,
-    grades: fields?.grades as string[],
-    subjects: fields?.subjects as string[],
+    grades: fields?.grades as EGrade[],
+    subjects: fields?.subjects as ESubject[],
     avatar,
   });
 };

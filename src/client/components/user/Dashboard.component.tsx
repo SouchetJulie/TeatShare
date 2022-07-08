@@ -1,14 +1,14 @@
 import { useProfileOnSubmit } from "@components/user/profile-on-submit.hook";
 import { useAutoLogin } from "@hooks/auto-login.hook";
 import { CleanFile } from "@typing/clean-file.interface";
-import { ECourse } from "@typing/course.enum";
 import { EGrade } from "@typing/grade.enum";
+import { ESubject } from "@typing/subject.enum";
 import Image from "next/image";
 import React, { FunctionComponent } from "react";
 import { Button, Form, ListGroup, Table } from "react-bootstrap";
 import Select from "react-select";
 
-const subjects = Object.entries(ECourse).map(
+const subjects = Object.entries(ESubject).map(
   ([value, label]: [string, string]) => ({
     value,
     label,

@@ -49,11 +49,13 @@ export const parseForm = (
  * @param {Record<string, any>} data Object to filter
  * @return {Record<string, any>} A filtered copy of the object
  */
-export const removeEmptyFields = (data: Record<string, unknown>) => {
-  const result: Record<string, unknown> = {};
-  Object.entries(data).forEach(([key, value]: [string, unknown]) => {
+export const removeEmptyFields = <T extends Record<string, unknown>>(
+  data: T
+): T => {
+  const result: T = {} as T;
+  Object.entries(data).forEach(([key, value]: [keyof T, unknown]) => {
     if (value !== "" && value !== undefined && value !== null) {
-      result[key] = value;
+      result[key] = value as typeof data[keyof T];
     }
   });
   return result;

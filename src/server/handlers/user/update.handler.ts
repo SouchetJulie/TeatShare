@@ -1,7 +1,7 @@
 import { parseForm, RequestFormData } from "@common/parse-form.utils";
 import { prepareUserUpdate, updateUser } from "@services/users.service";
 import { ApiResponse } from "@typing/api-response.interface";
-import { IUserDB, IUserPublic } from "@typing/user.interface";
+import { IUserProfile, IUserPublic } from "@typing/user.interface";
 import { ObjectId } from "bson";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 
@@ -13,7 +13,7 @@ export const userUpdateHandler: NextApiHandler = async (
 
   try {
     const formData: RequestFormData = await parseForm(req, /^image\/.*/);
-    const updateData: Partial<IUserDB> = await prepareUserUpdate(formData);
+    const updateData: IUserProfile = await prepareUserUpdate(formData);
 
     const updateSuccess: boolean = await updateUser(
       new ObjectId(currentUser._id),
