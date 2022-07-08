@@ -1,8 +1,11 @@
+import { getAxiosErrorMessage } from "@client/utils/get-axios-error.utils";
 import { useAutoLogin } from "@hooks/auto-login.hook";
+import { useCategoryList } from "@hooks/category-list.hook";
 import { useAppDispatch } from "@hooks/store-hook";
 import { addAlert } from "@stores/alert.store";
 import styles from "@styles/lesson/upload.module.scss";
 import { ApiResponse } from "@typing/api-response.interface";
+import { ICategory } from "@typing/category.interface";
 import { ILesson } from "@typing/lesson.interface";
 import axios, { AxiosError } from "axios";
 import { FormEvent, FunctionComponent, useState } from "react";
@@ -12,20 +15,17 @@ import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
-import { getAxiosErrorMessage } from "../../client/utils/get-axios-error.utils";
+import Select from "react-select";
 
 const requiredFields = ["title", "file"];
 
 const upload: FunctionComponent = () => {
   const dispatch = useAppDispatch();
-  const user = useAutoLogin(); // Route guard
+  useAutoLogin(); // Route guard
 
   const [isDraft, setIsDraft] = useState(false);
   const [validated, setValidated] = useState(false);
-
-  if (!user) {
-    return <></>;
-  }
+  const categories = useCategoryList();
 
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -35,7 +35,7 @@ const upload: FunctionComponent = () => {
 
     const form = event.target as HTMLFormElement;
     const formData: FormData = new FormData(form);
-    formData.append("isDraft", isDraft + "");
+    formData.append("isDraft", isDraft + ""); // force conversion to string
 
     // Check all required fields are filled
     if (
@@ -46,6 +46,12 @@ const upload: FunctionComponent = () => {
       return;
     }
 
+    // Clear empty values
+    if (formData.get("categoryIds") === "") {
+      formData.delete("categoryIds");
+    }
+
+    // Post the request
     const { data } = await axios
       .post<ApiResponse<{ lesson: ILesson }>>("/api/lesson", formData)
       .catch((error: AxiosError) => {
@@ -59,7 +65,6 @@ const upload: FunctionComponent = () => {
     const success = data.success;
 
     if (success) {
-      // ID est de type ObjectId
       const _id = data?.data?.lesson._id;
       const message: JSX.Element = (
         <span>
@@ -79,6 +84,10 @@ const upload: FunctionComponent = () => {
     }
   };
 
+  const categoryOptions = categories.map((category: ICategory) => ({
+    value: category._id,
+    label: category.label,
+  }));
   return (
     <Container className="min-vh-100">
       <Row>
@@ -124,22 +133,22 @@ const upload: FunctionComponent = () => {
           </Form.Group>
         </Col>
 
-        <Col className="d-flex flex-column justify-content-center" sm="3">
+        <Col className="d-flex flex-column justify-content-around" sm="3">
+          <Select
+            isMulti
+            options={categoryOptions}
+            name="categoryIds"
+            aria-label="Catégories"
+            placeholder="Catégories"
+          />
+
           <Button
             className="round-button"
             variant="primary"
             type="submit"
             onClick={() => setIsDraft(false)}
           >
-            Soumettre
-          </Button>
-          <Button
-            className="round-button"
-            variant="secondary"
-            type="submit"
-            onClick={() => setIsDraft(true)}
-          >
-            Sauvegarder
+            Publier
           </Button>
         </Col>
       </Form>

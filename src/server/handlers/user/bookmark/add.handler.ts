@@ -3,7 +3,7 @@ import { getOneByIdValidationChain } from "@middlewares/sanitization/validation-
 import { getOneLesson, updateBookmarkCounter } from "@services/lessons.service";
 import { addBookmarkToUser } from "@services/users.service";
 import { ApiResponse } from "@typing/api-response.interface";
-import { ILessonDB } from "@typing/lesson.interface";
+import { ILesson } from "@typing/lesson.interface";
 import { IUserPublic } from "@typing/user.interface";
 import { ObjectId } from "bson";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
@@ -15,7 +15,8 @@ const handler =
     const user: IUserPublic | undefined = req.session.user;
 
     try {
-      const lesson: ILessonDB | null = await getOneLesson(_id);
+      const lessonId = new ObjectId(_id);
+      const lesson: ILesson | null = await getOneLesson(lessonId);
 
       if (!lesson) {
         return res.status(404).json({
@@ -32,8 +33,7 @@ const handler =
       }
 
       // Add the bookmark
-      const lessonId = new ObjectId(_id);
-      await addBookmarkToUser(user!, lessonId.toHexString());
+      await addBookmarkToUser(user!, lessonId);
       await updateBookmarkCounter(lessonId, 1);
       // Update session
       req.session.user?.bookmarkIds.push(_id);

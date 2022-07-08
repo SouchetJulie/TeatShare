@@ -1,10 +1,11 @@
 import { CleanFile } from "@typing/clean-file.interface";
-import { ECourse } from "@typing/course.enum";
 import { EGrade } from "@typing/grade.enum";
-import { ObjectId } from "bson";
+import { ESubject } from "@typing/subject.enum";
+import { Replace } from "@typing/utility-types";
+import { ObjectId } from "mongodb";
 
 /**
- * Data about a lesson.
+ * Data about a lesson in database.
  */
 export interface ILessonDB {
   file: CleanFile;
@@ -17,21 +18,25 @@ export interface ILessonDB {
   publicationDate?: Date;
   isDraft: boolean;
   grade?: EGrade;
-  course?: ECourse;
+  subject?: ESubject;
   bookmarkCount: number;
   // foreign keys (needs to accept string so that filtered queries work)
-  authorId: string;
-  tagIds: string[];
-  commentIds: string[];
+  authorId: ObjectId;
+  categoryIds: ObjectId[];
+  commentIds: ObjectId[];
 }
 
 /**
- * Data about a lesson.
+ * Used for sharing data about a lesson.
  */
-export type ILesson = { _id: string } & Omit<ILessonDB, "_id">;
+export type ILesson = Replace<
+  // replace all string by string
+  Replace<ILessonDB, ObjectId | undefined, string>,
+  ObjectId[],
+  string[]
+>;
 
 /**
- *
  * Data for creation of a lesson.
  */
-export type ILessonCreate = Partial<ILessonDB>;
+export type ILessonCreate = Partial<ILesson>;

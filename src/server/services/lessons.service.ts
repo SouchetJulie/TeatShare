@@ -1,9 +1,9 @@
 import { uploadFile } from "@services/storage.service";
 import { addLessonToUser, isUser } from "@services/users.service";
-import { ILessonCreate, ILessonDB } from "@typing/lesson.interface";
+import { ILesson, ILessonCreate, ILessonDB } from "@typing/lesson.interface";
 import { IUserPublic } from "@typing/user.interface";
-import { ObjectId } from "bson";
 import { File } from "formidable";
+import { InsertOneResult, ObjectId } from "mongodb";
 import { Filter, getDatabase } from "./database.service";
 
 const collection = (await getDatabase()).collection<ILessonDB>("LessonFile");
@@ -26,21 +26,22 @@ if (!collection.indexExists("title_text_subtitle_text")) {
  */
 export const getAllLessons = async (
   filters?: Filter<ILessonDB>
-): Promise<ILessonDB[]> => {
+): Promise<ILesson[]> => {
   const cursor = collection.find(filters ?? {});
   const lessons: ILessonDB[] = await cursor.toArray();
   // Free cursor resources
   cursor.close();
-  return lessons;
+  return lessons.map(fromDatabase);
 };
 
 /**
  * Fetches one lesson from database.
- * @param {string} id Id (_id) of the lesson to fetch.
+ * @param {ObjectId} id Id (_id) of the lesson to fetch.
  * @return {Promise<ILessonDB | null>} The lesson, or null if not found.
  */
-export const getOneLesson = async (id: string): Promise<ILessonDB | null> => {
-  return collection.findOne({ _id: new ObjectId(id) });
+export const getOneLesson = async (id: ObjectId): Promise<ILesson | null> => {
+  const lesson: ILessonDB | null = await collection.findOne({ _id: id });
+  return lesson === null ? null : fromDatabase(lesson);
 };
 
 /**
@@ -78,30 +79,37 @@ export const createNewLesson = async (
     `[LESSON] Uploaded ${file.originalFilename} to ${file.filepath}.`
   );
 
+  const categoryIds: ObjectId[] =
+    uploadedLesson.categoryIds === undefined
+      ? []
+      : toArray(uploadedLesson.categoryIds).map(
+          (id: string) => new ObjectId(id)
+        );
+
   // Add to database
   const lesson: ILessonDB = {
     file,
     // default values
-    title: "",
-    subtitle: "",
-    isDraft: true,
-    creationDate: new Date(),
-    lastModifiedDate: new Date(),
-    bookmarkCount: 0,
+    title: uploadedLesson.title ?? "",
+    subtitle: uploadedLesson.subtitle ?? "",
+    isDraft: uploadedLesson.isDraft ?? true,
+    creationDate: uploadedLesson.creationDate ?? new Date(),
+    lastModifiedDate: uploadedLesson.lastModifiedDate ?? new Date(),
     // set the pub. date if necessary
     publicationDate: uploadedLesson.isDraft ? undefined : new Date(),
     // foreign keys
-    authorId: user._id?.toHexString() ?? "",
-    tagIds: [],
+    authorId: user._id!,
+    categoryIds,
     commentIds: [],
-    ...uploadedLesson,
+    // other data
+    bookmarkCount: 0,
   };
 
-  const result = await collection.insertOne(lesson);
+  const result: InsertOneResult<ILessonDB> = await collection.insertOne(lesson);
 
   if (result.acknowledged) {
     // Adding it to the user's lessons
-    await addLessonToUser(user, result.insertedId.toHexString());
+    await addLessonToUser(user, result.insertedId);
     console.log(
       `[LESSON] L'upload de la leçon a réussi! id: ${result.insertedId}`
     );
@@ -174,7 +182,9 @@ export const getFiltersFromQuery = (
     switch (key) {
       // Search by author id (multiple values are treated as "or")
       case "author":
-        filters.authorId = { $in: toArray(value) };
+        filters.authorId = {
+          $in: toArray(value).map((id: string) => new ObjectId(id)),
+        };
         break;
 
       // Text search (in title and subtitle)
@@ -288,3 +298,11 @@ export const getFiltersFromQuery = (
 
   return filters;
 };
+
+const fromDatabase = (lesson: ILessonDB): ILesson => ({
+  ...lesson,
+  _id: lesson._id!.toString(),
+  authorId: lesson.authorId.toString(),
+  categoryIds: lesson.categoryIds.map((id) => id.toString()),
+  commentIds: lesson.commentIds.map((id) => id.toString()),
+});

@@ -1,4 +1,7 @@
 import avatarLogo from "@assets/logos/avatar_placeholder.png";
+import { getUser, toggleBookmark } from "@client/services/user.service";
+import { getAxiosErrorMessage } from "@client/utils/get-axios-error.utils";
+import CategoryBadge from "@components/lesson/category-badge.component";
 import LessonBookmark from "@components/lesson/LessonBookmark";
 import { useAppDispatch, useAppSelector } from "@hooks/store-hook";
 import { addAlert } from "@stores/alert.store";
@@ -15,14 +18,13 @@ import { AxiosError, AxiosResponse } from "axios";
 import dayjs from "dayjs";
 import Image from "next/image";
 import React, { FunctionComponent, useEffect, useMemo, useState } from "react";
+import { ListGroup } from "react-bootstrap";
 import { Download, Printer } from "react-bootstrap-icons";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 // eslint-disable-next-line camelcase
 import { unstable_batchedUpdates } from "react-dom";
-import { getUser, toggleBookmark } from "../../../services/user.service";
-import { getAxiosErrorMessage } from "../../../utils/get-axios-error.utils";
 
 interface LessonHeaderComponentProps {
   lesson?: ILesson;
@@ -76,10 +78,10 @@ const LessonDetailsHeader: FunctionComponent<LessonHeaderComponentProps> = ({
             );
 
             if (isBookmarked) {
-              dispatch(removeBookmark(lesson!._id));
+              dispatch(removeBookmark(lesson!._id!));
               // lesson!.bookmarkCount -= 1;
             } else {
-              dispatch(addBookmark(lesson!._id));
+              dispatch(addBookmark(lesson!._id!));
               // lesson!.bookmarkCount += 1;
             }
           });
@@ -128,6 +130,11 @@ const LessonDetailsHeader: FunctionComponent<LessonHeaderComponentProps> = ({
         className=" d-flex justify-content-center align-items-center flex-column"
       >
         <h1>{lesson?.title ?? ""}</h1>
+        <ListGroup horizontal>
+          {lesson?.categoryIds.map((id: string) => (
+            <CategoryBadge key={`category-${id}`} id={id} />
+          ))}
+        </ListGroup>
       </Col>
       <Col xs={12} md={3} className={styles.headerAction}>
         <Button variant="none">

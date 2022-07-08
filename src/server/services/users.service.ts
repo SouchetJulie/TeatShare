@@ -14,7 +14,6 @@ import {
   IUserDB,
   IUserPublic,
 } from "@typing/user.interface";
-import { createEmptyUser } from "@utils/create-empty-user";
 import bcrypt from "bcryptjs";
 import { ObjectId } from "bson";
 import { File } from "formidable";
@@ -31,14 +30,14 @@ collection.createIndex({ email: 1 });
 /**
  * Fetches all users from database.
  *
- * @return {Promise<IUserDB[]>} The list (possibly empty) of all users found.
+ * @return {Promise<IUserPublic[]>} The list (possibly empty) of all users found.
  */
-const getAllUsers: () => Promise<IUserDB[]> = async () => {
+const getAllUsers: () => Promise<IUserPublic[]> = async () => {
   const users = await collection.find({}).toArray();
   // remove password before sending it back
   users.forEach((user: IUserDB) => delete user.password);
   console.log(`[DB] Retrieved ${users.length} users from DB.`);
-  return users;
+  return users.map(fromDatabase);
 };
 
 /**
@@ -56,7 +55,7 @@ const getUserByEmail = async (email: string): Promise<IUserPublic | null> => {
   // remove password before sending it back
   delete user.password;
   console.log(`[USER] Retrieved user ${user.email} from DB.`);
-  return user;
+  return fromDatabase(user);
 };
 
 /**
@@ -71,13 +70,14 @@ const getOneUser = async (userId: string): Promise<IUserPublic | null> => {
   });
 
   if (!user) {
+    console.warn(`[USER] Failed to get user ${userId}: not found`);
     return null;
   }
 
   // remove password before sending it back
   delete user.password;
   console.log(`[USER] Retrieved user ${user.email} from DB.`);
-  return user;
+  return fromDatabase(user);
 };
 
 /**
@@ -103,7 +103,7 @@ const createNewUser = async (
   const hashedPassword = bcrypt.hashSync(user.password, 13);
 
   const userDB: Omit<IUserDB, "_id"> = {
-    ...createEmptyUser(),
+    ...initEmptyUser(),
     email: user.email,
     firstName: user.firstName,
     lastName: user.lastName,
@@ -146,9 +146,9 @@ const isUser = (user: Record<string, any>): user is IUserDB => {
 /**
  * Adds the given lesson id to the list of lessons published by this user.
  * @param {IUserPublic} user
- * @param {string} lessonId
+ * @param {ObjectId} lessonId
  */
-const addLessonToUser = async (user: IUserPublic, lessonId: string) => {
+const addLessonToUser = async (user: IUserPublic, lessonId: ObjectId) => {
   return collection.updateOne(
     { email: user.email },
     { $push: { lessonIds: lessonId } }
@@ -158,9 +158,9 @@ const addLessonToUser = async (user: IUserPublic, lessonId: string) => {
 /**
  * Adds the given lesson id to the list of lessons bookmarked by this user.
  * @param {IUserPublic} user
- * @param {string} lessonId
+ * @param {ObjectId} lessonId
  */
-const addBookmarkToUser = async (user: IUserPublic, lessonId: string) => {
+const addBookmarkToUser = async (user: IUserPublic, lessonId: ObjectId) => {
   return collection.updateOne(
     { email: user.email },
     { $push: { bookmarkIds: lessonId } }
@@ -279,3 +279,34 @@ export {
   updateUser,
   prepareUserUpdate,
 };
+
+/**
+ * Creates an empty User with default values.
+ * @return {IUserDB}
+ */
+const initEmptyUser = (): IUserDB => {
+  return {
+    // set default values
+    joinDate: new Date(),
+    description: "",
+    location: "",
+    // foreign keys
+    grades: [],
+    subjects: [],
+    lessonIds: [],
+    bookmarkIds: [],
+    commentIds: [],
+    // authentication parameters
+    email: "",
+    firstName: "",
+    lastName: "",
+  };
+};
+
+const fromDatabase = (user: IUserDB): IUserPublic => ({
+  ...user,
+  _id: user._id!.toString(),
+  lessonIds: user.lessonIds.map((id) => id.toString()),
+  bookmarkIds: user.bookmarkIds.map((id) => id.toString()),
+  commentIds: user.commentIds.map((id) => id.toString()),
+});

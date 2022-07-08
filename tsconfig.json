@@ -33,6 +33,9 @@
       "@assets/*": [
         "client/assets/*"
       ],
+      "@client/*": [
+        "client/*"
+      ],
       "@components/*": [
         "client/components/*"
       ],
