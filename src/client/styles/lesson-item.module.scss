@@ -5,6 +5,17 @@
   flex-direction: row;
   justify-content: space-between;
   padding: 20px;
+  cursor: pointer;
+
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  background-color: white;
+
+  transition: border-color 0.25s;
+
+  &:hover {
+    border-color: $primary;
+  }
 }
 
 .header {

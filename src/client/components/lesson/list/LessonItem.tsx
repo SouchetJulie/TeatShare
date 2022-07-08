@@ -12,7 +12,6 @@ import React, { FunctionComponent, useEffect, useState } from "react";
 import Badge from "react-bootstrap/Badge";
 import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
-import NavLink from "react-bootstrap/NavLink";
 import Row from "react-bootstrap/Row";
 
 interface Props {
@@ -59,47 +58,51 @@ const LessonItem: FunctionComponent<Props> = ({ lesson }: Props) => {
   }, [setAuthor]);
 
   return (
-    <NavLink href={`/lesson/${lesson._id}`} className="p-0 text-dark">
-      <Row className={`${styles.card} border rounded bg-white`}>
-        {/* Subject */}
-        <Col sm={1}>
-          {lesson?.subject && (
-            <Badge pill bg="secondary">
-              {lesson?.subject}
-            </Badge>
-          )}
-        </Col>
-        {/* Title */}
-        <Col sm={12} md={3}>
-          <h6 className={styles.header}>{lesson.title}</h6>
-        </Col>
-        {/* Subtitle */}
-        <Col sm={12} md={3}>
-          {lesson.subtitle && (
-            <Card.Subtitle className={styles.subtitle}>
-              {lesson.subtitle}
-            </Card.Subtitle>
-          )}
-        </Col>
-        {/* Categories */}
-        <Col sm={2}>
-          {lesson.categoryIds.length > 0 && (
-            <span>
-              {lesson.categoryIds.map((id: string) => (
-                <CategoryBadge key={`category-${id}`} id={id} />
-              ))}
-            </span>
-          )}
-        </Col>
-        {/* Author */}
-        <Col sm={2} className={styles.authorLink}>
-          Écrit par{" "}
-          <Link href={`/user/${lesson.authorId}`}>{getUsername(author)}</Link>
-        </Col>
+    <Row className={styles.card}>
+      <Link href={`/lesson/${lesson._id}`}>
+        <>
+          {/* Subject */}
+          <Col sm={1}>
+            {lesson?.subject && (
+              <Badge pill bg="secondary">
+                {lesson?.subject}
+              </Badge>
+            )}
+          </Col>
+          {/* Title */}
+          <Col sm={12} md={3}>
+            <h6 className={styles.header}>{lesson.title}</h6>
+          </Col>
+          {/* Subtitle */}
+          <Col sm={12} md={3}>
+            {lesson.subtitle && (
+              <Card.Subtitle className={styles.subtitle}>
+                {lesson.subtitle}
+              </Card.Subtitle>
+            )}
+          </Col>
+          {/* Categories */}
+          <Col sm={2}>
+            {lesson.categoryIds.length > 0 && (
+              <span>
+                {lesson.categoryIds.map((id: string) => (
+                  <CategoryBadge key={`category-${id}`} id={id} />
+                ))}
+              </span>
+            )}
+          </Col>
+        </>
+      </Link>
+      {/* Author */}
+      <Col sm={2} className={styles.authorLink}>
+        Écrit par{" "}
+        <Link href={`/user/${lesson.authorId}`}>{getUsername(author)}</Link>
+      </Col>
+      <Link href={`/lesson/${lesson._id}`}>
         {/* marque-page & aperçu */}
         <Col sm={1}>(TODO)</Col>
-      </Row>
-    </NavLink>
+      </Link>
+    </Row>
   );
 };
 
