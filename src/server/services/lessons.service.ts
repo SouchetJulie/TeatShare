@@ -1,5 +1,5 @@
-import { cleanFileMetadata } from "@common/file.utils";
-import storageService from "@services/storage.service";
+import { toArray } from "@common/parse-form.utils";
+import { uploadFile } from "@services/storage.service";
 import { addLessonToUser, isUser } from "@services/users.service";
 import { ILesson, ILessonCreate, ILessonDB } from "@typing/lesson.interface";
 import { IUserPublic } from "@typing/user.interface";
@@ -66,16 +66,19 @@ export const createNewLesson = async (
   if (!isUser(user)) {
     throw new Error("Auteur invalide.");
   }
+  if (!process.env.LESSON_UPLOAD_DIRECTORY) {
+    throw new Error("Impossible d'upload le fichier.");
+  }
 
   // Add to cloud storage
-  const file = cleanFileMetadata(uploadedFile);
-  const destination = `${process.env.LESSON_UPLOAD_DIRECTORY}/${file.newFilename}`;
-  await storageService.upload(file.filepath, {
-    destination,
-  });
-  file.filepath = destination;
+  const file = await uploadFile(
+    uploadedFile,
+    process.env.LESSON_UPLOAD_DIRECTORY
+  );
 
-  console.log(`[LESSON] Uploaded ${file.originalFilename} to ${destination}.`);
+  console.log(
+    `[LESSON] Uploaded ${file.originalFilename} to ${file.filepath}.`
+  );
 
   const categoryIds: ObjectId[] =
     uploadedLesson.categoryIds === undefined
@@ -152,15 +155,6 @@ const forbidMultipleValues = (
     throw new Error(message || "les valeurs multiples sont interdites");
   }
 };
-
-/**
- * Make sure the given value is an array of strings.
- *
- * @param {string | string[]} value
- * @return {string[]}
- */
-const toArray = (value: string | string[]): string[] =>
-  Array.isArray(value) ? value : [value];
 
 /**
  * Converts the query to an object containing filters to use with the database.

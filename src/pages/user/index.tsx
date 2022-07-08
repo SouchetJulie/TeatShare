@@ -1,26 +1,4 @@
-import { useAutoLogin } from "@hooks/auto-login.hook";
-import React, { FunctionComponent } from "react";
+import Settings from "@components/user/Settings.component";
+import React from "react";
 
-const index: FunctionComponent = () => {
-  const user = useAutoLogin();
-
-  return user ? (
-    <div>
-      TODO for debug
-      <table>
-        {Object.entries(user).map(([key, value]) => {
-          return (
-            <tr>
-              <td>{key}</td>
-              <td>{Array.isArray(value) ? value.join(", ") : value}</td>
-            </tr>
-          );
-        })}
-      </table>
-    </div>
-  ) : (
-    <></>
-  );
-};
-
-export default index;
+export default () => <Settings />;

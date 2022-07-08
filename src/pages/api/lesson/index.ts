@@ -4,11 +4,10 @@ import routerMiddleware from "@middlewares/router.middleware";
 import { ApiResponse } from "@typing/api-response.interface";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 
-// Disable the default body parser
 export const config = {
   api: {
-    externalResolver: true,
-    bodyParser: false,
+    externalResolver: true, // for `connect` middlewares
+    bodyParser: false, // for file upload
   },
 };
 
