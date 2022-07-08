@@ -54,7 +54,7 @@ export const removeEmptyFields = <T extends Record<string, unknown>>(
 ): T => {
   const result: T = {} as T;
   Object.entries(data).forEach(([key, value]: [keyof T, unknown]) => {
-    if (value !== "" && value !== undefined && value !== null) {
+    if (valueExists(value)) {
       result[key] = value as typeof data[keyof T];
     }
   });
@@ -78,12 +78,11 @@ export const validateStringField = (
   validator: (s: string) => boolean,
   errorMessage: string
 ): string | undefined => {
-  const valueExists = value !== undefined && value !== null && value !== "";
-  if (!valueExists) return undefined;
+  if (!valueExists(value)) return undefined;
 
   const valueIsArray = Array.isArray(value);
-  const valueIsValid = !valueIsArray && validator(value);
-  if (valueExists && !valueIsValid) {
+  const valueIsValid = !valueIsArray && validator(value as string);
+  if (valueExists(value) && !valueIsValid) {
     throw new Error(errorMessage);
   }
   return value;
@@ -108,7 +107,7 @@ export const validateArrayStringField = (
 ): string[] | undefined => {
   if (!valueExists(value)) return undefined;
 
-  const arrayValue: string[] = toArray(value);
+  const arrayValue: string[] = toArray(value as string[]);
   const valueIsValid = arrayValue.every((item: string) => validator(item));
   if (valueExists(value) && !valueIsValid) {
     throw new Error(errorMessage);
@@ -116,9 +115,7 @@ export const validateArrayStringField = (
   return arrayValue;
 };
 
-const valueExists = (
-  value: string | string[] | undefined
-): value is string | string[] =>
+const valueExists = (value: unknown | undefined): value is unknown =>
   value !== undefined && value !== null && value !== "";
 
 /**
