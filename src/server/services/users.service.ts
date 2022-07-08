@@ -222,19 +222,35 @@ const updateUser = async (
 const prepareUserUpdate = async ({
   fields,
   files,
-}: RequestFormData): Promise<IUserProfile> => {
+}: RequestFormData): Promise<Partial<IUserProfile>> => {
   // Validation
-  validateStringField(fields?.email, isEmail, "Email invalide");
-  validateStringField(fields?.firstName, isFrenchAlpha, "Prénom invalide");
-  validateStringField(fields?.lastName, isFrenchAlpha, "Nom invalide");
-  validateStringField(fields?.description, isAscii, "Description invalide");
-  validateStringField(fields?.location, isAscii, "Localisation invalide");
-  validateArrayStringField(
+  const email = validateStringField(fields?.email, isEmail, "Email invalide");
+  const firstName = validateStringField(
+    fields?.firstName,
+    isFrenchAlpha,
+    "Prénom invalide"
+  );
+  const lastName = validateStringField(
+    fields?.lastName,
+    isFrenchAlpha,
+    "Nom invalide"
+  );
+  const description = validateStringField(
+    fields?.description,
+    isAscii,
+    "Description invalide"
+  );
+  const location = validateStringField(
+    fields?.location,
+    isAscii,
+    "Localisation invalide"
+  );
+  const subjects = validateArrayStringField(
     fields?.subjects,
     isAscii,
     "Liste de sujet invalide"
   );
-  validateArrayStringField(
+  const grades = validateArrayStringField(
     fields?.grades,
     isAscii,
     "Liste de classes invalide"
@@ -257,13 +273,13 @@ const prepareUserUpdate = async ({
   }
 
   return removeEmptyFields({
-    firstName: fields?.firstName as string,
-    lastName: fields?.lastName as string,
-    email: fields?.email as string,
-    description: fields?.description as string,
-    location: fields?.location as string,
-    grades: fields?.grades as EGrade[],
-    subjects: fields?.subjects as ESubject[],
+    firstName,
+    lastName,
+    email,
+    description,
+    location,
+    grades: grades as EGrade[],
+    subjects: subjects as ESubject[],
     avatar,
   });
 };

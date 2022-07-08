@@ -29,7 +29,7 @@ export const lessonPostHandler: NextApiHandler = async (
     // Read form
     let formData: RequestFormData;
     try {
-      formData = await parseForm(req, /^application\/pdf/);
+      formData = await parseForm(req, /^application\/pdf$/);
     } catch (e) {
       console.log(`[LESSON] Parsing the lesson upload failed`, e);
       return res.status(400).json({

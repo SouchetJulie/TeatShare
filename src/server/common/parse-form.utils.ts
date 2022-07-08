@@ -106,15 +106,28 @@ export const validateArrayStringField = (
   validator: (s: string) => boolean,
   errorMessage: string
 ): string[] | undefined => {
-  const valueExists = value !== undefined && value !== null && value !== "";
-  if (!valueExists) return undefined;
+  if (!valueExists(value)) return undefined;
 
-  const arrayValue = Array.isArray(value) ? value : [value];
+  const arrayValue = toArray(value);
   const valueIsValid = arrayValue.every((item: string) => validator(item));
-  if (valueExists && !valueIsValid) {
+  if (valueExists(value) && !valueIsValid) {
     throw new Error(errorMessage);
   }
   return arrayValue;
 };
+
+const valueExists = (
+  value: string | string[] | undefined
+): value is string | string[] =>
+  value !== undefined && value !== null && value !== "";
+
+/**
+ * Make sure the given value is an array of strings.
+ *
+ * @param {string | string[]} value
+ * @return {string[]}
+ */
+export const toArray = (value: string | string[]): string[] =>
+  Array.isArray(value) ? value : [value];
 
 export const isFrenchAlpha = (s: string) => isAlpha(s, "fr-FR");

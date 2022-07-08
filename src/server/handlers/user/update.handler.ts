@@ -13,7 +13,7 @@ export const userUpdateHandler: NextApiHandler = async (
 
   try {
     const formData: RequestFormData = await parseForm(req, /^image\/.*/);
-    const updateData: IUserProfile = await prepareUserUpdate(formData);
+    const updateData: Partial<IUserProfile> = await prepareUserUpdate(formData);
 
     const updateSuccess: boolean = await updateUser(
       new ObjectId(currentUser._id),

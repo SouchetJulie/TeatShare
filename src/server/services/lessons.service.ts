@@ -1,3 +1,4 @@
+import { toArray } from "@common/parse-form.utils";
 import { uploadFile } from "@services/storage.service";
 import { addLessonToUser, isUser } from "@services/users.service";
 import { ILesson, ILessonCreate, ILessonDB } from "@typing/lesson.interface";
@@ -154,15 +155,6 @@ const forbidMultipleValues = (
     throw new Error(message || "les valeurs multiples sont interdites");
   }
 };
-
-/**
- * Make sure the given value is an array of strings.
- *
- * @param {string | string[]} value
- * @return {string[]}
- */
-const toArray = (value: string | string[]): string[] =>
-  Array.isArray(value) ? value : [value];
 
 /**
  * Converts the query to an object containing filters to use with the database.
