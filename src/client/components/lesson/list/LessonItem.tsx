@@ -60,7 +60,7 @@ const LessonItem: FunctionComponent<Props> = ({ lesson }: Props) => {
 
   return (
     <NavLink href={`/lesson/${lesson._id}`} className="p-0 text-dark">
-      <Row className={styles.card + " border rounded bg-white"}>
+      <Row className={`${styles.card} border rounded bg-white`}>
         {/* Subject */}
         <Col sm={1}>
           {lesson?.subject && (
