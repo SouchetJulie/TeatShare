@@ -1,5 +1,5 @@
 import { cleanFileMetadata } from "@common/file.utils";
-import { Storage } from "@google-cloud/storage";
+import { Bucket, Storage } from "@google-cloud/storage";
 import { CleanFile } from "@typing/clean-file.interface";
 import { File } from "formidable";
 
@@ -20,9 +20,9 @@ const storage = new Storage({
   },
   projectId: credentials.project_id,
 });
-const bucketName = process.env.NEXT_PUBLIC_BUCKET_NAME;
+const bucketName: string = process.env.NEXT_PUBLIC_BUCKET_NAME;
 
-const bucket = storage.bucket(bucketName);
+const bucket: Bucket = storage.bucket(bucketName);
 
 /**
  * Uploads the given file to cloud storage.
@@ -34,8 +34,8 @@ export const uploadFile = async (
   uploadFile: File,
   uploadDirectory: string
 ): Promise<CleanFile> => {
-  const file = cleanFileMetadata(uploadFile);
-  const destination = `${uploadDirectory}/${file.newFilename}`;
+  const file: CleanFile = cleanFileMetadata(uploadFile);
+  const destination: string = `${uploadDirectory}/${file.newFilename}`;
   await bucket.upload(file.filepath, {
     destination,
   });

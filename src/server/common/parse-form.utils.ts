@@ -108,7 +108,7 @@ export const validateArrayStringField = (
 ): string[] | undefined => {
   if (!valueExists(value)) return undefined;
 
-  const arrayValue = toArray(value);
+  const arrayValue: string[] = toArray(value);
   const valueIsValid = arrayValue.every((item: string) => validator(item));
   if (valueExists(value) && !valueIsValid) {
     throw new Error(errorMessage);
