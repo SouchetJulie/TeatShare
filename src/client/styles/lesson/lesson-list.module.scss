@@ -3,7 +3,6 @@
 @import "~bootstrap/scss/variables";
 @import "../variables";
 
-
 .lessonContainer {
   overflow-x: hidden;
   max-height: max(400px, calc(100vh - $navbarHeight - $footerHeight - 300px));
