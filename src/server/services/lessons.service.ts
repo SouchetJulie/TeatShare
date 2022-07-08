@@ -96,6 +96,7 @@ export const createNewLesson = async (
     isDraft: uploadedLesson.isDraft ?? true,
     creationDate: uploadedLesson.creationDate ?? new Date(),
     lastModifiedDate: uploadedLesson.lastModifiedDate ?? new Date(),
+    subject: uploadedLesson.subject,
     // set the pub. date if necessary
     publicationDate: uploadedLesson.isDraft ? undefined : new Date(),
     // foreign keys

@@ -1,6 +1,7 @@
 import avatarLogo from "@assets/logos/avatar_placeholder.png";
 import { getUser, toggleBookmark } from "@client/services/user.service";
 import { getAxiosErrorMessage } from "@client/utils/get-axios-error.utils";
+import { getUsername } from "@client/utils/get-username.utils";
 import CategoryBadge from "@components/lesson/category-badge.component";
 import LessonBookmark from "@components/lesson/LessonBookmark";
 import { useAppDispatch, useAppSelector } from "@hooks/store-hook";
@@ -20,6 +21,7 @@ import Image from "next/image";
 import React, { FunctionComponent, useEffect, useMemo, useState } from "react";
 import { ListGroup } from "react-bootstrap";
 import { Download, Printer } from "react-bootstrap-icons";
+import Badge from "react-bootstrap/Badge";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
@@ -48,6 +50,7 @@ const LessonDetailsHeader: FunctionComponent<LessonHeaderComponentProps> = ({
     if (lesson?.authorId) {
       getUser(lesson.authorId)
         .then(({ data }: AxiosResponse<ApiResponse<{ user: IUserPublic }>>) => {
+          console.log(data.data?.user);
           setAuthor(data.data?.user);
         })
         .catch((err: AxiosError) => {
@@ -114,13 +117,9 @@ const LessonDetailsHeader: FunctionComponent<LessonHeaderComponentProps> = ({
           width="70px"
           height="70px"
         />
-        <p>
-          {author?.firstName ?? ""} {author?.lastName ?? ""}
-        </p>
-        {author?.subjects.length ? (
-          <p>Professeur de {author?.subjects.join(", ")} </p>
-        ) : (
-          <></>
+        <p>{getUsername(author)}</p>
+        {author?.subjects?.length && (
+          <p>Professeur de {author?.subjects?.join(", ")} </p>
         )}
         <p>publié le {formatDate ?? ""}</p>
       </Col>
@@ -131,6 +130,11 @@ const LessonDetailsHeader: FunctionComponent<LessonHeaderComponentProps> = ({
       >
         <h1>{lesson?.title ?? ""}</h1>
         <ListGroup horizontal>
+          {lesson?.subject && (
+            <Badge className="mx-2" pill bg="secondary">
+              {lesson?.subject}
+            </Badge>
+          )}
           {lesson?.categoryIds.map((id: string) => (
             <CategoryBadge key={`category-${id}`} id={id} />
           ))}

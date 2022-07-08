@@ -7,8 +7,10 @@ import styles from "@styles/lesson/upload.module.scss";
 import { ApiResponse } from "@typing/api-response.interface";
 import { ICategory } from "@typing/category.interface";
 import { ILesson } from "@typing/lesson.interface";
+import { ESubject } from "@typing/subject.enum";
 import axios, { AxiosError } from "axios";
 import { FormEvent, FunctionComponent, useState } from "react";
+import { Card } from "react-bootstrap";
 import Alert from "react-bootstrap/Alert";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
@@ -88,6 +90,14 @@ const upload: FunctionComponent = () => {
     value: category._id,
     label: category.label,
   }));
+
+  const subjectOptions = Object.entries(ESubject).map(
+    ([key, text]: [string, ESubject]) => ({
+      value: key,
+      label: text,
+    })
+  );
+
   return (
     <Container className="min-vh-100">
       <Row>
@@ -134,13 +144,35 @@ const upload: FunctionComponent = () => {
         </Col>
 
         <Col className="d-flex flex-column justify-content-around" sm="3">
-          <Select
-            isMulti
-            options={categoryOptions}
-            name="categoryIds"
-            aria-label="Catégories"
-            placeholder="Catégories"
-          />
+          <Card body bg="secondary" text="white" className="pb-2">
+            <div>
+              <Form.Label className={styles.label} htmlFor="categoryIds">
+                Catégories
+              </Form.Label>
+              <Select
+                isMulti
+                className="text-dark"
+                options={categoryOptions}
+                id="categoryIds"
+                name="categoryIds"
+                aria-label="Catégories"
+                placeholder="Catégories"
+              />
+            </div>
+            <div>
+              <Form.Label className={styles.label} htmlFor="subject">
+                Matière
+              </Form.Label>
+              <Select
+                className="text-dark"
+                options={subjectOptions}
+                id="subject"
+                name="subject"
+                aria-label="Matière"
+                placeholder="Matière"
+              />
+            </div>
+          </Card>
 
           <Button
             className="round-button"

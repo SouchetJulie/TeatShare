@@ -62,13 +62,11 @@ export const LessonList: FunctionComponent<Props> = ({ lessons }: Props) => (
         </InputGroup>
       </Form>
     </Container>
-    <Container className="my-4 ">
+    <Container className={`${styles.lessonContainer} my-4`}>
       {/* Affichage des résultats */}
-      <Row className={styles.lessonContainer}>
-        {lessons.map((lesson: ILesson) => (
-          <LessonItem key={`lesson-item-${lesson._id}`} lesson={lesson} />
-        ))}
-      </Row>
+      {lessons.map((lesson: ILesson) => (
+        <LessonItem key={`lesson-item-${lesson._id}`} lesson={lesson} />
+      ))}
     </Container>
   </>
 );
