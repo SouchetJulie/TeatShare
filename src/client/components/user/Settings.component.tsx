@@ -22,7 +22,7 @@ const grades = Object.entries(EGrade).map(
   })
 );
 
-const Dashboard: FunctionComponent = () => {
+const Settings: FunctionComponent = () => {
   const user = useAutoLogin();
   const onSubmit = useProfileOnSubmit();
 
@@ -146,4 +146,4 @@ const Dashboard: FunctionComponent = () => {
   );
 };
 
-export default Dashboard;
+export default Settings;

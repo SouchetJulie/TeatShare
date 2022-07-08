@@ -1,4 +1,4 @@
-import Dashboard from "@components/user/Dashboard.component";
+import Settings from "@components/user/Settings.component";
 import React from "react";
 
-export default () => <Dashboard />;
+export default () => <Settings />;
