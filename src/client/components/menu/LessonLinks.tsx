@@ -69,38 +69,44 @@ const LessonLinks: FunctionComponent<Props> = ({ className = "" }: Props) => {
           Recherche
         </Nav.Link>
       </OverlayTrigger>
-      <Nav.Link as={Link} href={"/lesson"} passHref>
-        <a className="nav-link">
-          <FileEarmarkRichtext
-            size={25}
-            className={styles.sidebar_icon}
-            aria-label="file icon"
-          />
-          <br />
-          Mes fiches de cours
-        </a>
+      <Nav.Link as="div">
+        <Link href={"/lesson"} passHref className="nav-link">
+          <a>
+            <FileEarmarkRichtext
+              size={25}
+              className={styles.sidebar_icon}
+              aria-label="file icon"
+            />
+            <br />
+            Mes fiches de cours
+          </a>
+        </Link>
       </Nav.Link>
-      <Nav.Link as={Link} href={"/user/bookmarks"} passHref>
-        <a className="nav-link">
-          <JournalBookmark
-            size={25}
-            className={styles.sidebar_icon}
-            aria-label="journal icon"
-          />
-          <br />
-          Mes signets
-        </a>
+      <Nav.Link as="div">
+        <Link href={"/user/bookmarks"} passHref className="nav-link">
+          <a>
+            <JournalBookmark
+              size={25}
+              className={styles.sidebar_icon}
+              aria-label="journal icon"
+            />
+            <br />
+            Mes signets
+          </a>
+        </Link>
       </Nav.Link>
-      <Nav.Link as={Link} href={"/lesson/upload"} passHref>
-        <a className={"nav-link"}>
-          <PlusCircleFill
-            size={25}
-            className={styles.sidebar_icon}
-            aria-label="plus icon"
-          />
-          <br />
-          Création de fiche
-        </a>
+      <Nav.Link as="div" className={styles.lastLink}>
+        <Link href={"/lesson/upload"} passHref>
+          <a>
+            <PlusCircleFill
+              size={25}
+              className={styles.sidebar_icon}
+              aria-label="plus icon"
+            />
+            <br />
+            Création de fiche
+          </a>
+        </Link>
       </Nav.Link>
     </div>
   );

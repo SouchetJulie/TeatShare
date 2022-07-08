@@ -40,14 +40,16 @@ const Settings: FunctionComponent = () => {
                 ))}
               </ListGroup>
             ) : typeof value === "object" ? ( // avatar
-              <Image
-                width={80}
-                height={80}
-                src={`https://storage.googleapis.com/${
-                  process.env.NEXT_PUBLIC_BUCKET_NAME
-                }/${(value as CleanFile).filepath}`}
-                alt="avatar"
-              />
+              value && (
+                <Image
+                  width={80}
+                  height={80}
+                  src={`https://storage.googleapis.com/${
+                    process.env.NEXT_PUBLIC_BUCKET_NAME
+                  }/${(value as CleanFile).filepath}`}
+                  alt="avatar"
+                />
+              )
             ) : (
               value // primitive values
             )}

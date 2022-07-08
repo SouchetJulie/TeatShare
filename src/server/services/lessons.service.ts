@@ -165,10 +165,12 @@ const forbidMultipleValues = (
  * @return {Filter<ILessonDB>} Filters
  */
 export const getFiltersFromQuery = (
-  rawQuery: Record<string, string | string[]>,
+  rawQuery: Partial<Record<string, string | string[] | undefined>>,
   user?: IUserPublic
 ): Filter<ILessonDB> => {
-  const query: QueryEntry[] = Object.entries(rawQuery);
+  const query: QueryEntry[] = Object.entries(rawQuery).filter(
+    ([, value]) => value !== undefined
+  ) as QueryEntry[];
   const filters: Filter<ILessonDB> = {};
 
   for (const [key, value] of query) {

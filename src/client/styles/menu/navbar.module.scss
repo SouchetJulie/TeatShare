@@ -131,15 +131,14 @@ div.popover {
 
     & > a {
       margin-top: 10px;
-
-      // last link is special
-      &:last-child {
-        margin-top: 100px;
-      }
     }
   }
 
   .navbar {
     padding-left: $sidebarWidth;
+  }
+
+  .lastLink {
+    margin-top: 100px;
   }
 }
