@@ -3,6 +3,7 @@ import { ICategory } from "@typing/category.interface";
 import axios from "axios";
 import { FunctionComponent, useEffect, useState } from "react";
 import Badge from "react-bootstrap/Badge";
+import styles from "./category.module.scss";
 
 interface Props {
   id: string;
@@ -21,7 +22,7 @@ const CategoryBadge: FunctionComponent<Props> = ({ id }) => {
       });
   }, []);
 
-  return <Badge className="mx-2">{category?.label ?? ""}</Badge>;
+  return <Badge className={styles.badge}>{category?.label ?? ""}</Badge>;
 };
 
 export default CategoryBadge;
