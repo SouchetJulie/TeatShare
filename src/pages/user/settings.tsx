@@ -1,5 +1,5 @@
 import { useAutoLogin } from "@hooks/auto-login.hook";
-import React, { FunctionComponent } from "react";
+import { FunctionComponent } from "react";
 
 const settings: FunctionComponent = () => {
   const user = useAutoLogin();

@@ -1,7 +1,7 @@
 import styles from "@styles/menu/navbar.module.scss";
 import { EGrade } from "@typing/grade.enum";
 import Link from "next/link";
-import React, { FunctionComponent } from "react";
+import { FunctionComponent } from "react";
 import Badge from "react-bootstrap/Badge";
 
 interface ClassLinkItemProps {

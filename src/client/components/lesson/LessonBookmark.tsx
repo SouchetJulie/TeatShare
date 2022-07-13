@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from "react";
+import { FunctionComponent } from "react";
 import { BookmarkCheck, BookmarkCheckFill } from "react-bootstrap-icons";
 
 interface LessonBookmarkProps {

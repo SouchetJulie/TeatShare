@@ -4,7 +4,7 @@ import { CleanFile } from "@typing/clean-file.interface";
 import { EGrade } from "@typing/grade.enum";
 import { ESubject } from "@typing/subject.enum";
 import Image from "next/image";
-import React, { FunctionComponent } from "react";
+import { FunctionComponent } from "react";
 import { Button, Form, ListGroup, Table } from "react-bootstrap";
 import Select from "react-select";
 

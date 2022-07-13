@@ -6,6 +6,7 @@
     "dev": "npm run prettier & next dev",
     "build": "next build",
     "start": "next start",
+    "lint": "eslint --fix --ext .ts,.tsx src",
     "prettier": "prettier -l -w ./src"
   },
   "dependencies": {

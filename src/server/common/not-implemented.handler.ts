@@ -2,7 +2,7 @@ import { ApiResponse } from "@typing/api-response.interface";
 import { NextApiRequest, NextApiResponse } from "next";
 
 export const notImplementedHandler = (
-  req: NextApiRequest,
+  _req: NextApiRequest,
   res: NextApiResponse<ApiResponse>
 ) => {
   return res.status(501).send({

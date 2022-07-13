@@ -10,7 +10,6 @@ import { useEffect, useState } from "react";
 const IdLesson = () => {
   const router = useRouter();
   const [lesson, setlesson] = useState<ILesson | undefined>();
-  // const [loading, setloading] = useState<boolean>(true);
   const id = router.query.IdLesson;
   const dispatch = useAppDispatch();
 
@@ -29,23 +28,11 @@ const IdLesson = () => {
           dispatch(
             addAlert({ message: err.message, success: false, ttl: 2000 })
           );
-        })
-        .finally(() => {
-          // setloading(false);
         });
     }
   }, [router.isReady]);
 
-  return (
-    <>
-      {/* loading || !lesson ? (
-        <LessonPlaceholder />
-      ) : (
-        <LessonPost lesson={lesson} />
-      ) */}
-      <LessonDetails lesson={lesson} />
-    </>
-  );
+  return <LessonDetails lesson={lesson} />;
 };
 
 export default IdLesson;

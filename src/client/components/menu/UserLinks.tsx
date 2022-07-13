@@ -3,7 +3,7 @@ import { useLogout } from "@hooks/logout.hook";
 import styles from "@styles/menu/navbar.module.scss";
 import { IUserPublic } from "@typing/user.interface";
 import Link from "next/link";
-import React, { FunctionComponent } from "react";
+import { FunctionComponent } from "react";
 import { NavDropdown } from "react-bootstrap";
 import Dropdown from "react-bootstrap/Dropdown";
 

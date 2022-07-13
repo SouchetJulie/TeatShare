@@ -1,6 +1,6 @@
 import { LessonList } from "@components/lesson/list/LessonList";
 import { useAutoLogin } from "@hooks/auto-login.hook";
-import React, { FunctionComponent } from "react";
+import { FunctionComponent } from "react";
 // TODO DISPLAY LESSON MADE BY CURRENT USER
 
 const index: FunctionComponent = () => {
