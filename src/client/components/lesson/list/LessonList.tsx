@@ -1,6 +1,6 @@
 import styles from "@styles/lesson/lesson-list.module.scss";
 import { ILesson } from "@typing/lesson.interface";
-import React, { FunctionComponent } from "react";
+import { FunctionComponent } from "react";
 import { Search, SortUp } from "react-bootstrap-icons";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";

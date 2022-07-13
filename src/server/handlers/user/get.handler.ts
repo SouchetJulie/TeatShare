@@ -6,7 +6,7 @@ import { IUserPublic } from "@typing/user.interface";
 import { NextApiRequest, NextApiResponse } from "next";
 
 const userGetAllHandler = async (
-  req: NextApiRequest,
+  _req: NextApiRequest,
   res: NextApiResponse<ApiResponse<{ users: IUserPublic[] }>>
 ) => {
   try {

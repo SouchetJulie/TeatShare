@@ -18,15 +18,15 @@ import { IUserPublic } from "@typing/user.interface";
 import { AxiosError, AxiosResponse } from "axios";
 import dayjs from "dayjs";
 import Image from "next/image";
-import React, { FunctionComponent, useEffect, useMemo, useState } from "react";
+import { FunctionComponent, useEffect, useMemo, useState } from "react";
 import { ListGroup } from "react-bootstrap";
 import { Download, Printer } from "react-bootstrap-icons";
 import Badge from "react-bootstrap/Badge";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
+
 // eslint-disable-next-line camelcase
-import { unstable_batchedUpdates } from "react-dom";
 
 interface LessonHeaderComponentProps {
   lesson?: ILesson;
@@ -69,25 +69,19 @@ const LessonDetailsHeader: FunctionComponent<LessonHeaderComponentProps> = ({
     toggleBookmark(lesson?._id ?? "", isBookmarked)
       .then(({ data: response }: AxiosResponse<ApiResponse>) => {
         if (response.success) {
-          unstable_batchedUpdates(() => {
-            dispatch(
-              addAlert({
-                success: true,
-                message: `Marque-page ${
-                  isBookmarked ? "supprimé" : "ajouté"
-                } !`,
-                ttl: 1500,
-              })
-            );
+          dispatch(
+            addAlert({
+              success: true,
+              message: `Marque-page ${isBookmarked ? "supprimé" : "ajouté"} !`,
+              ttl: 1500,
+            })
+          );
 
-            if (isBookmarked) {
-              dispatch(removeBookmark(lesson!._id!));
-              // lesson!.bookmarkCount -= 1;
-            } else {
-              dispatch(addBookmark(lesson!._id!));
-              // lesson!.bookmarkCount += 1;
-            }
-          });
+          if (isBookmarked) {
+            dispatch(removeBookmark(lesson!._id!));
+          } else {
+            dispatch(addBookmark(lesson!._id!));
+          }
         } else {
           addAlert({
             success: false,
