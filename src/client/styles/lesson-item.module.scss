@@ -2,6 +2,7 @@
 @import "../styles/variables";
 
 .card {
+  position: relative; // necessary for the stretched-link to work
   align-items: center;
   flex-direction: row;
   justify-content: space-between;
@@ -54,6 +55,6 @@
   margin-top: 5px;
 }
 
-.authorLink {
+.clickableLink {
   z-index: 5;
 }
