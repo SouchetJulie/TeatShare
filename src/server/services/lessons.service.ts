@@ -1,7 +1,9 @@
 import { toArray } from "@common/parse-form.utils";
 import { uploadFile } from "@services/storage.service";
 import { addLessonToUser, isUser } from "@services/users.service";
+import { EGrade } from "@typing/grade.enum";
 import { ILesson, ILessonCreate, ILessonDB } from "@typing/lesson.interface";
+import { ESubject } from "@typing/subject.enum";
 import { IUserPublic } from "@typing/user.interface";
 import { File } from "formidable";
 import { InsertOneResult, ObjectId } from "mongodb";
@@ -96,8 +98,8 @@ export const createNewLesson = async (
     isDraft: uploadedLesson.isDraft ?? true,
     creationDate: uploadedLesson.creationDate ?? new Date(),
     lastModifiedDate: uploadedLesson.lastModifiedDate ?? new Date(),
-    subject: uploadedLesson.subject,
-    grade: uploadedLesson.grade,
+    subject: uploadedLesson.subject as ESubject,
+    grade: uploadedLesson.grade as EGrade,
     // set the pub. date if necessary
     publicationDate: uploadedLesson.isDraft ? undefined : new Date(),
     // foreign keys
@@ -163,7 +165,7 @@ const forbidMultipleValues = (
  *
  * @param {Record<string, string|string[]>} rawQuery The query from the request
  * @param {IUserPublic} user The user at the origin of the request
- * @return {Filter<ILessonDB>} Filters
+ * @return {Filter<ILesson>} Filters
  */
 export const getFiltersFromQuery = (
   rawQuery: Partial<Record<string, string | string[] | undefined>>,
@@ -179,7 +181,7 @@ export const getFiltersFromQuery = (
       // Search by author id (multiple values are treated as "or")
       case "author":
         filters.authorId = {
-          $in: toArray(value).map((id: string) => new ObjectId(id)),
+          $in: toArray(value),
         };
         break;
 
@@ -204,13 +206,6 @@ export const getFiltersFromQuery = (
       // Search by category id (multiple values are treated as "and")
       case "category":
         filters.categoryIds = {
-          $all: toArray(value),
-        };
-        break;
-
-      // Search by tag id (multiple values are treated as "and")
-      case "tag":
-        filters.tagIds = {
           $all: toArray(value),
         };
         break;
