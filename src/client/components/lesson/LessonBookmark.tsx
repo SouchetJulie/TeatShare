@@ -1,21 +1,77 @@
+import { toggleBookmark } from "@client/services/user.service";
+import { getAxiosErrorMessage } from "@client/utils/get-axios-error.utils";
+import { useAppDispatch, useAppSelector } from "@hooks/store-hook";
+import { addAlert } from "@stores/alert.store";
+import {
+  addBookmark,
+  removeBookmark,
+  selectAuthenticatedUser,
+} from "@stores/user.store";
+import { ApiResponse } from "@typing/api-response.interface";
+import { IUserPublic } from "@typing/user.interface";
+import { AxiosError, AxiosResponse } from "axios";
 import { FunctionComponent } from "react";
 import { BookmarkCheck, BookmarkCheckFill } from "react-bootstrap-icons";
+import Button from "react-bootstrap/Button";
 
 interface LessonBookmarkProps {
-  isBookmarked?: boolean;
+  lessonId: string;
+  size: number;
 }
 
 const LessonBookmark: FunctionComponent<LessonBookmarkProps> = ({
-  isBookmarked,
+  lessonId,
+  size,
 }: LessonBookmarkProps): JSX.Element => {
+  const dispatch = useAppDispatch();
+  const user: IUserPublic | undefined = useAppSelector(selectAuthenticatedUser);
+
+  const isBookmarked: boolean = user?.bookmarkIds.includes(lessonId) ?? false;
+
+  const onBookmarkClick = () => {
+    toggleBookmark(lessonId, isBookmarked)
+      .then(({ data: response }: AxiosResponse<ApiResponse>) => {
+        if (response.success) {
+          dispatch(
+            addAlert({
+              success: true,
+              message: `Marque-page ${isBookmarked ? "supprimé" : "ajouté"} !`,
+              ttl: 1500,
+            })
+          );
+
+          if (isBookmarked) {
+            dispatch(removeBookmark(lessonId));
+          } else {
+            dispatch(addBookmark(lessonId));
+          }
+        } else {
+          addAlert({
+            success: false,
+            message: `Échec lors de ${
+              isBookmarked ? "la suppression" : "l'ajout"
+            } du marque-page : ${response.error}`,
+          });
+        }
+      })
+      .catch((e: AxiosError) =>
+        addAlert({
+          success: false,
+          message: `Échec lors de ${
+            isBookmarked ? "la suppression" : "l'ajout"
+          } du marque-page : ${getAxiosErrorMessage(e)}`,
+        })
+      );
+  };
+
   return (
-    <>
+    <Button variant="none" onClick={onBookmarkClick}>
       {isBookmarked ? (
-        <BookmarkCheckFill color="gold" size={30} />
+        <BookmarkCheckFill color="gold" size={size} />
       ) : (
-        <BookmarkCheck color="black" size={30} />
+        <BookmarkCheck color="black" size={size} />
       )}
-    </>
+    </Button>
   );
 };
 

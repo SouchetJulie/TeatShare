@@ -1,16 +1,11 @@
 import avatarLogo from "@assets/logos/avatar_placeholder.png";
-import { getUser, toggleBookmark } from "@client/services/user.service";
+import { getUser } from "@client/services/user.service";
 import { getAxiosErrorMessage } from "@client/utils/get-axios-error.utils";
 import { getUsername } from "@client/utils/get-username.utils";
 import CategoryBadge from "@components/category/category-badge.component";
 import LessonBookmark from "@components/lesson/LessonBookmark";
-import { useAppDispatch, useAppSelector } from "@hooks/store-hook";
+import { useAppDispatch } from "@hooks/store-hook";
 import { addAlert } from "@stores/alert.store";
-import {
-  addBookmark,
-  removeBookmark,
-  selectAuthenticatedUser,
-} from "@stores/user.store";
 import styles from "@styles/lesson/LessonPost.module.scss";
 import { ApiResponse } from "@typing/api-response.interface";
 import { ILesson } from "@typing/lesson.interface";
@@ -36,21 +31,17 @@ const LessonDetailsHeader: FunctionComponent<LessonHeaderComponentProps> = ({
   lesson,
 }) => {
   const [author, setAuthor] = useState<IUserPublic | undefined>(undefined);
-  const user: IUserPublic | undefined = useAppSelector(selectAuthenticatedUser);
   const dispatch = useAppDispatch();
 
   const formatDate: string = useMemo(
     () => dayjs(lesson?.publicationDate).format("DD/MM/YYYY"),
     [lesson?.publicationDate]
   );
-  const isBookmarked: boolean =
-    user?.bookmarkIds.includes(lesson?._id ?? "") ?? false;
 
   useEffect(() => {
     if (lesson?.authorId) {
       getUser(lesson.authorId)
         .then(({ data }: AxiosResponse<ApiResponse<{ user: IUserPublic }>>) => {
-          console.log(data.data?.user);
           setAuthor(data.data?.user);
         })
         .catch((err: AxiosError) => {
@@ -64,42 +55,6 @@ const LessonDetailsHeader: FunctionComponent<LessonHeaderComponentProps> = ({
         });
     }
   }, [lesson?.authorId]);
-
-  const onBookmarkClick = () => {
-    toggleBookmark(lesson?._id ?? "", isBookmarked)
-      .then(({ data: response }: AxiosResponse<ApiResponse>) => {
-        if (response.success) {
-          dispatch(
-            addAlert({
-              success: true,
-              message: `Marque-page ${isBookmarked ? "supprimé" : "ajouté"} !`,
-              ttl: 1500,
-            })
-          );
-
-          if (isBookmarked) {
-            dispatch(removeBookmark(lesson!._id!));
-          } else {
-            dispatch(addBookmark(lesson!._id!));
-          }
-        } else {
-          addAlert({
-            success: false,
-            message: `Échec lors de ${
-              isBookmarked ? "la suppression" : "l'ajout"
-            } du marque-page : ${response.error}`,
-          });
-        }
-      })
-      .catch((e: AxiosError) =>
-        addAlert({
-          success: false,
-          message: `Échec lors de ${
-            isBookmarked ? "la suppression" : "l'ajout"
-          } du marque-page : ${getAxiosErrorMessage(e)}`,
-        })
-      );
-  };
 
   return (
     <Row className={styles.lessonHeader}>
@@ -146,9 +101,7 @@ const LessonDetailsHeader: FunctionComponent<LessonHeaderComponentProps> = ({
         <Button variant="none">
           <Printer color="black" size={30} />
         </Button>
-        <Button variant="none" onClick={onBookmarkClick}>
-          <LessonBookmark isBookmarked={isBookmarked} />
-        </Button>
+        <LessonBookmark lessonId={lesson?._id ?? ""} size={30} />
       </Col>
     </Row>
   );
