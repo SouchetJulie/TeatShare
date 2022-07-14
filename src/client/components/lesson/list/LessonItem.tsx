@@ -1,6 +1,8 @@
 import { getUsername } from "@client/utils/get-username.utils";
 import CategoryBadge from "@components/category/category-badge.component";
+import { GradeBadge } from "@components/grade/grade-badge.component";
 import LessonBookmark from "@components/lesson/LessonBookmark";
+import { SubjectBadge } from "@components/subject/subject-badge.component";
 import { useAppDispatch, useAppSelector } from "@hooks/store-hook";
 import { addAlert } from "@stores/alert.store";
 import { selectAuthenticatedUser } from "@stores/user.store";
@@ -12,7 +14,6 @@ import axios from "axios";
 import Link from "next/link";
 import { FunctionComponent, useEffect, useState } from "react";
 import { PencilSquare } from "react-bootstrap-icons";
-import Badge from "react-bootstrap/Badge";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
@@ -65,17 +66,9 @@ const LessonItem: FunctionComponent<Props> = ({ lesson }: Props) => {
   return (
     <Row className={styles.card}>
       {/* Subject */}
-      <Col sm={1} className={styles.column}>
-        {lesson?.grade && (
-          <Badge pill bg="secondary">
-            {lesson?.grade}
-          </Badge>
-        )}
-        {lesson?.subject && (
-          <Badge pill bg="primary">
-            {lesson?.subject}
-          </Badge>
-        )}
+      <Col sm={1} className={`${styles.column} ${styles.clickable}`}>
+        {lesson?.grade && <GradeBadge grade={lesson.grade} />}
+        {lesson?.subject && <SubjectBadge subject={lesson.subject} />}
       </Col>
       {/* Title */}
       <Col sm={12} md={3}>
@@ -104,12 +97,12 @@ const LessonItem: FunctionComponent<Props> = ({ lesson }: Props) => {
         )}
       </Col>
       {/* Author */}
-      <Col sm={2} className={styles.clickableLink}>
+      <Col sm={2} className={styles.clickable}>
         Écrit par{" "}
         <Link href={`/user/${lesson.authorId}`}>{getUsername(author)}</Link>
       </Col>
       {/* marque-page, aperçu, modification */}
-      <Col sm={1} className={styles.clickableLink}>
+      <Col sm={1} className={styles.clickable}>
         <LessonBookmark lessonId={lesson._id ?? ""} size={20} />
         {user && author?._id === user?._id && (
           <Button variant="none">

@@ -25,7 +25,6 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
 
   text-align: center;
 
@@ -55,6 +54,6 @@
   margin-top: 5px;
 }
 
-.clickableLink {
+.clickable {
   z-index: 5;
 }

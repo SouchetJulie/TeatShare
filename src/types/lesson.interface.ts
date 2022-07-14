@@ -17,8 +17,8 @@ export interface ILessonDB {
   lastModifiedDate: Date;
   publicationDate?: Date;
   isDraft: boolean;
-  grade?: EGrade;
-  subject?: ESubject;
+  grade?: keyof typeof EGrade;
+  subject?: keyof typeof ESubject;
   bookmarkCount: number;
   // foreign keys (needs to accept string so that query filters work)
   authorId: ObjectId | string;

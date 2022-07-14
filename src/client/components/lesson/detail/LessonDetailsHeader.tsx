@@ -3,7 +3,9 @@ import { getUser } from "@client/services/user.service";
 import { getAxiosErrorMessage } from "@client/utils/get-axios-error.utils";
 import { getUsername } from "@client/utils/get-username.utils";
 import CategoryBadge from "@components/category/category-badge.component";
+import { GradeBadge } from "@components/grade/grade-badge.component";
 import LessonBookmark from "@components/lesson/LessonBookmark";
+import { SubjectBadge } from "@components/subject/subject-badge.component";
 import { useAppDispatch } from "@hooks/store-hook";
 import { addAlert } from "@stores/alert.store";
 import styles from "@styles/lesson/LessonPost.module.scss";
@@ -16,7 +18,6 @@ import Image from "next/image";
 import { FunctionComponent, useEffect, useMemo, useState } from "react";
 import { ListGroup } from "react-bootstrap";
 import { Download, Printer } from "react-bootstrap-icons";
-import Badge from "react-bootstrap/Badge";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
@@ -79,16 +80,8 @@ const LessonDetailsHeader: FunctionComponent<LessonHeaderComponentProps> = ({
       >
         <h1>{lesson?.title ?? ""}</h1>
         <ListGroup horizontal className="align-items-center">
-          {lesson?.grade && (
-            <Badge className="mx-1" pill bg="secondary">
-              {lesson?.grade}
-            </Badge>
-          )}
-          {lesson?.subject && (
-            <Badge className="mx-1" pill bg="primary">
-              {lesson?.subject}
-            </Badge>
-          )}
+          {lesson?.grade && <GradeBadge grade={lesson.grade} />}
+          {lesson?.subject && <SubjectBadge subject={lesson.subject} />}
           {lesson?.categoryIds.map((id: string) => (
             <CategoryBadge key={`category-${id}`} id={id} />
           ))}

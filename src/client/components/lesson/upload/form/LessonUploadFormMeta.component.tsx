@@ -39,7 +39,7 @@ const fromCategoryToOption = (category: ICategory): Option<string> => ({
 
 const fromValueToOption = <T extends string>(
   list: [string, T][],
-  key?: T
+  key?: T[keyof T]
 ): Option<T> | null => {
   if (!key) return null;
 

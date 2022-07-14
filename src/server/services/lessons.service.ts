@@ -1,9 +1,7 @@
 import { toArray } from "@common/parse-form.utils";
 import { uploadFile } from "@services/storage.service";
 import { addLessonToUser, isUser } from "@services/users.service";
-import { EGrade } from "@typing/grade.enum";
 import { ILesson, ILessonCreate, ILessonDB } from "@typing/lesson.interface";
-import { ESubject } from "@typing/subject.enum";
 import { IUserPublic } from "@typing/user.interface";
 import { File } from "formidable";
 import { InsertOneResult, ObjectId } from "mongodb";
@@ -98,8 +96,8 @@ export const createNewLesson = async (
     isDraft: uploadedLesson.isDraft ?? true,
     creationDate: uploadedLesson.creationDate ?? new Date(),
     lastModifiedDate: uploadedLesson.lastModifiedDate ?? new Date(),
-    subject: uploadedLesson.subject as ESubject,
-    grade: uploadedLesson.grade as EGrade,
+    subject: uploadedLesson.subject,
+    grade: uploadedLesson.grade,
     // set the pub. date if necessary
     publicationDate: uploadedLesson.isDraft ? undefined : new Date(),
     // foreign keys
