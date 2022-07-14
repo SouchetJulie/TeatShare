@@ -2,7 +2,7 @@ import avatarLogo from "@assets/logos/avatar_placeholder.png";
 import { getUser, toggleBookmark } from "@client/services/user.service";
 import { getAxiosErrorMessage } from "@client/utils/get-axios-error.utils";
 import { getUsername } from "@client/utils/get-username.utils";
-import CategoryBadge from "@components/lesson/category-badge.component";
+import CategoryBadge from "@components/category/category-badge.component";
 import LessonBookmark from "@components/lesson/LessonBookmark";
 import { useAppDispatch, useAppSelector } from "@hooks/store-hook";
 import { addAlert } from "@stores/alert.store";
@@ -123,9 +123,14 @@ const LessonDetailsHeader: FunctionComponent<LessonHeaderComponentProps> = ({
         className=" d-flex justify-content-center align-items-center flex-column"
       >
         <h1>{lesson?.title ?? ""}</h1>
-        <ListGroup horizontal>
+        <ListGroup horizontal className="align-items-center">
+          {lesson?.grade && (
+            <Badge className="mx-1" pill bg="secondary">
+              {lesson?.grade}
+            </Badge>
+          )}
           {lesson?.subject && (
-            <Badge className="mx-2" pill bg="secondary">
+            <Badge className="mx-1" pill bg="primary">
               {lesson?.subject}
             </Badge>
           )}

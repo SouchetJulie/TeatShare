@@ -6,6 +6,7 @@ import { addAlert } from "@stores/alert.store";
 import styles from "@styles/lesson/upload.module.scss";
 import { ApiResponse } from "@typing/api-response.interface";
 import { ICategory } from "@typing/category.interface";
+import { EGrade } from "@typing/grade.enum";
 import { ILesson } from "@typing/lesson.interface";
 import { ESubject } from "@typing/subject.enum";
 import axios, { AxiosError } from "axios";
@@ -98,6 +99,13 @@ const upload: FunctionComponent = () => {
     })
   );
 
+  const gradeOptions = Object.entries(EGrade).map(
+    ([key, text]: [string, EGrade]) => ({
+      value: key,
+      label: text,
+    })
+  );
+
   return (
     <Container className="min-vh-100">
       <Row>
@@ -120,6 +128,9 @@ const upload: FunctionComponent = () => {
               placeholder="Ajoutez un titre"
               required
             />
+            <Form.Control.Feedback type="invalid">
+              Ce champ est obligatoire.
+            </Form.Control.Feedback>
           </Form.Group>
 
           <Form.Group controlId="lesson_upload_form_subtitle">
@@ -140,23 +151,25 @@ const upload: FunctionComponent = () => {
               accept="application/pdf"
               required
             />
+            <Form.Control.Feedback type="invalid">
+              Ce champ est obligatoire.
+            </Form.Control.Feedback>
           </Form.Group>
         </Col>
 
         <Col className="d-flex flex-column justify-content-around" sm="3">
           <Card body bg="secondary" text="white" className="pb-2">
             <div>
-              <Form.Label className={styles.label} htmlFor="categoryIds">
-                Catégories
+              <Form.Label className={styles.label} htmlFor="grade">
+                Classe
               </Form.Label>
               <Select
-                isMulti
                 className="text-dark"
-                options={categoryOptions}
-                id="categoryIds"
-                name="categoryIds"
-                aria-label="Catégories"
-                placeholder="Catégories"
+                options={gradeOptions}
+                id="grade"
+                name="grade"
+                aria-label="Classe"
+                placeholder="Classe"
               />
             </div>
             <div>
@@ -170,6 +183,20 @@ const upload: FunctionComponent = () => {
                 name="subject"
                 aria-label="Matière"
                 placeholder="Matière"
+              />
+            </div>
+            <div>
+              <Form.Label className={styles.label} htmlFor="categoryIds">
+                Catégories
+              </Form.Label>
+              <Select
+                isMulti
+                className="text-dark"
+                options={categoryOptions}
+                id="categoryIds"
+                name="categoryIds"
+                aria-label="Catégories"
+                placeholder="Catégories"
               />
             </div>
           </Card>

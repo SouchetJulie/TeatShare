@@ -1,5 +1,5 @@
 import { getUsername } from "@client/utils/get-username.utils";
-import CategoryBadge from "@components/lesson/category-badge.component";
+import CategoryBadge from "@components/category/category-badge.component";
 import { useAppDispatch } from "@hooks/store-hook";
 import { addAlert } from "@stores/alert.store";
 import styles from "@styles/lesson-item.module.scss";
@@ -62,9 +62,14 @@ const LessonItem: FunctionComponent<Props> = ({ lesson }: Props) => {
       <Row className={styles.card}>
         <>
           {/* Subject */}
-          <Col sm={1}>
-            {lesson?.subject && (
+          <Col sm={1} className={styles.column}>
+            {lesson?.grade && (
               <Badge pill bg="secondary">
+                {lesson?.grade}
+              </Badge>
+            )}
+            {lesson?.subject && (
+              <Badge pill bg="primary">
                 {lesson?.subject}
               </Badge>
             )}
