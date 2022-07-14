@@ -1,5 +1,5 @@
 import LessonDetailsPDFViewer from "@components/lesson/detail/LessonDetailsPDFViewer";
-import { LessonUploadForm } from "@components/lesson/upload/LessonUploadForm.component";
+import { LessonUploadForm } from "@components/lesson/upload/form/LessonUploadForm.component";
 import { useAutoLogin } from "@hooks/auto-login.hook";
 import styles from "@styles/lesson/upload.module.scss";
 import { ILesson } from "@typing/lesson.interface";

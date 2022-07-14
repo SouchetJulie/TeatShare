@@ -73,6 +73,11 @@ export const lessonPostHandler: NextApiHandler = async (
       isDraft = formData?.fields.isDraft;
     }
 
+    // Get categoryIds (it's supposed to be an array, but the formData.fields.categoryIds is a string if empty)
+    if (formData.fields.categoryIds === "") {
+      formData.fields.categoryIds = [];
+    }
+
     const lessonCreate: ILessonCreate = {
       ...formData.fields,
       isDraft: JSON.parse(isDraft), // conversion to boolean

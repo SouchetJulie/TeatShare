@@ -28,9 +28,9 @@ export interface ILessonDB {
 
 /**
  * Used for sharing data about a lesson.
+ * Replace all ObjectId by string.
  */
 export type ILesson = Replace<
-  // replace all ObjectId by string
   Replace<
     Replace<ILessonDB, ObjectId | undefined, string>,
     ObjectId | string,
@@ -43,4 +43,4 @@ export type ILesson = Replace<
 /**
  * Data for creation of a lesson.
  */
-export type ILessonCreate = Partial<ILesson>;
+export type ILessonCreate = Partial<Omit<ILesson, "file"> & { file: File }>;
