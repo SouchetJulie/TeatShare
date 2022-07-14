@@ -19,7 +19,9 @@ const LessonUpload: FunctionComponent<LessonUploadProps> = ({
   return (
     <Container>
       <Row>
-        <h1 className={styles.uploadPageTitle}>Importer un PDF</h1>
+        <h1 className={styles.uploadPageTitle}>
+          {lesson ? "Modifier une leçon" : "Créer une leçon"}
+        </h1>
         <LessonUploadForm lesson={lesson} />
       </Row>
       {lesson && (

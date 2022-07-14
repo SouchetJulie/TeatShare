@@ -113,7 +113,7 @@ const LessonItem: FunctionComponent<Props> = ({ lesson }: Props) => {
         <LessonBookmark lessonId={lesson._id ?? ""} size={20} />
         {user && author?._id === user?._id && (
           <Button variant="none">
-            <Link href={`lesson/update/${lesson._id}`}>
+            <Link href={`lesson/upload/${lesson._id}`}>
               <PencilSquare size={20} />
             </Link>
           </Button>

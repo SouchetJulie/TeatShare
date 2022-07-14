@@ -19,9 +19,23 @@ import Select from "react-select";
 
 const requiredFields = ["title", "file"];
 
+const fromEnumToOption = <T extends string>([key, text]: [string, T]) => ({
+  value: key,
+  label: text,
+});
+
+const fromCategoryToOption = (category: ICategory) => ({
+  value: category._id,
+  label: category.label,
+});
+
+const subjectOptions = Object.entries(ESubject).map(fromEnumToOption);
+const gradeOptions = Object.entries(EGrade).map(fromEnumToOption);
+
 interface LessonUploadFormProps {
   lesson?: ILesson;
 }
+
 export const LessonUploadForm: FunctionComponent<LessonUploadFormProps> = ({
   lesson,
 }) => {
@@ -30,6 +44,7 @@ export const LessonUploadForm: FunctionComponent<LessonUploadFormProps> = ({
   const [isDraft, setIsDraft] = useState(false);
   const [validated, setValidated] = useState(false);
   const categories = useCategoryList();
+  const currentLesson: ILesson | undefined = Object.assign({}, lesson);
 
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -59,6 +74,7 @@ export const LessonUploadForm: FunctionComponent<LessonUploadFormProps> = ({
     if (lesson?._id) formData.set("id", lesson._id);
 
     // Post the request
+    // TODO change route if id is present
     const { data } = await axios
       .post<ApiResponse<{ lesson: ILesson }>>("/api/lesson", formData)
       .catch((error: AxiosError) => {
@@ -91,24 +107,19 @@ export const LessonUploadForm: FunctionComponent<LessonUploadFormProps> = ({
     }
   };
 
-  const categoryOptions = categories.map((category: ICategory) => ({
-    value: category._id,
-    label: category.label,
-  }));
+  const categoryOptions = categories.map(fromCategoryToOption);
+  const selectedCategories = categories
+    .filter((category: ICategory) =>
+      currentLesson?.categoryIds?.includes(category._id)
+    )
+    .map(fromCategoryToOption);
 
-  const subjectOptions = Object.entries(ESubject).map(
-    ([key, text]: [string, ESubject]) => ({
-      value: key,
-      label: text,
-    })
-  );
-
-  const gradeOptions = Object.entries(EGrade).map(
-    ([key, text]: [string, EGrade]) => ({
-      value: key,
-      label: text,
-    })
-  );
+  const selectedGrade = currentLesson?.grade
+    ? fromEnumToOption([EGrade[currentLesson.grade], currentLesson.grade])
+    : "";
+  const selectedSubject = currentLesson?.subject
+    ? fromEnumToOption([ESubject[currentLesson.subject], currentLesson.subject])
+    : "";
 
   // TODO prefill with lesson data if present
   return (
@@ -126,6 +137,7 @@ export const LessonUploadForm: FunctionComponent<LessonUploadFormProps> = ({
           <Form.Control
             className={styles.control}
             name="title"
+            value={currentLesson.title}
             placeholder="Ajoutez un titre"
             required
           />
@@ -139,6 +151,7 @@ export const LessonUploadForm: FunctionComponent<LessonUploadFormProps> = ({
           <Form.Control
             className={styles.control}
             name="subtitle"
+            value={currentLesson.subtitle}
             placeholder="Ajouter une courte description"
           />
         </Form.Group>
@@ -159,7 +172,7 @@ export const LessonUploadForm: FunctionComponent<LessonUploadFormProps> = ({
       </Col>
 
       <Col className="d-flex flex-column justify-content-around" sm="3">
-        <Card body bg="secondary" text="white" className="pb-2 mb-5">
+        <Card body bg="secondary" text="white" className="pb-4 mb-5">
           <div className="mt-n4">
             <Form.Label className={styles.label} htmlFor="grade">
               Classe
@@ -169,6 +182,7 @@ export const LessonUploadForm: FunctionComponent<LessonUploadFormProps> = ({
               options={gradeOptions}
               id="grade"
               name="grade"
+              value={selectedGrade}
               aria-label="Classe"
               placeholder="Classe"
             />
@@ -182,6 +196,7 @@ export const LessonUploadForm: FunctionComponent<LessonUploadFormProps> = ({
               options={subjectOptions}
               id="subject"
               name="subject"
+              value={selectedSubject}
               aria-label="Matière"
               placeholder="Matière"
             />
@@ -196,6 +211,7 @@ export const LessonUploadForm: FunctionComponent<LessonUploadFormProps> = ({
               options={categoryOptions}
               id="categoryIds"
               name="categoryIds"
+              value={selectedCategories}
               aria-label="Catégories"
               placeholder="Catégories"
             />
