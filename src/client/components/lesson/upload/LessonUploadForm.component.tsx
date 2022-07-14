@@ -159,8 +159,8 @@ export const LessonUploadForm: FunctionComponent<LessonUploadFormProps> = ({
       </Col>
 
       <Col className="d-flex flex-column justify-content-around" sm="3">
-        <Card body bg="secondary" text="white" className="pb-2">
-          <div>
+        <Card body bg="secondary" text="white" className="pb-2 mb-5">
+          <div className="mt-n4">
             <Form.Label className={styles.label} htmlFor="grade">
               Classe
             </Form.Label>
@@ -209,6 +209,14 @@ export const LessonUploadForm: FunctionComponent<LessonUploadFormProps> = ({
           onClick={() => setIsDraft(false)}
         >
           Publier
+        </Button>
+        <Button
+          className="round-button"
+          variant="secondary"
+          type="submit"
+          onClick={() => setIsDraft(true)}
+        >
+          Sauvegarder
         </Button>
       </Col>
     </Form>
