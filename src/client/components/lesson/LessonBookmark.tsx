@@ -65,11 +65,15 @@ const LessonBookmark: FunctionComponent<LessonBookmarkProps> = ({
   };
 
   return (
-    <Button variant="none" onClick={onBookmarkClick}>
+    <Button
+      variant={isBookmarked ? "outline-primary" : "outline-secondary"}
+      className="border-0 rounded-circle p-2"
+      onClick={onBookmarkClick}
+    >
       {isBookmarked ? (
-        <BookmarkCheckFill color="gold" size={size} />
+        <BookmarkCheckFill size={size} />
       ) : (
-        <BookmarkCheck color="black" size={size} />
+        <BookmarkCheck size={size} />
       )}
     </Button>
   );

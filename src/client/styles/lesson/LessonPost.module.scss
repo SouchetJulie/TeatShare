@@ -23,8 +23,7 @@
     text-align: center;
     flex-wrap: wrap;
     button {
-      border-radius: 100%;
-      padding: 0;
+      padding: 5px;
     }
   }
 
@@ -44,7 +43,6 @@
   div {
     button {
       border-radius: 40px;
-      //color: $white;
       border: none;
       width: auto;
       height: auto;
@@ -53,6 +51,15 @@
       font-weight: bold;
       margin: auto;
     }
+  }
+}
+
+.tagList {
+  align-items: center;
+
+  &>* {
+    margin-right: 5px;
+    margin-left: 5px;
   }
 }
 

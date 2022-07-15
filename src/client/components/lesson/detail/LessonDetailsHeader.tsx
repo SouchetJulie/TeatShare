@@ -79,10 +79,10 @@ const LessonDetailsHeader: FunctionComponent<LessonHeaderComponentProps> = ({
       <Col
         xs={12}
         md={6}
-        className=" d-flex justify-content-center align-items-center flex-column"
+        className="d-flex justify-content-center align-items-center flex-column"
       >
         <h1>{lesson?.title ?? ""}</h1>
-        <ListGroup horizontal className="align-items-center">
+        <ListGroup horizontal className={styles.tagList}>
           {lesson?.grade && <GradeBadge grade={lesson.grade} />}
           {lesson?.subject && <SubjectBadge subject={lesson.subject} />}
           {lesson?.categoryIds.map((id: string) => (
@@ -94,13 +94,13 @@ const LessonDetailsHeader: FunctionComponent<LessonHeaderComponentProps> = ({
         {user && author?._id === user?._id && (
           <LessonEdit lessonId={lesson?._id} size={30} />
         )}
-        <Button variant="none">
-          <Download color="black" size={30} />
-        </Button>
-        <Button variant="none">
-          <Printer color="black" size={30} />
-        </Button>
         <LessonBookmark lessonId={lesson?._id ?? ""} size={30} />
+        <Button variant="outline-secondary" className="border-0 rounded-circle">
+          <Download size={30} />
+        </Button>
+        <Button variant="outline-secondary" className="border-0 rounded-circle">
+          <Printer size={30} />
+        </Button>
       </Col>
     </Row>
   );
