@@ -71,7 +71,6 @@ export const LessonUploadFormMeta: FunctionComponent<
     .map(fromCategoryToOption);
 
   const selectedGrade = fromValueToOption(grades, currentLesson?.grade);
-  console.log(currentLesson?.subject);
   const selectedSubject = fromValueToOption(subjects, currentLesson?.subject);
 
   return (

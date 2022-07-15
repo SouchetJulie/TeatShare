@@ -1,5 +1,8 @@
-import { lessonPostHandler } from "@handlers/lesson/create.handler";
 import { lessonGetAllHandler } from "@handlers/lesson/get.handler";
+import {
+  lessonCreateHandler,
+  lessonUpdateHandler,
+} from "@handlers/lesson/save.handler";
 import routerMiddleware from "@middlewares/router.middleware";
 import { ApiResponse } from "@typing/api-response.interface";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
@@ -17,7 +20,8 @@ export default async (
 ) => {
   const handlers: Record<string, NextApiHandler<ApiResponse>> = {
     GET: lessonGetAllHandler,
-    POST: lessonPostHandler,
+    POST: lessonCreateHandler,
+    PUT: lessonUpdateHandler,
     // add here handlers for other methods
   };
 
