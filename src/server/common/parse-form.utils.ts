@@ -70,18 +70,23 @@ export const removeEmptyFields = <T extends Record<string, unknown>>(
  * @param {string | string[] | undefined} value Value to validate
  * @param {Function} validator Validating function
  * @param {string} errorMessage Error message to show in case the value is invalid
+ * @param {boolean} isOptional Whether the field is optional
  * @return {string|undefined} The validated value
  * @throws {Error} If the value is invalid
  */
 export const validateStringField = (
   value: string | string[] | undefined,
   validator: (s: string) => boolean,
-  errorMessage: string
+  errorMessage: string,
+  isOptional = true
 ): string | undefined => {
-  if (!valueExists(value)) return undefined;
+  if (!valueExists(value)) {
+    if (isOptional) return undefined;
+    throw new Error(errorMessage + " (obligatoire)");
+  }
 
   const valueIsArray = Array.isArray(value);
-  const valueIsValid = !valueIsArray && validator(value as string);
+  const valueIsValid = !valueIsArray && validator(value);
   if (valueExists(value) && !valueIsValid) {
     throw new Error(errorMessage);
   }
@@ -104,10 +109,10 @@ export const validateArrayStringField = (
   value: string | string[] | undefined,
   validator: (s: string) => boolean,
   errorMessage: string
-): string[] | undefined => {
-  if (!valueExists(value)) return undefined;
+): string[] => {
+  if (!valueExists(value)) return [];
 
-  const arrayValue: string[] = toArray(value as string[]);
+  const arrayValue: string[] = toArray(value);
   const valueIsValid = arrayValue.every((item: string) => validator(item));
   if (valueExists(value) && !valueIsValid) {
     throw new Error(errorMessage);
@@ -115,7 +120,7 @@ export const validateArrayStringField = (
   return arrayValue;
 };
 
-const valueExists = (value: unknown | undefined): value is unknown =>
+const valueExists = <T extends unknown>(value: T | undefined): value is T =>
   value !== undefined && value !== null && value !== "";
 
 /**
@@ -128,3 +133,5 @@ export const toArray = (value: string | string[]): string[] =>
   Array.isArray(value) ? value : [value];
 
 export const isFrenchAlpha = (s: string) => isAlpha(s, "fr-FR");
+export const isText = (s: string) =>
+  /^[A-Za-zÀ-ÖØ-öø-ÿ\d\s.;,:!?()\[\]'-]*$/.test(s);

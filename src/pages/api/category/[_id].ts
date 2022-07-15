@@ -19,5 +19,5 @@ export default async (
     // add here handlers for other methods
   };
 
-  await routerMiddleware(handlers, req.method)(req, res); // TODO find why there is no ajax response
+  await routerMiddleware(handlers, req.method)(req, res);
 };

@@ -1,12 +1,11 @@
 import { toArray } from "@common/parse-form.utils";
 import { uploadFile } from "@services/storage.service";
 import { addLessonToUser, isUser } from "@services/users.service";
-import { EGrade } from "@typing/grade.enum";
+import { CleanFile } from "@typing/clean-file.interface";
 import { ILesson, ILessonCreate, ILessonDB } from "@typing/lesson.interface";
-import { ESubject } from "@typing/subject.enum";
 import { IUserPublic } from "@typing/user.interface";
 import { File } from "formidable";
-import { InsertOneResult, ObjectId } from "mongodb";
+import { InsertOneResult, ObjectId, UpdateResult } from "mongodb";
 import { Filter, getDatabase } from "./database.service";
 
 const collection = (await getDatabase()).collection<ILessonDB>("LessonFile");
@@ -47,6 +46,67 @@ export const getOneLesson = async (id: ObjectId): Promise<ILesson | null> => {
   return lesson === null ? null : fromDatabase(lesson);
 };
 
+const prepareLessonUpload = async (
+  uploadedLesson: ILessonCreate,
+  uploadedFile: File | undefined,
+  user: IUserPublic
+) => {
+  if (!uploadedLesson.title) {
+    throw new Error("Titre manquant.");
+  }
+  if (!isUser(user)) {
+    throw new Error("Auteur invalide.");
+  }
+  if (!process.env.LESSON_UPLOAD_DIRECTORY) {
+    throw new Error("Impossible d'upload le fichier.");
+  }
+
+  let file: CleanFile;
+  if (!uploadedLesson._id) {
+    if (!uploadedFile)
+      throw new Error("Fichier manquant lors de la création d'une leçon.");
+    // Add to cloud storage
+    file = await uploadFile(uploadedFile, process.env.LESSON_UPLOAD_DIRECTORY);
+
+    console.log(
+      `[LESSON] Uploaded ${file.originalFilename} to ${file.filepath}.`
+    );
+  } else {
+    const previousLesson = await getOneLesson(new ObjectId(uploadedLesson._id));
+    if (!previousLesson) {
+      throw new Error(
+        "Leçon manquante lors de la lecture en base de données pour la modification."
+      );
+    }
+    file = previousLesson.file;
+  }
+
+  // Add to database
+  const lesson: ILessonDB = {
+    file,
+    // default values
+    _id: uploadedLesson._id ? new ObjectId(uploadedLesson._id) : undefined,
+    title: uploadedLesson.title ?? "",
+    subtitle: uploadedLesson.subtitle ?? "",
+    isDraft: uploadedLesson.isDraft ?? true,
+    creationDate: uploadedLesson.creationDate ?? new Date(),
+    lastModifiedDate: uploadedLesson.lastModifiedDate ?? new Date(),
+    subject: uploadedLesson.subject,
+    grade: uploadedLesson.grade,
+    // set the pub. date if necessary
+    publicationDate: uploadedLesson.isDraft ? undefined : new Date(),
+    // foreign keys
+    authorId: user._id!,
+    categoryIds:
+      uploadedLesson.categoryIds?.map((id: string) => new ObjectId(id)) ?? [],
+    commentIds:
+      uploadedLesson.commentIds?.map((id: string) => new ObjectId(id)) ?? [],
+    // other data
+    bookmarkCount: uploadedLesson.bookmarkCount ?? 0,
+  };
+  return lesson;
+};
+
 /**
  * Creates a new lesson by uploading it to the necessary services, with the relevant updates to the author as well.
  * @param {IUserPublic} user
@@ -59,56 +119,7 @@ export const createNewLesson = async (
   uploadedFile: File,
   uploadedLesson: ILessonCreate
 ): Promise<{ id: ObjectId }> => {
-  if (!uploadedLesson.title) {
-    throw new Error("Titre manquant.");
-  }
-  if (!uploadedFile) {
-    throw new Error("Fichier manquant.");
-  }
-  if (!isUser(user)) {
-    throw new Error("Auteur invalide.");
-  }
-  if (!process.env.LESSON_UPLOAD_DIRECTORY) {
-    throw new Error("Impossible d'upload le fichier.");
-  }
-
-  // Add to cloud storage
-  const file = await uploadFile(
-    uploadedFile,
-    process.env.LESSON_UPLOAD_DIRECTORY
-  );
-
-  console.log(
-    `[LESSON] Uploaded ${file.originalFilename} to ${file.filepath}.`
-  );
-
-  const categoryIds: ObjectId[] =
-    uploadedLesson.categoryIds === undefined
-      ? []
-      : toArray(uploadedLesson.categoryIds).map(
-          (id: string) => new ObjectId(id)
-        );
-
-  // Add to database
-  const lesson: ILessonDB = {
-    file,
-    // default values
-    title: uploadedLesson.title ?? "",
-    subtitle: uploadedLesson.subtitle ?? "",
-    isDraft: uploadedLesson.isDraft ?? true,
-    creationDate: uploadedLesson.creationDate ?? new Date(),
-    lastModifiedDate: uploadedLesson.lastModifiedDate ?? new Date(),
-    subject: uploadedLesson.subject as ESubject,
-    grade: uploadedLesson.grade as EGrade,
-    // set the pub. date if necessary
-    publicationDate: uploadedLesson.isDraft ? undefined : new Date(),
-    // foreign keys
-    authorId: user._id!,
-    categoryIds,
-    commentIds: [],
-    // other data
-    bookmarkCount: 0,
-  };
+  const lesson = await prepareLessonUpload(uploadedLesson, uploadedFile, user);
 
   const result: InsertOneResult<ILessonDB> = await collection.insertOne(lesson);
 
@@ -116,12 +127,44 @@ export const createNewLesson = async (
     // Adding it to the user's lessons
     await addLessonToUser(user, result.insertedId);
     console.log(
-      `[LESSON] L'upload de la leçon a réussi! id: ${result.insertedId}`
+      `[LESSON] La création de leçon a réussi ! id: ${result.insertedId}`
     );
     return { id: result.insertedId };
   } else {
     throw new Error(
-      "L'upload de la leçon a échoué ! L'opération d'écriture a été ignorée."
+      "La creation de la leçon a échoué ! L'opération d'écriture a été ignorée."
+    );
+  }
+};
+
+/**
+ * Updates a lesson in database.
+ *
+ * @param {IUserPublic} user
+ * @param {File | undefined} uploadedFile
+ * @param {ILessonCreate} uploadedLesson
+ * @throws {Error} If the given data is invalid or there is a problem with upload.
+ */
+export const updateLesson = async (
+  user: IUserPublic,
+  uploadedFile: File | undefined,
+  uploadedLesson: ILessonCreate
+): Promise<{ id: ObjectId }> => {
+  const lesson = await prepareLessonUpload(uploadedLesson, uploadedFile, user);
+
+  const result: UpdateResult = await collection.updateOne(
+    { _id: lesson._id },
+    { $set: lesson }
+  );
+
+  if (result.acknowledged && result.modifiedCount === 1) {
+    console.log(
+      `[LESSON] La modification de la leçon a réussi! id: ${lesson._id}`
+    );
+    return { id: lesson._id! };
+  } else {
+    throw new Error(
+      "La modification de la leçon a échoué ! L'opération a été ignorée."
     );
   }
 };

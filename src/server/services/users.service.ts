@@ -278,8 +278,8 @@ const prepareUserUpdate = async ({
     email,
     description,
     location,
-    grades: grades as EGrade[],
-    subjects: subjects as ESubject[],
+    grades: grades as (keyof typeof EGrade)[],
+    subjects: subjects as (keyof typeof ESubject)[],
     avatar,
   });
 };

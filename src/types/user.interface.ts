@@ -26,8 +26,8 @@ export interface IUserCreate extends IUserAuth {
 export interface IUserProfile extends IUserCreate {
   description: string;
   location: string;
-  grades: EGrade[];
-  subjects: ESubject[];
+  grades: (keyof typeof EGrade)[];
+  subjects: (keyof typeof ESubject)[];
   avatar?: CleanFile;
 }
 
