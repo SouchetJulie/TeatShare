@@ -134,4 +134,4 @@ export const toArray = (value: string | string[]): string[] =>
 
 export const isFrenchAlpha = (s: string) => isAlpha(s, "fr-FR");
 export const isText = (s: string) =>
-  /^[A-Za-zÀ-ÖØ-öø-ÿ\d\s.,:!?()\[\]']*$/.test(s);
+  /^[A-Za-zÀ-ÖØ-öø-ÿ\d\s.;,:!?()\[\]'-]*$/.test(s);

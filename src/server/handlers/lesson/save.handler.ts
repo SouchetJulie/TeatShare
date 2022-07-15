@@ -21,6 +21,7 @@ import validator from "validator";
 import isBoolean = validator.isBoolean;
 import isAlpha = validator.isAlpha;
 import isHexadecimal = validator.isHexadecimal;
+import isAlphanumeric = validator.isAlphanumeric;
 
 const readUploadedLesson = async (req: NextApiRequest) => {
   const formData: RequestFormData = await parseForm(req, /^application\/pdf$/);
@@ -49,7 +50,7 @@ const readUploadedLesson = async (req: NextApiRequest) => {
   );
   const grade: string | undefined = validateStringField(
     formData?.fields?.grade,
-    isAlpha,
+    isAlphanumeric,
     "Classe invalide"
   );
 
