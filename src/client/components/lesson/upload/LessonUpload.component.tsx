@@ -31,10 +31,10 @@ const LessonUpload: FunctionComponent<LessonUploadProps> = ({
             <Link href={`/lesson/${lesson._id}`}>
               <Button
                 rounded-pill
-                variant="outline-secondary"
-                className="border-0"
+                variant="outline-primary"
+                className="border-0 p-2 rounded-circle"
               >
-                <EyeFill />
+                <EyeFill size={30} />
               </Button>
             </Link>
           </Col>
