@@ -58,7 +58,7 @@ export const LessonUploadFormGeneral: FunctionComponent<
             lessonDispatch(setField("file", event.target.value))
           }
           accept="application/pdf"
-          required
+          required={!currentLesson?._id}
         />
         <Form.Control.Feedback type="invalid">
           Ce champ est obligatoire.
