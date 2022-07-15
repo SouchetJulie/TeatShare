@@ -44,7 +44,7 @@
   div {
     button {
       border-radius: 40px;
-      color: $white;
+      //color: $white;
       border: none;
       width: auto;
       height: auto;
@@ -52,10 +52,6 @@
       font-size: 15px;
       font-weight: bold;
       margin: auto;
-    }
-
-    .downloadButton {
-      background: $bleu-clair;
     }
   }
 }

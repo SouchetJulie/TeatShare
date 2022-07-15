@@ -5,9 +5,11 @@ import { getUsername } from "@client/utils/get-username.utils";
 import CategoryBadge from "@components/category/category-badge.component";
 import { GradeBadge } from "@components/grade/grade-badge.component";
 import LessonBookmark from "@components/lesson/LessonBookmark";
+import { LessonEdit } from "@components/lesson/LessonEdit.component";
 import { SubjectBadge } from "@components/subject/subject-badge.component";
-import { useAppDispatch } from "@hooks/store-hook";
+import { useAppDispatch, useAppSelector } from "@hooks/store-hook";
 import { addAlert } from "@stores/alert.store";
+import { selectAuthenticatedUser } from "@stores/user.store";
 import styles from "@styles/lesson/LessonPost.module.scss";
 import { ApiResponse } from "@typing/api-response.interface";
 import { ILesson } from "@typing/lesson.interface";
@@ -32,6 +34,7 @@ const LessonDetailsHeader: FunctionComponent<LessonHeaderComponentProps> = ({
   lesson,
 }) => {
   const [author, setAuthor] = useState<IUserPublic | undefined>(undefined);
+  const user = useAppSelector(selectAuthenticatedUser);
   const dispatch = useAppDispatch();
 
   const formatDate: string = useMemo(
@@ -88,6 +91,9 @@ const LessonDetailsHeader: FunctionComponent<LessonHeaderComponentProps> = ({
         </ListGroup>
       </Col>
       <Col xs={12} md={3} className={styles.headerAction}>
+        {user && author?._id === user?._id && (
+          <LessonEdit lessonId={lesson?._id} size={30} />
+        )}
         <Button variant="none">
           <Download color="black" size={30} />
         </Button>

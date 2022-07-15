@@ -2,6 +2,7 @@ import { getUsername } from "@client/utils/get-username.utils";
 import CategoryBadge from "@components/category/category-badge.component";
 import { GradeBadge } from "@components/grade/grade-badge.component";
 import LessonBookmark from "@components/lesson/LessonBookmark";
+import { LessonEdit } from "@components/lesson/LessonEdit.component";
 import { SubjectBadge } from "@components/subject/subject-badge.component";
 import { useAppDispatch, useAppSelector } from "@hooks/store-hook";
 import { addAlert } from "@stores/alert.store";
@@ -13,8 +14,6 @@ import { IUserPublic } from "@typing/user.interface";
 import axios from "axios";
 import Link from "next/link";
 import { FunctionComponent, useEffect, useState } from "react";
-import { PencilSquare } from "react-bootstrap-icons";
-import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
@@ -105,11 +104,7 @@ const LessonItem: FunctionComponent<Props> = ({ lesson }: Props) => {
       <Col sm={1} className={styles.clickable}>
         <LessonBookmark lessonId={lesson._id ?? ""} size={20} />
         {user && author?._id === user?._id && (
-          <Button variant="none">
-            <Link href={`lesson/upload/${lesson._id}`}>
-              <PencilSquare size={20} />
-            </Link>
-          </Button>
+          <LessonEdit lessonId={lesson._id} />
         )}
       </Col>
     </Row>
