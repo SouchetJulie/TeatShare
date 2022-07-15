@@ -127,12 +127,12 @@ export const createNewLesson = async (
     // Adding it to the user's lessons
     await addLessonToUser(user, result.insertedId);
     console.log(
-      `[LESSON] L'upload de la leçon a réussi! id: ${result.insertedId}`
+      `[LESSON] La création de leçon a réussi ! id: ${result.insertedId}`
     );
     return { id: result.insertedId };
   } else {
     throw new Error(
-      "L'upload de la leçon a échoué ! L'opération d'écriture a été ignorée."
+      "La creation de la leçon a échoué ! L'opération d'écriture a été ignorée."
     );
   }
 };
@@ -158,7 +158,9 @@ export const updateLesson = async (
   );
 
   if (result.acknowledged && result.modifiedCount === 1) {
-    console.log(`[LESSON] L'upload de la leçon a réussi! id: ${lesson._id}`);
+    console.log(
+      `[LESSON] La modification de la leçon a réussi! id: ${lesson._id}`
+    );
     return { id: lesson._id! };
   } else {
     throw new Error(
