@@ -5,6 +5,7 @@ import { getUsername } from "@client/utils/get-username.utils";
 import CategoryBadge from "@components/category/CategoryBadge.component";
 import { GradeBadge } from "@components/grade/GradeBadge.component";
 import LessonBookmark from "@components/lesson/button/LessonBookmark";
+import { LessonDelete } from "@components/lesson/button/LessonDelete.component";
 import { LessonEdit } from "@components/lesson/button/LessonEdit.component";
 import { SubjectBadge } from "@components/subject/subject-badge.component";
 import { useAppDispatch, useAppSelector } from "@hooks/store-hook";
@@ -98,7 +99,14 @@ const LessonDetailsHeader: FunctionComponent<LessonHeaderComponentProps> = ({
       </Col>
       <Col xs={12} md={3} className={styles.headerAction}>
         {user && author?._id === user?._id && (
-          <LessonEdit lessonId={lesson?._id} size={30} />
+          <>
+            <LessonEdit lessonId={lesson?._id} size={30} />
+            <LessonDelete
+              size={30}
+              lessonId={lesson?._id}
+              lessonTitle={lesson?.title}
+            />
+          </>
         )}
         <LessonBookmark lessonId={lesson?._id ?? ""} size={30} />
         <Button variant="outline-secondary" className="border-0 rounded-circle">
