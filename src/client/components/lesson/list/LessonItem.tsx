@@ -1,8 +1,8 @@
 import { getUsername } from "@client/utils/get-username.utils";
-import CategoryBadge from "@components/category/category-badge.component";
-import { GradeBadge } from "@components/grade/grade-badge.component";
-import LessonBookmark from "@components/lesson/LessonBookmark";
-import { LessonEdit } from "@components/lesson/LessonEdit.component";
+import CategoryBadge from "@components/category/CategoryBadge.component";
+import { GradeBadge } from "@components/grade/GradeBadge.component";
+import LessonBookmark from "@components/lesson/button/LessonBookmark";
+import { LessonEdit } from "@components/lesson/button/LessonEdit.component";
 import { SubjectBadge } from "@components/subject/subject-badge.component";
 import { useAppDispatch, useAppSelector } from "@hooks/store-hook";
 import { addAlert } from "@stores/alert.store";
