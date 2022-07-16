@@ -13,7 +13,7 @@ export const LessonEdit: FunctionComponent<LessonEditProps> = ({
   size,
 }: LessonEditProps): JSX.Element => (
   <Button variant="outline-primary" className="border-0 rounded-circle p-2">
-    <Link href={`/lesson/upload/${lessonId}`}>
+    <Link href={`/lesson/${lessonId}/edit`}>
       <PencilSquare size={size} />
     </Link>
   </Button>

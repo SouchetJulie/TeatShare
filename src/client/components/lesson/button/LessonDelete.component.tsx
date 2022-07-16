@@ -28,6 +28,7 @@ export const LessonDelete: FunctionComponent<LessonDeleteProps> = ({
   const closeModal = () => setShow(false);
   const deleteLesson = () => {
     closeModal();
+    router.prefetch("/");
 
     let success: boolean;
     let message: string;
@@ -35,8 +36,15 @@ export const LessonDelete: FunctionComponent<LessonDeleteProps> = ({
     axios
       .delete<ApiResponse>(`/api/lesson/${lessonId}`)
       .then(({ data: response }: AxiosResponse<ApiResponse>) => {
-        if (router.pathname.startsWith(`/lesson/${lessonId}`)) {
+        console.log(router.pathname);
+        // /!\ this corresponds to the file name
+        if (router.pathname.startsWith(`/lesson/[IdLesson]`)) {
+          // we are on the lesson page, so redirect to the lesson list
           router.push("/");
+        } else {
+          // we are on the lesson list page, so reload the data
+          // TODO delete from the store instead of brute reloading
+          window.location.reload();
         }
 
         if (response.success) {
