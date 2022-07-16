@@ -45,9 +45,15 @@ const LessonDetailsHeader: FunctionComponent<LessonHeaderComponentProps> = ({
   useEffect(() => {
     if (lesson?.authorId) {
       getUser(lesson.authorId)
-        .then(({ data }: AxiosResponse<ApiResponse<{ user: IUserPublic }>>) => {
-          setAuthor(data.data?.user);
-        })
+        .then(
+          ({
+            data: response,
+          }: AxiosResponse<ApiResponse<{ user: IUserPublic }>>) => {
+            if (response.success) {
+              setAuthor(response.data?.user);
+            }
+          }
+        )
         .catch((err: AxiosError) => {
           dispatch(
             addAlert({

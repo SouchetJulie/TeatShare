@@ -56,9 +56,9 @@ const useFetchLessons = (
         .get<ApiResponse<{ lessons: ILesson[] }>>(`/api/lesson?${searchParams}`)
         .then(
           ({
-            data: { data, success },
+            data: response,
           }: AxiosResponse<ApiResponse<{ lessons: ILesson[] }>>) => {
-            if (!success) {
+            if (!response.success) {
               dispatch(
                 addAlert({
                   message: "Impossible de récupérer la liste des leçons",
@@ -67,7 +67,7 @@ const useFetchLessons = (
                 })
               );
             } else if (isSubscribed) {
-              setLessons(data?.lessons ?? []);
+              setLessons(response.data?.lessons ?? []);
             }
           }
         )

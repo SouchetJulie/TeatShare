@@ -104,7 +104,7 @@ const LessonItem: FunctionComponent<Props> = ({ lesson }: Props) => {
       <Col sm={1} className={styles.clickable}>
         <LessonBookmark lessonId={lesson._id ?? ""} size={20} />
         {user && author?._id === user?._id && (
-          <LessonEdit lessonId={lesson._id} />
+          <LessonEdit lessonId={lesson._id} size={20} />
         )}
       </Col>
     </Row>
