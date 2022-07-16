@@ -5,7 +5,7 @@ import { CleanFile } from "@typing/clean-file.interface";
 import { ILesson, ILessonCreate, ILessonDB } from "@typing/lesson.interface";
 import { IUserPublic } from "@typing/user.interface";
 import { File } from "formidable";
-import { InsertOneResult, ObjectId, UpdateResult } from "mongodb";
+import { DeleteResult, InsertOneResult, ObjectId, UpdateResult } from "mongodb";
 import { Filter, getDatabase } from "./database.service";
 
 const collection = (await getDatabase()).collection<ILessonDB>("LessonFile");
@@ -182,6 +182,21 @@ export const updateBookmarkCounter = async (
     { _id: lessonId },
     { $inc: { bookmarkCount: amount } }
   );
+};
+
+/**
+ * Delete a lesson from database.
+ * @param {ObjectId} id Id (_id) of the lesson to delete.
+ */
+export const deleteLesson = async (id: ObjectId): Promise<void> => {
+  const result: DeleteResult = await collection.deleteOne({ _id: id });
+  if (result.deletedCount === 1) {
+    console.log(`[LESSON] La leçon a été supprimée ! id: ${id}`);
+  } else {
+    throw new Error(
+      "La suppression de la leçon a échoué ! L'opération a été ignorée."
+    );
+  }
 };
 
 // A [key, value] tuple
