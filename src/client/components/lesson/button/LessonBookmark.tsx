@@ -66,7 +66,7 @@ const LessonBookmark: FunctionComponent<LessonBookmarkProps> = ({
 
   return (
     <Button
-      variant={isBookmarked ? "outline-primary" : "outline-secondary"}
+      variant="outline-secondary"
       className="border-0 rounded-circle p-2"
       onClick={onBookmarkClick}
     >

@@ -1,8 +1,9 @@
 import { getUsername } from "@client/utils/get-username.utils";
-import CategoryBadge from "@components/category/category-badge.component";
-import { GradeBadge } from "@components/grade/grade-badge.component";
-import LessonBookmark from "@components/lesson/LessonBookmark";
-import { LessonEdit } from "@components/lesson/LessonEdit.component";
+import CategoryBadge from "@components/category/CategoryBadge.component";
+import { GradeBadge } from "@components/grade/GradeBadge.component";
+import LessonBookmark from "@components/lesson/button/LessonBookmark";
+import { LessonDelete } from "@components/lesson/button/LessonDelete.component";
+import { LessonEdit } from "@components/lesson/button/LessonEdit.component";
 import { SubjectBadge } from "@components/subject/subject-badge.component";
 import { useAppDispatch, useAppSelector } from "@hooks/store-hook";
 import { addAlert } from "@stores/alert.store";
@@ -102,10 +103,17 @@ const LessonItem: FunctionComponent<Props> = ({ lesson }: Props) => {
       </Col>
       {/* marque-page, aperçu, modification */}
       <Col sm={1} className={styles.clickable}>
-        <LessonBookmark lessonId={lesson._id ?? ""} size={20} />
         {user && author?._id === user?._id && (
-          <LessonEdit lessonId={lesson._id} />
+          <>
+            <LessonEdit lessonId={lesson._id} size={20} />
+            <LessonDelete
+              size={20}
+              lessonId={lesson._id}
+              lessonTitle={lesson.title}
+            />
+          </>
         )}
+        <LessonBookmark lessonId={lesson._id ?? ""} size={20} />
       </Col>
     </Row>
   );

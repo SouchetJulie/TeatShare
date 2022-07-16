@@ -59,20 +59,25 @@ const LoginForm: FunctionComponent = () => {
             ({
               data: response,
             }: AxiosResponse<ApiResponse<{ user: IUserPublic }>>) => {
-              success = true;
-              message = "Connexion réussie!";
-              dispatch(addAlert({ message, success, ttl: 2000 }));
+              if (response.success) {
+                success = true;
+                message = "Connexion réussie !";
 
-              router.push("/");
-              dispatch(setUser(response.data?.user));
+                router.push("/");
+                dispatch(setUser(response.data?.user));
+              } else {
+                success = false;
+                message = "Nom d'utilisateur ou mot de passe incorrects";
+                setButtonMessage("Connexion échouée.");
+              }
             }
           )
           .catch(() => {
             success = false;
             message = "Nom d'utilisateur ou mot de passe incorrects";
             setButtonMessage("Connexion échouée.");
-            dispatch(addAlert({ message, success, ttl: 2000 }));
-          });
+          })
+          .finally(() => dispatch(addAlert({ message, success, ttl: 2000 })));
       }
     } else {
       // Add

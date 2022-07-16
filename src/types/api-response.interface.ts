@@ -1,5 +1,9 @@
-export interface ApiResponse<DataType = unknown> {
-  success: boolean;
-  error?: string;
-  data?: DataType;
-}
+export type ApiResponse<DataType = unknown> =
+  | {
+      success: true;
+      data?: DataType;
+    }
+  | {
+      success: false;
+      error: string;
+    };

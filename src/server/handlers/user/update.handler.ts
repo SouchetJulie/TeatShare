@@ -38,6 +38,7 @@ export const userUpdateHandler: NextApiHandler = async (
       console.log(`[USER] ${currentUser.email} failed to update profile`);
       return res.status(400).json({
         success: false,
+        error: "Impossible de mettre à jour le profil",
       });
     }
   } catch (e) {

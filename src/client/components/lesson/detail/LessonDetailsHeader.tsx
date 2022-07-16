@@ -2,10 +2,11 @@ import avatarLogo from "@assets/logos/avatar_placeholder.png";
 import { getUser } from "@client/services/user.service";
 import { getAxiosErrorMessage } from "@client/utils/get-axios-error.utils";
 import { getUsername } from "@client/utils/get-username.utils";
-import CategoryBadge from "@components/category/category-badge.component";
-import { GradeBadge } from "@components/grade/grade-badge.component";
-import LessonBookmark from "@components/lesson/LessonBookmark";
-import { LessonEdit } from "@components/lesson/LessonEdit.component";
+import CategoryBadge from "@components/category/CategoryBadge.component";
+import { GradeBadge } from "@components/grade/GradeBadge.component";
+import LessonBookmark from "@components/lesson/button/LessonBookmark";
+import { LessonDelete } from "@components/lesson/button/LessonDelete.component";
+import { LessonEdit } from "@components/lesson/button/LessonEdit.component";
 import { SubjectBadge } from "@components/subject/subject-badge.component";
 import { useAppDispatch, useAppSelector } from "@hooks/store-hook";
 import { addAlert } from "@stores/alert.store";
@@ -45,9 +46,15 @@ const LessonDetailsHeader: FunctionComponent<LessonHeaderComponentProps> = ({
   useEffect(() => {
     if (lesson?.authorId) {
       getUser(lesson.authorId)
-        .then(({ data }: AxiosResponse<ApiResponse<{ user: IUserPublic }>>) => {
-          setAuthor(data.data?.user);
-        })
+        .then(
+          ({
+            data: response,
+          }: AxiosResponse<ApiResponse<{ user: IUserPublic }>>) => {
+            if (response.success) {
+              setAuthor(response.data?.user);
+            }
+          }
+        )
         .catch((err: AxiosError) => {
           dispatch(
             addAlert({
@@ -92,7 +99,14 @@ const LessonDetailsHeader: FunctionComponent<LessonHeaderComponentProps> = ({
       </Col>
       <Col xs={12} md={3} className={styles.headerAction}>
         {user && author?._id === user?._id && (
-          <LessonEdit lessonId={lesson?._id} size={30} />
+          <>
+            <LessonEdit lessonId={lesson?._id} size={30} />
+            <LessonDelete
+              size={30}
+              lessonId={lesson?._id}
+              lessonTitle={lesson?.title}
+            />
+          </>
         )}
         <LessonBookmark lessonId={lesson?._id ?? ""} size={30} />
         <Button variant="outline-secondary" className="border-0 rounded-circle">

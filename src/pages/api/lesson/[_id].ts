@@ -1,3 +1,4 @@
+import { lessonDeleteHandler } from "@handlers/lesson/delete.handler";
 import { lessonGetOneHandler } from "@handlers/lesson/get.handler";
 import routerMiddleware from "@middlewares/router.middleware";
 import { ApiResponse } from "@typing/api-response.interface";
@@ -13,6 +14,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   const { _id } = req.query as { _id: string };
   const handlers: Record<string, NextApiHandler<ApiResponse>> = {
     GET: lessonGetOneHandler(_id),
+    DELETE: lessonDeleteHandler(_id),
     // add here handlers for other methods
   };
 
