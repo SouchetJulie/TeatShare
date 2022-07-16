@@ -15,7 +15,7 @@ const baseLessonDeleteHandler =
     const { _id: id } = req.body.sanitized as { _id: string };
 
     try {
-      await deleteLesson(new ObjectId(id));
+      await deleteLesson(new ObjectId(id), req.session.user?._id);
 
       console.log(`[LESSON] Lesson ${id} found`);
       return res.status(200).json({

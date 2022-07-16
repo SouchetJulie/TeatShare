@@ -1,6 +1,6 @@
 import { toArray } from "@common/parse-form.utils";
 import { uploadFile } from "@services/storage.service";
-import { addLessonToUser, isUser } from "@services/users.service";
+import { addLessonToUser } from "@services/users.service";
 import { CleanFile } from "@typing/clean-file.interface";
 import { ILesson, ILessonCreate, ILessonDB } from "@typing/lesson.interface";
 import { IUserPublic } from "@typing/user.interface";
@@ -54,9 +54,7 @@ const prepareLessonUpload = async (
   if (!uploadedLesson.title) {
     throw new Error("Titre manquant.");
   }
-  if (!isUser(user)) {
-    throw new Error("Auteur invalide.");
-  }
+  if (!user._id) throw new Error("Auteur invalide.");
   if (!process.env.LESSON_UPLOAD_DIRECTORY) {
     throw new Error("Impossible d'upload le fichier.");
   }
@@ -67,7 +65,6 @@ const prepareLessonUpload = async (
       throw new Error("Fichier manquant lors de la création d'une leçon.");
     // Add to cloud storage
     file = await uploadFile(uploadedFile, process.env.LESSON_UPLOAD_DIRECTORY);
-
     console.log(
       `[LESSON] Uploaded ${file.originalFilename} to ${file.filepath}.`
     );
@@ -79,6 +76,9 @@ const prepareLessonUpload = async (
       );
     }
     file = previousLesson.file;
+
+    if (previousLesson.authorId !== user._id)
+      throw new Error("Vous n'êtes pas l'auteur de cette leçon.");
   }
 
   // Add to database
@@ -96,7 +96,7 @@ const prepareLessonUpload = async (
     // set the pub. date if necessary
     publicationDate: uploadedLesson.isDraft ? undefined : new Date(),
     // foreign keys
-    authorId: user._id!,
+    authorId: new ObjectId(user._id),
     categoryIds:
       uploadedLesson.categoryIds?.map((id: string) => new ObjectId(id)) ?? [],
     commentIds:
@@ -187,8 +187,20 @@ export const updateBookmarkCounter = async (
 /**
  * Delete a lesson from database.
  * @param {ObjectId} id Id (_id) of the lesson to delete.
+ * @param {string} currentUserId ID of the current user.
+ * @throws {Error} If the lesson does not exist or the user is not the author.
  */
-export const deleteLesson = async (id: ObjectId): Promise<void> => {
+export const deleteLesson = async (
+  id: ObjectId,
+  currentUserId?: string
+): Promise<void> => {
+  // check that the current user is the same as the lesson's author
+  const lesson = await getOneLesson(id);
+  if (!lesson) throw new Error("Leçon non trouvée.");
+  if (!lesson.authorId) throw new Error("Auteur invalide.");
+  if (lesson.authorId !== currentUserId)
+    throw new Error("Vous n'êtes pas l'auteur de cette leçon.");
+
   const result: DeleteResult = await collection.deleteOne({ _id: id });
   if (result.deletedCount === 1) {
     console.log(`[LESSON] La leçon a été supprimée ! id: ${id}`);
