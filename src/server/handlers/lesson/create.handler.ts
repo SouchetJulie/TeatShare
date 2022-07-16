@@ -5,11 +5,7 @@ import {
   validateArrayStringField,
   validateStringField,
 } from "@common/parse-form.utils";
-import {
-  createNewLesson,
-  getOneLesson,
-  updateLesson,
-} from "@services/lessons.service";
+import { createNewLesson, getOneLesson } from "@services/lessons.service";
 import { ApiResponse } from "@typing/api-response.interface";
 import { EGrade } from "@typing/grade.enum";
 import { ILesson, ILessonCreate } from "@typing/lesson.interface";
@@ -23,7 +19,7 @@ import isAlpha = validator.isAlpha;
 import isHexadecimal = validator.isHexadecimal;
 import isAlphanumeric = validator.isAlphanumeric;
 
-const readUploadedLesson = async (req: NextApiRequest) => {
+export const readUploadedLesson = async (req: NextApiRequest) => {
   const formData: RequestFormData = await parseForm(req, /^application\/pdf$/);
 
   const title: string = validateStringField(
@@ -144,46 +140,6 @@ export const lessonCreateHandler: NextApiHandler = async (
     return res.status(500).json({
       success: false,
       error: "Créer la leçon a échoué.",
-    });
-  }
-};
-
-export const lessonUpdateHandler: NextApiHandler = async (
-  req: NextApiRequest,
-  res: NextApiResponse<ApiResponse<{ lesson: ILesson }>>
-) => {
-  try {
-    // Get author
-    const currentUser: IUserPublic | undefined = req.session.user;
-
-    if (!currentUser) {
-      return res.status(401).json({
-        success: false,
-        error: "Il faut se connecter pour effectuer cette action.",
-      });
-    }
-
-    // Read form
-    const { file, lessonCreate } = await readUploadedLesson(req);
-
-    // Update the lesson
-    const { id } = await updateLesson(currentUser, file, lessonCreate);
-
-    // Read the final uploaded lesson
-    const uploadedLesson: ILesson | null = await getOneLesson(id);
-
-    if (!uploadedLesson) {
-      console.log("[LESSON] Edit of lesson failed: uploaded lesson not found");
-      return res.status(500).json({
-        success: false,
-        error: "Modifier la leçon a échoué.",
-      });
-    }
-  } catch (e) {
-    console.log(`[LESSON] Edit of lesson failed:`, e);
-    return res.status(500).json({
-      success: false,
-      error: "Modifier la leçon a échoué.",
     });
   }
 };

@@ -1,8 +1,6 @@
+import { lessonCreateHandler } from "@handlers/lesson/create.handler";
 import { lessonGetAllHandler } from "@handlers/lesson/get.handler";
-import {
-  lessonCreateHandler,
-  lessonUpdateHandler,
-} from "@handlers/lesson/save.handler";
+import { lessonUpdateHandler } from "@handlers/lesson/update.handler";
 import routerMiddleware from "@middlewares/router.middleware";
 import { ApiResponse } from "@typing/api-response.interface";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
