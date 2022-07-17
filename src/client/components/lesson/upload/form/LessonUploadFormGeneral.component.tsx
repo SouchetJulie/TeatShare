@@ -1,8 +1,8 @@
 import {
-  LessonSetField,
-  LessonSetLesson,
   setField,
-} from "@components/lesson/upload/lesson-upload-reducer.hook";
+  SetFieldAction,
+  SetStateAction,
+} from "@hooks/reducer-actions.utils";
 import styles from "@styles/lesson/upload.module.scss";
 import { ILessonCreate } from "@typing/lesson.interface";
 import { ChangeEvent, Dispatch, FunctionComponent } from "react";
@@ -10,7 +10,9 @@ import { Form } from "react-bootstrap";
 
 interface LessonUploadFormGeneralProps {
   currentLesson?: ILessonCreate;
-  lessonDispatch: Dispatch<LessonSetField | LessonSetLesson>;
+  lessonDispatch: Dispatch<
+    SetFieldAction<ILessonCreate> | SetStateAction<ILessonCreate>
+  >;
 }
 
 export const LessonUploadFormGeneral: FunctionComponent<

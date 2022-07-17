@@ -1,9 +1,9 @@
-import {
-  LessonSetField,
-  LessonSetLesson,
-  setField,
-} from "@components/lesson/upload/lesson-upload-reducer.hook";
 import { useCategoryList } from "@hooks/category-list.hook";
+import {
+  setField,
+  SetFieldAction,
+  SetStateAction,
+} from "@hooks/reducer-actions.utils";
 import styles from "@styles/lesson/upload.module.scss";
 import { ICategory } from "@typing/category.interface";
 import { EGrade } from "@typing/grade.enum";
@@ -16,7 +16,9 @@ import Select, { MultiValue, SingleValue } from "react-select";
 
 interface LessonUploadFormMetaProps {
   currentLesson?: ILessonCreate;
-  lessonDispatch: Dispatch<LessonSetField | LessonSetLesson>;
+  lessonDispatch: Dispatch<
+    SetFieldAction<ILessonCreate> | SetStateAction<ILessonCreate>
+  >;
 }
 
 interface Option<T extends string> {

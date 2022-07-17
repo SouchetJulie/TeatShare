@@ -1,10 +1,11 @@
+import { SetFieldAction, SetStateAction } from "@hooks/reducer-actions.utils";
 import { ILesson, ILessonCreate } from "@typing/lesson.interface";
 import { Reducer, useReducer } from "react";
 
 export const useLessonUploadReducer = (initialLesson?: ILesson) => {
   const reducer = (
     state: ILessonCreate | undefined,
-    action: LessonSetField | LessonSetLesson
+    action: SetFieldAction<ILessonCreate> | SetStateAction<ILessonCreate>
   ) => {
     switch (action.type) {
       case "SET_FIELD":
@@ -12,7 +13,7 @@ export const useLessonUploadReducer = (initialLesson?: ILesson) => {
           ...state,
           [action.key]: action.value,
         };
-      case "SET_LESSON":
+      case "SET_STATE":
         return action.payload;
       default:
         return state;
@@ -20,7 +21,10 @@ export const useLessonUploadReducer = (initialLesson?: ILesson) => {
   };
 
   return useReducer<
-    Reducer<ILessonCreate | undefined, LessonSetField | LessonSetLesson>
+    Reducer<
+      ILessonCreate | undefined,
+      SetFieldAction<ILessonCreate> | SetStateAction<ILessonCreate>
+    >
   >(
     reducer,
     Object.assign(
@@ -30,30 +34,7 @@ export const useLessonUploadReducer = (initialLesson?: ILesson) => {
   );
 };
 
-/*
- * Actions
- */
-export interface LessonSetField {
-  type: "SET_FIELD";
-  key: keyof ILessonCreate;
-  value: ILessonCreate[keyof ILessonCreate];
-}
-
-export const setField = (
-  key: keyof ILessonCreate,
-  value: ILessonCreate[keyof ILessonCreate]
-): LessonSetField => ({
-  type: "SET_FIELD",
-  key,
-  value,
-});
-
-export interface LessonSetLesson {
-  type: "SET_LESSON";
-  payload: ILessonCreate;
-}
-
-export const setLesson = (lesson: ILesson): LessonSetLesson => ({
-  type: "SET_LESSON",
+export const setLesson = (lesson: ILesson): SetStateAction<ILessonCreate> => ({
+  type: "SET_STATE",
   payload: { ...lesson, file: lesson.file as unknown as File },
 });
