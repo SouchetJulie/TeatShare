@@ -35,7 +35,7 @@
     "yup": "^0.32.11"
   },
   "devDependencies": {
-    "@next/eslint-plugin-next": "^12.2.1",
+    "@next/eslint-plugin-next": "^12.2.2",
     "@svgr/webpack": "^6.2.0",
     "@types/bcrypt": "^5.0.0",
     "@types/bcryptjs": "^2.4.2",
