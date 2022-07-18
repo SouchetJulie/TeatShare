@@ -4,7 +4,7 @@ import { setUser } from "@stores/user.store";
 import styles from "@styles/auth/Login.Component.module.scss";
 import { ApiResponse } from "@typing/api-response.interface";
 import { IUserCreate, IUserPublic } from "@typing/user.interface";
-import axios, { AxiosError, AxiosResponse } from "axios";
+import axios, { AxiosResponse } from "axios";
 import { Formik } from "formik";
 import { FormikHelpers } from "formik/dist/types";
 import Link from "next/link";
@@ -16,7 +16,6 @@ import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import * as yup from "yup";
-import { getAxiosErrorMessage } from "../../utils/get-axios-error.utils";
 
 const userCreateSchema = yup.object({
   email: yup
@@ -75,23 +74,25 @@ const SignupForm: FunctionComponent = () => {
           data: response,
         }: AxiosResponse<ApiResponse<{ user: IUserPublic }>>) => {
           setSubmitting(false);
+          if (response.success) {
+            success = true;
+            message = "Inscription réussie !";
 
-          success = true;
-          message = "Inscription réussie !";
-          dispatch(addAlert({ message, success, ttl: 2000 }));
-
-          router.push("/");
-          dispatch(setUser(response.data?.user));
+            router.push("/");
+            dispatch(setUser(response.data?.user));
+          } else {
+            success = false;
+            message = "Nom d'utilisateur ou mot de passe incorrects";
+            setButtonMessage("Inscription échouée.");
+          }
         }
       )
-      .catch((error: AxiosError) => {
-        setSubmitting(false);
-
+      .catch(() => {
         success = false;
+        message = "Nom d'utilisateur ou mot de passe incorrects";
         setButtonMessage("Inscription échouée.");
-        message = `L'inscription a échouée : ${getAxiosErrorMessage(error)}`;
-        dispatch(addAlert({ message, success }));
-      });
+      })
+      .finally(() => dispatch(addAlert({ message, success, ttl: 2000 })));
   };
 
   useEffect(() => {

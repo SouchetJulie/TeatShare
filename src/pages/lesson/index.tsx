@@ -1,12 +1,13 @@
 import { LessonList } from "@components/lesson/list/LessonList";
 import { useAutoLogin } from "@hooks/auto-login.hook";
-import React, { FunctionComponent } from "react";
-// TODO DISPLAY LESSON MADE BY CURRENT USER
+import { useFetchLessons } from "@hooks/fetch-lessons.hook";
+import { FunctionComponent } from "react";
 
 const index: FunctionComponent = () => {
   const user = useAutoLogin();
+  const { lessons } = useFetchLessons({ author: user?._id });
 
-  return user ? <LessonList lessons={[]} /> : <></>;
+  return <LessonList lessons={lessons} />;
 };
 
 export default index;

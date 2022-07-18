@@ -1,9 +1,8 @@
 import styles from "@styles/menu/navbar.module.scss";
 import { EGrade } from "@typing/grade.enum";
 import Link from "next/link";
-import React, { FunctionComponent } from "react";
+import { FunctionComponent } from "react";
 import Badge from "react-bootstrap/Badge";
-import Nav from "react-bootstrap/Nav";
 
 interface ClassLinkItemProps {
   name: EGrade;
@@ -12,18 +11,13 @@ interface ClassLinkItemProps {
 const GradeLinkItem: FunctionComponent<ClassLinkItemProps> = ({
   name,
 }: ClassLinkItemProps) => (
-  <Nav.Link
-    as={Link}
-    href={`/?class=${name}`}
-    passHref
-    className="ms-3 ms-md-0"
-  >
+  <Link href={`/?grade=${name}`} passHref className="ms-3 ms-md-0">
     <a>
       <Badge bg="secondary" pill>
         {name}
       </Badge>
     </a>
-  </Nav.Link>
+  </Link>
 );
 
 interface Props {
@@ -38,7 +32,6 @@ const GradeLinks: FunctionComponent<Props> = ({ show = true }: Props) => {
   const grades = Object.values(EGrade);
   return (
     <div className={styles.gradeBadges}>
-      <hr />
       {show
         ? grades.map((grade: EGrade) => (
             <GradeLinkItem key={`grade-link-${grade}`} name={grade} />

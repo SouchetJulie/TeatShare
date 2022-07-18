@@ -17,21 +17,25 @@ export interface ILessonDB {
   lastModifiedDate: Date;
   publicationDate?: Date;
   isDraft: boolean;
-  grade?: EGrade;
-  subject?: ESubject;
+  grade?: keyof typeof EGrade;
+  subject?: keyof typeof ESubject;
   bookmarkCount: number;
-  // foreign keys (needs to accept string so that filtered queries work)
-  authorId: ObjectId;
+  // foreign keys (needs to accept string so that query filters work)
+  authorId: ObjectId | string;
   categoryIds: ObjectId[];
   commentIds: ObjectId[];
 }
 
 /**
  * Used for sharing data about a lesson.
+ * Replace all ObjectId by string.
  */
 export type ILesson = Replace<
-  // replace all string by string
-  Replace<ILessonDB, ObjectId | undefined, string>,
+  Replace<
+    Replace<ILessonDB, ObjectId | undefined, string>,
+    ObjectId | string,
+    string
+  >,
   ObjectId[],
   string[]
 >;
@@ -39,4 +43,4 @@ export type ILesson = Replace<
 /**
  * Data for creation of a lesson.
  */
-export type ILessonCreate = Partial<ILesson>;
+export type ILessonCreate = Partial<Omit<ILesson, "file"> & { file: File }>;

@@ -1,7 +1,7 @@
 import { useAppSelector } from "@hooks/store-hook";
 import { selectIsAuthenticated } from "@stores/user.store";
 import styles from "@styles/menu/navbar.module.scss";
-import React, { FunctionComponent } from "react";
+import { FunctionComponent } from "react";
 import Nav from "react-bootstrap/Nav";
 import LessonLinks from "../menu/LessonLinks";
 

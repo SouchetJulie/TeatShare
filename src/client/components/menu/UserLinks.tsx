@@ -1,11 +1,11 @@
+import { getUsername } from "@client/utils/get-username.utils";
 import { useLogout } from "@hooks/logout.hook";
 import styles from "@styles/menu/navbar.module.scss";
 import { IUserPublic } from "@typing/user.interface";
 import Link from "next/link";
-import React, { FunctionComponent, useEffect, useState } from "react";
+import { FunctionComponent } from "react";
 import { NavDropdown } from "react-bootstrap";
 import Dropdown from "react-bootstrap/Dropdown";
-import Nav from "react-bootstrap/Nav";
 
 interface Props {
   user?: IUserPublic;
@@ -17,26 +17,14 @@ interface Props {
  */
 const UserLinks: FunctionComponent<Props> = ({ user }: Props) => {
   const logout = useLogout();
-  const [username, setUsername] = useState("");
-
-  // For display
-  useEffect(() => {
-    if (user) {
-      if (user.firstName || user.lastName) {
-        setUsername(`${user.firstName} ${user.lastName}`.trim());
-      } else {
-        setUsername(user.email);
-      }
-    }
-  }, [user, setUsername]);
 
   return user ? (
     <NavDropdown
       className={`ms-lg-5 ms-md-3 mb-2 my-md-auto text-light ${styles.dropdownMenu}`}
-      title={username}
+      title={getUsername(user)}
       menuVariant="dark"
     >
-      <NavDropdown.Item>
+      <NavDropdown.Item as="div">
         <Link href={"/user"}>Mon profil</Link>
       </NavDropdown.Item>
       <Dropdown.Divider />
@@ -45,6 +33,7 @@ const UserLinks: FunctionComponent<Props> = ({ user }: Props) => {
       </NavDropdown.Item>
       <Dropdown.Divider />
       <NavDropdown.Item>
+      <NavDropdown.Item as="div">
         <Link href={"/user/settings"}>Paramètres</Link>
       </NavDropdown.Item>
       <Dropdown.Divider />
@@ -52,12 +41,12 @@ const UserLinks: FunctionComponent<Props> = ({ user }: Props) => {
     </NavDropdown>
   ) : (
     <div className={"ms-md-5 mb-2 my-md-auto " + styles.navSection}>
-      <Nav.Link as={Link} href={"/user/login"}>
+      <Link className="nav-link" href={"/user/login"}>
         Connexion
-      </Nav.Link>
-      <Nav.Link as={Link} href={"/user/signup"}>
+      </Link>
+      <Link className="nav-link" href={"/user/signup"}>
         Inscription
-      </Nav.Link>
+      </Link>
     </div>
   );
 };

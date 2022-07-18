@@ -1,9 +1,8 @@
 ## Summary
-| Q            | A                                                     |
-|--------------|-------------------------------------------------------|
-| Bug fix?     | yes/no                                                |
-| New feature? | yes/no <!-- remember to update the README.md -->      |
-| Issue?       | closes #<!-- put the number of the related issue -->  |
+| Q            | A            |
+|--------------|--------------|
+| Bug fix?     | yes/no       |
+| New feature? | yes/no       |
 
 ## Changelog
 ### ✨ Features

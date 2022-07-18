@@ -1,4 +1,7 @@
-import { Storage } from "@google-cloud/storage";
+import { cleanFileMetadata } from "@common/file.utils";
+import { Bucket, Storage } from "@google-cloud/storage";
+import { CleanFile } from "@typing/clean-file.interface";
+import { File } from "formidable";
 
 if (!process.env.GCS_CREDENTIALS) {
   throw new Error("GCS_CREDENTIALS must be defined in environment");
@@ -17,6 +20,25 @@ const storage = new Storage({
   },
   projectId: credentials.project_id,
 });
-const bucket = process.env.NEXT_PUBLIC_BUCKET_NAME;
+const bucketName: string = process.env.NEXT_PUBLIC_BUCKET_NAME;
 
-export default storage.bucket(bucket);
+const bucket: Bucket = storage.bucket(bucketName);
+
+/**
+ * Uploads the given file to cloud storage.
+ * @param {File} uploadFile File to upload
+ * @param {string} uploadDirectory Where to store the file
+ * @return {CleanFile} File metadata
+ */
+export const uploadFile = async (
+  uploadFile: File,
+  uploadDirectory: string
+): Promise<CleanFile> => {
+  const file: CleanFile = cleanFileMetadata(uploadFile);
+  const destination: string = `${uploadDirectory}/${file.newFilename}`;
+  await bucket.upload(file.filepath, {
+    destination,
+  });
+  file.filepath = destination;
+  return file;
+};

@@ -13,7 +13,7 @@ export default (
   async (
     req: NextApiRequest,
     res: NextApiResponse<ApiResponse>
-  ): Promise<void> => {
+  ): Promise<unknown> => {
     if (!req.session.user) {
       return res.status(401).json({
         success: false,

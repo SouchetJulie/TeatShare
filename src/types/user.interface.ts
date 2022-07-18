@@ -1,3 +1,4 @@
+import { CleanFile } from "@typing/clean-file.interface";
 import { ESubject } from "@typing/subject.enum";
 import { Replace } from "@typing/utility-types";
 import { ObjectId } from "bson";
@@ -20,12 +21,23 @@ export interface IUserCreate extends IUserAuth {
 }
 
 /**
+ * Data about a user's profile
+ */
+export interface IUserProfile extends IUserCreate {
+  description: string;
+  location: string;
+  grades: (keyof typeof EGrade)[];
+  subjects: (keyof typeof ESubject)[];
+  avatar?: CleanFile;
+}
+
+/**
  * **All** data about a user.
  * @property {string} _id optional
  * @property {string} email
  * @property {string} firstName
  * @property {string} lastName
- * @property {File} avatar
+ * @property {CleanFile} avatar
  * @property {Date} joinDate
  * @property {string} description
  * @property {string} location
@@ -35,14 +47,9 @@ export interface IUserCreate extends IUserAuth {
  * @property {string[]} bookmarkIds
  * @property {string[]} commentIds
  */
-export interface IUserDB extends IUserCreate {
+export interface IUserDB extends IUserProfile {
   _id?: ObjectId; // used in database
-  avatar?: File;
   joinDate: Date;
-  description: string;
-  location: string;
-  grades: EGrade[];
-  subjects: ESubject[];
   // foreign keys
   lessonIds: ObjectId[];
   bookmarkIds: ObjectId[];

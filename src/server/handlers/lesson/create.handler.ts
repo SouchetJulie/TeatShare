@@ -1,50 +1,92 @@
+import {
+  isText,
+  parseForm,
+  RequestFormData,
+  validateArrayStringField,
+  validateStringField,
+} from "@common/parse-form.utils";
 import { createNewLesson, getOneLesson } from "@services/lessons.service";
 import { ApiResponse } from "@typing/api-response.interface";
+import { EGrade } from "@typing/grade.enum";
 import { ILesson, ILessonCreate } from "@typing/lesson.interface";
+import { ESubject } from "@typing/subject.enum";
 import { IUserPublic } from "@typing/user.interface";
-import { Fields, File, Files, IncomingForm, Part } from "formidable";
+import { File } from "formidable";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
+import validator from "validator";
+import isBoolean = validator.isBoolean;
+import isAlpha = validator.isAlpha;
+import isHexadecimal = validator.isHexadecimal;
+import isAlphanumeric = validator.isAlphanumeric;
 
-interface LessonFormData {
-  fields?: Fields;
-  files?: Files;
-}
+export const readUploadedLesson = async (req: NextApiRequest) => {
+  const formData: RequestFormData = await parseForm(req, /^application\/pdf$/);
 
-/**
- * Reads the form's value from the request and puts them into a Formidable object.
- * @param {NextApiRequest} req The incoming request.
- * @return {Promise<LessonFormData>} The form's values.
- * @throws {Error} If the parsing fails.
- */
-const parseForm = (req: NextApiRequest): Promise<LessonFormData> =>
-  new Promise(
-    (
-      resolve: (value: { fields: Fields; files: Files }) => void,
-      reject: (reason: Error) => void
-    ) => {
-      const form = new IncomingForm({
-        keepExtensions: false,
-        hashAlgorithm: "sha256",
-        multiples: true,
-        filter: ({ mimetype }: Part): boolean =>
-          !!mimetype && mimetype.includes("pdf"), // keep only pdf
-      });
-
-      form.parse(req, (err, fields: Fields, files: Files) => {
-        if (err) {
-          return reject(err);
-        }
-        resolve({ fields, files });
-      });
-    }
+  const title: string = validateStringField(
+    formData?.fields?.title,
+    isText,
+    "Titre manquant ou invalide",
+    false
+  )!;
+  const subtitle: string | undefined = validateStringField(
+    formData?.fields?.subtitle,
+    isText,
+    "Sous-titre invalide"
+  );
+  const isDraft: string = validateStringField(
+    formData?.fields?.isDraft,
+    isBoolean,
+    "Choix brouillon/publication manquant.",
+    false
+  )!;
+  const subject: string | undefined = validateStringField(
+    formData?.fields?.subject,
+    isAlpha,
+    "Matière invalide"
+  );
+  const grade: string | undefined = validateStringField(
+    formData?.fields?.grade,
+    isAlphanumeric,
+    "Classe invalide"
   );
 
+  const _id: string | undefined = validateStringField(
+    formData?.fields?._id,
+    isHexadecimal,
+    "Id invalide"
+  );
+  const categoryIds: string[] = validateArrayStringField(
+    formData?.fields?.categoryIds,
+    isHexadecimal,
+    "Catégories invalides"
+  );
+
+  // Get file
+  let file: File | undefined;
+  if (formData?.files?.file instanceof Array) {
+    file = formData.files.file[0];
+  } else {
+    file = formData.files?.file;
+  }
+
+  const lessonCreate: ILessonCreate = {
+    _id,
+    title,
+    subtitle,
+    categoryIds,
+    subject: subject as keyof typeof ESubject,
+    grade: grade as keyof typeof EGrade,
+    isDraft: JSON.parse(isDraft), // conversion to boolean
+  };
+  return { lessonCreate, file };
+};
+
 /**
- * Parses the incoming request to record a new lesson.
+ * Parses the incoming request to record a new lesson or update an existing one.
  * @param {NextApiRequest} req Incoming request.
  * @param {NextApiResponse} res Whether the recording succeeded, and the reasons why not otherwise.
  */
-export const lessonPostHandler: NextApiHandler = async (
+export const lessonCreateHandler: NextApiHandler = async (
   req: NextApiRequest,
   res: NextApiResponse<ApiResponse<{ lesson: ILesson }>>
 ) => {
@@ -60,74 +102,30 @@ export const lessonPostHandler: NextApiHandler = async (
     }
 
     // Read form
-    let formData: LessonFormData;
-    try {
-      formData = await parseForm(req);
-    } catch (e) {
-      console.log(`[LESSON] Parsing the lesson upload failed`, e);
-      return res.status(400).json({
-        success: false,
-        error: (e as Error).message,
-      });
-    }
+    const { lessonCreate, file } = await readUploadedLesson(req);
 
-    if (!formData?.files) {
+    if (!file) {
       return res.status(400).json({
         success: false,
         error: "Fichier manquant.",
       });
     }
-    if (!formData?.fields?.isDraft) {
-      return res.status(400).json({
-        success: false,
-        error: "Choix brouillon/publication manquant.",
-      });
-    }
-    if (!formData?.fields.title) {
-      return res.status(400).json({
-        success: false,
-        error: "Titre manquant.",
-      });
-    }
 
-    // Get file
-    let file: File;
-    if (formData?.files?.file instanceof Array) {
-      file = formData.files.file[0];
-    } else {
-      file = formData.files.file;
-    }
-
-    // Get isDraft
-    let isDraft: string;
-    if (formData?.fields.isDraft instanceof Array) {
-      isDraft = formData?.fields.isDraft[0];
-    } else {
-      isDraft = formData?.fields.isDraft;
-    }
-
-    const lessonCreate: ILessonCreate = {
-      ...formData.fields,
-      isDraft: JSON.parse(isDraft), // conversion to boolean
-    };
-
+    // Create the lesson
     const { id } = await createNewLesson(currentUser, file, lessonCreate);
-
     currentUser.lessonIds.push(id.toString());
     await req.session.save();
 
-    console.log(`[LESSON] Upload of lesson ${id} successful`);
-
-    // Read what was uploaded
+    // Read the final uploaded lesson
     const uploadedLesson: ILesson | null = await getOneLesson(id);
 
     if (!uploadedLesson) {
       console.log(
-        "[LESSON] Upload of lesson failed: uploaded lesson not found"
+        "[LESSON] Creation of lesson failed: uploaded lesson not found"
       );
       return res.status(500).json({
         success: false,
-        error: "Uploader la leçon a échoué.",
+        error: "Créer la leçon a échoué.",
       });
     }
 
@@ -138,10 +136,10 @@ export const lessonPostHandler: NextApiHandler = async (
       },
     });
   } catch (e) {
-    console.log(`[LESSON] Upload of lesson failed:`, e);
+    console.log(`[LESSON] Creation of lesson failed:`, e);
     return res.status(500).json({
       success: false,
-      error: "Uploader la leçon a échoué.",
+      error: "Créer la leçon a échoué.",
     });
   }
 };

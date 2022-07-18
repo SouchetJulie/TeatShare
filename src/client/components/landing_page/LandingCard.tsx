@@ -5,7 +5,7 @@ import img4 from "@imgCours/cours4.png";
 import img5 from "@imgCours/cours5.png";
 import img6 from "@imgCours/cours6.png";
 import { ILandingPageCardInterface } from "@typing/landing-page-card.interface";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
 import { FunctionComponent } from "react";
 import Timer from "../../../../public/landingPage/timer.svg";

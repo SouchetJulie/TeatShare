@@ -1,15 +1,16 @@
 import avatarLogo from "@assets/logos/avatar_placeholder.png";
-import { getUser, toggleBookmark } from "@client/services/user.service";
+import { getUser } from "@client/services/user.service";
 import { getAxiosErrorMessage } from "@client/utils/get-axios-error.utils";
-import CategoryBadge from "@components/lesson/category-badge.component";
-import LessonBookmark from "@components/lesson/LessonBookmark";
+import { getUsername } from "@client/utils/get-username.utils";
+import CategoryBadge from "@components/category/CategoryBadge.component";
+import { GradeBadge } from "@components/grade/GradeBadge.component";
+import LessonBookmark from "@components/lesson/button/LessonBookmark";
+import { LessonDelete } from "@components/lesson/button/LessonDelete.component";
+import { LessonEdit } from "@components/lesson/button/LessonEdit.component";
+import { SubjectBadge } from "@components/subject/subject-badge.component";
 import { useAppDispatch, useAppSelector } from "@hooks/store-hook";
 import { addAlert } from "@stores/alert.store";
-import {
-  addBookmark,
-  removeBookmark,
-  selectAuthenticatedUser,
-} from "@stores/user.store";
+import { selectAuthenticatedUser } from "@stores/user.store";
 import styles from "@styles/lesson/LessonPost.module.scss";
 import { ApiResponse } from "@typing/api-response.interface";
 import { ILesson } from "@typing/lesson.interface";
@@ -17,14 +18,14 @@ import { IUserPublic } from "@typing/user.interface";
 import { AxiosError, AxiosResponse } from "axios";
 import dayjs from "dayjs";
 import Image from "next/image";
-import React, { FunctionComponent, useEffect, useMemo, useState } from "react";
+import { FunctionComponent, useEffect, useMemo, useState } from "react";
 import { ListGroup } from "react-bootstrap";
 import { Download, Printer } from "react-bootstrap-icons";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
+
 // eslint-disable-next-line camelcase
-import { unstable_batchedUpdates } from "react-dom";
 
 interface LessonHeaderComponentProps {
   lesson?: ILesson;
@@ -34,22 +35,26 @@ const LessonDetailsHeader: FunctionComponent<LessonHeaderComponentProps> = ({
   lesson,
 }) => {
   const [author, setAuthor] = useState<IUserPublic | undefined>(undefined);
-  const user: IUserPublic | undefined = useAppSelector(selectAuthenticatedUser);
+  const user = useAppSelector(selectAuthenticatedUser);
   const dispatch = useAppDispatch();
 
   const formatDate: string = useMemo(
     () => dayjs(lesson?.publicationDate).format("DD/MM/YYYY"),
     [lesson?.publicationDate]
   );
-  const isBookmarked: boolean =
-    user?.bookmarkIds.includes(lesson?._id ?? "") ?? false;
 
   useEffect(() => {
     if (lesson?.authorId) {
       getUser(lesson.authorId)
-        .then(({ data }: AxiosResponse<ApiResponse<{ user: IUserPublic }>>) => {
-          setAuthor(data.data?.user);
-        })
+        .then(
+          ({
+            data: response,
+          }: AxiosResponse<ApiResponse<{ user: IUserPublic }>>) => {
+            if (response.success) {
+              setAuthor(response.data?.user);
+            }
+          }
+        )
         .catch((err: AxiosError) => {
           dispatch(
             addAlert({
@@ -62,48 +67,6 @@ const LessonDetailsHeader: FunctionComponent<LessonHeaderComponentProps> = ({
     }
   }, [lesson?.authorId]);
 
-  const onBookmarkClick = () => {
-    toggleBookmark(lesson?._id ?? "", isBookmarked)
-      .then(({ data: response }: AxiosResponse<ApiResponse>) => {
-        if (response.success) {
-          unstable_batchedUpdates(() => {
-            dispatch(
-              addAlert({
-                success: true,
-                message: `Marque-page ${
-                  isBookmarked ? "supprimé" : "ajouté"
-                } !`,
-                ttl: 1500,
-              })
-            );
-
-            if (isBookmarked) {
-              dispatch(removeBookmark(lesson!._id!));
-              // lesson!.bookmarkCount -= 1;
-            } else {
-              dispatch(addBookmark(lesson!._id!));
-              // lesson!.bookmarkCount += 1;
-            }
-          });
-        } else {
-          addAlert({
-            success: false,
-            message: `Échec lors de ${
-              isBookmarked ? "la suppression" : "l'ajout"
-            } du marque-page : ${response.error}`,
-          });
-        }
-      })
-      .catch((e: AxiosError) =>
-        addAlert({
-          success: false,
-          message: `Échec lors de ${
-            isBookmarked ? "la suppression" : "l'ajout"
-          } du marque-page : ${getAxiosErrorMessage(e)}`,
-        })
-      );
-  };
-
   return (
     <Row className={styles.lessonHeader}>
       <Col xs={12} md={3}>
@@ -114,37 +77,43 @@ const LessonDetailsHeader: FunctionComponent<LessonHeaderComponentProps> = ({
           width="70px"
           height="70px"
         />
-        <p>
-          {author?.firstName ?? ""} {author?.lastName ?? ""}
-        </p>
-        {author?.subjects.length ? (
-          <p>Professeur de {author?.subjects.join(", ")} </p>
-        ) : (
-          <></>
+        <p>{getUsername(author)}</p>
+        {author?.subjects?.length && (
+          <p>Professeur de {author?.subjects?.join(", ")} </p>
         )}
         <p>publié le {formatDate ?? ""}</p>
       </Col>
       <Col
         xs={12}
         md={6}
-        className=" d-flex justify-content-center align-items-center flex-column"
+        className="d-flex justify-content-center align-items-center flex-column"
       >
         <h1>{lesson?.title ?? ""}</h1>
-        <ListGroup horizontal>
+        <ListGroup horizontal className={styles.tagList}>
+          {lesson?.grade && <GradeBadge grade={lesson.grade} />}
+          {lesson?.subject && <SubjectBadge subject={lesson.subject} />}
           {lesson?.categoryIds.map((id: string) => (
             <CategoryBadge key={`category-${id}`} id={id} />
           ))}
         </ListGroup>
       </Col>
       <Col xs={12} md={3} className={styles.headerAction}>
-        <Button variant="none">
-          <Download color="black" size={30} />
+        {user && author?._id === user?._id && (
+          <>
+            <LessonEdit lessonId={lesson?._id} size={30} />
+            <LessonDelete
+              size={30}
+              lessonId={lesson?._id}
+              lessonTitle={lesson?.title}
+            />
+          </>
+        )}
+        <LessonBookmark lessonId={lesson?._id ?? ""} size={30} />
+        <Button variant="outline-secondary" className="border-0 rounded-circle">
+          <Download size={30} />
         </Button>
-        <Button variant="none">
-          <Printer color="black" size={30} />
-        </Button>
-        <Button variant="none" onClick={onBookmarkClick}>
-          <LessonBookmark isBookmarked={isBookmarked} />
+        <Button variant="outline-secondary" className="border-0 rounded-circle">
+          <Printer size={30} />
         </Button>
       </Col>
     </Row>

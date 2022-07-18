@@ -1,19 +1,21 @@
 @import "../variables";
 
 .control {
-  margin-bottom: 30px;
   border-top-color: transparent;
   border-right-color: transparent;
   border-left-color: transparent;
 }
 
 .label {
+  margin-top: 30px;
   font-size: 1.25em;
   font-variant: small-caps;
 }
 
 .uploadPageTitle {
+  align-items: center;
+  justify-content: center;
+
   margin-top: 4%;
   text-align: center;
-  color: $orange;
 }

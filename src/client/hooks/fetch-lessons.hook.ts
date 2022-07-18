@@ -1,6 +1,6 @@
-import { useAppDispatch, useAppSelector } from "@hooks/store-hook";
+import { useAutoLogin } from "@hooks/auto-login.hook";
+import { useAppDispatch } from "@hooks/store-hook";
 import { addAlert } from "@stores/alert.store";
-import { selectIsAuthenticated } from "@stores/user.store";
 import { ApiResponse } from "@typing/api-response.interface";
 import { ILesson } from "@typing/lesson.interface";
 import axios, { AxiosError, AxiosResponse } from "axios";
@@ -33,12 +33,16 @@ interface FetchLessonsParameters {
    * Whether to fetch the draft lessons only
    */
   isDraft?: boolean;
+  /**
+   * Fetches the lessons written by this author only, if defined
+   */
+  author?: string;
 }
 
 const useFetchLessons = (
   filters: FetchLessonsParameters = {}
 ): FetchLessonsReturns => {
-  const isAuthenticated: boolean = useAppSelector(selectIsAuthenticated);
+  const isAuthenticated = !!useAutoLogin();
   const dispatch = useAppDispatch();
   const [lessons, setLessons] = useState<ILesson[]>([]);
 
@@ -52,9 +56,9 @@ const useFetchLessons = (
         .get<ApiResponse<{ lessons: ILesson[] }>>(`/api/lesson?${searchParams}`)
         .then(
           ({
-            data: { data, success },
+            data: response,
           }: AxiosResponse<ApiResponse<{ lessons: ILesson[] }>>) => {
-            if (!success) {
+            if (!response.success) {
               dispatch(
                 addAlert({
                   message: "Impossible de récupérer la liste des leçons",
@@ -63,7 +67,7 @@ const useFetchLessons = (
                 })
               );
             } else if (isSubscribed) {
-              setLessons(data?.lessons ?? []);
+              setLessons(response.data?.lessons ?? []);
             }
           }
         )

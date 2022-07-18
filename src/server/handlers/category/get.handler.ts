@@ -7,7 +7,7 @@ import { ObjectId } from "mongodb";
 import { NextApiRequest, NextApiResponse } from "next";
 
 const categoryGetAllHandler = async (
-  req: NextApiRequest,
+  _req: NextApiRequest,
   res: NextApiResponse<ApiResponse<{ categories: ICategoryDB[] }>>
 ) => {
   try {

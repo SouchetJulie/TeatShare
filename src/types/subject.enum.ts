@@ -1,4 +1,7 @@
-// Not subject to change, so hardcoded for better type-checking
+/**
+ * The general subject of the lesson (maths, language, art...).
+ * Not subject to change, so hardcoded for better type-checking.
+ */
 export enum ESubject {
   maths = "MATHS",
   francais = "FRANCAIS",
