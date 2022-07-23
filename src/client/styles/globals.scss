@@ -9,8 +9,8 @@ $enable-negative-margins: true;
 
 // adding new colors
 $custom-colors: (
-  "primary-light": $primary-light,
-  "secondary-light": $secondary-light,
+        "primary-light": $primary-light,
+        "secondary-light": $secondary-light,
 );
 
 $theme-colors: map-merge($theme-colors, $custom-colors);
@@ -67,6 +67,7 @@ h1 {
   padding-right: 40px;
   padding-left: 40px;
   border-radius: 25px;
+  color: white;
 }
 
 .onTop {

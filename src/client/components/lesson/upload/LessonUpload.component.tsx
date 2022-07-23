@@ -23,7 +23,7 @@ const LessonUpload: FunctionComponent<LessonUploadProps> = ({
   return (
     <Container>
       <Row className={styles.uploadPageTitle}>
-        <Col sm="auto" as="h1" className="text-primary">
+        <Col sm="auto" as="h1" className="text-secondary">
           {lesson ? <>Modifier une leçon</> : "Créer une leçon"}
         </Col>
         {lesson && (
