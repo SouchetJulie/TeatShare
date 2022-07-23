@@ -6,9 +6,10 @@ import styles from "../../styles/dashboard/dashboard.module.scss";
 
 interface Props {
   user: IUserPublic;
+  nbrPost: number;
 }
 
-const DashBoardCard: FunctionComponent<Props> = ({ user }: Props) => {
+const DashBoardCard: FunctionComponent<Props> = ({ user, nbrPost }: Props) => {
   return (
     <div>
       <h3> Mon Profil</h3>
@@ -26,7 +27,7 @@ const DashBoardCard: FunctionComponent<Props> = ({ user }: Props) => {
             <span>{user.firstName ? user.firstName : "Votre nom"}</span>
             <p>classe(s) enseignée(s)</p>
             <span>{user.grades ? user.grades : "Pas de classe"}</span>
-            <h6>6 POSTS - 2 COMMENTAIRES</h6>
+            <h6>{nbrPost} POSTS - 2 COMMENTAIRES</h6>
           </Card.Text>
         </Card.Body>
       </Card>
