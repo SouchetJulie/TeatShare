@@ -1,11 +1,15 @@
+import avatarLogo from "@assets/logos/avatar_placeholder.png";
 import { useProfileOnSubmit } from "@components/user/profile-on-submit.hook";
 import { useAutoLogin } from "@hooks/auto-login.hook";
+import dashboardStyles from "@styles/dashboard/dashboard.module.scss";
+import styles from "@styles/profile/profile.module.scss";
 import { CleanFile } from "@typing/clean-file.interface";
 import { EGrade } from "@typing/grade.enum";
 import { ESubject } from "@typing/subject.enum";
 import Image from "next/image";
-import { FunctionComponent } from "react";
-import { Button, Form, ListGroup, Table } from "react-bootstrap";
+import { FunctionComponent, useState } from "react";
+import { Button, Card, Form, ListGroup, Table } from "react-bootstrap";
+import Container from "react-bootstrap/Container";
 import Select from "react-select";
 
 const subjects = Object.entries(ESubject).map(
@@ -22,11 +26,12 @@ const grades = Object.entries(EGrade).map(
   })
 );
 
-const Settings: FunctionComponent = () => {
+const Profile: FunctionComponent = () => {
   const user = useAutoLogin();
   const onSubmit = useProfileOnSubmit();
+  const [modifiying, setModifiying] = useState<boolean>(false);
 
-  const entries = user
+  const entries: Array<JSX.Element> | null = user
     ? Object.entries(user).map(([key, value]) => (
         <tr key={`row-${key}`}>
           <td>{key}</td>
@@ -58,9 +63,8 @@ const Settings: FunctionComponent = () => {
       ))
     : null;
 
-  return user ? (
+  const userForm: JSX.Element | null = user ? (
     <div>
-      <h3>TODO for debug</h3>
       <Table>
         <tbody>{entries}</tbody>
       </Table>
@@ -143,9 +147,39 @@ const Settings: FunctionComponent = () => {
         <Button type="submit">Envoyer</Button>
       </Form>
     </div>
-  ) : (
-    <></>
+  ) : null;
+
+  // Return the Component
+  return (
+    <Container className={styles.profileContainer}>
+      <h2 className={styles.title}>Mon profile</h2>
+      <div>
+        <h3 className={styles.sectionTitle}>Mes informations</h3>
+        <div className={styles.profileMainData}>
+          <div className={styles.myData}></div>
+          <Card className={dashboardStyles.card}>
+            {/* Next considère le logo comme un objet possédant un attribut src */}
+            <Card.Img
+              variant="top"
+              src={avatarLogo.src}
+              className={dashboardStyles.cardImage}
+            />
+            <Card.Body>
+              <span className={dashboardStyles.badge}>veteran</span>
+              <Card.Text className={dashboardStyles.cardText}>
+                <p>Nom</p>
+                <span>metier</span>
+                <p>classe(s) enseignée(s)</p>
+                <span>Cp CE1</span>
+                <h6>6 POSTS - 2 COMMENTAIRES</h6>
+              </Card.Text>
+            </Card.Body>
+          </Card>
+        </div>
+        {userForm}
+      </div>
+    </Container>
   );
 };
 
-export default Settings;
+export default Profile;
