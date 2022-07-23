@@ -9,8 +9,8 @@ $enable-negative-margins: true;
 
 // adding new colors
 $custom-colors: (
-  "primary-light": $primary-light,
-  "secondary-light": $secondary-light,
+        "primary-light": $primary-light,
+        "secondary-light": $secondary-light,
 );
 
 $theme-colors: map-merge($theme-colors, $custom-colors);
@@ -31,8 +31,7 @@ body,
   min-height: 100vh;
   margin: 0;
   padding: 0;
-  background-color: $light;
-  scrollbar-color: $primary lightgray;
+  background: $background;
 }
 
 #__next_page {

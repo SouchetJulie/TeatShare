@@ -3,7 +3,7 @@ import { useLogout } from "@hooks/logout.hook";
 import styles from "@styles/menu/navbar.module.scss";
 import { IUserPublic } from "@typing/user.interface";
 import Link from "next/link";
-import { FunctionComponent } from "react";
+import React, { FunctionComponent, useEffect, useState } from "react";
 import { NavDropdown } from "react-bootstrap";
 import Dropdown from "react-bootstrap/Dropdown";
 
@@ -17,6 +17,18 @@ interface Props {
  */
 const UserLinks: FunctionComponent<Props> = ({ user }: Props) => {
   const logout = useLogout();
+  const [username, setUsername] = useState("");
+
+  // For display
+  useEffect(() => {
+    if (user) {
+      if (user.firstName || user.lastName) {
+        setUsername(`${user.firstName} ${user.lastName}`.trim());
+      } else {
+        setUsername(user.email);
+      }
+    }
+  }, [user, setUsername]);
 
   return user ? (
     <NavDropdown
@@ -29,6 +41,10 @@ const UserLinks: FunctionComponent<Props> = ({ user }: Props) => {
       </NavDropdown.Item>
       <Dropdown.Divider />
       <NavDropdown.Item as="div">
+        <Link href={"/dashboard"}>Mon dashboard</Link>
+      </NavDropdown.Item>
+      <Dropdown.Divider />
+      <NavDropdown.Item>
         <Link href={"/user/settings"}>Paramètres</Link>
       </NavDropdown.Item>
       <Dropdown.Divider />
@@ -36,12 +52,12 @@ const UserLinks: FunctionComponent<Props> = ({ user }: Props) => {
     </NavDropdown>
   ) : (
     <div className={"ms-md-5 mb-2 my-md-auto " + styles.navSection}>
-      <Link className="nav-link" href={"/user/login"}>
+      <Nav.Link as={Link} href={"/user/login"}>
         Connexion
-      </Link>
-      <Link className="nav-link" href={"/user/signup"}>
+      </Nav.Link>
+      <Nav.Link as={Link} href={"/user/signup"}>
         Inscription
-      </Link>
+      </Nav.Link>
     </div>
   );
 };
