@@ -4,7 +4,7 @@ import styles from "@styles/menu/navbar.module.scss";
 import { IUserPublic } from "@typing/user.interface";
 import Link from "next/link";
 import React, { FunctionComponent, useEffect, useState } from "react";
-import { NavDropdown } from "react-bootstrap";
+import { Nav, NavDropdown } from "react-bootstrap";
 import Dropdown from "react-bootstrap/Dropdown";
 
 interface Props {
@@ -44,7 +44,7 @@ const UserLinks: FunctionComponent<Props> = ({ user }: Props) => {
         <Link href={"/dashboard"}>Mon dashboard</Link>
       </NavDropdown.Item>
       <Dropdown.Divider />
-      <NavDropdown.Item>
+      <NavDropdown.Item as="div">
         <Link href={"/user/settings"}>Paramètres</Link>
       </NavDropdown.Item>
       <Dropdown.Divider />
