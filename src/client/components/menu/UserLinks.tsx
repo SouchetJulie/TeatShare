@@ -28,11 +28,10 @@ const UserLinks: FunctionComponent<Props> = ({ user }: Props) => {
         <Link href={"/user"}>Mon profil</Link>
       </NavDropdown.Item>
       <Dropdown.Divider />
-      <NavDropdown.Item>
+      <NavDropdown.Item as="div">
         <Link href={"/dashboard"}>Mon dashboard</Link>
       </NavDropdown.Item>
       <Dropdown.Divider />
-      <NavDropdown.Item>
       <NavDropdown.Item as="div">
         <Link href={"/user/settings"}>Paramètres</Link>
       </NavDropdown.Item>

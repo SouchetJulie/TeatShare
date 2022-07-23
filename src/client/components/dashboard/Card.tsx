@@ -1,11 +1,14 @@
 import avatarLogo from "@assets/logos/avatar_placeholder.png";
+import { IUserPublic } from "@typing/user.interface";
 import { FunctionComponent } from "react";
 import Card from "react-bootstrap/Card";
 import styles from "../../styles/dashboard/dashboard.module.scss";
 
-interface Props {}
+interface Props {
+  user: IUserPublic;
+}
 
-const DashBoardCard: FunctionComponent<Props> = ({}: Props) => {
+const DashBoardCard: FunctionComponent<Props> = ({ user }: Props) => {
   return (
     <div>
       <h3> Mon Profil</h3>
@@ -20,9 +23,9 @@ const DashBoardCard: FunctionComponent<Props> = ({}: Props) => {
           <span className={styles.badge}>veteran</span>
           <Card.Text className={styles.cardText}>
             <p>Nom</p>
-            <span>metier</span>
+            <span>{user.firstName ? user.firstName : "Votre nom"}</span>
             <p>classe(s) enseignée(s)</p>
-            <span>Cp CE1</span>
+            <span>{user.grades ? user.grades : "Pas de classe"}</span>
             <h6>6 POSTS - 2 COMMENTAIRES</h6>
           </Card.Text>
         </Card.Body>
