@@ -1,0 +1,26 @@
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/mixins";
+@import "~bootstrap/scss/variables";
+
+.form {
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 10px;
+  z-index: 10;
+}
+
+@include media-breakpoint-down("md") {
+  .inputGroup {
+    margin-bottom: 5px;
+  }
+}
+
+@include media-breakpoint-up("md") {
+  .fixedWidth {
+    width: 25%;
+  }
+}
+
+.input {
+  border-radius: 25px !important;
+}

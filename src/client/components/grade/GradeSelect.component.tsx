@@ -1,14 +1,17 @@
 import {
+  createSelectStyle,
   fromEnumToOption,
   fromValueToOption,
+  SelectOption,
 } from "@components/ui/select-option.utils";
 import { EGrade } from "@typing/grade.enum";
 import { FunctionComponent, ReactElement } from "react";
-import Select, { SingleValue } from "react-select";
+import Select, { SingleValue, StylesConfig } from "react-select";
 
 interface GradeSelectProps {
   currentSelected?: string;
   onChange: (selected: SingleValue<{ value: string; label: EGrade }>) => void;
+  rounded?: boolean;
 }
 
 const grade = Object.entries(EGrade);
@@ -17,9 +20,14 @@ const gradeOptions = grade.map(fromEnumToOption);
 const GradeSelect: FunctionComponent<GradeSelectProps> = ({
   currentSelected,
   onChange,
+  rounded = false,
 }: GradeSelectProps): ReactElement => {
   const selectedGrade = fromValueToOption(grade, currentSelected);
 
+  const styles: StylesConfig<
+    SelectOption<EGrade>,
+    false
+  > = createSelectStyle<EGrade>({ rounded });
   return (
     <Select
       className="text-dark"
@@ -30,6 +38,7 @@ const GradeSelect: FunctionComponent<GradeSelectProps> = ({
       onChange={onChange}
       aria-label="Classe"
       placeholder="Classe"
+      styles={styles}
     />
   );
 };

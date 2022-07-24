@@ -1,3 +1,5 @@
+import { CSSObjectWithLabel, StylesConfig } from "react-select";
+
 interface SelectOption<T extends string> {
   value: string;
   label: T;
@@ -30,5 +32,21 @@ const fromValueToOption = <T extends string>(
   };
 };
 
-export { fromEnumToOption, fromValueToOption };
-export type { SelectOption };
+interface SelectStyle {
+  rounded: boolean;
+}
+
+const createSelectStyle = <
+  Data extends string,
+  isMulti extends boolean = false
+>({
+  rounded,
+}: SelectStyle): StylesConfig<SelectOption<Data>, isMulti> => ({
+  control: (baseStyle: CSSObjectWithLabel) => ({
+    ...baseStyle,
+    borderRadius: rounded ? "25px" : "initial",
+  }),
+});
+
+export { fromEnumToOption, fromValueToOption, createSelectStyle };
+export type { SelectOption, SelectStyle };
