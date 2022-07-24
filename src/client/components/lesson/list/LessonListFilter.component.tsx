@@ -19,6 +19,9 @@ import InputGroup from "react-bootstrap/InputGroup";
 import Row from "react-bootstrap/Row";
 import { MultiValue, SingleValue } from "react-select";
 
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
 interface LessonListFilterProps {
   filters: LessonFilterState;
   filterDispatch: LessonFilterDispatch;
@@ -74,7 +77,7 @@ export const LessonListFilter: FunctionComponent<LessonListFilterProps> = ({
           </Button>
         </Col>
 
-        <InputGroup as={Col} xs={10} md={11} className={styles.inputGroup}>
+        <Col xs={10} md={11} className={styles.inputGroup}>
           <Form.Label visuallyHidden htmlFor="lessons-filter-text">
             Recherche
           </Form.Label>
@@ -88,7 +91,7 @@ export const LessonListFilter: FunctionComponent<LessonListFilterProps> = ({
               filterDispatch(setField("text", event.target.value))
             }
           />
-        </InputGroup>
+        </Col>
       </Row>
       <Row>
         <InputGroup
@@ -131,6 +134,14 @@ export const LessonListFilter: FunctionComponent<LessonListFilterProps> = ({
             rounded
             currentSelected={filters?.categoryIds}
             onChange={onCategoryChange}
+          />
+        </Col>
+      </Row>
+      <Row>
+        <Col xs={12} md={3} className={styles.inputGroup}>
+          <DatePicker
+            locale="fr"
+            onChange={(date: Date | null) => console.log(date)}
           />
         </Col>
       </Row>
