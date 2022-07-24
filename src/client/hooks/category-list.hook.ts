@@ -1,6 +1,6 @@
 import { useAppDispatch } from "@hooks/store-hook";
 import { addAlert } from "@stores/alert.store";
-import { ApiResponse } from "@typing/api-response.interface";
+import { ApiErrorResponse, ApiResponse } from "@typing/api-response.interface";
 import { ICategory } from "@typing/category.interface";
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { useEffect, useState } from "react";
@@ -34,7 +34,7 @@ export const useCategoryList = (): ICategory[] => {
           }
         }
       )
-      .catch((e: AxiosError) => {
+      .catch((e: AxiosError<ApiErrorResponse>) => {
         dispatch(
           addAlert({
             success: false,
