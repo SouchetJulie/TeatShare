@@ -37,6 +37,7 @@ const CategorySelect: FunctionComponent<CategorySelectProps> = ({
 
   return (
     <Select
+      isClearable
       isMulti
       className="text-dark"
       options={categoryOptions}

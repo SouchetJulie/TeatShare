@@ -31,6 +31,7 @@ const SubjectSelect: FunctionComponent<SubjectSelectProps> = ({
 
   return (
     <Select
+      isClearable
       className="text-dark"
       options={subjectOptions}
       id="subject"

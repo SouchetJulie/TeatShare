@@ -10,6 +10,8 @@ import styles from "@styles/lesson/lesson-filter.module.scss";
 import { EGrade } from "@typing/grade.enum";
 import { ESubject } from "@typing/subject.enum";
 import { ChangeEvent, FunctionComponent } from "react";
+import { Button } from "react-bootstrap";
+import { ArrowCounterclockwise } from "react-bootstrap-icons";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
@@ -43,11 +45,17 @@ export const LessonListFilter: FunctionComponent<LessonListFilterProps> = ({
       )
     );
 
+  const onReset = (): void => {
+    filterDispatch({ type: "SET_STATE", payload: {} });
+  };
+
+  const showReset: boolean = Object.values(filters).length > 0;
+
   return (
     <Form as={Row} className={styles.form}>
       <InputGroup
         as={Col}
-        md="3"
+        md="2"
         className={`${styles.inputGroup} ${styles.fixedWidth}`}
       >
         <Form.Label visuallyHidden htmlFor="lessons-filter-author">
@@ -58,14 +66,14 @@ export const LessonListFilter: FunctionComponent<LessonListFilterProps> = ({
           id="lessons-filter-author"
           name="authorId"
           placeholder="ID de l'auteur"
-          value={filters.authorId}
+          value={filters.authorId ?? ""}
           onChange={(event: ChangeEvent<HTMLInputElement>) =>
             filterDispatch(setField("authorId", event.target.value))
           }
         />
       </InputGroup>
 
-      <Col md="3" className={styles.inputGroup}>
+      <Col md="2" className={styles.inputGroup}>
         <GradeSelect
           rounded
           currentSelected={filters?.grade}
@@ -73,7 +81,7 @@ export const LessonListFilter: FunctionComponent<LessonListFilterProps> = ({
         />
       </Col>
 
-      <Col md="3" className={styles.inputGroup}>
+      <Col md="2" className={styles.inputGroup}>
         <SubjectSelect
           rounded
           currentSelected={filters?.subject}
@@ -81,13 +89,27 @@ export const LessonListFilter: FunctionComponent<LessonListFilterProps> = ({
         />
       </Col>
 
-      <Col md="3" className={styles.inputGroup}>
+      <Col md="2" className={styles.inputGroup}>
         <CategorySelect
           rounded
           currentSelected={filters?.categoryIds}
           onChange={onCategoryChange}
         />
       </Col>
+
+      {showReset && (
+        <Col xs="1">
+          <Button
+            type="reset"
+            variant="outline-dark"
+            className="rounded-circle"
+            onClick={onReset}
+          >
+            <span className="visually-hidden">Vider</span>
+            <ArrowCounterclockwise />
+          </Button>
+        </Col>
+      )}
     </Form>
   );
 };

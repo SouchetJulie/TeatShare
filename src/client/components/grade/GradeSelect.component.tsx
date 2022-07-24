@@ -30,6 +30,7 @@ const GradeSelect: FunctionComponent<GradeSelectProps> = ({
   > = createSelectStyle<EGrade>({ rounded });
   return (
     <Select
+      isClearable
       className="text-dark"
       options={gradeOptions}
       id="grade"
