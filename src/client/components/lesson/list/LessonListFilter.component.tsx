@@ -54,67 +54,86 @@ export const LessonListFilter: FunctionComponent<LessonListFilterProps> = ({
     const values = Object.values(filters);
     return values.some(
       // If any value is not empty, then we can reset
-      (value) => valueExists(value) && Array.isArray(value) && value.length > 0
+      (value) => valueExists(value, true)
     );
   }, [filters]);
 
   return (
-    <Form as={Row} className={styles.form}>
-      <Col xs="1">
-        <Button
-          disabled={!canReset}
-          type="reset"
-          variant={canReset ? "secondary" : "outline-secondary"}
-          className="rounded-circle"
-          onClick={onReset}
+    <Form className={styles.form}>
+      <Row>
+        <Col xs="1">
+          <Button
+            disabled={!canReset}
+            type="reset"
+            variant={canReset ? "secondary" : "outline-secondary"}
+            className="rounded-circle"
+            onClick={onReset}
+          >
+            <span className="visually-hidden">Réinitialiser les filtres</span>
+            <ArrowCounterclockwise />
+          </Button>
+        </Col>
+
+        <InputGroup as={Col} xs={10} md={11} className={styles.inputGroup}>
+          <Form.Label visuallyHidden htmlFor="lessons-filter-text">
+            Recherche
+          </Form.Label>
+          <Form.Control
+            className={styles.input}
+            id="lessons-filter-text"
+            name="text"
+            placeholder="Recherche"
+            value={filters.text ?? ""}
+            onChange={(event: ChangeEvent<HTMLInputElement>) =>
+              filterDispatch(setField("text", event.target.value))
+            }
+          />
+        </InputGroup>
+      </Row>
+      <Row>
+        <InputGroup
+          as={Col}
+          className={`${styles.inputGroup} ${styles.freeWidth}`}
         >
-          <span className="visually-hidden">Réinitialiser les filtres</span>
-          <ArrowCounterclockwise />
-        </Button>
-      </Col>
+          <Form.Label visuallyHidden htmlFor="lessons-filter-author">
+            Auteur
+          </Form.Label>
+          <Form.Control
+            className={styles.input}
+            id="lessons-filter-author"
+            name="authorId"
+            placeholder="ID de l'auteur"
+            value={filters.authorId ?? ""}
+            onChange={(event: ChangeEvent<HTMLInputElement>) =>
+              filterDispatch(setField("authorId", event.target.value))
+            }
+          />
+        </InputGroup>
 
-      <InputGroup
-        as={Col}
-        className={`${styles.inputGroup} ${styles.freeWidth}`}
-      >
-        <Form.Label visuallyHidden htmlFor="lessons-filter-author">
-          Auteur
-        </Form.Label>
-        <Form.Control
-          className={styles.input}
-          id="lessons-filter-author"
-          name="authorId"
-          placeholder="ID de l'auteur"
-          value={filters.authorId ?? ""}
-          onChange={(event: ChangeEvent<HTMLInputElement>) =>
-            filterDispatch(setField("authorId", event.target.value))
-          }
-        />
-      </InputGroup>
+        <Col xs={12} md={3} className={styles.inputGroup}>
+          <GradeSelect
+            rounded
+            currentSelected={filters?.grade}
+            onChange={gradeOnChange}
+          />
+        </Col>
 
-      <Col className={styles.inputGroup}>
-        <GradeSelect
-          rounded
-          currentSelected={filters?.grade}
-          onChange={gradeOnChange}
-        />
-      </Col>
+        <Col xs={12} md={3} className={styles.inputGroup}>
+          <SubjectSelect
+            rounded
+            currentSelected={filters?.subject}
+            onChange={subjectOnChange}
+          />
+        </Col>
 
-      <Col className={styles.inputGroup}>
-        <SubjectSelect
-          rounded
-          currentSelected={filters?.subject}
-          onChange={subjectOnChange}
-        />
-      </Col>
-
-      <Col className={styles.inputGroup}>
-        <CategorySelect
-          rounded
-          currentSelected={filters?.categoryIds}
-          onChange={onCategoryChange}
-        />
-      </Col>
+        <Col xs={12} md={3} className={styles.inputGroup}>
+          <CategorySelect
+            rounded
+            currentSelected={filters?.categoryIds}
+            onChange={onCategoryChange}
+          />
+        </Col>
+      </Row>
     </Form>
   );
 };

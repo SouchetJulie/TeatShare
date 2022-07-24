@@ -22,15 +22,11 @@ export const filterLesson = (filters: LessonFilter, lesson: ILesson): boolean =>
           return typeof value === "number" && lesson.bookmarkCount <= value;
 
         // Title & subtitle
-        case "title":
+        case "text":
           return (
             typeof value === "string" &&
-            lesson.title.toLowerCase().includes(value.toLowerCase())
-          );
-        case "subtitle":
-          return (
-            typeof value === "string" &&
-            lesson.title.toLowerCase().includes(value.toLowerCase())
+            (lesson.title.toLowerCase().includes(value.toLowerCase()) ||
+              lesson.subtitle?.toLowerCase().includes(value.toLowerCase()))
           );
 
         // Author TODO filter by author name

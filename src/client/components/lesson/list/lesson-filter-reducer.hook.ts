@@ -9,6 +9,8 @@ type LessonWithoutNotFilterable = Omit<
   | "creationDate"
   | "lastModifiedDate"
   | "bookmarkCount"
+  | "title"
+  | "subtitle"
 >;
 
 type LessonDateFilters = {
@@ -25,8 +27,15 @@ type LessonBookmarkFilters = {
   bookmarksBelow: number;
 };
 
+type LessonTextFilter = {
+  text: string;
+};
+
 type LessonFilter = Partial<
-  LessonWithoutNotFilterable & LessonBookmarkFilters & LessonDateFilters
+  LessonWithoutNotFilterable &
+    LessonBookmarkFilters &
+    LessonDateFilters &
+    LessonTextFilter
 >;
 
 const useLessonFilterReducer = () => {
