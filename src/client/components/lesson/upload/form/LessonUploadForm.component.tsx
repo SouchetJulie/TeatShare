@@ -8,7 +8,7 @@ import {
 import { setField } from "@hooks/reducer-actions.utils";
 import { useAppDispatch } from "@hooks/store-hook";
 import { addAlert } from "@stores/alert.store";
-import { ApiResponse } from "@typing/api-response.interface";
+import { ApiErrorResponse, ApiResponse } from "@typing/api-response.interface";
 import { ILesson } from "@typing/lesson.interface";
 import axios, { AxiosError } from "axios";
 import { FormEvent, FunctionComponent, useEffect, useState } from "react";
@@ -65,7 +65,7 @@ export const LessonUploadForm: FunctionComponent<LessonUploadFormProps> = ({
         url: "/api/lesson",
         data: formData,
       })
-      .catch((error: AxiosError) => {
+      .catch((error: AxiosError<ApiErrorResponse>) => {
         const response: ApiResponse<{ lesson: ILesson }> = {
           success: false,
           error: getAxiosErrorMessage(error),
