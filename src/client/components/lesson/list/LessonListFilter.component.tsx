@@ -21,9 +21,6 @@ export const LessonListFilter: FunctionComponent<LessonListFilterProps> = ({
   filterDispatch,
 }: LessonListFilterProps): JSX.Element => (
   <Form as={Row} className={styles.form}>
-    <Col as="h5" className="text-primary" xs={1}>
-      Filtrer
-    </Col>
     <InputGroup as={Col} md="auto" className={styles.inputGroup}>
       <Form.Label visuallyHidden htmlFor="lessons-filter-author">
         Rechercher
