@@ -24,7 +24,7 @@ export const LessonList: FunctionComponent<Props> = ({
     return (
       Object.entries(lesson)
         .map(([key, value]) => {
-          // Compare the value of the filter with the value of the lesson
+          // Keep the lesson if its value includes the corresponding filter value
           return (
             !filters[key as keyof ILesson] ||
             filters[key as keyof ILesson] === value ||
