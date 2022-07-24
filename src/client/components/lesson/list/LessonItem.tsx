@@ -28,6 +28,7 @@ const LessonItem: FunctionComponent<Props> = ({ lesson }: Props) => {
   const user = useAppSelector(selectAuthenticatedUser);
   const dispatch = useAppDispatch();
   const [author, setAuthor] = useState<IUserPublic | undefined>(undefined);
+  const [isHovering, setIsHovering] = useState(false);
 
   useEffect(() => {
     let isSubscribed = true;
@@ -67,8 +68,20 @@ const LessonItem: FunctionComponent<Props> = ({ lesson }: Props) => {
     router.push(`/lesson/${lesson._id}`);
   };
 
+  const prepareLessonFetch = (): void => {
+    setIsHovering(true);
+    setTimeout(() => {
+      if (isHovering) router.prefetch(`/lesson/${lesson._id}`);
+    }, 500);
+  };
+
   return (
-    <Row className={styles.card} onClick={goToLesson}>
+    <Row
+      className={styles.card}
+      onClick={goToLesson}
+      onMouseEnter={prepareLessonFetch}
+      onMouseLeave={() => setIsHovering(false)}
+    >
       {/* Subject */}
       <Col sm={1} className={styles.column}>
         {lesson?.grade && <GradeBadge grade={lesson.grade} />}
