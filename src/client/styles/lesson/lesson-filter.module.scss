@@ -16,8 +16,8 @@
 }
 
 @include media-breakpoint-up("md") {
-  .fixedWidth {
-    width: 16.66666667%;
+  .freeWidth {
+    width: initial;
   }
 }
 

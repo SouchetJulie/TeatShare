@@ -1,3 +1,4 @@
+import { filterLesson } from "@components/lesson/list/filter-lesson";
 import { useLessonFilterReducer } from "@components/lesson/list/lesson-filter-reducer.hook";
 import { LessonListFilter } from "@components/lesson/list/LessonListFilter.component";
 import styles from "@styles/lesson/lesson-list.module.scss";
@@ -20,23 +21,9 @@ export const LessonList: FunctionComponent<Props> = ({
 }: Props) => {
   const [filters, filterDispatch] = useLessonFilterReducer();
 
-  const filteredLessons = lessons.filter((lesson: ILesson) => {
-    return (
-      Object.entries(lesson)
-        .map(([key, value]) => {
-          // Keep the lesson if its value includes the corresponding filter value
-          return (
-            !filters[key as keyof ILesson] ||
-            filters[key as keyof ILesson] === value ||
-            (typeof value === "string" &&
-              typeof filters[key as keyof ILesson] === "string" &&
-              value.includes(filters[key as keyof ILesson] as string))
-          );
-        })
-        // Keep lessons that match all filters
-        .every(Boolean)
-    );
-  });
+  const filteredLessons = lessons.filter((lesson) =>
+    filterLesson(filters, lesson)
+  );
 
   return (
     <>

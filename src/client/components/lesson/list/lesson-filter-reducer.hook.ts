@@ -2,10 +2,37 @@ import { SetFieldAction, SetStateAction } from "@hooks/reducer-actions.utils";
 import { ILesson } from "@typing/lesson.interface";
 import { Dispatch, Reducer, useReducer } from "react";
 
-export const useLessonFilterReducer = () => {
+type LessonWithoutNotFilterable = Omit<
+  ILesson,
+  | "file"
+  | "publicationDate"
+  | "creationDate"
+  | "lastModifiedDate"
+  | "bookmarkCount"
+>;
+
+type LessonDateFilters = {
+  publicationDateBefore: string;
+  publicationDateAfter: string;
+  creationDateBefore: string;
+  creationDateAfter: string;
+  lastModifiedDateBefore: string;
+  lastModifiedDateAfter: string;
+};
+
+type LessonBookmarkFilters = {
+  bookmarksAbove: number;
+  bookmarksBelow: number;
+};
+
+type LessonFilter = Partial<
+  LessonWithoutNotFilterable & LessonBookmarkFilters & LessonDateFilters
+>;
+
+const useLessonFilterReducer = () => {
   const reducer = (
-    state: Partial<ILesson>,
-    action: SetFieldAction<Partial<ILesson>> | SetStateAction<Partial<ILesson>>
+    state: LessonFilter,
+    action: SetFieldAction<LessonFilter> | SetStateAction<LessonFilter>
   ) => {
     switch (action.type) {
       case "SET_FIELD":
@@ -22,13 +49,16 @@ export const useLessonFilterReducer = () => {
 
   return useReducer<
     Reducer<
-      Partial<ILesson>,
-      SetFieldAction<Partial<ILesson>> | SetStateAction<Partial<ILesson>>
+      LessonFilter,
+      SetFieldAction<LessonFilter> | SetStateAction<LessonFilter>
     >
   >(reducer, {});
 };
 
-export type LessonFilterDispatch = Dispatch<
-  SetFieldAction<Partial<ILesson>> | SetStateAction<Partial<ILesson>>
+type LessonFilterDispatch = Dispatch<
+  SetFieldAction<LessonFilter> | SetStateAction<LessonFilter>
 >;
-export type LessonFilterState = Partial<ILesson>;
+type LessonFilterState = LessonFilter;
+
+export { useLessonFilterReducer };
+export type { LessonFilterDispatch, LessonFilterState, LessonFilter };

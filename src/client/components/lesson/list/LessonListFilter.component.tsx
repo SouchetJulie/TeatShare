@@ -9,7 +9,8 @@ import { setField } from "@hooks/reducer-actions.utils";
 import styles from "@styles/lesson/lesson-filter.module.scss";
 import { EGrade } from "@typing/grade.enum";
 import { ESubject } from "@typing/subject.enum";
-import { ChangeEvent, FunctionComponent } from "react";
+import { valueExists } from "@utils/parse-form.utils";
+import { ChangeEvent, FunctionComponent, useMemo } from "react";
 import { Button } from "react-bootstrap";
 import { ArrowCounterclockwise } from "react-bootstrap-icons";
 import Col from "react-bootstrap/Col";
@@ -49,14 +50,32 @@ export const LessonListFilter: FunctionComponent<LessonListFilterProps> = ({
     filterDispatch({ type: "SET_STATE", payload: {} });
   };
 
-  const showReset: boolean = Object.values(filters).length > 0;
+  const canReset: boolean = useMemo(() => {
+    const values = Object.values(filters);
+    return values.some(
+      // If any value is not empty, then we can reset
+      (value) => valueExists(value) && Array.isArray(value) && value.length > 0
+    );
+  }, [filters]);
 
   return (
     <Form as={Row} className={styles.form}>
+      <Col xs="1">
+        <Button
+          disabled={!canReset}
+          type="reset"
+          variant={canReset ? "secondary" : "outline-secondary"}
+          className="rounded-circle"
+          onClick={onReset}
+        >
+          <span className="visually-hidden">Réinitialiser les filtres</span>
+          <ArrowCounterclockwise />
+        </Button>
+      </Col>
+
       <InputGroup
         as={Col}
-        md="2"
-        className={`${styles.inputGroup} ${styles.fixedWidth}`}
+        className={`${styles.inputGroup} ${styles.freeWidth}`}
       >
         <Form.Label visuallyHidden htmlFor="lessons-filter-author">
           Auteur
@@ -73,7 +92,7 @@ export const LessonListFilter: FunctionComponent<LessonListFilterProps> = ({
         />
       </InputGroup>
 
-      <Col md="2" className={styles.inputGroup}>
+      <Col className={styles.inputGroup}>
         <GradeSelect
           rounded
           currentSelected={filters?.grade}
@@ -81,7 +100,7 @@ export const LessonListFilter: FunctionComponent<LessonListFilterProps> = ({
         />
       </Col>
 
-      <Col md="2" className={styles.inputGroup}>
+      <Col className={styles.inputGroup}>
         <SubjectSelect
           rounded
           currentSelected={filters?.subject}
@@ -89,27 +108,13 @@ export const LessonListFilter: FunctionComponent<LessonListFilterProps> = ({
         />
       </Col>
 
-      <Col md="2" className={styles.inputGroup}>
+      <Col className={styles.inputGroup}>
         <CategorySelect
           rounded
           currentSelected={filters?.categoryIds}
           onChange={onCategoryChange}
         />
       </Col>
-
-      {showReset && (
-        <Col xs="1">
-          <Button
-            type="reset"
-            variant="outline-dark"
-            className="rounded-circle"
-            onClick={onReset}
-          >
-            <span className="visually-hidden">Vider</span>
-            <ArrowCounterclockwise />
-          </Button>
-        </Col>
-      )}
     </Form>
   );
 };
