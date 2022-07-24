@@ -76,8 +76,26 @@ const validateArrayStringField = (
   }
   return arrayValue;
 };
-const valueExists = <T extends unknown>(value: T | undefined): value is T =>
-  value !== undefined && value !== null && value !== "";
+/**
+ * Validates that the given field :
+ * - is not `undefined`
+ * - is not null
+ * - is not an empty string
+ * - if `checksArray` is true, checks whether it isn't an empty array
+ *
+ * @template T
+ * @param {T|undefined} value Value to validate.
+ * @param {boolean} checksArray Whether to check that the value is not an empty array (default: false).
+ * @return {boolean} Whether the value exists.
+ */
+const valueExists = <T extends unknown>(
+  value: T | undefined,
+  checksArray = false
+): value is T =>
+  value !== undefined &&
+  value !== null &&
+  value !== "" &&
+  (!checksArray || !Array.isArray(value) || value.length > 0);
 /**
  * Make sure the given value is an array of strings.
  *
