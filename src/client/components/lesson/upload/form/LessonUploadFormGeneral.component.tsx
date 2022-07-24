@@ -25,7 +25,7 @@ export const LessonUploadFormGeneral: FunctionComponent<
         <Form.Control
           className={styles.control}
           name="title"
-          value={currentLesson?.title}
+          value={currentLesson?.title ?? ""}
           onChange={(event: ChangeEvent<HTMLInputElement>) =>
             lessonDispatch(setField("title", event.target.value))
           }
@@ -42,7 +42,7 @@ export const LessonUploadFormGeneral: FunctionComponent<
         <Form.Control
           className={styles.control}
           name="subtitle"
-          value={currentLesson?.subtitle}
+          value={currentLesson?.subtitle ?? ""}
           onChange={(event: ChangeEvent<HTMLInputElement>) =>
             lessonDispatch(setField("subtitle", event.target.value))
           }
@@ -60,7 +60,7 @@ export const LessonUploadFormGeneral: FunctionComponent<
             lessonDispatch(setField("file", event.target.value))
           }
           accept="application/pdf"
-          required={!currentLesson?._id}
+          required={!currentLesson?._id ?? ""}
         />
         <Form.Control.Feedback type="invalid">
           Ce champ est obligatoire.

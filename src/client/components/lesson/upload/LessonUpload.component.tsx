@@ -38,7 +38,6 @@ const LessonUpload: FunctionComponent<LessonUploadProps> = ({
             <Col sm={1}>
               <Link href={`/lesson/${lesson._id}`}>
                 <Button
-                  rounded-pill
                   variant="outline-primary"
                   className="border-0 p-2 rounded-circle"
                 >
