@@ -1,68 +1,59 @@
-@import "../../styles/variables";
+@import "~bootstrap/scss/bootstrap-utilities";
+@import "../variables";
 
 .card {
+  position: relative; // necessary for the stretched-link to work
   align-items: center;
   flex-direction: row;
   justify-content: space-between;
   padding: 20px;
-  color: $grey;
-  border: none;
-  border-bottom: solid 1px black;
-  border-radius: 0;
+  cursor: pointer;
 
-  .badge {
-    padding: 0 2%;
-    border-radius: 12px;
-    background: $orange;
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  background-color: white;
+
+  transition: border-color 0.25s;
+
+  &:hover {
+    border-color: $primary;
   }
 }
 
-.main {
-  flex-grow: 1;
-  padding-right: 20px;
-  padding-left: 20px;
+.column {
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  text-align: center;
+
+  & > * {
+    margin-top: 2px;
+    margin-bottom: 2px;
+
+    @include media-breakpoint-up(md) {
+      min-width: 100%;
+    }
+  }
 }
 
 .header {
+  flex-grow: 1;
   display: flex;
   justify-content: space-between;
   margin: 0;
   border: none;
   background-color: transparent;
 
-  & *:first-child {
-    font-size: 20px;
-    font-weight: bold;
-    text-transform: capitalize;
-  }
-
-  div {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 30%;
-
-    .hashtag {
-      font-size: 15px;
-      font-weight: normal;
-    }
-
-    .avatar {
-      width: 25px;
-      height: 25px;
-      border-radius: 100%;
-      background: grey;
-    }
-
-    .authorLink {
-      z-index: 5;
-      background: #009fb7;
-    }
-  }
+  font-weight: bold;
+  text-transform: capitalize;
 }
 
 .subtitle {
-  font-size: 15px;
   margin-top: 5px;
-  color: $grey;
+}
+
+.clickable {
+  z-index: 5;
 }
