@@ -38,6 +38,7 @@ body,
 #__next_page {
   overflow-x: hidden;
   padding-top: $navbarHeight;
+  min-height: calc(100vh - $navbarHeight - $footerHeight);
 
   @include media-breakpoint-up(md) {
     &.authenticated {
