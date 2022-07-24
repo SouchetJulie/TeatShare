@@ -10,7 +10,7 @@ import {
 import { ApiErrorResponse, ApiResponse } from "@typing/api-response.interface";
 import { IUserPublic } from "@typing/user.interface";
 import { AxiosError, AxiosResponse } from "axios";
-import { FunctionComponent } from "react";
+import { FunctionComponent, MouseEvent } from "react";
 import { BookmarkCheck, BookmarkCheckFill } from "react-bootstrap-icons";
 import Button from "react-bootstrap/Button";
 
@@ -28,7 +28,9 @@ const LessonBookmark: FunctionComponent<LessonBookmarkProps> = ({
 
   const isBookmarked: boolean = user?.bookmarkIds.includes(lessonId) ?? false;
 
-  const onBookmarkClick = () => {
+  const onBookmarkClick = (event: MouseEvent) => {
+    event.stopPropagation();
+
     toggleBookmark(lessonId, isBookmarked)
       .then(({ data: response }: AxiosResponse<ApiResponse>) => {
         if (response.success) {

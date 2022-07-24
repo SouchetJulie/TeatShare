@@ -1,3 +1,4 @@
+import { getUser } from "@client/services/user.service";
 import { getUsername } from "@client/utils/get-username.utils";
 import CategoryBadge from "@components/category/CategoryBadge.component";
 import { GradeBadge } from "@components/grade/GradeBadge.component";
@@ -9,11 +10,10 @@ import { useAppDispatch, useAppSelector } from "@hooks/store-hook";
 import { addAlert } from "@stores/alert.store";
 import { selectAuthenticatedUser } from "@stores/user.store";
 import styles from "@styles/lesson/lesson-item.module.scss";
-import { ApiResponse } from "@typing/api-response.interface";
 import { ILesson } from "@typing/lesson.interface";
 import { IUserPublic } from "@typing/user.interface";
-import axios from "axios";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { FunctionComponent, useEffect, useState } from "react";
 import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
@@ -24,6 +24,7 @@ interface Props {
 }
 
 const LessonItem: FunctionComponent<Props> = ({ lesson }: Props) => {
+  const router = useRouter();
   const user = useAppSelector(selectAuthenticatedUser);
   const dispatch = useAppDispatch();
   const [author, setAuthor] = useState<IUserPublic | undefined>(undefined);
@@ -31,8 +32,7 @@ const LessonItem: FunctionComponent<Props> = ({ lesson }: Props) => {
   useEffect(() => {
     let isSubscribed = true;
 
-    axios
-      .get<ApiResponse<{ user: IUserPublic }>>(`/api/user/${lesson.authorId}`)
+    getUser(lesson.authorId)
       .then(({ data: response }) => {
         if (isSubscribed) {
           if (response.success && !!response.data) {
@@ -63,10 +63,14 @@ const LessonItem: FunctionComponent<Props> = ({ lesson }: Props) => {
     };
   }, [setAuthor]);
 
+  const goToLesson = (): void => {
+    router.push(`/lesson/${lesson._id}`);
+  };
+
   return (
-    <Row className={styles.card}>
+    <Row className={styles.card} onClick={goToLesson}>
       {/* Subject */}
-      <Col sm={1} className={`${styles.column} ${styles.clickable}`}>
+      <Col sm={1} className={styles.column}>
         {lesson?.grade && <GradeBadge grade={lesson.grade} />}
         {lesson?.subject && <SubjectBadge subject={lesson.subject} />}
       </Col>
@@ -74,7 +78,7 @@ const LessonItem: FunctionComponent<Props> = ({ lesson }: Props) => {
       <Col sm={12} md={3}>
         <h6 className={styles.header}>
           <Link href={`/lesson/${lesson._id}`} passHref>
-            <a className="stretched-link">{lesson.title}</a>
+            <a>{lesson.title}</a>
           </Link>
         </h6>
       </Col>
@@ -97,12 +101,12 @@ const LessonItem: FunctionComponent<Props> = ({ lesson }: Props) => {
         )}
       </Col>
       {/* Author */}
-      <Col sm={2} className={styles.clickable}>
+      <Col sm={2}>
         Écrit par{" "}
         <Link href={`/user/${lesson.authorId}`}>{getUsername(author)}</Link>
       </Col>
       {/* marque-page, aperçu, modification */}
-      <Col sm={1} className={styles.clickable}>
+      <Col sm={1}>
         {user && author?._id === user?._id && (
           <>
             <LessonEdit lessonId={lesson._id} size={20} />
