@@ -3,6 +3,7 @@ import { LessonUploadForm } from "@components/lesson/upload/form/LessonUploadFor
 import { useAutoLogin } from "@hooks/auto-login.hook";
 import styles from "@styles/lesson/upload.module.scss";
 import { ILesson } from "@typing/lesson.interface";
+import Head from "next/head";
 import Link from "next/link";
 import { FunctionComponent } from "react";
 import { EyeFill } from "react-bootstrap-icons";
@@ -21,32 +22,40 @@ const LessonUpload: FunctionComponent<LessonUploadProps> = ({
   useAutoLogin(); // Route guard
 
   return (
-    <Container>
-      <Row className={styles.uploadPageTitle}>
-        <Col sm="auto" as="h1" className="text-primary">
-          {lesson ? <>Modifier une leçon</> : "Créer une leçon"}
-        </Col>
-        {lesson && (
-          <Col sm={1}>
-            <Link href={`/lesson/${lesson._id}`}>
-              <Button
-                rounded-pill
-                variant="outline-primary"
-                className="border-0 p-2 rounded-circle"
-              >
-                <EyeFill size={30} />
-              </Button>
-            </Link>
+    <>
+      <Head>
+        <title>
+          TeatShare -{" "}
+          {lesson ? `Modifier "${lesson.title}"` : "Créer une leçon"}
+        </title>
+      </Head>
+      <Container>
+        <Row className={styles.uploadPageTitle}>
+          <Col sm="auto" as="h1" className="text-primary">
+            {lesson ? <>Modifier une leçon</> : "Créer une leçon"}
           </Col>
-        )}
-      </Row>
-      <LessonUploadForm lesson={lesson} />
-      {lesson && (
-        <Row>
-          <LessonDetailsPDFViewer lesson={lesson} />
+          {lesson && (
+            <Col sm={1}>
+              <Link href={`/lesson/${lesson._id}`}>
+                <Button
+                  rounded-pill
+                  variant="outline-primary"
+                  className="border-0 p-2 rounded-circle"
+                >
+                  <EyeFill size={30} />
+                </Button>
+              </Link>
+            </Col>
+          )}
         </Row>
-      )}
-    </Container>
+        <LessonUploadForm lesson={lesson} />
+        {lesson && (
+          <Row>
+            <LessonDetailsPDFViewer lesson={lesson} />
+          </Row>
+        )}
+      </Container>
+    </>
   );
 };
 
