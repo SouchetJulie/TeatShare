@@ -46,10 +46,7 @@ const LessonDetailsHeader: FunctionComponent<LessonHeaderComponentProps> = ({
 
   // Print method
   const handlePrint = () => {
-    if (typeof window !== "undefined") {
-      // browser code
-      printJS(fileURL);
-    }
+    printJS(fileURL);
   };
   // Download Method
   const downloadPDF = () => {
