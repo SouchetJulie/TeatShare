@@ -88,15 +88,15 @@ const LessonItem: FunctionComponent<Props> = ({ lesson }: Props) => {
         {lesson?.subject && <SubjectBadge subject={lesson.subject} />}
       </Col>
       {/* Title */}
-      <Col sm={12} md={3}>
-        <h6 className={styles.header}>
+      <Col sm={12} md={3} className={styles.column}>
+        <h6 className={`${styles.header} ${styles.column}`}>
           <Link href={`/lesson/${lesson._id}`} passHref>
             <a>{lesson.title}</a>
           </Link>
         </h6>
       </Col>
       {/* Subtitle */}
-      <Col sm={12} md={3}>
+      <Col sm={12} md={3} className={styles.column}>
         {lesson.subtitle && (
           <Card.Subtitle className={styles.subtitle}>
             {lesson.subtitle}
@@ -104,7 +104,7 @@ const LessonItem: FunctionComponent<Props> = ({ lesson }: Props) => {
         )}
       </Col>
       {/* Categories */}
-      <Col sm={2}>
+      <Col sm={2} className={styles.column}>
         {lesson.categoryIds.length > 0 && (
           <span>
             {lesson.categoryIds.map((id: string) => (
@@ -114,7 +114,7 @@ const LessonItem: FunctionComponent<Props> = ({ lesson }: Props) => {
         )}
       </Col>
       {/* Author */}
-      <Col sm={2}>
+      <Col sm={2} className={styles.column}>
         Écrit par{" "}
         <Link href={`/user/${lesson.authorId}`}>{getUsername(author)}</Link>
       </Col>

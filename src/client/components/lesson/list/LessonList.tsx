@@ -43,11 +43,11 @@ export const LessonList: FunctionComponent<Props> = ({
           filterDispatch={filterDispatch}
           showAdvancedFilters={showAdvancedFilters}
         />
-        <Row className={`${styles.lessonContainer} my-4`}>
+        <div className={styles.lessonContainer}>
           {filteredLessons.map((lesson: ILesson) => (
             <LessonItem key={`lesson-item-${lesson._id}`} lesson={lesson} />
           ))}
-        </Row>
+        </div>
       </Container>
     </>
   );

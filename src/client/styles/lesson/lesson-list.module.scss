@@ -1,7 +1,17 @@
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/mixins";
+@import "~bootstrap/scss/variables";
 @import "../variables";
 
 .lessonContainer {
   overflow-x: hidden;
   max-height: max(400px, calc(100vh - $navbarHeight - $footerHeight - 300px));
-  padding-right: 30px;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+@include media-breakpoint-up("md") {
+  .lessonContainer {
+    padding-right: 30px;
+  }
 }
