@@ -17,7 +17,6 @@ import { ILesson } from "@typing/lesson.interface";
 import { IUserPublic } from "@typing/user.interface";
 import { AxiosError, AxiosResponse } from "axios";
 import dayjs from "dayjs";
-// @ts-ignore
 import { saveAs } from "file-saver";
 import Image from "next/image";
 import printJS from "print-js";
