@@ -7,7 +7,7 @@ import {
   removeBookmark,
   selectAuthenticatedUser,
 } from "@stores/user.store";
-import { ApiResponse } from "@typing/api-response.interface";
+import { ApiErrorResponse, ApiResponse } from "@typing/api-response.interface";
 import { IUserPublic } from "@typing/user.interface";
 import { AxiosError, AxiosResponse } from "axios";
 import { FunctionComponent } from "react";
@@ -54,7 +54,7 @@ const LessonBookmark: FunctionComponent<LessonBookmarkProps> = ({
           });
         }
       })
-      .catch((e: AxiosError) =>
+      .catch((e: AxiosError<ApiErrorResponse>) =>
         addAlert({
           success: false,
           message: `Échec lors de ${

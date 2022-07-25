@@ -1,7 +1,7 @@
 import { useRefreshUser } from "@hooks/refresh-user.hook";
 import { useAppDispatch } from "@hooks/store-hook";
 import { addAlert } from "@stores/alert.store";
-import { ApiResponse } from "@typing/api-response.interface";
+import { ApiErrorResponse, ApiResponse } from "@typing/api-response.interface";
 import axios, { AxiosError, AxiosResponse } from "axios";
 import React from "react";
 import { getAxiosErrorMessage } from "../../utils/get-axios-error.utils";
@@ -58,7 +58,7 @@ export const useProfileOnSubmit = (): ((
           );
         }
       })
-      .catch((e: AxiosError) =>
+      .catch((e: AxiosError<ApiErrorResponse>) =>
         dispatch(
           addAlert({
             success: false,

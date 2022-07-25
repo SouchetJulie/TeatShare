@@ -12,7 +12,7 @@ import { useAppDispatch, useAppSelector } from "@hooks/store-hook";
 import { addAlert } from "@stores/alert.store";
 import { selectAuthenticatedUser } from "@stores/user.store";
 import styles from "@styles/lesson/LessonPost.module.scss";
-import { ApiResponse } from "@typing/api-response.interface";
+import { ApiErrorResponse, ApiResponse } from "@typing/api-response.interface";
 import { ILesson } from "@typing/lesson.interface";
 import { IUserPublic } from "@typing/user.interface";
 import { AxiosError, AxiosResponse } from "axios";
@@ -55,7 +55,7 @@ const LessonDetailsHeader: FunctionComponent<LessonHeaderComponentProps> = ({
             }
           }
         )
-        .catch((err: AxiosError) => {
+        .catch((err: AxiosError<ApiErrorResponse>) => {
           dispatch(
             addAlert({
               message: getAxiosErrorMessage(err),
