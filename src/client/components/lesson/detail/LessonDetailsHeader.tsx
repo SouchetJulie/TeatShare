@@ -49,7 +49,8 @@ const LessonDetailsHeader: FunctionComponent<LessonHeaderComponentProps> = ({
     printJS(fileURL);
   };
   const downloadPDF = () => {
-    saveAs(fileURL, lesson?.file.newFilename);
+    const nameToPrint: string = lesson?.title + ".pdf";
+    saveAs(fileURL, nameToPrint);
   };
 
   useEffect(() => {
