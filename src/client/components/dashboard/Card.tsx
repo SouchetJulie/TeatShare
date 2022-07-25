@@ -1,4 +1,5 @@
 import avatarLogo from "@assets/logos/avatar_placeholder.png";
+import { CleanFile } from "@typing/clean-file.interface";
 import { IUserPublic } from "@typing/user.interface";
 import { FunctionComponent } from "react";
 import Card from "react-bootstrap/Card";
@@ -10,7 +11,8 @@ interface Props {
 }
 
 const DashBoardCard: FunctionComponent<Props> = ({ user, nbrPost }: Props) => {
-  console.log("user :", user.grades);
+  console.log("user :", user);
+
   return (
     <div>
       <h3> Mon Profil</h3>
@@ -18,7 +20,13 @@ const DashBoardCard: FunctionComponent<Props> = ({ user, nbrPost }: Props) => {
         {/* Next considère le logo comme un objet possédant un attribut src */}
         <Card.Img
           variant="top"
-          src={avatarLogo.src}
+          src={
+            user?.avatar
+              ? `https://storage.googleapis.com/${
+                  process.env.NEXT_PUBLIC_BUCKET_NAME
+                }/${(user.avatar as CleanFile).filepath}`
+              : avatarLogo.src
+          }
           className={styles.cardImage}
         />
         <Card.Body>
@@ -33,7 +41,7 @@ const DashBoardCard: FunctionComponent<Props> = ({ user, nbrPost }: Props) => {
             )}
 
             <span>
-              {user && user.grades.length
+              {user?.grades.length
                 ? user.grades.map((grade) => {
                     return <>{grade}&nbsp;</>;
                   })
