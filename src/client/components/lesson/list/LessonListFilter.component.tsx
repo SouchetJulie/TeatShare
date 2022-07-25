@@ -25,7 +25,7 @@ import Select, { MultiValue, SingleValue } from "react-select";
 interface LessonListFilterProps {
   filters: LessonFilterState;
   filterDispatch: LessonFilterDispatch;
-  showPrivateFilters?: boolean;
+  showAdvancedFilters?: boolean;
 }
 
 const isDraftOptions: SelectOption<string, boolean | undefined>[] = [
@@ -37,7 +37,7 @@ const isDraftOptions: SelectOption<string, boolean | undefined>[] = [
 export const LessonListFilter: FunctionComponent<LessonListFilterProps> = ({
   filters,
   filterDispatch,
-  showPrivateFilters = true, // TODO put at false
+  showAdvancedFilters = false,
 }: LessonListFilterProps): JSX.Element => {
   const subjectOnChange = (
     selected: SingleValue<{ value: string; label: ESubject }>
@@ -141,7 +141,7 @@ export const LessonListFilter: FunctionComponent<LessonListFilterProps> = ({
           <Accordion.Header>Filtres supplémentaires</Accordion.Header>
           <Accordion.Body>
             <Row>
-              {!showPrivateFilters && (
+              {!showAdvancedFilters && (
                 <InputGroup
                   as={Col}
                   className={`${styles.inputGroup} ${styles.freeWidth}`}
@@ -162,7 +162,11 @@ export const LessonListFilter: FunctionComponent<LessonListFilterProps> = ({
                 </InputGroup>
               )}
 
-              <Col xs={12} md={3} className={styles.inputGroup}>
+              <Col
+                xs={12}
+                md={showAdvancedFilters ? 4 : 3}
+                className={styles.inputGroup}
+              >
                 <GradeSelect
                   rounded
                   currentSelected={filters?.grade}
@@ -170,7 +174,11 @@ export const LessonListFilter: FunctionComponent<LessonListFilterProps> = ({
                 />
               </Col>
 
-              <Col xs={12} md={3} className={styles.inputGroup}>
+              <Col
+                xs={12}
+                md={showAdvancedFilters ? 4 : 3}
+                className={styles.inputGroup}
+              >
                 <SubjectSelect
                   rounded
                   currentSelected={filters?.subject}
@@ -178,7 +186,11 @@ export const LessonListFilter: FunctionComponent<LessonListFilterProps> = ({
                 />
               </Col>
 
-              <Col xs={12} md={3} className={styles.inputGroup}>
+              <Col
+                xs={12}
+                md={showAdvancedFilters ? 4 : 3}
+                className={styles.inputGroup}
+              >
                 <CategorySelect
                   rounded
                   currentSelected={filters?.categoryIds}
@@ -208,7 +220,7 @@ export const LessonListFilter: FunctionComponent<LessonListFilterProps> = ({
             </Row>
           </Accordion.Body>
         </Accordion.Item>
-        {showPrivateFilters && (
+        {showAdvancedFilters && (
           <Accordion.Item eventKey="private">
             <Accordion.Header>Filtres avancés</Accordion.Header>
             <Accordion.Body>

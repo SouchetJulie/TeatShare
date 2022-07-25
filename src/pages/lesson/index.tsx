@@ -7,7 +7,9 @@ const index: FunctionComponent = () => {
   const user = useAutoLogin();
   const { lessons } = useFetchLessons({ author: user?._id });
 
-  return <LessonList lessons={lessons} title="Mes leçons" />;
+  return (
+    <LessonList lessons={lessons} title="Mes leçons" showAdvancedFilters />
+  );
 };
 
 export default index;

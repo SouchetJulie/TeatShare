@@ -13,11 +13,13 @@ import LessonItem from "./LessonItem";
 interface Props {
   lessons: ILesson[];
   title: string;
+  showAdvancedFilters?: boolean;
 }
 
 export const LessonList: FunctionComponent<Props> = ({
   lessons,
   title,
+  showAdvancedFilters = false,
 }: Props) => {
   const [filters, filterDispatch] = useLessonFilterReducer();
 
@@ -36,7 +38,11 @@ export const LessonList: FunctionComponent<Props> = ({
             {title}
           </Col>
         </Row>
-        <LessonListFilter filters={filters} filterDispatch={filterDispatch} />
+        <LessonListFilter
+          filters={filters}
+          filterDispatch={filterDispatch}
+          showAdvancedFilters={showAdvancedFilters}
+        />
         <Row className={`${styles.lessonContainer} my-4`}>
           {filteredLessons.map((lesson: ILesson) => (
             <LessonItem key={`lesson-item-${lesson._id}`} lesson={lesson} />
