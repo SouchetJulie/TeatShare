@@ -91,7 +91,7 @@ const LessonLinks: FunctionComponent<Props> = ({ className = "" }: Props) => {
               aria-label="journal icon"
             />
             <br />
-            Mes signets
+            Mes favoris
           </a>
         </Link>
       </Nav.Link>

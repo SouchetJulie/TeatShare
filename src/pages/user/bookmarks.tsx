@@ -10,7 +10,7 @@ const ForLater: FunctionComponent = () => {
   return (
     <>
       <Head>
-        <title>TeatShare - Mes signets</title>
+        <title>TeatShare - Mes favoris</title>
       </Head>
       <LessonList lessons={lessons} />
     </>
