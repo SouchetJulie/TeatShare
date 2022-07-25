@@ -1,10 +1,19 @@
 import { CSSObjectWithLabel, StylesConfig } from "react-select";
 
-interface SelectOption<T extends string> {
-  value: string;
-  label: T;
+interface SelectOption<LabelType extends string, ValueType = string> {
+  value: ValueType;
+  label: LabelType;
 }
 
+/**
+ * Converts a [key, text] pair from Object.entries() to a SelectOption.
+ * For use with an enum.
+ *
+ * @template T
+ * @param {string} key The key of the entry.
+ * @param {T} text The value of the entry.
+ * @return {SelectOption<T>} The converted entry.
+ */
 const fromEnumToOption = <T extends string>([key, text]: [
   string,
   T
@@ -12,7 +21,15 @@ const fromEnumToOption = <T extends string>([key, text]: [
   value: key,
   label: text,
 });
-const fromValueToOption = <T extends string>(
+/**
+ * Gets the corresponding SelectOption for a given enum key.
+ *
+ * @template T
+ * @param {[string, T][]} list Array of [key, text] pair from Object.entries()
+ * @param {string} key The key to search.
+ * @return {SelectOption<T>|null} The corresponding SelectOption or null if not found.
+ */
+const getSelectedOption = <T extends string>(
   list: [string, T][],
   key?: T[keyof T]
 ): SelectOption<T> | null => {
@@ -36,6 +53,12 @@ interface SelectStyle {
   rounded: boolean;
 }
 
+/**
+ * Creates a CSS config for a Select component.
+ *
+ * @param {SelectStyle} params The parameters for the CSS config.
+ * @return {StylesConfig} The CSS config.
+ */
 const createSelectStyle = <
   Data extends string,
   isMulti extends boolean = false
@@ -48,5 +71,5 @@ const createSelectStyle = <
   }),
 });
 
-export { fromEnumToOption, fromValueToOption, createSelectStyle };
+export { fromEnumToOption, getSelectedOption, createSelectStyle };
 export type { SelectOption, SelectStyle };

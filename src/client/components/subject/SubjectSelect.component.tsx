@@ -1,7 +1,7 @@
 import {
   createSelectStyle,
   fromEnumToOption,
-  fromValueToOption,
+  getSelectedOption,
   SelectOption,
 } from "@components/ui/select-option.utils";
 import { ESubject } from "@typing/subject.enum";
@@ -22,7 +22,7 @@ const SubjectSelect: FunctionComponent<SubjectSelectProps> = ({
   onChange,
   rounded = false,
 }: SubjectSelectProps): ReactElement => {
-  const selectedSubject = fromValueToOption(subjects, currentSelected);
+  const selectedSubject = getSelectedOption(subjects, currentSelected);
 
   const styles: StylesConfig<
     SelectOption<ESubject>,

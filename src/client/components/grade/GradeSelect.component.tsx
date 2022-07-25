@@ -1,7 +1,7 @@
 import {
   createSelectStyle,
   fromEnumToOption,
-  fromValueToOption,
+  getSelectedOption,
   SelectOption,
 } from "@components/ui/select-option.utils";
 import { EGrade } from "@typing/grade.enum";
@@ -22,7 +22,7 @@ const GradeSelect: FunctionComponent<GradeSelectProps> = ({
   onChange,
   rounded = false,
 }: GradeSelectProps): ReactElement => {
-  const selectedGrade = fromValueToOption(grade, currentSelected);
+  const selectedGrade = getSelectedOption(grade, currentSelected);
 
   const styles: StylesConfig<
     SelectOption<EGrade>,
