@@ -5,6 +5,7 @@ import {
   LessonFilterState,
 } from "@components/lesson/list/lesson-filter-reducer.hook";
 import SubjectSelect from "@components/subject/SubjectSelect.component";
+import Datepicker from "@components/ui/Datepicker";
 import { setField } from "@hooks/reducer-actions.utils";
 import styles from "@styles/lesson/lesson-filter.module.scss";
 import { EGrade } from "@typing/grade.enum";
@@ -17,10 +18,8 @@ import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import Row from "react-bootstrap/Row";
-import { MultiValue, SingleValue } from "react-select";
-
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { MultiValue, SingleValue } from "react-select";
 
 interface LessonListFilterProps {
   filters: LessonFilterState;
@@ -49,6 +48,14 @@ export const LessonListFilter: FunctionComponent<LessonListFilterProps> = ({
       )
     );
 
+  const onPublicationDateChange = ([start, end]: [
+    Date | null,
+    Date | null
+  ]) => {
+    filterDispatch(setField("publicationDateAfter", start ?? undefined));
+    filterDispatch(setField("publicationDateBefore", end ?? undefined));
+  };
+
   const onReset = (): void => {
     filterDispatch({ type: "SET_STATE", payload: {} });
   };
@@ -60,6 +67,8 @@ export const LessonListFilter: FunctionComponent<LessonListFilterProps> = ({
       (value) => valueExists(value, true)
     );
   }, [filters]);
+
+  console.log(filters); // TODO to delete
 
   return (
     <Form className={styles.form}>
@@ -93,9 +102,9 @@ export const LessonListFilter: FunctionComponent<LessonListFilterProps> = ({
           />
         </Col>
       </Row>
-      <Accordion>
+      <Accordion defaultActiveKey="0">
         <Accordion.Item eventKey="0">
-          <Accordion.Header>Plus de filtres</Accordion.Header>
+          <Accordion.Header>Filtres supplémentaires</Accordion.Header>
           <Accordion.Body>
             <Row>
               <InputGroup
@@ -143,8 +152,12 @@ export const LessonListFilter: FunctionComponent<LessonListFilterProps> = ({
             </Row>
             <Row>
               <Col xs={12} md={3} className={styles.inputGroup}>
-                <DatePicker
-                  onChange={(date: Date | null) => console.log(date)}
+                <Datepicker
+                  placeholder="Date de publication"
+                  range
+                  start={filters?.publicationDateAfter}
+                  end={filters?.publicationDateBefore}
+                  onChange={onPublicationDateChange}
                 />
               </Col>
             </Row>

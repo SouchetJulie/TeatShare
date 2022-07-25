@@ -59,7 +59,7 @@ export const filterLesson = (filters: LessonFilter, lesson: ILesson): boolean =>
           if (!lesson.publicationDate) {
             return false;
           }
-          const filterDate = new Date(value as string);
+          const filterDate = value as Date;
           const lessonDate = new Date(lesson.publicationDate);
           // Check date validity
           if (isNaN(lessonDate.valueOf()) || isNaN(filterDate.valueOf()))
@@ -71,7 +71,7 @@ export const filterLesson = (filters: LessonFilter, lesson: ILesson): boolean =>
           if (!lesson.publicationDate) {
             return false;
           }
-          const filterDate = new Date(value as string);
+          const filterDate = value as Date;
           const lessonDate = new Date(lesson.publicationDate);
           // Check date validity
           if (isNaN(lessonDate.valueOf()) || isNaN(filterDate.valueOf()))
@@ -80,7 +80,7 @@ export const filterLesson = (filters: LessonFilter, lesson: ILesson): boolean =>
           return lessonDate.valueOf() >= filterDate.valueOf();
         }
         case "creationDateBefore": {
-          const filterDate = new Date(value as string);
+          const filterDate = value as Date;
           const lessonDate = new Date(lesson.creationDate);
           // Check date validity
           if (isNaN(lessonDate.valueOf()) || isNaN(filterDate.valueOf()))
@@ -89,7 +89,7 @@ export const filterLesson = (filters: LessonFilter, lesson: ILesson): boolean =>
           return lessonDate.valueOf() <= filterDate.valueOf();
         }
         case "creationDateAfter": {
-          const filterDate = new Date(value as string);
+          const filterDate = value as Date;
           const lessonDate = new Date(lesson.creationDate);
           // Check date validity
           if (isNaN(lessonDate.valueOf()) || isNaN(filterDate.valueOf()))
@@ -98,7 +98,7 @@ export const filterLesson = (filters: LessonFilter, lesson: ILesson): boolean =>
           return lessonDate.valueOf() >= filterDate.valueOf();
         }
         case "lastModifiedDateBefore": {
-          const filterDate = new Date(value as string);
+          const filterDate = value as Date;
           const lessonDate = new Date(lesson.lastModifiedDate);
           // Check date validity
           if (isNaN(lessonDate.valueOf()) || isNaN(filterDate.valueOf()))
@@ -107,7 +107,7 @@ export const filterLesson = (filters: LessonFilter, lesson: ILesson): boolean =>
           return lessonDate.valueOf() <= filterDate.valueOf();
         }
         case "lastModifiedDateAfter": {
-          const filterDate = new Date(value as string);
+          const filterDate = value as Date;
           const lessonDate = new Date(lesson.lastModifiedDate);
           // Check date validity
           if (isNaN(lessonDate.valueOf()) || isNaN(filterDate.valueOf()))

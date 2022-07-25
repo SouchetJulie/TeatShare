@@ -14,12 +14,12 @@ type LessonWithoutNotFilterable = Omit<
 >;
 
 type LessonDateFilters = {
-  publicationDateBefore: string;
-  publicationDateAfter: string;
-  creationDateBefore: string;
-  creationDateAfter: string;
-  lastModifiedDateBefore: string;
-  lastModifiedDateAfter: string;
+  publicationDateBefore: Date;
+  publicationDateAfter: Date;
+  creationDateBefore: Date;
+  creationDateAfter: Date;
+  lastModifiedDateBefore: Date;
+  lastModifiedDateAfter: Date;
 };
 
 type LessonBookmarkFilters = {
