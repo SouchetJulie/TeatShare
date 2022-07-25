@@ -10,6 +10,7 @@ interface Props {
 }
 
 const DashBoardCard: FunctionComponent<Props> = ({ user, nbrPost }: Props) => {
+  console.log("user :", user.grades);
   return (
     <div>
       <h3> Mon Profil</h3>
@@ -25,8 +26,19 @@ const DashBoardCard: FunctionComponent<Props> = ({ user, nbrPost }: Props) => {
           <Card.Text className={styles.cardText}>
             <p>Nom</p>
             <span>{user.firstName ? user.firstName : "Votre nom"}</span>
-            <p>classe(s) enseignée(s)</p>
-            <span>{user.grades ? user.grades : "Pas de classe"}</span>
+            {user && user.grades.length > 1 ? (
+              <p>classes enseignées</p>
+            ) : (
+              <p>classe enseignée</p>
+            )}
+
+            <span>
+              {user && user.grades.length
+                ? user.grades.map((grade) => {
+                    return <>{grade}&nbsp;</>;
+                  })
+                : "Pas de classe"}
+            </span>
             <h6>{nbrPost} POSTS - 2 COMMENTAIRES</h6>
           </Card.Text>
         </Card.Body>

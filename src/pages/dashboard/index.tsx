@@ -15,8 +15,6 @@ const Dashboard: FunctionComponent<Props> = ({}: Props) => {
   const user: IUserPublic | undefined = useAutoLogin();
   const { lessons } = useFetchLessons({ author: user?._id });
 
-  console.log("lessons :", lessons);
-
   return user ? (
     <Container className={styles.dashboardContainer}>
       <h2 className={styles.title}>Dashboard</h2>
