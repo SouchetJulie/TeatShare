@@ -193,6 +193,7 @@ export const LessonListFilter: FunctionComponent<LessonListFilterProps> = ({
               >
                 <CategorySelect
                   rounded
+                  groupShown={filters?.subject}
                   currentSelected={filters?.categoryIds}
                   onChange={onCategoryChange}
                 />

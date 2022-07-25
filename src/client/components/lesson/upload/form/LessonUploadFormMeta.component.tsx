@@ -68,6 +68,7 @@ export const LessonUploadFormMeta: FunctionComponent<
           Catégories
         </Form.Label>
         <CategorySelect
+          groupShown={currentLesson?.subject}
           currentSelected={currentLesson?.categoryIds}
           onChange={onCategoryChange}
         />
