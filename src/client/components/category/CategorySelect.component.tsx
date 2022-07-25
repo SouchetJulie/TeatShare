@@ -13,6 +13,7 @@ interface CategorySelectProps {
   currentSelected?: string[];
   onChange: (newValues: MultiValue<{ value: string; label: string }>) => void;
   rounded?: boolean;
+  groupShown?: string;
 }
 
 const fromCategoryToOption = (category: ICategory): SelectOption<string> => ({
@@ -24,6 +25,7 @@ const CategorySelect: FunctionComponent<CategorySelectProps> = ({
   currentSelected,
   onChange,
   rounded = false,
+  groupShown,
 }: CategorySelectProps): ReactElement => {
   const categoryList = useCategoryList();
 
@@ -33,6 +35,12 @@ const CategorySelect: FunctionComponent<CategorySelectProps> = ({
 
     categoryList.forEach((category: ICategory) => {
       const group = category.subject ?? "";
+
+      // Filter groups to show (always keep those with no group)
+      if (groupShown && group !== "" && group !== groupShown) {
+        return;
+      }
+
       if (!categoryGroups[group]) {
         categoryGroups[group] = [];
       }
@@ -42,7 +50,7 @@ const CategorySelect: FunctionComponent<CategorySelectProps> = ({
     const groups = Object.entries(categoryGroups).map(fromGroupToGroupOptions);
     putNoGroupFirst(groups);
     return groups;
-  }, [categoryList]);
+  }, [categoryList, groupShown]);
 
   // Converts the current selected values to options for the select
   const selectedCategories = useMemo(
