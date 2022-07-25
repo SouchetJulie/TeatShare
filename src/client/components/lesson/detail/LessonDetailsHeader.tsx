@@ -46,7 +46,6 @@ const LessonDetailsHeader: FunctionComponent<LessonHeaderComponentProps> = ({
 
   // Print method
   const handlePrint = () => {
-    // THIS LIB SUCKS
     if (typeof window !== "undefined") {
       // browser code
       printJS(fileURL);
