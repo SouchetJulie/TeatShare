@@ -45,9 +45,11 @@ const LessonDetailsHeader: FunctionComponent<LessonHeaderComponentProps> = ({
     [lesson?.publicationDate]
   );
 
+  // Print method
   const handlePrint = () => {
     printJS(fileURL);
   };
+  // Download Method
   const downloadPDF = () => {
     const nameToPrint: string = lesson?.title + ".pdf";
     saveAs(fileURL, nameToPrint);
