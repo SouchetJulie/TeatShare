@@ -74,7 +74,7 @@ const FooterAuthenticated: FunctionComponent = (): JSX.Element => {
         </div>
         <div className={styles.menu_footer_profile}>
           <p>Profil</p>
-          <Link href={"/user/bookmarks"}>Mes favoris</Link>
+          <Link href={"/user/bookmarks"}>Mes signets</Link>
           <Link href={"/user/settings"}>Paramètres</Link>
           <Link href={"/lesson"}>Mes contributions</Link>
         </div>
