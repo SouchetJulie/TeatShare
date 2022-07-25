@@ -46,6 +46,7 @@ const LessonDetailsHeader: FunctionComponent<LessonHeaderComponentProps> = ({
 
   // Print method
   const handlePrint = () => {
+    // THIS LIB SUCKS
     printJS(fileURL);
   };
   // Download Method
