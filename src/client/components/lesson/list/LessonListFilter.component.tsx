@@ -56,6 +56,19 @@ export const LessonListFilter: FunctionComponent<LessonListFilterProps> = ({
     filterDispatch(setField("publicationDateBefore", end ?? undefined));
   };
 
+  const onLastModifiedDateChange = ([start, end]: [
+    Date | null,
+    Date | null
+  ]) => {
+    filterDispatch(setField("lastModifiedDateAfter", start ?? undefined));
+    filterDispatch(setField("lastModifiedDateBefore", end ?? undefined));
+  };
+
+  const onCreationDateChange = ([start, end]: [Date | null, Date | null]) => {
+    filterDispatch(setField("creationDateAfter", start ?? undefined));
+    filterDispatch(setField("creationDateBefore", end ?? undefined));
+  };
+
   const onReset = (): void => {
     filterDispatch({ type: "SET_STATE", payload: {} });
   };
@@ -151,13 +164,31 @@ export const LessonListFilter: FunctionComponent<LessonListFilterProps> = ({
               </Col>
             </Row>
             <Row>
-              <Col xs={12} md={3} className={styles.inputGroup}>
+              <Col xs={12} md={4} className={styles.inputGroup}>
+                <Datepicker
+                  placeholder="Date de création"
+                  range
+                  start={filters?.creationDateAfter}
+                  end={filters?.creationDateBefore}
+                  onChange={onCreationDateChange}
+                />
+              </Col>
+              <Col xs={12} md={4} className={styles.inputGroup}>
                 <Datepicker
                   placeholder="Date de publication"
                   range
                   start={filters?.publicationDateAfter}
                   end={filters?.publicationDateBefore}
                   onChange={onPublicationDateChange}
+                />
+              </Col>
+              <Col xs={12} md={4} className={styles.inputGroup}>
+                <Datepicker
+                  placeholder="Date de modification"
+                  range
+                  start={filters?.lastModifiedDateAfter}
+                  end={filters?.lastModifiedDateBefore}
+                  onChange={onLastModifiedDateChange}
                 />
               </Col>
             </Row>

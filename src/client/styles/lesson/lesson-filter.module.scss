@@ -11,6 +11,12 @@
   }
 }
 
+.inputGroup {
+  input {
+    width: 100%;
+  }
+}
+
 @include media-breakpoint-down("md") {
   .inputGroup {
     margin-bottom: 5px;
