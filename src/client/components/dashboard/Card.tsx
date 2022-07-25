@@ -10,7 +10,7 @@ interface Props {
   nbrPost: number;
 }
 
-const DashBoardCard: FunctionComponent<Props> = ({ user, nbrPost }: Props) => {
+const DashBoardCard: FunctionComponent<Props> = ({ user }: Props) => {
   return (
     <div>
       <h4> Mon profil</h4>
@@ -31,7 +31,7 @@ const DashBoardCard: FunctionComponent<Props> = ({ user, nbrPost }: Props) => {
           <span className={styles.badge}>veteran</span>
           <Card.Text className={styles.cardText}>
             <p>Nom</p>
-            <span>{user.firstName ? user.firstName : "Votre nom"}</span>
+            <span>{user?.firstName ? user.firstName : "Votre nom"}</span>
             {user && user.grades.length > 1 ? (
               <p>classes enseignées</p>
             ) : (
@@ -45,7 +45,7 @@ const DashBoardCard: FunctionComponent<Props> = ({ user, nbrPost }: Props) => {
                   })
                 : "Pas de classe"}
             </span>
-            <h6>{nbrPost} POSTS - 2 COMMENTAIRES</h6>
+            <h6>{user?.lessonIds.length} POSTS - 2 COMMENTAIRES</h6>
           </Card.Text>
         </Card.Body>
       </Card>
