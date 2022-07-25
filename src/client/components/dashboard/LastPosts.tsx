@@ -9,25 +9,32 @@ interface Props {
 }
 
 const LastPosts: FunctionComponent<Props> = ({ lessons }: Props) => {
+  // console.log(lessons);
   return (
     <Container className={styles.lastPostsContainer}>
-      <h4>Mes derniers posts</h4>
+      <h4 className={styles.subTitle}>Mes derniers posts</h4>
       <div className={styles.lastPostsList}>
-        {lessons.map((lesson: ILesson, index: number) => {
-          return (
-            <Link href={`/lesson/${lesson._id}`}>
-              <div
-                className={styles.post}
-                key={`lesson-${index}-${lesson.title}`}
-              >
-                <div className={styles.postCard}>
-                  <p>Sujet : {lesson.title}</p>
-                  <p>{lesson.subtitle} </p>
+        {lessons.length ? (
+          lessons.map((lesson: ILesson, index: number) => {
+            return (
+              <Link href={`/lesson/${lesson._id}`}>
+                <div
+                  className={styles.post}
+                  key={`lesson-${index}-${lesson.title}`}
+                >
+                  <div className={styles.postCard}>
+                    <p>Sujet : {lesson.title}</p>
+                    <p>{lesson.subtitle} </p>
+                  </div>
                 </div>
-              </div>
-            </Link>
-          );
-        })}
+              </Link>
+            );
+          })
+        ) : (
+          <div className={styles.noLesson}>
+            <p>Vous n'avez pas de leçons</p>
+          </div>
+        )}
       </div>
     </Container>
   );

@@ -7,6 +7,7 @@
   height: 90vh;
 }
 
+
 .title {
   text-align: center;
   margin: 20px 0 30px 0;
@@ -140,6 +141,23 @@
     }
   }
 
+  .noLesson {
+    height: 100%;
+    width: 100%;
+    background-color: $greyc;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    p {
+      text-align: center;
+      margin: 0;
+      color: #b4b4b4;
+      font-size: 50px;
+    }
+  }
+
   .lastPostsList::-webkit-scrollbar-thumb {
     background: $primary;
     border-radius: 10px;
@@ -150,4 +168,20 @@
     background: $greyc;
     border-radius: 10px;
   }
+}
+
+@media screen and (max-width: 522px) {
+  .title {
+    text-align: center;
+    margin: 40px 0 0 0;
+    color: $secondary;
+  }
+  .card {
+    margin: auto;
+  }
+  .subTitle {
+    text-align: center;
+    margin: 5% auto;
+  }
+
 }

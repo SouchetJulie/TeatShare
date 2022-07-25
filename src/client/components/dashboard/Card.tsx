@@ -7,13 +7,12 @@ import styles from "../../styles/dashboard/dashboard.module.scss";
 
 interface Props {
   user: IUserPublic;
-  nbrPost: number;
 }
 
 const DashBoardCard: FunctionComponent<Props> = ({ user }: Props) => {
   return (
     <div>
-      <h4> Mon profil</h4>
+      <h4 className={styles.subTitle}> Mon profil</h4>
       <Card className={styles.card}>
         {/* Next considère le logo comme un objet possédant un attribut src */}
         <Card.Img
