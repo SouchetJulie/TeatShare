@@ -6,6 +6,7 @@ import {
 } from "@components/lesson/list/lesson-filter-reducer.hook";
 import SubjectSelect from "@components/subject/SubjectSelect.component";
 import Datepicker from "@components/ui/Datepicker";
+import { SelectOption } from "@components/ui/select-option.utils";
 import { setField } from "@hooks/reducer-actions.utils";
 import styles from "@styles/lesson/lesson-filter.module.scss";
 import { EGrade } from "@typing/grade.enum";
@@ -19,16 +20,24 @@ import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import Row from "react-bootstrap/Row";
 import "react-datepicker/dist/react-datepicker.css";
-import { MultiValue, SingleValue } from "react-select";
+import Select, { MultiValue, SingleValue } from "react-select";
 
 interface LessonListFilterProps {
   filters: LessonFilterState;
   filterDispatch: LessonFilterDispatch;
+  showPrivateFilters?: boolean;
 }
+
+const isDraftOptions: SelectOption<string, boolean | undefined>[] = [
+  { value: undefined, label: "Tous" },
+  { value: false, label: "Publiés" },
+  { value: true, label: "Brouillons" },
+];
 
 export const LessonListFilter: FunctionComponent<LessonListFilterProps> = ({
   filters,
   filterDispatch,
+  showPrivateFilters = true, // TODO put at false
 }: LessonListFilterProps): JSX.Element => {
   const subjectOnChange = (
     selected: SingleValue<{ value: string; label: ESubject }>
@@ -69,9 +78,23 @@ export const LessonListFilter: FunctionComponent<LessonListFilterProps> = ({
     filterDispatch(setField("creationDateBefore", end ?? undefined));
   };
 
-  const onReset = (): void => {
-    filterDispatch({ type: "SET_STATE", payload: {} });
+  const onIsDraftChange = (
+    selected: SingleValue<{ value: boolean | undefined; label: string }>
+  ): void => {
+    if (selected) filterDispatch(setField("isDraft", selected.value));
   };
+
+  const selectedIsDraftOption = useMemo(
+    () =>
+      isDraftOptions.filter(
+        (option: SelectOption<string, boolean | undefined>) =>
+          option.value === filters.isDraft
+      ),
+    [filters.isDraft]
+  );
+
+  const onReset = (): void =>
+    filterDispatch({ type: "SET_STATE", payload: {} });
 
   const canReset: boolean = useMemo(() => {
     const values = Object.values(filters);
@@ -80,8 +103,6 @@ export const LessonListFilter: FunctionComponent<LessonListFilterProps> = ({
       (value) => valueExists(value, true)
     );
   }, [filters]);
-
-  console.log(filters); // TODO to delete
 
   return (
     <Form className={styles.form}>
@@ -115,29 +136,31 @@ export const LessonListFilter: FunctionComponent<LessonListFilterProps> = ({
           />
         </Col>
       </Row>
-      <Accordion defaultActiveKey="0">
-        <Accordion.Item eventKey="0">
+      <Accordion defaultActiveKey="public" alwaysOpen>
+        <Accordion.Item eventKey="public">
           <Accordion.Header>Filtres supplémentaires</Accordion.Header>
           <Accordion.Body>
             <Row>
-              <InputGroup
-                as={Col}
-                className={`${styles.inputGroup} ${styles.freeWidth}`}
-              >
-                <Form.Label visuallyHidden htmlFor="lessons-filter-author">
-                  Auteur
-                </Form.Label>
-                <Form.Control
-                  className={styles.input}
-                  id="lessons-filter-author"
-                  name="authorId"
-                  placeholder="ID de l'auteur"
-                  value={filters.authorId ?? ""}
-                  onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                    filterDispatch(setField("authorId", event.target.value))
-                  }
-                />
-              </InputGroup>
+              {!showPrivateFilters && (
+                <InputGroup
+                  as={Col}
+                  className={`${styles.inputGroup} ${styles.freeWidth}`}
+                >
+                  <Form.Label visuallyHidden htmlFor="lessons-filter-author">
+                    Auteur
+                  </Form.Label>
+                  <Form.Control
+                    className={styles.input}
+                    id="lessons-filter-author"
+                    name="authorId"
+                    placeholder="ID de l'auteur"
+                    value={filters.authorId ?? ""}
+                    onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                      filterDispatch(setField("authorId", event.target.value))
+                    }
+                  />
+                </InputGroup>
+              )}
 
               <Col xs={12} md={3} className={styles.inputGroup}>
                 <GradeSelect
@@ -164,16 +187,7 @@ export const LessonListFilter: FunctionComponent<LessonListFilterProps> = ({
               </Col>
             </Row>
             <Row>
-              <Col xs={12} md={4} className={styles.inputGroup}>
-                <Datepicker
-                  placeholder="Date de création"
-                  range
-                  start={filters?.creationDateAfter}
-                  end={filters?.creationDateBefore}
-                  onChange={onCreationDateChange}
-                />
-              </Col>
-              <Col xs={12} md={4} className={styles.inputGroup}>
+              <Col className={styles.inputGroup}>
                 <Datepicker
                   placeholder="Date de publication"
                   range
@@ -182,7 +196,7 @@ export const LessonListFilter: FunctionComponent<LessonListFilterProps> = ({
                   onChange={onPublicationDateChange}
                 />
               </Col>
-              <Col xs={12} md={4} className={styles.inputGroup}>
+              <Col className={styles.inputGroup}>
                 <Datepicker
                   placeholder="Date de modification"
                   range
@@ -194,6 +208,33 @@ export const LessonListFilter: FunctionComponent<LessonListFilterProps> = ({
             </Row>
           </Accordion.Body>
         </Accordion.Item>
+        {showPrivateFilters && (
+          <Accordion.Item eventKey="private">
+            <Accordion.Header>Filtres avancés</Accordion.Header>
+            <Accordion.Body>
+              <Row>
+                <Col className={styles.inputGroup}>
+                  <Datepicker
+                    placeholder="Date de création"
+                    range
+                    start={filters?.creationDateAfter}
+                    end={filters?.creationDateBefore}
+                    onChange={onCreationDateChange}
+                  />
+                </Col>
+                <Col>
+                  <Select
+                    aria-label="Etat de publication"
+                    placeholder="Etat de publication"
+                    options={isDraftOptions}
+                    value={selectedIsDraftOption}
+                    onChange={onIsDraftChange}
+                  />
+                </Col>
+              </Row>
+            </Accordion.Body>
+          </Accordion.Item>
+        )}
       </Accordion>
     </Form>
   );
