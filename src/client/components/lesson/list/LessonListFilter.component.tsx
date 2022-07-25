@@ -144,7 +144,6 @@ export const LessonListFilter: FunctionComponent<LessonListFilterProps> = ({
             <Row>
               <Col xs={12} md={3} className={styles.inputGroup}>
                 <DatePicker
-                  locale="fr"
                   onChange={(date: Date | null) => console.log(date)}
                 />
               </Col>
