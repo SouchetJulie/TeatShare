@@ -3,7 +3,6 @@
 @import "~bootstrap/scss/variables";
 @import "../variables";
 
-
 .dashboardContainer {
   height: 90vh;
 }
@@ -107,14 +106,11 @@
     .post {
       margin-bottom: 15px;
 
-
       & > p {
         margin-bottom: 10px;
       }
 
-
       .postCard {
-
         background: white;
         border-radius: 15px;
         padding: 10px 20px;
@@ -122,7 +118,7 @@
         flex-direction: column;
         width: 100%;
         justify-content: center;
-        transition-duration: .75s;
+        transition-duration: 0.75s;
         cursor: pointer;
 
         &:hover {
@@ -131,7 +127,6 @@
 
           & > :nth-child(2) {
             color: white;
-
           }
         }
 
@@ -139,7 +134,7 @@
           color: #6c6c6c;
           font-size: 12.5px;
           margin: 0;
-          transition-duration: .75s;
+          transition-duration: 0.75s;
         }
       }
     }
@@ -154,8 +149,5 @@
     width: 10px;
     background: $greyc;
     border-radius: 10px;
-
   }
-
 }
-
