@@ -11,7 +11,7 @@ interface Props {
 const LastPosts: FunctionComponent<Props> = ({ lessons }: Props) => {
   return (
     <Container className={styles.lastPostsContainer}>
-      <h3>Mes derniers posts</h3>
+      <h4>Mes derniers posts</h4>
       <div className={styles.lastPostsList}>
         {lessons.map((lesson: ILesson, index: number) => {
           return (

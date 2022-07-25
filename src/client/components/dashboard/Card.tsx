@@ -11,11 +11,9 @@ interface Props {
 }
 
 const DashBoardCard: FunctionComponent<Props> = ({ user, nbrPost }: Props) => {
-  console.log("user :", user);
-
   return (
     <div>
-      <h3> Mon Profil</h3>
+      <h4> Mon profil</h4>
       <Card className={styles.card}>
         {/* Next considère le logo comme un objet possédant un attribut src */}
         <Card.Img
