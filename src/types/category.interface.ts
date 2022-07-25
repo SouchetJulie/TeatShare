@@ -3,12 +3,14 @@
  * Categories can be added at the users' request.
  * The list is stored in database.
  */
+import { ESubject } from "@typing/subject.enum";
 import { Replace } from "@typing/utility-types";
 import { ObjectId } from "mongodb";
 
 interface ICategoryDB {
   _id: ObjectId;
   label: string;
+  subject?: keyof typeof ESubject;
 }
 
 /**
