@@ -11,7 +11,7 @@ import { EGrade } from "@typing/grade.enum";
 import { ESubject } from "@typing/subject.enum";
 import { valueExists } from "@utils/parse-form.utils";
 import { ChangeEvent, FunctionComponent, useMemo } from "react";
-import { Button } from "react-bootstrap";
+import { Accordion, Button } from "react-bootstrap";
 import { ArrowCounterclockwise } from "react-bootstrap-icons";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
@@ -93,58 +93,65 @@ export const LessonListFilter: FunctionComponent<LessonListFilterProps> = ({
           />
         </Col>
       </Row>
-      <Row>
-        <InputGroup
-          as={Col}
-          className={`${styles.inputGroup} ${styles.freeWidth}`}
-        >
-          <Form.Label visuallyHidden htmlFor="lessons-filter-author">
-            Auteur
-          </Form.Label>
-          <Form.Control
-            className={styles.input}
-            id="lessons-filter-author"
-            name="authorId"
-            placeholder="ID de l'auteur"
-            value={filters.authorId ?? ""}
-            onChange={(event: ChangeEvent<HTMLInputElement>) =>
-              filterDispatch(setField("authorId", event.target.value))
-            }
-          />
-        </InputGroup>
+      <Accordion>
+        <Accordion.Item eventKey="0">
+          <Accordion.Header>Plus de filtres</Accordion.Header>
+          <Accordion.Body>
+            <Row>
+              <InputGroup
+                as={Col}
+                className={`${styles.inputGroup} ${styles.freeWidth}`}
+              >
+                <Form.Label visuallyHidden htmlFor="lessons-filter-author">
+                  Auteur
+                </Form.Label>
+                <Form.Control
+                  className={styles.input}
+                  id="lessons-filter-author"
+                  name="authorId"
+                  placeholder="ID de l'auteur"
+                  value={filters.authorId ?? ""}
+                  onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                    filterDispatch(setField("authorId", event.target.value))
+                  }
+                />
+              </InputGroup>
 
-        <Col xs={12} md={3} className={styles.inputGroup}>
-          <GradeSelect
-            rounded
-            currentSelected={filters?.grade}
-            onChange={gradeOnChange}
-          />
-        </Col>
+              <Col xs={12} md={3} className={styles.inputGroup}>
+                <GradeSelect
+                  rounded
+                  currentSelected={filters?.grade}
+                  onChange={gradeOnChange}
+                />
+              </Col>
 
-        <Col xs={12} md={3} className={styles.inputGroup}>
-          <SubjectSelect
-            rounded
-            currentSelected={filters?.subject}
-            onChange={subjectOnChange}
-          />
-        </Col>
+              <Col xs={12} md={3} className={styles.inputGroup}>
+                <SubjectSelect
+                  rounded
+                  currentSelected={filters?.subject}
+                  onChange={subjectOnChange}
+                />
+              </Col>
 
-        <Col xs={12} md={3} className={styles.inputGroup}>
-          <CategorySelect
-            rounded
-            currentSelected={filters?.categoryIds}
-            onChange={onCategoryChange}
-          />
-        </Col>
-      </Row>
-      <Row>
-        <Col xs={12} md={3} className={styles.inputGroup}>
-          <DatePicker
-            locale="fr"
-            onChange={(date: Date | null) => console.log(date)}
-          />
-        </Col>
-      </Row>
+              <Col xs={12} md={3} className={styles.inputGroup}>
+                <CategorySelect
+                  rounded
+                  currentSelected={filters?.categoryIds}
+                  onChange={onCategoryChange}
+                />
+              </Col>
+            </Row>
+            <Row>
+              <Col xs={12} md={3} className={styles.inputGroup}>
+                <DatePicker
+                  locale="fr"
+                  onChange={(date: Date | null) => console.log(date)}
+                />
+              </Col>
+            </Row>
+          </Accordion.Body>
+        </Accordion.Item>
+      </Accordion>
     </Form>
   );
 };

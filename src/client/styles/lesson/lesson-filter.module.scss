@@ -3,6 +3,7 @@
 @import "~bootstrap/scss/variables";
 
 .form {
+  & > *,
   [class="row"] {
     margin-top: 10px;
     align-items: center;
