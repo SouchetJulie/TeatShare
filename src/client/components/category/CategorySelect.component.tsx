@@ -32,6 +32,7 @@ const CategorySelect: FunctionComponent<CategorySelectProps> = ({
 
   const styles: StylesConfig<SelectOption<string>, true> = createSelectStyle<
     string,
+    string,
     true
   >({ rounded });
 
