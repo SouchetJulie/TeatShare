@@ -9,7 +9,7 @@ const handler = async (
   const user = req.session.user;
 
   if (!user) {
-    console.log(`[LOGIN] User ${user.email} failed to auto-log in: session expired`);
+    console.log(`[LOGIN] User failed to auto-log in: session expired`);
     return res.status(200).json({
       success: false,
       error: "La session a expiré",
