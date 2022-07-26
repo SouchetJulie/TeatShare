@@ -19,7 +19,6 @@ import { AxiosError, AxiosResponse } from "axios";
 import dayjs from "dayjs";
 import { saveAs } from "file-saver";
 import Image from "next/image";
-import printJS from "print-js";
 import { FunctionComponent, useEffect, useMemo, useState } from "react";
 import { ListGroup } from "react-bootstrap";
 import { Download, Printer } from "react-bootstrap-icons";
@@ -46,7 +45,17 @@ const LessonDetailsHeader: FunctionComponent<LessonHeaderComponentProps> = ({
 
   // Print method
   const handlePrint = () => {
-    printJS(fileURL);
+    // This needs to be a dynamic import to avoid the SSR,
+    // since print-js requires the `window` object to work
+    import("print-js").then(({ default: printJS }) => {
+      printJS({
+        printable: fileURL,
+        type: "pdf",
+        style: "A4",
+        showModal: true,
+        modalMessage: "Un instant...",
+      });
+    });
   };
   // Download Method
   const downloadPDF = () => {
