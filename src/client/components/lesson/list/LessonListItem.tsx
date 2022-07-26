@@ -74,9 +74,13 @@ const LessonListItem: FunctionComponent<Props> = ({ lesson }: Props) => {
     }, 500);
   };
 
+  const itemStyle: string = `${styles.card} ${
+    lesson.isDraft ? styles.draft : ""
+  }`;
+
   return (
     <Row
-      className={styles.card}
+      className={itemStyle}
       onClick={goToLesson}
       onMouseEnter={prepareLessonFetch}
       onMouseLeave={() => setIsHovering(false)}
@@ -85,9 +89,6 @@ const LessonListItem: FunctionComponent<Props> = ({ lesson }: Props) => {
       <Col lg={1} className={styles.column}>
         {lesson?.grade && <GradeBadge grade={lesson.grade} />}
         {lesson?.subject && <SubjectBadge subject={lesson.subject} />}
-      </Col>
-      <Col lg={1} className={`${styles.column} ${styles.draft}`}>
-        {lesson.isDraft && <span>[Brouillon]</span>}
       </Col>
       {/* Title */}
       <Col lg={3} className={styles.column}>
