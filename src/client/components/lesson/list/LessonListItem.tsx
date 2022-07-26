@@ -117,7 +117,12 @@ const LessonListItem: FunctionComponent<Props> = ({ lesson }: Props) => {
       {/* Author */}
       <Col className={styles.column}>
         Écrit par{" "}
-        <Link href={`/user/${lesson.authorId}`}>{getUsername(author)}</Link>
+        <button
+          className={styles.notShown}
+          onClick={(e: any) => e.stopPropagation()}
+        >
+          <Link href={"/dashboard"}>{getUsername(author)}</Link>
+        </button>
       </Col>
       {/* marque-page, aperçu, modification */}
       <Col lg={1}>
