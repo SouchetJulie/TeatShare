@@ -1,9 +1,10 @@
 import avatarLogo from "@assets/logos/avatar_placeholder.png";
+import styles from "@styles/dashboard/dashboard.module.scss";
 import { CleanFile } from "@typing/clean-file.interface";
+import { EGrade } from "@typing/grade.enum";
 import { IUserPublic } from "@typing/user.interface";
 import { FunctionComponent } from "react";
 import Card from "react-bootstrap/Card";
-import styles from "@styles/dashboard/dashboard.module.scss";
 
 interface Props {
   user: IUserPublic;
@@ -39,7 +40,7 @@ const DashBoardCard: FunctionComponent<Props> = ({ user }: Props) => {
 
             <span>
               {user?.grades.length
-                ? user.grades.map((grade) => {
+                ? user.grades.map((grade: keyof typeof EGrade) => {
                     return <>{grade}&nbsp;</>;
                   })
                 : "Pas de classe"}
