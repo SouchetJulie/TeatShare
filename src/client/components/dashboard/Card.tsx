@@ -3,7 +3,7 @@ import styles from "@styles/dashboard/dashboard.module.scss";
 import { CleanFile } from "@typing/clean-file.interface";
 import { EGrade } from "@typing/grade.enum";
 import { IUserPublic } from "@typing/user.interface";
-import { FunctionComponent } from "react";
+import React, { FunctionComponent } from "react";
 import Card from "react-bootstrap/Card";
 
 interface Props {
@@ -29,24 +29,32 @@ const DashBoardCard: FunctionComponent<Props> = ({ user }: Props) => {
         />
         <Card.Body>
           <span className={styles.badge}>veteran</span>
-          <Card.Text className={styles.cardText}>
+          <div className={styles.cardText}>
             <p>Nom</p>
             <span>{user?.firstName ? user.firstName : "Votre nom"}</span>
             {user && user.grades.length > 1 ? (
-              <p>classes enseignées</p>
+              <p>Classes enseignées</p>
             ) : (
-              <p>classe enseignée</p>
+              <p>Classe enseignée</p>
             )}
 
             <span>
               {user?.grades.length
-                ? user.grades.map((grade: keyof typeof EGrade) => {
-                    return <>{grade}&nbsp;</>;
-                  })
-                : "Pas de classe"}
+                ? user.grades.map(
+                    (grade: keyof typeof EGrade, index: number) => {
+                      return (
+                        <React.Fragment key={`grade-${index}`}>
+                          {grade}&nbsp;
+                        </React.Fragment>
+                      );
+                    }
+                  )
+                : "Pas de classe.."}
             </span>
-            <h6>{user?.lessonIds.length} POSTS - 2 COMMENTAIRES</h6>
-          </Card.Text>
+            <p className={styles.nbrPosts}>
+              {user?.lessonIds.length} POSTS - 2 COMMENTAIRES
+            </p>
+          </div>
         </Card.Body>
       </Card>
     </div>
