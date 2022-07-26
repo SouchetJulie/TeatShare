@@ -15,8 +15,8 @@ import { IUserPublic } from "@typing/user.interface";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { FunctionComponent, useEffect, useState } from "react";
+import { Row } from "react-bootstrap";
 import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
 
 interface Props {
   lesson: ILesson;

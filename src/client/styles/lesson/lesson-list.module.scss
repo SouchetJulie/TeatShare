@@ -4,7 +4,7 @@
 @import "../variables";
 
 .lessonContainer {
-  overflow-x: hidden;
+  overflow-y: auto;
   max-height: max(400px, calc(100vh - $navbarHeight - $footerHeight - 300px));
   margin-top: 1.5rem;
   margin-bottom: 1.5rem;
@@ -12,6 +12,6 @@
 
 @include media-breakpoint-up("md") {
   .lessonContainer {
-    padding-right: 30px;
+    padding-right: 15px;
   }
 }
