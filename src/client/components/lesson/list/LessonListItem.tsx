@@ -1,3 +1,4 @@
+import { getUser } from "@client/services/user.service";
 import { getUsername } from "@client/utils/get-username.utils";
 import CategoryBadge from "@components/category/CategoryBadge.component";
 import { GradeBadge } from "@components/grade/GradeBadge.component";
@@ -8,31 +9,30 @@ import { SubjectBadge } from "@components/subject/subject-badge.component";
 import { useAppDispatch, useAppSelector } from "@hooks/store-hook";
 import { addAlert } from "@stores/alert.store";
 import { selectAuthenticatedUser } from "@stores/user.store";
-import styles from "@styles/lesson-item.module.scss";
-import { ApiResponse } from "@typing/api-response.interface";
+import styles from "@styles/lesson/lesson-item.module.scss";
 import { ILesson } from "@typing/lesson.interface";
 import { IUserPublic } from "@typing/user.interface";
-import axios from "axios";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { FunctionComponent, useEffect, useState } from "react";
-import Card from "react-bootstrap/Card";
+import { Row } from "react-bootstrap";
 import Col from "react-bootstrap/Col";
-import Row from "react-bootstrap/Row";
 
 interface Props {
   lesson: ILesson;
 }
 
-const LessonItem: FunctionComponent<Props> = ({ lesson }: Props) => {
+const LessonListItem: FunctionComponent<Props> = ({ lesson }: Props) => {
+  const router = useRouter();
   const user = useAppSelector(selectAuthenticatedUser);
   const dispatch = useAppDispatch();
   const [author, setAuthor] = useState<IUserPublic | undefined>(undefined);
+  const [isHovering, setIsHovering] = useState(false);
 
   useEffect(() => {
     let isSubscribed = true;
 
-    axios
-      .get<ApiResponse<{ user: IUserPublic }>>(`/api/user/${lesson.authorId}`)
+    getUser(lesson.authorId)
       .then(({ data: response }) => {
         if (isSubscribed) {
           if (response.success && !!response.data) {
@@ -63,31 +63,49 @@ const LessonItem: FunctionComponent<Props> = ({ lesson }: Props) => {
     };
   }, [setAuthor]);
 
+  const goToLesson = (): void => {
+    router.push(`/lesson/${lesson._id}`);
+  };
+
+  const prepareLessonFetch = (): void => {
+    setIsHovering(true);
+    setTimeout(() => {
+      if (isHovering) router.prefetch(`/lesson/${lesson._id}`);
+    }, 500);
+  };
+
+  const itemStyle: string = `${styles.card} ${
+    lesson.isDraft ? styles.draft : ""
+  }`;
+
   return (
-    <Row className={styles.card}>
+    <Row
+      className={itemStyle}
+      onClick={goToLesson}
+      onMouseEnter={prepareLessonFetch}
+      onMouseLeave={() => setIsHovering(false)}
+    >
       {/* Subject */}
-      <Col sm={1} className={`${styles.column} ${styles.clickable}`}>
+      <Col lg={1} className={styles.column}>
         {lesson?.grade && <GradeBadge grade={lesson.grade} />}
         {lesson?.subject && <SubjectBadge subject={lesson.subject} />}
       </Col>
       {/* Title */}
-      <Col sm={12} md={3}>
-        <h6 className={styles.header}>
+      <Col lg={3} className={styles.column}>
+        <h5 className={styles.header}>
           <Link href={`/lesson/${lesson._id}`} passHref>
-            <a className="stretched-link">{lesson.title}</a>
+            <a>{lesson.title}</a>
           </Link>
-        </h6>
+        </h5>
       </Col>
       {/* Subtitle */}
-      <Col sm={12} md={3}>
+      <Col lg={3} className={styles.column}>
         {lesson.subtitle && (
-          <Card.Subtitle className={styles.subtitle}>
-            {lesson.subtitle}
-          </Card.Subtitle>
+          <h6 className={styles.subtitle}>{lesson.subtitle}</h6>
         )}
       </Col>
       {/* Categories */}
-      <Col sm={2}>
+      <Col className={styles.column}>
         {lesson.categoryIds.length > 0 && (
           <span>
             {lesson.categoryIds.map((id: string) => (
@@ -97,12 +115,12 @@ const LessonItem: FunctionComponent<Props> = ({ lesson }: Props) => {
         )}
       </Col>
       {/* Author */}
-      <Col sm={2} className={styles.clickable}>
+      <Col className={styles.column}>
         Écrit par{" "}
         <Link href={`/user/${lesson.authorId}`}>{getUsername(author)}</Link>
       </Col>
       {/* marque-page, aperçu, modification */}
-      <Col sm={1} className={styles.clickable}>
+      <Col lg={1}>
         {user && author?._id === user?._id && (
           <>
             <LessonEdit lessonId={lesson._id} size={20} />
@@ -119,4 +137,4 @@ const LessonItem: FunctionComponent<Props> = ({ lesson }: Props) => {
   );
 };
 
-export default LessonItem;
+export default LessonListItem;

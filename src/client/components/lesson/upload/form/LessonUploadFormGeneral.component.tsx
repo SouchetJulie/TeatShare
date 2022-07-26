@@ -1,8 +1,8 @@
 import {
-  LessonSetField,
-  LessonSetLesson,
   setField,
-} from "@components/lesson/upload/lesson-upload-reducer.hook";
+  SetFieldAction,
+  SetStateAction,
+} from "@hooks/reducer-actions.utils";
 import styles from "@styles/lesson/upload.module.scss";
 import { ILessonCreate } from "@typing/lesson.interface";
 import { ChangeEvent, Dispatch, FunctionComponent } from "react";
@@ -10,7 +10,9 @@ import { Form } from "react-bootstrap";
 
 interface LessonUploadFormGeneralProps {
   currentLesson?: ILessonCreate;
-  lessonDispatch: Dispatch<LessonSetField | LessonSetLesson>;
+  lessonDispatch: Dispatch<
+    SetFieldAction<ILessonCreate> | SetStateAction<ILessonCreate>
+  >;
 }
 
 export const LessonUploadFormGeneral: FunctionComponent<
@@ -23,7 +25,7 @@ export const LessonUploadFormGeneral: FunctionComponent<
         <Form.Control
           className={styles.control}
           name="title"
-          value={currentLesson?.title}
+          value={currentLesson?.title ?? ""}
           onChange={(event: ChangeEvent<HTMLInputElement>) =>
             lessonDispatch(setField("title", event.target.value))
           }
@@ -40,7 +42,7 @@ export const LessonUploadFormGeneral: FunctionComponent<
         <Form.Control
           className={styles.control}
           name="subtitle"
-          value={currentLesson?.subtitle}
+          value={currentLesson?.subtitle ?? ""}
           onChange={(event: ChangeEvent<HTMLInputElement>) =>
             lessonDispatch(setField("subtitle", event.target.value))
           }
@@ -58,7 +60,7 @@ export const LessonUploadFormGeneral: FunctionComponent<
             lessonDispatch(setField("file", event.target.value))
           }
           accept="application/pdf"
-          required={!currentLesson?._id}
+          required={!currentLesson?._id ?? ""}
         />
         <Form.Control.Feedback type="invalid">
           Ce champ est obligatoire.
