@@ -3,6 +3,7 @@ import { LessonUploadForm } from "@components/lesson/upload/form/LessonUploadFor
 import { useAutoLogin } from "@hooks/auto-login.hook";
 import styles from "@styles/lesson/upload.module.scss";
 import { ILesson } from "@typing/lesson.interface";
+import Head from "next/head";
 import Link from "next/link";
 import { FunctionComponent } from "react";
 import { EyeFill } from "react-bootstrap-icons";
