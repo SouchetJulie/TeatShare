@@ -6,13 +6,6 @@ import { FunctionComponent } from "react";
 const ForLater: FunctionComponent = () => {
   useAutoLogin(); // route guard
   const { lessons } = useFetchLessons({ bookmarks: true });
-  return (
-    <>
-      <Head>
-        <title>TeatShare - Mes Signets</title>
-      </Head>
-      <LessonList lessons={lessons} />
-    </>
-  );
+  return <LessonList lessons={lessons} title="Mes signets" />;
 };
 export default ForLater;
