@@ -4,40 +4,14 @@
 @import "../variables";
 
 .lessonContainer {
-  overflow-x: hidden;
+  overflow-y: auto;
   max-height: max(400px, calc(100vh - $navbarHeight - $footerHeight - 300px));
-  padding-right: 30px;
-}
-
-.form {
-  align-items: center;
-  flex-wrap: wrap-reverse;
-  justify-content: space-between;
-  width: 100%;
-}
-
-.filterButton {
-  border: none;
-  background-color: #f96f5d;
-}
-
-.inputGroup > * {
-  border-radius: 25px;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
 }
 
 @include media-breakpoint-up("md") {
-  .inputGroup {
-    width: 30%;
+  .lessonContainer {
+    padding-right: 15px;
   }
-}
-
-@include media-breakpoint-down("md") {
-  .inputGroup {
-    margin-bottom: 5px;
-  }
-}
-
-.formInput {
-  border-top-left-radius: 25px !important;
-  border-bottom-left-radius: 25px !important;
 }

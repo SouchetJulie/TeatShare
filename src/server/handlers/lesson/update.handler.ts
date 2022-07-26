@@ -36,6 +36,10 @@ export const lessonUpdateHandler: NextApiHandler = async (
         error: "Modifier la leçon a échoué.",
       });
     }
+    console.log(`[LESSON] Edit of lesson "${uploadedLesson.title}" succeeded`);
+    return res.status(200).json({
+      success: true,
+    });
   } catch (e) {
     console.log(`[LESSON] Edit of lesson failed:`, e);
     return res.status(500).json({

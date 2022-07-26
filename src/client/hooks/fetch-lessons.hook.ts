@@ -1,7 +1,7 @@
 import { useAutoLogin } from "@hooks/auto-login.hook";
 import { useAppDispatch } from "@hooks/store-hook";
 import { addAlert } from "@stores/alert.store";
-import { ApiResponse } from "@typing/api-response.interface";
+import { ApiErrorResponse, ApiResponse } from "@typing/api-response.interface";
 import { ILesson } from "@typing/lesson.interface";
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { useEffect, useState } from "react";
@@ -39,6 +39,11 @@ interface FetchLessonsParameters {
   author?: string;
 }
 
+/**
+ * Hook for fetching lessons. Fetches all lessons by default.
+ * @param {FetchLessonsParameters} filters The parameters to filter the lessons
+ * @return {FetchLessonsReturns} The lessons and whether there is an authenticated user
+ */
 const useFetchLessons = (
   filters: FetchLessonsParameters = {}
 ): FetchLessonsReturns => {
@@ -71,7 +76,7 @@ const useFetchLessons = (
             }
           }
         )
-        .catch((reason: AxiosError) => {
+        .catch((reason: AxiosError<ApiErrorResponse>) => {
           console.log(
             "Erreur récupération des leçons",
             getAxiosErrorMessage(reason)

@@ -1,16 +1,15 @@
-import {
-  isText,
-  parseForm,
-  RequestFormData,
-  validateArrayStringField,
-  validateStringField,
-} from "@common/parse-form.utils";
+import { parseForm, RequestFormData } from "@common/parse-form.utils";
 import { createNewLesson, getOneLesson } from "@services/lessons.service";
 import { ApiResponse } from "@typing/api-response.interface";
 import { EGrade } from "@typing/grade.enum";
 import { ILesson, ILessonCreate } from "@typing/lesson.interface";
 import { ESubject } from "@typing/subject.enum";
 import { IUserPublic } from "@typing/user.interface";
+import {
+  isText,
+  validateArrayStringField,
+  validateStringField,
+} from "@utils/parse-form.utils";
 import { File } from "formidable";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 import validator from "validator";
@@ -129,6 +128,7 @@ export const lessonCreateHandler: NextApiHandler = async (
       });
     }
 
+    console.log(`[LESSON] Lesson upload succeeded: "${uploadedLesson.title}"`);
     return res.status(200).json({
       success: true,
       data: {

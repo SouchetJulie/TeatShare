@@ -1,10 +1,4 @@
-import {
-  isFrenchAlpha,
-  removeEmptyFields,
-  RequestFormData,
-  validateArrayStringField,
-  validateStringField,
-} from "@common/parse-form.utils";
+import { RequestFormData } from "@common/parse-form.utils";
 import { uploadFile } from "@services/storage.service";
 import { CleanFile } from "@typing/clean-file.interface";
 import { EGrade } from "@typing/grade.enum";
@@ -17,6 +11,12 @@ import {
   IUserProfile,
   IUserPublic,
 } from "@typing/user.interface";
+import {
+  isFrenchAlpha,
+  removeEmptyFields,
+  validateArrayStringField,
+  validateStringField,
+} from "@utils/parse-form.utils";
 import bcrypt from "bcryptjs";
 import { ObjectId } from "bson";
 import { File } from "formidable";

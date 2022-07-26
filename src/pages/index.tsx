@@ -12,7 +12,7 @@ const Home: FunctionComponent = () => {
   const { isAuthenticated, lessons } = useFetchLessons({ isDraft: false });
 
   const component: JSX.Element = isAuthenticated ? (
-    <LessonList lessons={lessons} />
+    <LessonList lessons={lessons} title="Liste des leçons" />
   ) : (
     <LandingPage />
   );

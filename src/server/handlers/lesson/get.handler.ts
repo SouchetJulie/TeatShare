@@ -17,6 +17,7 @@ const lessonGetAllHandler = async (
   try {
     const user = req.session.user;
     const filters = getFiltersFromQuery(req.query, user);
+    console.log("[LESSON] Filters for list GET:", filters);
 
     // Read lessons from database & send result
     const lessons: ILesson[] = await getAllLessons(filters);

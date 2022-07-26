@@ -44,20 +44,16 @@ const UserLinks: FunctionComponent<Props> = ({ user }: Props) => {
         <Link href={"/dashboard"}>Mon dashboard</Link>
       </NavDropdown.Item>
       <Dropdown.Divider />
-      <NavDropdown.Item as="div">
-        <Link href={"/user/settings"}>Paramètres</Link>
-      </NavDropdown.Item>
-      <Dropdown.Divider />
       <NavDropdown.Item onClick={logout}>Déconnexion</NavDropdown.Item>
     </NavDropdown>
   ) : (
     <div className={"ms-md-5 mb-2 my-md-auto " + styles.navSection}>
-      <Nav.Link as={Link} href={"/user/login"}>
+      <Link className="nav-link" href={"/user/login"}>
         Connexion
-      </Nav.Link>
-      <Nav.Link as={Link} href={"/user/signup"}>
+      </Link>
+      <Link className="nav-link" href={"/user/signup"}>
         Inscription
-      </Nav.Link>
+      </Link>
     </div>
   );
 };

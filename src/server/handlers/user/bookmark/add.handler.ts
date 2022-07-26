@@ -26,6 +26,7 @@ const handler =
       }
 
       if (user!.bookmarkIds.includes(_id)) {
+        console.log(`[LESSON] Lesson ${_id} was already in user's bookmarks`);
         return res.status(400).json({
           success: false,
           error: "Cette leçon est déjà dans les marques-pages",
@@ -43,6 +44,10 @@ const handler =
 
       return res.status(200).json({ success: true });
     } catch (e) {
+      console.log(
+        `[LESSON] Failed to add lesson ${_id} to user's bookmarks:`,
+        e
+      );
       return res.status(500).json({
         success: false,
         error: `Erreur lors de l'ajout du marque-page : ${

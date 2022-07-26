@@ -13,6 +13,13 @@ import NavBar from "../client/components/menu/NavBar";
 import SideBar from "../client/components/menu/SideBar";
 import Alert from "../client/components/ui/AlertComponent";
 
+import fr from "date-fns/locale/fr";
+
+import { registerLocale, setDefaultLocale } from "react-datepicker";
+
+setDefaultLocale("fr");
+registerLocale("fr", fr);
+
 /**
  * Main application component: contains the parts that are shared for the whole app.
  * @constructor

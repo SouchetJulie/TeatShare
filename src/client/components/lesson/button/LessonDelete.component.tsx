@@ -1,10 +1,10 @@
 import { getAxiosErrorMessage } from "@client/utils/get-axios-error.utils";
 import { useAppDispatch } from "@hooks/store-hook";
 import { addAlert } from "@stores/alert.store";
-import { ApiResponse } from "@typing/api-response.interface";
+import { ApiErrorResponse, ApiResponse } from "@typing/api-response.interface";
 import axios, { AxiosError, AxiosResponse } from "axios";
 import { useRouter } from "next/router";
-import { FunctionComponent, useState } from "react";
+import { FunctionComponent, MouseEvent, useState } from "react";
 import { Modal } from "react-bootstrap";
 import { TrashFill } from "react-bootstrap-icons";
 import Button from "react-bootstrap/Button";
@@ -24,7 +24,10 @@ export const LessonDelete: FunctionComponent<LessonDeleteProps> = ({
   const dispatch = useAppDispatch();
   const [show, setShow] = useState(false);
 
-  const openModal = () => setShow(true);
+  const openModal = (event: MouseEvent) => {
+    event.stopPropagation();
+    setShow(true);
+  };
   const closeModal = () => setShow(false);
   const deleteLesson = () => {
     closeModal();
@@ -57,7 +60,7 @@ export const LessonDelete: FunctionComponent<LessonDeleteProps> = ({
           ttl = 5000;
         }
       })
-      .catch((err: AxiosError) => {
+      .catch((err: AxiosError<ApiErrorResponse>) => {
         success = false;
         message = `Suppression échouée : ${getAxiosErrorMessage(err)}`;
         ttl = 5000;
