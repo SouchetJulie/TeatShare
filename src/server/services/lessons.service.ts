@@ -251,7 +251,7 @@ export const getFiltersFromQuery = (
       // Search by author id (multiple values are treated as "or")
       case "author":
         filters.authorId = {
-          $in: toArray(value),
+          $in: toArray(value).map((id) => new ObjectId(id)),
         };
         break;
 

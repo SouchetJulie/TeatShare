@@ -44,7 +44,10 @@ const handler =
 
       return res.status(200).json({ success: true });
     } catch (e) {
-      console.log(`[LESSON] Failed to add lesson ${_id} to user's bookmarks:`, e);
+      console.log(
+        `[LESSON] Failed to add lesson ${_id} to user's bookmarks:`,
+        e
+      );
       return res.status(500).json({
         success: false,
         error: `Erreur lors de l'ajout du marque-page : ${

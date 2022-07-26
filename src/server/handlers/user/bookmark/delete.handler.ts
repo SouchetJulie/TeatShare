@@ -48,7 +48,10 @@ const handler =
 
       return res.status(200).json({ success: true });
     } catch (e) {
-      console.log(`[LESSON] Failed to remove lesson ${_id} from user's bookmarks:`, e);
+      console.log(
+        `[LESSON] Failed to remove lesson ${_id} from user's bookmarks:`,
+        e
+      );
       return res.status(500).json({
         success: false,
         error: `Erreur lors de la suppression du marque-page : ${
