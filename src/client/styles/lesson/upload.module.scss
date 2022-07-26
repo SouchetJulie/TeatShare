@@ -1,9 +1,18 @@
 @import "../variables";
 
 .control {
+  background: none;
   border-top-color: transparent;
+  border-bottom-color: #a2a2a2;
   border-right-color: transparent;
   border-left-color: transparent;
+
+  &::placeholder {
+    color: $grey;
+  }
+
+  &:focus {
+  }
 }
 
 .label {

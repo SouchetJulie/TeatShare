@@ -29,7 +29,7 @@ const UserLinks: FunctionComponent<Props> = ({ user }: Props) => {
       </NavDropdown.Item>
       <Dropdown.Divider />
       <NavDropdown.Item as="div">
-        <Link href={"/user/settings"}>Paramètres</Link>
+        <Link href={"/dashboard"}>Mon dashboard</Link>
       </NavDropdown.Item>
       <Dropdown.Divider />
       <NavDropdown.Item onClick={logout}>Déconnexion</NavDropdown.Item>

@@ -44,7 +44,13 @@ export const LessonUploadFormMeta: FunctionComponent<
   ): void => lessonDispatch(setField("grade", selected?.value));
 
   return (
-    <Card body bg="secondary" text="white" className="pb-4 mb-5">
+    <Card
+      body
+      bg="secondary"
+      text="white"
+      className="pb-4 mb-5"
+      style={{ borderRadius: "15px" }}
+    >
       <div className="mt-n4">
         <Form.Label className={styles.label} htmlFor="grade">
           Classe
