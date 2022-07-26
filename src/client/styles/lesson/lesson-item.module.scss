@@ -20,6 +20,13 @@
   }
 }
 
+$draft-color: #801818;
+.draft {
+  font-size: small;
+  font-weight: normal;
+  color: $draft-color;
+}
+
 .column {
   align-self: stretch;
   display: flex;
@@ -32,23 +39,22 @@
     margin-top: 2px;
     margin-bottom: 2px;
 
-    @include media-breakpoint-up(md) {
+    @include media-breakpoint-up(lg) {
       min-width: 100%;
     }
   }
 }
 
 .header {
-  margin: 0;
-  border: none;
-  background-color: transparent;
-
+  font-size: initial;
   font-weight: bold;
   text-transform: capitalize;
 }
 
-.subtitle {
-  margin-top: 5px;
+@include media-breakpoint-up(lg) {
+  .subtitle, .header {
+    text-align: start;
+  }
 }
 
 .clickable {

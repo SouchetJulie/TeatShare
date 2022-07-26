@@ -8,7 +8,7 @@ import { FunctionComponent } from "react";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
-import LessonItem from "./LessonItem";
+import LessonListItem from "./LessonListItem";
 
 interface Props {
   lessons: ILesson[];
@@ -45,7 +45,7 @@ export const LessonList: FunctionComponent<Props> = ({
         />
         <div className={styles.lessonContainer}>
           {filteredLessons.map((lesson: ILesson) => (
-            <LessonItem key={`lesson-item-${lesson._id}`} lesson={lesson} />
+            <LessonListItem key={`lesson-item-${lesson._id}`} lesson={lesson} />
           ))}
         </div>
       </Container>
