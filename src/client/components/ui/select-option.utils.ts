@@ -60,11 +60,12 @@ interface SelectStyle {
  * @return {StylesConfig} The CSS config.
  */
 const createSelectStyle = <
-  Data extends string,
+  LabelType extends string,
+  ValueType = string,
   isMulti extends boolean = false
 >({
   rounded,
-}: SelectStyle): StylesConfig<SelectOption<Data>, isMulti> => ({
+}: SelectStyle): StylesConfig<SelectOption<LabelType, ValueType>, isMulti> => ({
   control: (baseStyle: CSSObjectWithLabel) => ({
     ...baseStyle,
     borderRadius: rounded ? "25px" : "initial",

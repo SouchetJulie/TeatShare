@@ -6,7 +6,10 @@ import {
 } from "@components/lesson/list/lesson-filter-reducer.hook";
 import SubjectSelect from "@components/subject/SubjectSelect.component";
 import Datepicker from "@components/ui/Datepicker";
-import { SelectOption } from "@components/ui/select-option.utils";
+import {
+  createSelectStyle,
+  SelectOption,
+} from "@components/ui/select-option.utils";
 import { setField } from "@hooks/reducer-actions.utils";
 import styles from "@styles/lesson/lesson-filter.module.scss";
 import { EGrade } from "@typing/grade.enum";
@@ -33,6 +36,10 @@ const isDraftOptions: SelectOption<string, boolean | undefined>[] = [
   { value: false, label: "Publiés" },
   { value: true, label: "Brouillons" },
 ];
+
+const isDraftStyles = createSelectStyle<string, boolean | undefined>({
+  rounded: true,
+});
 
 export const LessonListFilter: FunctionComponent<LessonListFilterProps> = ({
   filters,
@@ -241,6 +248,7 @@ export const LessonListFilter: FunctionComponent<LessonListFilterProps> = ({
                     options={isDraftOptions}
                     value={selectedIsDraftOption}
                     onChange={onIsDraftChange}
+                    styles={isDraftStyles}
                   />
                 </Col>
               </Row>
