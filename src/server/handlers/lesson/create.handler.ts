@@ -128,6 +128,7 @@ export const lessonCreateHandler: NextApiHandler = async (
       });
     }
 
+    console.log(`[LESSON] Lesson upload succeeded: "${uploadedLesson.title}"`);
     return res.status(200).json({
       success: true,
       data: {

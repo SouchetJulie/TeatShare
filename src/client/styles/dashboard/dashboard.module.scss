@@ -1,0 +1,185 @@
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/mixins";
+@import "~bootstrap/scss/variables";
+@import "../variables";
+
+.dashboardContainer {
+  height: 90vh;
+}
+
+.title {
+  text-align: center;
+  margin: 4% 0 30px 0;
+  color: $secondary;
+}
+
+.card {
+  width: 345px;
+  background: $bluel;
+  border: none;
+  border-radius: 20px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+
+  .badge {
+    position: absolute;
+    top: 15px;
+    right: -25px;
+    transform: rotate(45deg);
+    background-color: #ff5252;
+    display: inline-block;
+    color: white;
+    width: 100px;
+  }
+
+  .cardImage {
+    width: 200px;
+    height: 200px;
+    margin: 10px auto;
+  }
+
+  .cardText {
+    p {
+      margin: 5px 0 10px 0;
+    }
+
+    span {
+      display: inline-block;
+      background-color: #f5f5f5;
+      border-radius: 15px;
+      width: 200px;
+      padding: 5px 2px;
+      color: #6c6c6c;
+    }
+
+    .nbrPosts {
+      margin-top: 15px;
+    }
+  }
+}
+
+.commentContainer {
+  div {
+    div {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      p {
+        margin: 0 0 15px 0;
+        color: $grbk;
+      }
+
+      .date {
+        font-size: 8px;
+      }
+    }
+
+    span {
+      display: inline-block;
+      border-radius: 15px;
+      padding: 2px 2px;
+      width: 100px;
+      background: $bluel;
+      text-align: center;
+    }
+  }
+
+  button {
+    border-radius: 20px;
+    min-width: 300px;
+    display: flex;
+    color: white;
+    justify-content: center;
+  }
+}
+
+.lastPostsContainer {
+  .lastPostsList {
+    height: 60vh;
+    overflow-y: auto;
+    width: auto;
+    padding: 0 20px 0 0;
+    scrollbar-color: $primary;
+
+    .post {
+      margin-bottom: 15px;
+
+      & > p {
+        margin-bottom: 10px;
+      }
+
+      .postCard {
+        background: white;
+        border-radius: 15px;
+        padding: 10px 20px;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        justify-content: center;
+        transition-duration: 0.75s;
+        cursor: pointer;
+
+        &:hover {
+          background: $primary;
+          color: white;
+
+          & > :nth-child(2) {
+            color: white;
+          }
+        }
+
+        & > :nth-child(2) {
+          color: #6c6c6c;
+          font-size: 12.5px;
+          margin: 0;
+          transition-duration: 0.75s;
+        }
+      }
+    }
+  }
+
+  .noLesson {
+    height: 100%;
+    width: 100%;
+    background-color: $greyc;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    p {
+      text-align: center;
+      margin: 0;
+      color: #b4b4b4;
+      font-size: 50px;
+    }
+  }
+
+  .lastPostsList::-webkit-scrollbar-thumb {
+    background: $primary;
+    border-radius: 10px;
+  }
+
+  .lastPostsList::-webkit-scrollbar {
+    width: 10px;
+    background: $greyc;
+    border-radius: 10px;
+  }
+}
+
+@media screen and (max-width: 522px) {
+  .title {
+    text-align: center;
+    margin: 40px 0 0 0;
+    color: $secondary;
+  }
+  .card {
+    margin: auto;
+  }
+  .subTitle {
+    text-align: center;
+    margin: 5% auto;
+  }
+}

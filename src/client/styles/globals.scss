@@ -33,6 +33,7 @@ body,
   padding: 0;
   background-color: $light;
   scrollbar-color: $primary lightgray;
+  background: $background;
 }
 
 #__next_page {
@@ -66,6 +67,7 @@ h1 {
   padding-right: 40px;
   padding-left: 40px;
   border-radius: 25px;
+  color: white;
 }
 
 .onTop {
