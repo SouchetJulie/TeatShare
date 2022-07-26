@@ -2,10 +2,10 @@ import { getAxiosErrorMessage } from "@client/utils/get-axios-error.utils";
 import { LessonUploadFormGeneral } from "@components/lesson/upload/form/LessonUploadFormGeneral.component";
 import { LessonUploadFormMeta } from "@components/lesson/upload/form/LessonUploadFormMeta.component";
 import {
-  setField,
   setLesson,
   useLessonUploadReducer,
 } from "@components/lesson/upload/lesson-upload-reducer.hook";
+import { setField } from "@hooks/reducer-actions.utils";
 import { useAppDispatch } from "@hooks/store-hook";
 import { addAlert } from "@stores/alert.store";
 import { ApiErrorResponse, ApiResponse } from "@typing/api-response.interface";

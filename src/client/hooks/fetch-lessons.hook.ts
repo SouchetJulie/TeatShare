@@ -39,6 +39,11 @@ interface FetchLessonsParameters {
   author?: string;
 }
 
+/**
+ * Hook for fetching lessons. Fetches all lessons by default.
+ * @param {FetchLessonsParameters} filters The parameters to filter the lessons
+ * @return {FetchLessonsReturns} The lessons and whether there is an authenticated user
+ */
 const useFetchLessons = (
   filters: FetchLessonsParameters = {}
 ): FetchLessonsReturns => {

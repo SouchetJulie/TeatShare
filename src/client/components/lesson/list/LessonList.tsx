@@ -1,72 +1,54 @@
+import { filterLesson } from "@components/lesson/list/filter-lesson";
+import { useLessonFilterReducer } from "@components/lesson/list/lesson-filter-reducer.hook";
+import { LessonListFilter } from "@components/lesson/list/LessonListFilter.component";
 import styles from "@styles/lesson/lesson-list.module.scss";
 import { ILesson } from "@typing/lesson.interface";
+import Head from "next/head";
 import { FunctionComponent } from "react";
-import { Search, SortUp } from "react-bootstrap-icons";
-import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
-import Form from "react-bootstrap/Form";
-import InputGroup from "react-bootstrap/InputGroup";
 import Row from "react-bootstrap/Row";
-import LessonItem from "./LessonItem";
+import LessonListItem from "./LessonListItem";
 
 interface Props {
   lessons: ILesson[];
+  title: string;
+  showAdvancedFilters?: boolean;
 }
 
-export const LessonList: FunctionComponent<Props> = ({ lessons }: Props) => (
-  <>
-    <Container className="my-4 mb-5">
-      {/* Filtres */}
-      <Form as={Row} className={styles.form}>
-        <Col md="auto">
-          <Button
-            type="submit"
-            variant="secondary"
-            className={styles.filterButton}
-          >
-            Filtrer
-          </Button>
-        </Col>
-        <InputGroup as={Col} md="auto" className={styles.inputGroup}>
-          <Form.Label visuallyHidden htmlFor="lessons-sort">
-            Trier par
-          </Form.Label>
-          <Form.Select
-            className={styles.formInput}
-            id="lessons-sort"
-            name="sort"
-          >
-            <option>Titre</option>
-            <option>Matière</option>
-            <option>Auteur</option>
-            <option>Marqués</option>
-          </Form.Select>
-          <InputGroup.Text>
-            <SortUp />
-          </InputGroup.Text>
-        </InputGroup>
-        <InputGroup as={Col} md="auto" className={styles.inputGroup}>
-          <Form.Label visuallyHidden htmlFor="lessons-search">
-            Rechercher
-          </Form.Label>
-          <Form.Control
-            className={styles.formInput}
-            id="lessons-search"
-            name="search"
-            placeholder="Recherche par mots-clés"
-          />
-          <InputGroup.Text>
-            <Search />
-          </InputGroup.Text>
-        </InputGroup>
-      </Form>
-    </Container>
-    <Container className={`${styles.lessonContainer} my-4`}>
-      {/* Affichage des résultats */}
-      {lessons.map((lesson: ILesson) => (
-        <LessonItem key={`lesson-item-${lesson._id}`} lesson={lesson} />
-      ))}
-    </Container>
-  </>
-);
+export const LessonList: FunctionComponent<Props> = ({
+  lessons,
+  title,
+  showAdvancedFilters = false,
+}: Props) => {
+  const [filters, filterDispatch] = useLessonFilterReducer();
+
+  const filteredLessons = lessons.filter((lesson) =>
+    filterLesson(filters, lesson)
+  );
+
+  return (
+    <>
+      <Head>
+        <title>TeatShare - {title}</title>
+      </Head>
+      <Container>
+        <Row className="mt-5 justify-content-center">
+          <Col sm="auto" as="h1" className="text-secondary">
+            {title}
+          </Col>
+        </Row>
+        <LessonListFilter
+          filters={filters}
+          filterDispatch={filterDispatch}
+          showAdvancedFilters={showAdvancedFilters}
+        />
+        <div className={styles.lessonContainer}>
+          {filteredLessons.map((lesson: ILesson) => (
+            <LessonListItem key={`lesson-item-${lesson._id}`} lesson={lesson} />
+          ))}
+        </div>
+      </Container>
+    </>
+  );
+};
