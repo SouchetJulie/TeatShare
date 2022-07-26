@@ -1,4 +1,4 @@
-import { CSSObjectWithLabel, StylesConfig } from "react-select";
+import { CSSObjectWithLabel, GroupBase, StylesConfig } from "react-select";
 
 interface SelectOption<LabelType extends string, ValueType = string> {
   value: ValueType;
@@ -21,6 +21,35 @@ const fromEnumToOption = <T extends string>([key, text]: [
   value: key,
   label: text,
 });
+
+/**
+ * Takes an [groupName, optionList] pair and creates the corresponding SelectOptionGroup.
+ * @param {[string, SelectOption[]]} group The [groupName, optionList] pair.
+ * @return {GroupBase<SelectOption>} The corresponding SelectOptionGroup.
+ */
+const fromGroupToGroupOptions = ([groupName, optionList]: [
+  string,
+  SelectOption<string>[]
+]): GroupBase<SelectOption<string>> => ({
+  label: groupName,
+  options: optionList,
+});
+
+/**
+ * Updates a list of option groups by putting the group with no label in first place.
+ * No change is made if there is no such group, or it is already in first place.
+ * @param {GroupBase<SelectOption>[]} optionGroups The list of option groups.
+ */
+const putNoGroupFirst = (
+  optionGroups: GroupBase<SelectOption<string>>[]
+): void => {
+  const noGroupIndex = optionGroups.findIndex(({ label }) => label === "");
+  if (noGroupIndex !== -1 && noGroupIndex !== 0) {
+    const noGroup = optionGroups.splice(noGroupIndex, 1)[0];
+    optionGroups.unshift(noGroup);
+  }
+};
+
 /**
  * Gets the corresponding SelectOption for a given enum key.
  *
@@ -72,5 +101,11 @@ const createSelectStyle = <
   }),
 });
 
-export { fromEnumToOption, getSelectedOption, createSelectStyle };
+export {
+  fromEnumToOption,
+  getSelectedOption,
+  createSelectStyle,
+  fromGroupToGroupOptions,
+  putNoGroupFirst,
+};
 export type { SelectOption, SelectStyle };
