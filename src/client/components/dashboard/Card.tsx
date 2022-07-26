@@ -3,7 +3,7 @@ import { CleanFile } from "@typing/clean-file.interface";
 import { IUserPublic } from "@typing/user.interface";
 import { FunctionComponent } from "react";
 import Card from "react-bootstrap/Card";
-import styles from "../../styles/dashboard/dashboard.module.scss";
+import styles from "@styles/dashboard/dashboard.module.scss";
 
 interface Props {
   user: IUserPublic;
