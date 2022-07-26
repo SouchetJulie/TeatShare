@@ -17,7 +17,9 @@ const handler = async (
     const user = await getUserByEmail(userCredentials.email);
 
     if (!user) {
-      console.log(`[LOGIN] User ${user.email} failed to log in: unknown user`);
+      console.log(
+        `[LOGIN] User ${userCredentials.email} failed to log in: unknown user`
+      );
       return res.status(404).json({
         success: false,
         error: "Utilisateur inconnu",
@@ -33,7 +35,7 @@ const handler = async (
       data: { user },
     });
   } else {
-    console.log(`[LOGIN] User ${user.email} failed to log in`);
+    console.log(`[LOGIN] User ${userCredentials.email} failed to log in`);
     return res.status(400).json({
       success: false,
       error: "Connexion échouée",
