@@ -1,4 +1,5 @@
 import avatarLogo from "@assets/logos/avatar_placeholder.png";
+import { getUsername } from "@client/utils/get-username.utils";
 import styles from "@styles/dashboard/dashboard.module.scss";
 import { CleanFile } from "@typing/clean-file.interface";
 import { EGrade } from "@typing/grade.enum";
@@ -31,7 +32,7 @@ const DashBoardCard: FunctionComponent<Props> = ({ user }: Props) => {
           <span className={styles.badge}>veteran</span>
           <div className={styles.cardText}>
             <p>Nom</p>
-            <span>{user?.firstName ? user.firstName : "Votre nom"}</span>
+            <span>{getUsername(user) ?? "Votre nom"}</span>
             {user && user.grades.length > 1 ? (
               <p>Classes enseignées</p>
             ) : (
