@@ -17,6 +17,7 @@ import { ILesson } from "@typing/lesson.interface";
 import { IUserPublic } from "@typing/user.interface";
 import { AxiosError, AxiosResponse } from "axios";
 import dayjs from "dayjs";
+import { saveAs } from "file-saver";
 import Image from "next/image";
 import { FunctionComponent, useEffect, useMemo, useState } from "react";
 import { ListGroup } from "react-bootstrap";
@@ -24,8 +25,6 @@ import { Download, Printer } from "react-bootstrap-icons";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-
-// eslint-disable-next-line camelcase
 
 interface LessonHeaderComponentProps {
   lesson?: ILesson;
@@ -37,11 +36,32 @@ const LessonDetailsHeader: FunctionComponent<LessonHeaderComponentProps> = ({
   const [author, setAuthor] = useState<IUserPublic | undefined>(undefined);
   const user = useAppSelector(selectAuthenticatedUser);
   const dispatch = useAppDispatch();
+  const fileURL: string = `https://storage.googleapis.com/${process.env.NEXT_PUBLIC_BUCKET_NAME}/${lesson?.file.filepath}`;
 
   const formatDate: string = useMemo(
     () => dayjs(lesson?.publicationDate).format("DD/MM/YYYY"),
     [lesson?.publicationDate]
   );
+
+  // Print method
+  const handlePrint = () => {
+    // This needs to be a dynamic import to avoid the SSR,
+    // since print-js requires the `window` object to work
+    import("print-js").then(({ default: printJS }) => {
+      printJS({
+        printable: fileURL,
+        type: "pdf",
+        style: "A4",
+        showModal: true,
+        modalMessage: "Un instant...",
+      });
+    });
+  };
+  // Download Method
+  const downloadPDF = () => {
+    const nameToPrint: string = lesson?.title + ".pdf";
+    saveAs(fileURL, nameToPrint);
+  };
 
   useEffect(() => {
     if (lesson?.authorId) {
@@ -81,7 +101,7 @@ const LessonDetailsHeader: FunctionComponent<LessonHeaderComponentProps> = ({
         {author?.subjects?.length && (
           <p>Professeur de {author?.subjects?.join(", ")} </p>
         )}
-        <p>publié le {formatDate ?? ""}</p>
+        <p>Publié le {formatDate ?? ""}</p>
       </Col>
       <Col
         xs={12}
@@ -109,10 +129,18 @@ const LessonDetailsHeader: FunctionComponent<LessonHeaderComponentProps> = ({
           </>
         )}
         <LessonBookmark lessonId={lesson?._id ?? ""} size={30} />
-        <Button variant="outline-secondary" className="border-0 rounded-circle">
+        <Button
+          variant="outline-secondary"
+          className="border-0 rounded-circle"
+          onClick={downloadPDF}
+        >
           <Download size={30} />
         </Button>
-        <Button variant="outline-secondary" className="border-0 rounded-circle">
+        <Button
+          variant="outline-secondary"
+          className="border-0 rounded-circle"
+          onClick={handlePrint}
+        >
           <Printer size={30} />
         </Button>
       </Col>
