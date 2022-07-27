@@ -11,14 +11,18 @@
 }
 
 .profileMainData {
-
-  display: grid;
-  grid-template-rows: minmax(auto, 447px) 1fr;
-  grid-template-columns: 1fr auto;
+  display: flex;
   gap: 30px;
   justify-content: start;
-
 }
+
+@media screen and (max-width: 767px) {
+  .profileMainData {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+}
+
 
 .profileEdit {
   background: white;
