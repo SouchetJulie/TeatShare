@@ -166,13 +166,12 @@ const Profile: FunctionComponent = () => {
             />
             <Card.Body>
               <span className={dashboardStyles.badge}>veteran</span>
-              <Card.Text className={dashboardStyles.cardText}>
-                <p>Nom</p>
-                <span>metier</span>
-                <p>classe(s) enseignée(s)</p>
-                <span>Cp CE1</span>
-                <h6>6 POSTS - 2 COMMENTAIRES</h6>
-              </Card.Text>
+
+              <p>Nom</p>
+              <span>metier</span>
+              <p>classe(s) enseignée(s)</p>
+              <span>Cp CE1</span>
+              <h6>6 POSTS - 2 COMMENTAIRES</h6>
             </Card.Body>
           </Card>
         </div>
