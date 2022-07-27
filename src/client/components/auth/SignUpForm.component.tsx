@@ -1,10 +1,11 @@
+import { getAxiosErrorMessage } from "@client/utils/get-axios-error.utils";
 import { useAppDispatch } from "@hooks/store-hook";
 import { addAlert } from "@stores/alert.store";
 import { setUser } from "@stores/user.store";
 import styles from "@styles/auth/Login.Component.module.scss";
-import { ApiResponse } from "@typing/api-response.interface";
+import { ApiErrorResponse, ApiResponse } from "@typing/api-response.interface";
 import { IUserCreate, IUserPublic } from "@typing/user.interface";
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 import { Formik } from "formik";
 import { FormikHelpers } from "formik/dist/types";
 import Link from "next/link";
@@ -82,14 +83,14 @@ const SignupForm: FunctionComponent = () => {
             dispatch(setUser(response.data?.user));
           } else {
             success = false;
-            message = "Nom d'utilisateur ou mot de passe incorrects";
+            message = `Inscription échouée: ${response.error}`;
             setButtonMessage("Inscription échouée.");
           }
         }
       )
-      .catch(() => {
+      .catch((e: AxiosError<ApiErrorResponse>) => {
         success = false;
-        message = "Nom d'utilisateur ou mot de passe incorrects";
+        message = `Inscription échouée: ${getAxiosErrorMessage(e)}`;
         setButtonMessage("Inscription échouée.");
       })
       .finally(() => dispatch(addAlert({ message, success, ttl: 2000 })));
