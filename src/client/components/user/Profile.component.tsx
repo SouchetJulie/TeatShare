@@ -152,7 +152,7 @@ const Profile: FunctionComponent = () => {
   // Return the Component
   return (
     <Container className={styles.profileContainer}>
-      <h2 className={styles.title}>Mon profile</h2>
+      <h1 className={styles.title}>Mon profile</h1>
       <div>
         <h3 className={styles.sectionTitle}>Mes informations</h3>
         <div className={styles.profileMainData}>
@@ -161,17 +161,24 @@ const Profile: FunctionComponent = () => {
             {/* Next considère le logo comme un objet possédant un attribut src */}
             <Card.Img
               variant="top"
-              src={avatarLogo.src}
+              src={
+                user?.avatar
+                  ? `https://storage.googleapis.com/${
+                      process.env.NEXT_PUBLIC_BUCKET_NAME
+                    }/${(user.avatar as CleanFile).filepath}`
+                  : avatarLogo.src
+              }
               className={dashboardStyles.cardImage}
             />
             <Card.Body>
               <span className={dashboardStyles.badge}>veteran</span>
-
-              <p>Nom</p>
-              <span>metier</span>
-              <p>classe(s) enseignée(s)</p>
-              <span>Cp CE1</span>
-              <h6>6 POSTS - 2 COMMENTAIRES</h6>
+              <div className={styles.cardText}>
+                <p>Nom</p>
+                <span>metier</span>
+                <p>classe(s) enseignée(s)</p>
+                <span>Cp CE1</span>
+                <h6>6 POSTS - 2 COMMENTAIRES</h6>
+              </div>
             </Card.Body>
           </Card>
         </div>
