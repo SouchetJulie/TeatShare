@@ -35,7 +35,7 @@ const handler = async (
     });
   } catch (e) {
     console.log("[SIGNUP] Error while recording newly created user:");
-    return res.status(400).json({
+    return res.status(500).json({
       success: false,
       error:
         "Erreur lors de la création de l'utilisateur : " + (e as Error).message,

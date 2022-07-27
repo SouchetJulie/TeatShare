@@ -31,13 +31,23 @@ export const validationErrorResponse = (
 
   const message = Object.entries(errorMap).map(
     ([param, { value, messages }]) => {
-      const valueToDisplay =
-        param === "password" ? value.replaceAll(/./g, "●") : value;
-      return `La valeur de "${param}" ("${valueToDisplay}") est invalide : ${messages.join(
-        ", "
-      )}`;
+      let valueToDisplay: string;
+      if (param === "password") {
+        valueToDisplay = "";
+        for (let i = 0; i < value.length; i++) {
+          valueToDisplay += "●";
+        }
+      } else {
+        valueToDisplay = value;
+      }
+
+      const allMessages: string = messages.join(", ");
+
+      return `La valeur de "${param}" ("${valueToDisplay}") est invalide : ${allMessages}`;
     }
   );
+
+  console.log(`[VALIDATION] Validation failed : ${message.join("\n")}`);
 
   return res.status(400).send(message.join(". "));
 };
