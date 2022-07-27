@@ -1,6 +1,6 @@
-import { useAutoLogin } from "@hooks/auto-login.hook";
-import { useAppDispatch } from "@hooks/store-hook";
+import { useAppDispatch, useAppSelector } from "@hooks/store-hook";
 import { addAlert } from "@stores/alert.store";
+import { selectIsAuthenticated } from "@stores/user.store";
 import { ApiErrorResponse, ApiResponse } from "@typing/api-response.interface";
 import { ILesson } from "@typing/lesson.interface";
 import axios, { AxiosError, AxiosResponse } from "axios";
@@ -47,7 +47,7 @@ interface FetchLessonsParameters {
 const useFetchLessons = (
   filters: FetchLessonsParameters = {}
 ): FetchLessonsReturns => {
-  const isAuthenticated = !!useAutoLogin();
+  const isAuthenticated: boolean = useAppSelector(selectIsAuthenticated);
   const dispatch = useAppDispatch();
   const [lessons, setLessons] = useState<ILesson[]>([]);
 

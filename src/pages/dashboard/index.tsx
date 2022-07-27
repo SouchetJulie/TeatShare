@@ -30,8 +30,11 @@ const Dashboard: FunctionComponent<Props> = ({}: Props) => {
       }
     );
   }
-
-  const { lessons } = useFetchLessons({ author: user?._id });
+  const idToSend =
+    router.query.otherUser != undefined ? router.query.otherUser : user?._id;
+  const { lessons } = useFetchLessons({
+    author: idToSend,
+  });
 
   return user ? (
     <Container className={styles.dashboardContainer}>

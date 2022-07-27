@@ -123,7 +123,7 @@ const LessonListItem: FunctionComponent<Props> = ({ lesson }: Props) => {
         >
           <Link
             href={{
-              pathname: "/dashboard",
+              pathname: "/dashboard/teacher",
               query: { otherUser: author?._id },
             }}
           >

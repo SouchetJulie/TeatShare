@@ -12,7 +12,7 @@ const LastPosts: FunctionComponent<Props> = ({ lessons }: Props) => {
   // console.log(lessons);
   return (
     <Container className={styles.lastPostsContainer}>
-      <h4 className={styles.subTitle}>Mes derniers posts</h4>
+      <h4 className={styles.subTitle}>Derniers posts</h4>
       <div className={styles.lastPostsList}>
         {lessons.length ? (
           lessons.map((lesson: ILesson, index: number) => {
