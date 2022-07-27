@@ -31,7 +31,7 @@ const userCreateSchema = yup.object({
     .min(1)
     .matches(
       /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
-      "Le mot de passe doit comporter au moins 8 caractères, une majuscule, minuscule, un chiffre et un caractère spécial."
+      "Le mot de passe doit comporter au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial."
     ),
   passwordConfirm: yup
     .string()
@@ -49,7 +49,7 @@ type UserCreateSchema = yup.InferType<typeof userCreateSchema>;
 const popover = (
   <Popover id="password-help" body>
     Le mot de passe doit comporter au moins 8 caractères, une majuscule,
-    minuscule, un chiffre et un caractère spécial.
+    une minuscule, un chiffre et un caractère spécial.
   </Popover>
 );
 
