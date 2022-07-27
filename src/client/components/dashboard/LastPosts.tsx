@@ -9,7 +9,6 @@ interface Props {
 }
 
 const LastPosts: FunctionComponent<Props> = ({ lessons }: Props) => {
-  // console.log(lessons);
   return (
     <Container className={styles.lastPostsContainer}>
       <h4 className={styles.subTitle}>Derniers posts</h4>
@@ -31,7 +30,7 @@ const LastPosts: FunctionComponent<Props> = ({ lessons }: Props) => {
           })
         ) : (
           <div className={styles.noLesson}>
-            <p>Vous n'avez pas de leçons</p>
+            <p>Pas de leçons</p>
           </div>
         )}
       </div>
