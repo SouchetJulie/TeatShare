@@ -22,6 +22,8 @@ export const validate =
     req: NextApiRequest,
     res: NextApiResponse<ApiResponse>
   ): Promise<void> => {
+    console.log(`[VALIDATE] Validating request...`, req); // TODO to delete
+
     // Apply all validations
     try {
       await Promise.allSettled(
