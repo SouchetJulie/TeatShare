@@ -69,51 +69,51 @@ const Profile: FunctionComponent = () => {
       <Form.Group controlId="email">
         {/*<Form.Label>email</Form.Label>*/}
         <Form.Control
-          className={styles.formInput}
+          className={`${styles.formInput} ${!modifiying && styles.disableText}`}
           disabled={!modifiying}
           name="email"
           type="email"
-          placeholder={user.email || "email"}
+          defaultValue={user.email || "email"}
         />
       </Form.Group>
       {/* First name */}
       <Form.Group controlId="firstName">
         {/*<Form.Label>firstName</Form.Label>*/}
         <Form.Control
-          className={styles.formInput}
+          className={`${styles.formInput} ${!modifiying && styles.disableText}`}
           disabled={!modifiying}
           name="firstName"
-          placeholder={user.firstName || "firstName"}
+          defaultValue={user.firstName || "firstName"}
         />
       </Form.Group>
       {/* Last name */}
       <Form.Group controlId="lastName">
         {/*<Form.Label>lastName</Form.Label>*/}
         <Form.Control
-          className={styles.formInput}
+          className={`${styles.formInput} ${!modifiying && styles.disableText}`}
           disabled={!modifiying}
           name="lastName"
-          placeholder={user.lastName || "lastName"}
+          defaultValue={user.lastName || "lastName"}
         />
       </Form.Group>
       {/* Description */}
       <Form.Group controlId="description">
         {/*<Form.Label>description</Form.Label>*/}
         <Form.Control
-          className={styles.formInput}
+          className={`${styles.formInput} ${!modifiying && styles.disableText}`}
           disabled={!modifiying}
           name="description"
-          placeholder={user.description || "description"}
+          defaultValue={user.description || "description"}
         />
       </Form.Group>
       {/* Location */}
       <Form.Group controlId="location">
         {/*<Form.Label>location</Form.Label>*/}
         <Form.Control
-          className={styles.formInput}
+          className={`${styles.formInput} ${!modifiying && styles.disableText}`}
           disabled={!modifiying}
           name="location"
-          placeholder={user.location || "location"}
+          defaultValue={user.location || "location"}
         />
       </Form.Group>
       {/* Grades */}
@@ -121,8 +121,10 @@ const Profile: FunctionComponent = () => {
         <Form.Group controlId="grades">
           {/*<Form.Label>grades</Form.Label>*/}
           <Select
-            disabled={!modifiying}
-            className={styles.formInput}
+            isDisabled={!modifiying}
+            className={`${styles.formInput} ${
+              !modifiying && styles.disableText
+            }`}
             id="grades"
             name="grades"
             aria-labelledby="grades"
@@ -137,7 +139,8 @@ const Profile: FunctionComponent = () => {
       <Form.Group controlId="subjects">
         {/*<Form.Label>subjects</Form.Label>*/}
         <Select
-          className={styles.formInput}
+          isDisabled={!modifiying}
+          className={`${styles.formInput} ${!modifiying && styles.disableText}`}
           id="subjects"
           name="subjects"
           aria-labelledby="subjects"
@@ -152,7 +155,9 @@ const Profile: FunctionComponent = () => {
         <Form.Group controlId="avatar">
           {/*<Form.Label>avatar</Form.Label>*/}
           <Form.Control
-            className={styles.formInput}
+            className={`${styles.formInput} ${
+              !modifiying && styles.disableText
+            }`}
             disabled={!modifiying}
             name="avatar"
             type="file"
@@ -202,9 +207,10 @@ const Profile: FunctionComponent = () => {
               variant="top"
               src={
                 user?.avatar
-                  ? `https://storage.googleapis.com/${
-                      process.env.NEXT_PUBLIC_BUCKET_NAME
-                    }/${(user.avatar as CleanFile).filepath}`
+                  ? `
+            }https://storage.googleapis.com/${
+              process.env.NEXT_PUBLIC_BUCKET_NAME
+            }/${(user.avatar as CleanFile).filepath}`
                   : avatarLogo.src
               }
               className={dashboardStyles.cardImage}

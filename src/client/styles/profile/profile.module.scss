@@ -1,7 +1,7 @@
 @import "../variables";
 
 .profileContainer {
-  margin-bottom: 10px;
+  min-height: 100vh;
 }
 
 .title {
@@ -68,6 +68,7 @@
       }
     }
 
+
     .formSubmitButton {
       width: fit-content;
       background: $secondary;
@@ -89,3 +90,6 @@
   border-radius: 10px;
 }
 
+.disableText {
+  color: #a9a9a9;
+}
