@@ -31,8 +31,6 @@ export const validationErrorResponse = (
 
   const message = Object.entries(errorMap).map(
     ([param, { value, messages }]) => {
-      console.log(param, value, messages); // TODO to delete
-
       let valueToDisplay: string;
       if (param === "password") {
         valueToDisplay = "";
@@ -43,11 +41,13 @@ export const validationErrorResponse = (
         valueToDisplay = value;
       }
 
-      const message: string = messages.join(", ");
+      const allMessages: string = messages.join(", ");
 
-      return `La valeur de "${param}" ("${valueToDisplay}") est invalide : ${message}`;
+      return `La valeur de "${param}" ("${valueToDisplay}") est invalide : ${allMessages}`;
     }
   );
+
+  console.log(`[VALIDATION] Validation failed : ${message.join("\n")}`);
 
   return res.status(400).send(message.join(". "));
 };
