@@ -1,6 +1,6 @@
 import { ILesson } from "@typing/lesson.interface";
 import Link from "next/link";
-import { FunctionComponent } from "react";
+import React, { FunctionComponent } from "react";
 import Container from "react-bootstrap/Container";
 import styles from "../../styles/dashboard/dashboard.module.scss";
 
@@ -17,17 +17,16 @@ const LastPosts: FunctionComponent<Props> = ({ lessons }: Props) => {
         {lessons.length ? (
           lessons.map((lesson: ILesson, index: number) => {
             return (
-              <Link href={`/lesson/${lesson._id}`}>
-                <div
-                  className={styles.post}
-                  key={`lesson-${index}-${lesson.title}`}
-                >
-                  <div className={styles.postCard}>
-                    <p>Sujet : {lesson.title}</p>
-                    <p>{lesson.subtitle} </p>
+              <React.Fragment key={`lesson-${index}-${lesson.title}`}>
+                <Link href={`/lesson/${lesson._id}`}>
+                  <div className={styles.post}>
+                    <div className={styles.postCard}>
+                      <p>Sujet : {lesson.title}</p>
+                      <p>{lesson.subtitle} </p>
+                    </div>
                   </div>
-                </div>
-              </Link>
+                </Link>
+              </React.Fragment>
             );
           })
         ) : (
