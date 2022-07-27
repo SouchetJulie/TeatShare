@@ -136,10 +136,21 @@ export const lessonCreateHandler: NextApiHandler = async (
       },
     });
   } catch (e) {
-    console.log(`[LESSON] Creation of lesson failed:`, e);
-    return res.status(500).json({
+    const error = e as Error;
+    console.log(`[LESSON] Creation of lesson failed:`, error.message);
+
+    let status = 500;
+    let message = error.message;
+
+    // Translates unreadable formidable error message
+    if (message.includes("maxFileSize")) {
+      status = 413;
+      message = "Le fichier est trop volumineux.";
+    }
+
+    return res.status(status).json({
       success: false,
-      error: "Créer la leçon a échoué.",
+      error: message,
     });
   }
 };
