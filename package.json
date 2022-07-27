@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "npm run prettier & next dev",
+    "prod": "next build & next start",
     "build": "next build",
     "start": "next start",
     "lint": "eslint --fix --ext .ts,.tsx src",
