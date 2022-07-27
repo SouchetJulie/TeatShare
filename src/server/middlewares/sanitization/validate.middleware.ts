@@ -1,12 +1,12 @@
 import { runMiddleware } from "@middlewares/run-middleware.helper";
 import { validationErrorResponse } from "@middlewares/sanitization/validation-error.response";
+import { ApiResponse } from "@typing/api-response.interface";
 import {
   matchedData,
   ValidationChain,
   validationResult,
 } from "express-validator";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
-import { sendError } from "next/dist/server/api-utils";
 
 /**
  * Next API middleware for completing the validation process,
@@ -18,20 +18,22 @@ import { sendError } from "next/dist/server/api-utils";
  */
 export const validate =
   (validationChains: ValidationChain[], handler: NextApiHandler) =>
-  async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
+  async (
+    req: NextApiRequest,
+    res: NextApiResponse<ApiResponse>
+  ): Promise<void> => {
     // Apply all validations
     try {
-      await Promise.all(
+      await Promise.allSettled(
         validationChains.map((validationChain: ValidationChain) =>
           runMiddleware(req, res, validationChain)
         )
       );
     } catch (e) {
-      sendError(
-        res,
-        500,
-        "Le traitement de la requête a échoué. Veuillez réessayer ou contacter un administrateur."
-      );
+      res.status(500).json({
+        success: false,
+        error: "Erreur lors de validation de la requête.",
+      });
     }
 
     // Check if any failed
@@ -47,5 +49,6 @@ export const validate =
     }
     req.body.sanitized = matchedData(req);
 
+    // Call the next handler
     handler(req, res);
   };
