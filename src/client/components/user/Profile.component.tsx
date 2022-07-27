@@ -9,6 +9,7 @@ import { EGrade } from "@typing/grade.enum";
 import { ESubject } from "@typing/subject.enum";
 import React, { FunctionComponent, useState } from "react";
 import { Button, Card, Form } from "react-bootstrap";
+import { Pen } from "react-bootstrap-icons";
 import Container from "react-bootstrap/Container";
 import Select from "react-select";
 
@@ -63,63 +64,64 @@ const Profile: FunctionComponent = () => {
   //   : null;
 
   const userForm: JSX.Element | null = user ? (
-    <div>
-      <Form onSubmit={onSubmit} className={styles.formProfil}>
-        {/* Email */}
-        <Form.Group controlId="email">
-          {/*<Form.Label>email</Form.Label>*/}
-          <Form.Control
-            className={styles.formInput}
-            disabled={!modifiying}
-            name="email"
-            type="email"
-            placeholder={user.email || "email"}
-          />
-        </Form.Group>
-        {/* First name */}
-        <Form.Group controlId="firstName">
-          {/*<Form.Label>firstName</Form.Label>*/}
-          <Form.Control
-            className={styles.formInput}
-            disabled={!modifiying}
-            name="firstName"
-            placeholder={user.firstName || "firstName"}
-          />
-        </Form.Group>
-        {/* Last name */}
-        <Form.Group controlId="lastName">
-          {/*<Form.Label>lastName</Form.Label>*/}
-          <Form.Control
-            className={styles.formInput}
-            disabled={!modifiying}
-            name="lastName"
-            placeholder={user.lastName || "lastName"}
-          />
-        </Form.Group>
-        {/* Description */}
-        <Form.Group controlId="description">
-          {/*<Form.Label>description</Form.Label>*/}
-          <Form.Control
-            className={styles.formInput}
-            disabled={!modifiying}
-            name="description"
-            placeholder={user.description || "description"}
-          />
-        </Form.Group>
-        {/* Location */}
-        <Form.Group controlId="location">
-          {/*<Form.Label>location</Form.Label>*/}
-          <Form.Control
-            className={styles.formInput}
-            disabled={!modifiying}
-            name="location"
-            placeholder={user.location || "location"}
-          />
-        </Form.Group>
-        {/* Grades */}
+    <Form onSubmit={onSubmit} className={styles.formProfil}>
+      {/* Email */}
+      <Form.Group controlId="email">
+        {/*<Form.Label>email</Form.Label>*/}
+        <Form.Control
+          className={styles.formInput}
+          disabled={!modifiying}
+          name="email"
+          type="email"
+          placeholder={user.email || "email"}
+        />
+      </Form.Group>
+      {/* First name */}
+      <Form.Group controlId="firstName">
+        {/*<Form.Label>firstName</Form.Label>*/}
+        <Form.Control
+          className={styles.formInput}
+          disabled={!modifiying}
+          name="firstName"
+          placeholder={user.firstName || "firstName"}
+        />
+      </Form.Group>
+      {/* Last name */}
+      <Form.Group controlId="lastName">
+        {/*<Form.Label>lastName</Form.Label>*/}
+        <Form.Control
+          className={styles.formInput}
+          disabled={!modifiying}
+          name="lastName"
+          placeholder={user.lastName || "lastName"}
+        />
+      </Form.Group>
+      {/* Description */}
+      <Form.Group controlId="description">
+        {/*<Form.Label>description</Form.Label>*/}
+        <Form.Control
+          className={styles.formInput}
+          disabled={!modifiying}
+          name="description"
+          placeholder={user.description || "description"}
+        />
+      </Form.Group>
+      {/* Location */}
+      <Form.Group controlId="location">
+        {/*<Form.Label>location</Form.Label>*/}
+        <Form.Control
+          className={styles.formInput}
+          disabled={!modifiying}
+          name="location"
+          placeholder={user.location || "location"}
+        />
+      </Form.Group>
+      {/* Grades */}
+      {modifiying && (
         <Form.Group controlId="grades">
           {/*<Form.Label>grades</Form.Label>*/}
           <Select
+            disabled={!modifiying}
             className={styles.formInput}
             id="grades"
             name="grades"
@@ -130,21 +132,23 @@ const Profile: FunctionComponent = () => {
             hideSelectedOptions={true}
           />
         </Form.Group>
-        {/* Subjects */}
-        <Form.Group controlId="subjects">
-          {/*<Form.Label>subjects</Form.Label>*/}
-          <Select
-            className={styles.formInput}
-            id="subjects"
-            name="subjects"
-            aria-labelledby="subjects"
-            placeholder="subjects"
-            isMulti
-            options={subjects}
-            hideSelectedOptions={true}
-          />
-        </Form.Group>
-        {/* Avatar */}
+      )}
+      {/* Subjects */}
+      <Form.Group controlId="subjects">
+        {/*<Form.Label>subjects</Form.Label>*/}
+        <Select
+          className={styles.formInput}
+          id="subjects"
+          name="subjects"
+          aria-labelledby="subjects"
+          placeholder="subjects"
+          isMulti
+          options={subjects}
+          hideSelectedOptions={true}
+        />
+      </Form.Group>
+      {/* Avatar */}
+      {modifiying && (
         <Form.Group controlId="avatar">
           {/*<Form.Label>avatar</Form.Label>*/}
           <Form.Control
@@ -155,10 +159,22 @@ const Profile: FunctionComponent = () => {
             accept="image/*"
           />
         </Form.Group>
+      )}
 
-        {modifiying && <Button type="submit">Envoyer</Button>}
-      </Form>
-    </div>
+      {modifiying && (
+        <>
+          <Button type="submit" className={styles.formSubmitButton}>
+            Sauvegarder
+          </Button>
+          <button
+            className={styles.formCancelButton}
+            onClick={() => setModifiying(false)}
+          >
+            Annuler
+          </button>
+        </>
+      )}
+    </Form>
   ) : null;
 
   // Return the Component
@@ -168,7 +184,18 @@ const Profile: FunctionComponent = () => {
       <div>
         <h3 className={styles.sectionTitle}>Mes informations</h3>
         <div className={styles.profileMainData}>
-          <div className={styles.profileEdit}>{userForm}</div>
+          <div className={styles.profileEdit}>
+            {userForm}
+            {!modifiying && (
+              <button
+                onClick={() => {
+                  setModifiying(true);
+                }}
+              >
+                <span>Modifier</span> <Pen />
+              </button>
+            )}
+          </div>
           <Card className={dashboardStyles.card}>
             {/* Next considère le logo comme un objet possédant un attribut src */}
             <Card.Img
