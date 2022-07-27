@@ -98,7 +98,7 @@ const LessonDetailsHeader: FunctionComponent<LessonHeaderComponentProps> = ({
           height="70px"
         />
         <p>{getUsername(author)}</p>
-        {author?.subjects?.length && (
+        {author && author.subjects.length > 0 && (
           <p>Professeur de {author?.subjects?.join(", ")} </p>
         )}
         <p>Publié le {formatDate ?? ""}</p>
