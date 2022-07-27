@@ -1,4 +1,5 @@
 import avatarLogo from "@assets/logos/avatar_placeholder.png";
+import { getUsername } from "@client/utils/get-username.utils";
 import { useProfileOnSubmit } from "@components/user/profile-on-submit.hook";
 import { useAutoLogin } from "@hooks/auto-login.hook";
 import dashboardStyles from "@styles/dashboard/dashboard.module.scss";
@@ -7,7 +8,7 @@ import { CleanFile } from "@typing/clean-file.interface";
 import { EGrade } from "@typing/grade.enum";
 import { ESubject } from "@typing/subject.enum";
 import Image from "next/image";
-import { FunctionComponent, useState } from "react";
+import React, { FunctionComponent, useState } from "react";
 import { Button, Card, Form, ListGroup, Table } from "react-bootstrap";
 import Container from "react-bootstrap/Container";
 import Select from "react-select";
@@ -172,12 +173,31 @@ const Profile: FunctionComponent = () => {
             />
             <Card.Body>
               <span className={dashboardStyles.badge}>veteran</span>
-              <div className={styles.cardText}>
+              <div className={dashboardStyles.cardText}>
                 <p>Nom</p>
-                <span>metier</span>
-                <p>classe(s) enseignée(s)</p>
-                <span>Cp CE1</span>
-                <h6>6 POSTS - 2 COMMENTAIRES</h6>
+                <span>{getUsername(user) ?? "Votre nom"}</span>
+                {user && user.grades.length > 1 ? (
+                  <p>Classes enseignées</p>
+                ) : (
+                  <p>Classe enseignée</p>
+                )}
+
+                <span>
+                  {user?.grades.length
+                    ? user.grades.map(
+                        (grade: keyof typeof EGrade, index: number) => {
+                          return (
+                            <React.Fragment key={`grade-${index}`}>
+                              {grade}&nbsp;
+                            </React.Fragment>
+                          );
+                        }
+                      )
+                    : "Pas de classe.."}
+                </span>
+                <p className={dashboardStyles.nbrPosts}>
+                  {user?.lessonIds.length} POSTS - 2 COMMENTAIRES
+                </p>
               </div>
             </Card.Body>
           </Card>
