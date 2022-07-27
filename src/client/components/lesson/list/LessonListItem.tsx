@@ -121,7 +121,14 @@ const LessonListItem: FunctionComponent<Props> = ({ lesson }: Props) => {
           className={styles.notShown}
           onClick={(e: any) => e.stopPropagation()}
         >
-          <Link href={"/dashboard"}>{getUsername(author)}</Link>
+          <Link
+            href={{
+              pathname: "/dashboard",
+              query: { otherUser: author?._id },
+            }}
+          >
+            {getUsername(author)}
+          </Link>
         </button>
       </Col>
       {/* marque-page, aperçu, modification */}
