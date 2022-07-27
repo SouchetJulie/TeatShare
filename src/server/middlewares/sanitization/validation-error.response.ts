@@ -29,15 +29,20 @@ export const validationErrorResponse = (
     errorMap[error.param].messages.push(error.msg);
   });
 
-  console.log("[VALIDATE] Error map:", errorMap); // TODO to delete
-
   const message = Object.entries(errorMap).map(
     ([param, { value, messages }]) => {
-      const valueToDisplay =
-        param === "password" ? value.replaceAll(/./g, "●") : value;
-      return `La valeur de "${param}" ("${valueToDisplay}") est invalide : ${messages.join(
-        ", "
-      )}`;
+      console.log(param, value, messages); // TODO to delete
+
+      let valueToDisplay: string;
+      if (param === "password") {
+        valueToDisplay = value.replaceAll(/./g, "●");
+      } else {
+        valueToDisplay = value;
+      }
+
+      const message: string = messages.join(", ");
+
+      return `La valeur de "${param}" ("${valueToDisplay}") est invalide : ${message}`;
     }
   );
 

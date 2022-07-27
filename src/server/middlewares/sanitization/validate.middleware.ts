@@ -43,8 +43,6 @@ export const validate =
     // Check if any failed
     const errors = validationResult(req);
 
-    console.log("[VALIDATE] Errors:", errors.array()); // TODO to delete
-
     if (!errors.isEmpty()) {
       return validationErrorResponse(res, errors.array());
     }
