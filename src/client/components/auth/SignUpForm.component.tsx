@@ -11,6 +11,7 @@ import { FormikHelpers } from "formik/dist/types";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { FunctionComponent, useEffect, useState } from "react";
+import { OverlayTrigger, Popover } from "react-bootstrap";
 import { XLg } from "react-bootstrap-icons";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
@@ -21,13 +22,20 @@ import * as yup from "yup";
 const userCreateSchema = yup.object({
   email: yup
     .string()
-    .defined()
-    .min(1, "Veuillez entrer un email valide.")
-    .email(),
-  password: yup.string().defined().min(1, "Veuillez entrer un mot de passe."),
+    .defined("Vous devez renseigner ce champ")
+    .min(1)
+    .email("Veuillez entrer un email valide."),
+  password: yup
+    .string()
+    .defined("Vous devez renseigner ce champ")
+    .min(1)
+    .matches(
+      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
+      "Le mot de passe doit comporter au moins 8 caractères, une majuscule, minuscule, un chiffre et un caractère spécial."
+    ),
   passwordConfirm: yup
     .string()
-    .defined()
+    .defined("Vous devez renseigner ce champ")
     .oneOf(
       [yup.ref("password"), null],
       "Les mots de passe doivent être les mêmes."
@@ -37,6 +45,13 @@ const userCreateSchema = yup.object({
 });
 
 type UserCreateSchema = yup.InferType<typeof userCreateSchema>;
+
+const popover = (
+  <Popover id="password-help" body>
+    Le mot de passe doit comporter au moins 8 caractères, une majuscule,
+    minuscule, un chiffre et un caractère spécial.
+  </Popover>
+);
 
 const SignupForm: FunctionComponent = () => {
   // store
@@ -131,21 +146,34 @@ const SignupForm: FunctionComponent = () => {
                   placeholder="Adresse email"
                   type="email"
                 />
+                <Form.Control.Feedback type="invalid">
+                  {errors.email}
+                </Form.Control.Feedback>
               </Form.Group>
               {/* Password */}
               <Form.Group controlId="password">
                 <Form.Label className="visually-hidden">
                   Mot de passe :
                 </Form.Label>
-                <Form.Control
-                  onChange={handleChange}
-                  name="password"
-                  isInvalid={touched.password && !!errors.password}
-                  isValid={touched.password && !errors.password}
-                  className={styles.loginInput}
-                  placeholder="Mot de passe"
-                  type="password"
-                />
+                <OverlayTrigger
+                  trigger="focus"
+                  placement="auto"
+                  overlay={popover}
+                >
+                  <Form.Control
+                    name="password"
+                    type="password"
+                    placeholder="Mot de passe"
+                    aria-describedby="password-help"
+                    className={styles.loginInput}
+                    isInvalid={touched.password && !!errors.password}
+                    isValid={touched.password && !errors.password}
+                    onChange={handleChange}
+                  />
+                </OverlayTrigger>
+                <Form.Control.Feedback type="invalid">
+                  {errors.password}
+                </Form.Control.Feedback>
               </Form.Group>
               {/* Password confirmation */}
               <Form.Group controlId="passwordConfirm">
@@ -163,6 +191,9 @@ const SignupForm: FunctionComponent = () => {
                   placeholder="Répétez le mot de passe"
                   type="password"
                 />
+                <Form.Control.Feedback type="invalid">
+                  {errors.passwordConfirm}
+                </Form.Control.Feedback>
               </Form.Group>
               <Row as="fieldset">
                 {/* First name */}
