@@ -35,7 +35,10 @@ export const validationErrorResponse = (
 
       let valueToDisplay: string;
       if (param === "password") {
-        valueToDisplay = value.replaceAll(/./g, "●");
+        valueToDisplay = "";
+        for (let i = 0; i < value.length; i++) {
+          valueToDisplay += "●";
+        }
       } else {
         valueToDisplay = value;
       }
