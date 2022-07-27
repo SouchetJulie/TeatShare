@@ -197,7 +197,7 @@ const Profile: FunctionComponent = () => {
                   setModifiying(true);
                 }}
               >
-                <span>Modifier</span> <Pen />
+                <span className={styles.modifyButton}>Modifier</span> <Pen />
               </button>
             )}
           </div>

@@ -10,17 +10,12 @@
   color: $primary;
 }
 
+
 .profileMainData {
   display: flex;
   gap: 30px;
   justify-content: start;
-}
 
-@media screen and (max-width: 767px) {
-  .profileMainData {
-    display: flex;
-    flex-direction: column-reverse;
-  }
 }
 
 
@@ -92,4 +87,36 @@
 
 .disableText {
   color: #a9a9a9;
+}
+
+@media screen and (max-width: 767px) {
+  .profileContainer {
+
+    h3 {
+      text-align: center;
+    }
+  }
+  .profileMainData {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    margin-bottom: 30px;
+  }
+
+  .profileEdit {
+    .formProfil {
+      width: 90%;
+    }
+
+    .modifyButton {
+      display: none;
+    }
+  }
+}
+
+
+@media screen and (max-width: 576px) {
+  .profileEdit {
+    width: 90%;
+  }
 }
