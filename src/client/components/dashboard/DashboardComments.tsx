@@ -1,6 +1,6 @@
+import styles from "@styles/dashboard/dashboard.module.scss";
 import { FunctionComponent } from "react";
 import Button from "react-bootstrap/Button";
-import styles from "../../styles/dashboard/dashboard.module.scss";
 
 interface Props {}
 

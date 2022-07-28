@@ -41,7 +41,10 @@
     }
   }
 }
-
+.notShown {
+  background: none;
+  border: none;
+}
 .header {
   font-size: initial;
   font-weight: bold;

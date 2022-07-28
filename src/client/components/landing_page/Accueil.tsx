@@ -1,5 +1,5 @@
+import styles from "@styles/landing_page/Accueil.module.scss";
 import Link from "next/link";
-import styles from "../../styles/landing_page/Accueil.module.scss";
 
 const Accueil = () => {
   return (
