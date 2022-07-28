@@ -2,6 +2,7 @@
 
 .profileContainer {
   min-height: 100vh;
+  margin-bottom: 5%;
 }
 
 .title {
@@ -34,7 +35,8 @@
   }
 
   button {
-    width: auto;
+    margin: 0 auto;
+    width: 20%;
     height: fit-content;
     background: none;
     border: none;
@@ -46,10 +48,12 @@
   }
 
   .formProfil {
-    width: 80%;
+    width: 100%;
+    min-width: 80%;
     display: flex;
     flex-direction: column;
     gap: 20px;
+
 
     &::placeholder {
       color: #dadada

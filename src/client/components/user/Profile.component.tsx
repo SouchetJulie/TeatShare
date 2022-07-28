@@ -30,6 +30,7 @@ const grades = Object.entries(EGrade).map(
 const Profile: FunctionComponent = () => {
   const user = useAutoLogin();
   const onSubmit = useProfileOnSubmit();
+
   const [modifiying, setModifiying] = useState<boolean>(false);
   // const entries: Array<JSX.Element> | null = user
   //   ? Object.entries(user).map(([key, value]) => (
@@ -184,8 +185,10 @@ const Profile: FunctionComponent = () => {
             Sauvegarder
           </Button>
           <button
+            onClick={() => {
+              setModifiying(false);
+            }}
             className={styles.formCancelButton}
-            onClick={() => setModifiying(false)}
           >
             Annuler
           </button>
@@ -205,6 +208,7 @@ const Profile: FunctionComponent = () => {
             {userForm}
             {!modifiying && (
               <button
+                className={styles.editButton}
                 onClick={() => {
                   setModifiying(true);
                 }}
