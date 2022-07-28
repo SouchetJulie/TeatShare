@@ -48,8 +48,8 @@ type UserCreateSchema = yup.InferType<typeof userCreateSchema>;
 
 const popover = (
   <Popover id="password-help" body>
-    Le mot de passe doit comporter au moins 8 caractères, une majuscule,
-    une minuscule, un chiffre et un caractère spécial.
+    Le mot de passe doit comporter au moins 8 caractères, une majuscule, une
+    minuscule, un chiffre et un caractère spécial.
   </Popover>
 );
 

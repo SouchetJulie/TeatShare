@@ -7,7 +7,8 @@ import {
 import { useCategoryList } from "@hooks/category-list.hook";
 import { ICategory } from "@typing/category.interface";
 import { FunctionComponent, ReactElement, useMemo } from "react";
-import Select, { MultiValue, StylesConfig } from "react-select";
+import Select, { GroupBase, MultiValue, StylesConfig } from "react-select";
+import styles from "./category.module.scss";
 
 interface CategorySelectProps {
   currentSelected?: string[];
@@ -20,6 +21,10 @@ const fromCategoryToOption = (category: ICategory): SelectOption<string> => ({
   value: category._id,
   label: category.label,
 });
+
+const NoOptionsMessage = () => (
+  <a className={styles.link}>Proposer une nouvelle catégorie ?</a>
+);
 
 const CategorySelect: FunctionComponent<CategorySelectProps> = ({
   currentSelected,
@@ -83,6 +88,7 @@ const CategorySelect: FunctionComponent<CategorySelectProps> = ({
       placeholder="Catégories"
       styles={styles}
       hideSelectedOptions
+      components={{ NoOptionsMessage }}
     />
   );
 };
