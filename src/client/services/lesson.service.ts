@@ -25,6 +25,9 @@ const getLessons = async (
   return response;
 };
 
+const getLessonFileURL = (lesson?: ILesson): string =>
+  `https://storage.googleapis.com/${process.env.NEXT_PUBLIC_BUCKET_NAME}/${lesson?.file.filepath}`;
+
 /**
  * Available filters for the `useFetchLessons` hook
  */
@@ -44,4 +47,4 @@ interface FetchLessonsParameters {
 }
 
 export type { FetchLessonsParameters };
-export { getLessons };
+export { getLessons, getLessonFileURL };

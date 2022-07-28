@@ -1,6 +1,4 @@
-@import "~bootstrap/scss/functions";
-@import "~bootstrap/scss/mixins";
-@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/bootstrap-utilities";
 @import "../variables";
 
 .dashboardContainer {
@@ -164,16 +162,16 @@
       border-radius: 10px;
     }
     &::-webkit-scrollbar {
-       width: 10px;
-       background: $greyc;
-       border-radius: 10px;
-     }
+      width: 10px;
+      background: $greyc;
+      border-radius: 10px;
+    }
     // For Firefox
     scrollbar-color: $primary $greyc;
   }
 }
 
-@include media-breakpoint-down("xs"){
+@include media-breakpoint-down("sm"){
   .title {
     text-align: center;
     margin: 40px 0 0 0;

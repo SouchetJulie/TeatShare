@@ -1,3 +1,3 @@
-import Settings from "@components/user/Settings.component";
+import Profile from "@components/user/Profile.component";
 
-export default () => <Settings />;
+export default () => <Profile />;

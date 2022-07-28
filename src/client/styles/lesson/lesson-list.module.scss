@@ -8,10 +8,22 @@
   max-height: max(400px, calc(100vh - $navbarHeight - $footerHeight - 300px));
   margin-top: 1.5rem;
   margin-bottom: 1.5rem;
+  scrollbar-color: $primary;
 }
 
 @include media-breakpoint-up("md") {
   .lessonContainer {
     padding-right: 15px;
   }
+}
+
+.lessonContainer::-webkit-scrollbar-thumb {
+  background: $primary;
+  border-radius: 10px;
+}
+
+.lessonContainer::-webkit-scrollbar {
+  width: 10px;
+  background: $greyc;
+  border-radius: 10px;
 }
