@@ -40,6 +40,7 @@ const GradeSelect: FunctionComponent<GradeSelectProps> = ({
       aria-label="Classe"
       placeholder="Classe"
       styles={styles}
+      hideSelectedOptions
     />
   );
 };

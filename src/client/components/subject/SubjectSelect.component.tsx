@@ -41,6 +41,7 @@ const SubjectSelect: FunctionComponent<SubjectSelectProps> = ({
       aria-label="Matière"
       placeholder="Matière"
       styles={styles}
+      hideSelectedOptions
     />
   );
 };

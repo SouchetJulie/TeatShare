@@ -82,6 +82,7 @@ const CategorySelect: FunctionComponent<CategorySelectProps> = ({
       aria-label="Catégories"
       placeholder="Catégories"
       styles={styles}
+      hideSelectedOptions
     />
   );
 };
