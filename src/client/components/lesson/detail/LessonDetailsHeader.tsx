@@ -1,4 +1,5 @@
 import avatarLogo from "@assets/logos/avatar_placeholder.png";
+import { getLessonFileURL } from "@client/services/lesson.service";
 import { getUser } from "@client/services/user.service";
 import { getAxiosErrorMessage } from "@client/utils/get-axios-error.utils";
 import { getUsername } from "@client/utils/get-username.utils";
@@ -36,7 +37,7 @@ const LessonDetailsHeader: FunctionComponent<LessonHeaderComponentProps> = ({
   const [author, setAuthor] = useState<IUserPublic | undefined>(undefined);
   const user = useAppSelector(selectAuthenticatedUser);
   const dispatch = useAppDispatch();
-  const fileURL: string = `https://storage.googleapis.com/${process.env.NEXT_PUBLIC_BUCKET_NAME}/${lesson?.file.filepath}`;
+  const fileURL: string = getLessonFileURL(lesson);
 
   const formatDate: string = useMemo(
     () => dayjs(lesson?.publicationDate).format("DD/MM/YYYY"),
