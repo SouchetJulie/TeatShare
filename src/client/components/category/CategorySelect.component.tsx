@@ -70,7 +70,7 @@ const CategorySelect: FunctionComponent<CategorySelectProps> = ({
   >({ rounded });
 
   return (
-    <Select
+    <Select<SelectOption<string>, true, GroupBase<SelectOption<string>>>
       isClearable
       isMulti
       className="text-dark"

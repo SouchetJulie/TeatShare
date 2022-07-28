@@ -6,7 +6,7 @@ import {
 } from "@components/ui/select-option.utils";
 import { ESubject } from "@typing/subject.enum";
 import { FunctionComponent, ReactElement } from "react";
-import Select, { SingleValue, StylesConfig } from "react-select";
+import Select, { GroupBase, SingleValue, StylesConfig } from "react-select";
 
 interface SubjectSelectProps {
   currentSelected?: string;
@@ -30,7 +30,7 @@ const SubjectSelect: FunctionComponent<SubjectSelectProps> = ({
   > = createSelectStyle<ESubject>({ rounded });
 
   return (
-    <Select
+    <Select<SelectOption<ESubject>, false, GroupBase<SelectOption<ESubject>>>
       isClearable
       className="text-dark"
       options={subjectOptions}
