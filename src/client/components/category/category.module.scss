@@ -1,3 +1,4 @@
+@import "~bootstrap/scss/bootstrap-utilities";
 @import "../../styles/variables";
 
 .badge {
@@ -21,5 +22,16 @@
   :hover,
   :focus {
     color: $secondary-light !important;
+  }
+}
+
+.createForm {
+  label {
+    margin-left: 8px;
+    font-variant: small-caps;
+  }
+
+  input, button {
+    border-radius: $border-radius-pill;
   }
 }
