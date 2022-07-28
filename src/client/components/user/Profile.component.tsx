@@ -67,7 +67,7 @@ const Profile: FunctionComponent = () => {
     <Form onSubmit={onSubmit} className={styles.formProfil}>
       {/* Email */}
       <Form.Group controlId="email">
-        {/*<Form.Label>email</Form.Label>*/}
+        <Form.Label>Email :</Form.Label>
         <Form.Control
           className={`${styles.formInput} ${!modifiying && styles.disableText}`}
           disabled={!modifiying}
@@ -76,9 +76,9 @@ const Profile: FunctionComponent = () => {
           defaultValue={user.email || "email"}
         />
       </Form.Group>
-      {/* First name */}
+
       <Form.Group controlId="firstName">
-        {/*<Form.Label>firstName</Form.Label>*/}
+        <Form.Label>FirstName :</Form.Label>
         <Form.Control
           className={`${styles.formInput} ${!modifiying && styles.disableText}`}
           disabled={!modifiying}
@@ -88,7 +88,7 @@ const Profile: FunctionComponent = () => {
       </Form.Group>
       {/* Last name */}
       <Form.Group controlId="lastName">
-        {/*<Form.Label>lastName</Form.Label>*/}
+        <Form.Label>LastName :</Form.Label>
         <Form.Control
           className={`${styles.formInput} ${!modifiying && styles.disableText}`}
           disabled={!modifiying}
@@ -97,10 +97,13 @@ const Profile: FunctionComponent = () => {
         />
       </Form.Group>
       {/* Description */}
-      <Form.Group controlId="description">
-        {/*<Form.Label>description</Form.Label>*/}
+      <Form.Group controlId="b">
+        <Form.Label>Description :</Form.Label>
         <Form.Control
-          className={`${styles.formInput} ${!modifiying && styles.disableText}`}
+          as="textarea"
+          className={`${styles.formTextarea} ${
+            !modifiying && styles.disableText
+          }`}
           disabled={!modifiying}
           name="description"
           defaultValue={user.description || "description"}
@@ -108,7 +111,7 @@ const Profile: FunctionComponent = () => {
       </Form.Group>
       {/* Location */}
       <Form.Group controlId="location">
-        {/*<Form.Label>location</Form.Label>*/}
+        <Form.Label>Location :</Form.Label>
         <Form.Control
           className={`${styles.formInput} ${!modifiying && styles.disableText}`}
           disabled={!modifiying}
@@ -119,7 +122,7 @@ const Profile: FunctionComponent = () => {
       {/* Grades */}
       {modifiying && (
         <Form.Group controlId="grades">
-          {/*<Form.Label>grades</Form.Label>*/}
+          <Form.Label>Classes :</Form.Label>
           <Select
             isDisabled={!modifiying}
             className={`${styles.formInput} ${
@@ -137,7 +140,7 @@ const Profile: FunctionComponent = () => {
       )}
       {/* Subjects */}
       <Form.Group controlId="subjects">
-        {/*<Form.Label>subjects</Form.Label>*/}
+        <Form.Label>Sujets :</Form.Label>
         <Select
           isDisabled={!modifiying}
           className={`${styles.formInput} ${!modifiying && styles.disableText}`}
@@ -153,7 +156,7 @@ const Profile: FunctionComponent = () => {
       {/* Avatar */}
       {modifiying && (
         <Form.Group controlId="avatar">
-          {/*<Form.Label>avatar</Form.Label>*/}
+          <Form.Label>Avatar :</Form.Label>
           <Form.Control
             className={`${styles.formInput} ${
               !modifiying && styles.disableText
@@ -165,7 +168,6 @@ const Profile: FunctionComponent = () => {
           />
         </Form.Group>
       )}
-
       {modifiying && (
         <>
           <Button type="submit" className={styles.formSubmitButton}>

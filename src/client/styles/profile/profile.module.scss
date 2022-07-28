@@ -51,15 +51,38 @@
     flex-direction: column;
     gap: 20px;
 
+    &::placeholder {
+      color: #dadada
+    }
+
+    label {
+      color: #dadada;
+      font-size: 12px;
+      margin: 5px;
+    }
+
+    .formTextarea {
+      border-radius: 5px;
+      min-height: 100px;
+      max-height: 300px;
+
+      &:disabled {
+        background: hsl(0, 0%, 95%);
+        color: #818181;
+      }
+    }
+
     .formInput {
       border-radius: 30px;
 
-      &:disabled {
-        background: white;
+      & > :nth-child(3) {
+        border-radius: 50px;
       }
 
-      &::placeholder {
-        color: $grey
+      &:disabled {
+        border: solid 1px hsl(0, 0%, 90%);
+        background: hsl(0, 0%, 95%);
+        color: #818181;
       }
     }
 
