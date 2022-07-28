@@ -110,15 +110,20 @@ const Profile: FunctionComponent = () => {
         />
       </Form.Group>
       {/* Location */}
-      <Form.Group controlId="location">
-        <Form.Label>Location :</Form.Label>
-        <Form.Control
-          className={`${styles.formInput} ${!modifiying && styles.disableText}`}
-          disabled={!modifiying}
-          name="location"
-          defaultValue={user.location || "location"}
-        />
-      </Form.Group>
+      {modifiying && (
+        <Form.Group controlId="location">
+          <Form.Label>Location :</Form.Label>
+          <Form.Control
+            className={`${styles.formInput} ${
+              !modifiying && styles.disableText
+            }`}
+            disabled={!modifiying}
+            name="location"
+            defaultValue={user.location || "location"}
+          />
+        </Form.Group>
+      )}
+
       {/* Grades */}
       {modifiying && (
         <Form.Group controlId="grades">
@@ -139,20 +144,25 @@ const Profile: FunctionComponent = () => {
         </Form.Group>
       )}
       {/* Subjects */}
-      <Form.Group controlId="subjects">
-        <Form.Label>Sujets :</Form.Label>
-        <Select
-          isDisabled={!modifiying}
-          className={`${styles.formInput} ${!modifiying && styles.disableText}`}
-          id="subjects"
-          name="subjects"
-          aria-labelledby="subjects"
-          placeholder="subjects"
-          isMulti
-          options={subjects}
-          hideSelectedOptions={true}
-        />
-      </Form.Group>
+      {modifiying && (
+        <Form.Group controlId="subjects">
+          <Form.Label>Matieres :</Form.Label>
+          <Select
+            isDisabled={!modifiying}
+            className={`${styles.formInput} ${
+              !modifiying && styles.disableText
+            }`}
+            id="subjects"
+            name="subjects"
+            aria-labelledby="subjects"
+            placeholder="subjects"
+            isMulti
+            options={subjects}
+            hideSelectedOptions={true}
+          />
+        </Form.Group>
+      )}
+
       {/* Avatar */}
       {modifiying && (
         <Form.Group controlId="avatar">
