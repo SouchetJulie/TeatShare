@@ -20,7 +20,7 @@ export const LessonUploadFormGeneral: FunctionComponent<
 > = ({ currentLesson, lessonDispatch }) => {
   return (
     <>
-      <Form.Group controlId="lesson_upload_form_title">
+      <Form.Group controlId="lesson-upload-form-title">
         <Form.Label className={styles.label}>Titre</Form.Label>
         <Form.Control
           className={styles.control}
@@ -37,7 +37,7 @@ export const LessonUploadFormGeneral: FunctionComponent<
         </Form.Control.Feedback>
       </Form.Group>
 
-      <Form.Group controlId="lesson_upload_form_subtitle">
+      <Form.Group controlId="lesson-upload-form-subtitle">
         <Form.Label className={styles.label}>Sous-titre</Form.Label>
         <Form.Control
           className={styles.control}
@@ -50,18 +50,22 @@ export const LessonUploadFormGeneral: FunctionComponent<
         />
       </Form.Group>
 
-      <Form.Group controlId="lesson_upload_form_file">
+      <Form.Group controlId="lesson-upload-form-file">
         <Form.Label className={styles.label}>Contenu de fiche</Form.Label>
         <Form.Control
           className={styles.control}
           name="file"
           type="file"
+          aria-describedby="file-help"
           onChange={(event: ChangeEvent<HTMLInputElement>) =>
             lessonDispatch(setField("file", event.target.value))
           }
           accept="application/pdf"
           required={!currentLesson?._id ?? ""}
         />
+        <Form.Text id="file-help" muted>
+          Le fichier doit faire moins de 4 Mo.
+        </Form.Text>
         <Form.Control.Feedback type="invalid">
           Ce champ est obligatoire.
         </Form.Control.Feedback>

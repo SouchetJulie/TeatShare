@@ -26,6 +26,7 @@ const parseForm = (
       reject: (reason: Error) => void
     ) => {
       const form = new IncomingForm({
+        maxFileSize: 1024 * 1024 * 4.4, // = 4.4 MB, since Vercel's serverless functions payloads are limited to 4.5MB
         keepExtensions: false,
         hashAlgorithm: "sha256",
         multiples: true,
