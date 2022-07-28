@@ -1,4 +1,5 @@
 import { getUser } from "@client/services/user.service";
+import { getAxiosErrorMessage } from "@client/utils/get-axios-error.utils";
 import { getUsername } from "@client/utils/get-username.utils";
 import CategoryBadge from "@components/category/CategoryBadge.component";
 import { GradeBadge } from "@components/grade/GradeBadge.component";
@@ -10,8 +11,10 @@ import { useAppDispatch, useAppSelector } from "@hooks/store-hook";
 import { addAlert } from "@stores/alert.store";
 import { selectAuthenticatedUser } from "@stores/user.store";
 import styles from "@styles/lesson/lesson-item.module.scss";
+import { ApiErrorResponse } from "@typing/api-response.interface";
 import { ILesson } from "@typing/lesson.interface";
 import { IUserPublic } from "@typing/user.interface";
+import { AxiosError } from "axios";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { FunctionComponent, useEffect, useState } from "react";
@@ -32,30 +35,24 @@ const LessonListItem: FunctionComponent<Props> = ({ lesson }: Props) => {
   useEffect(() => {
     let isSubscribed = true;
 
+    let success = true;
+    let message = `Problème de récupération de l'auteur pour la leçon "${lesson.title}"`;
+
     getUser(lesson.authorId)
       .then(({ data: response }) => {
-        if (isSubscribed) {
-          if (response.success && !!response.data) {
-            setAuthor(response.data.user);
-          } else {
-            dispatch(
-              addAlert({
-                ttl: 5000,
-                message: `Problème de récupération de l'auteur pour la leçon "${lesson.title}"`,
-                success: false,
-              })
-            );
-          }
-        }
+        if (!isSubscribed) return;
+
+        if (response.success && !!response.data) setAuthor(response.data.user);
+        else success = false;
       })
-      .catch(() => {
-        dispatch(
-          addAlert({
-            ttl: 5000,
-            message: `Problème de récupération de l'auteur pour la leçon "${lesson.title}"`,
-            success: false,
-          })
-        );
+      .catch((e: AxiosError<ApiErrorResponse>) => {
+        if (!isSubscribed) return;
+        success = false;
+        message += ` : ${getAxiosErrorMessage(e)}`;
+      })
+      .finally(() => {
+        if (!success)
+          dispatch(addAlert({ ttl: 5000, message, success: false }));
       });
 
     return (): void => {
@@ -77,6 +74,8 @@ const LessonListItem: FunctionComponent<Props> = ({ lesson }: Props) => {
   const itemStyle: string = `${styles.card} ${
     lesson.isDraft ? styles.draft : ""
   }`;
+  const authorLink =
+    author?._id === user?._id ? "/dashboard" : `/dashboard/${author?._id}`;
 
   return (
     <Row
@@ -117,7 +116,12 @@ const LessonListItem: FunctionComponent<Props> = ({ lesson }: Props) => {
       {/* Author */}
       <Col className={styles.column}>
         Écrit par{" "}
-        <Link href={`/user/${lesson.authorId}`}>{getUsername(author)}</Link>
+        <button
+          className={styles.notShown}
+          onClick={(e: any) => e.stopPropagation()}
+        >
+          <Link href={authorLink}>{getUsername(author)}</Link>
+        </button>
       </Col>
       {/* marque-page, aperçu, modification */}
       <Col lg={1}>

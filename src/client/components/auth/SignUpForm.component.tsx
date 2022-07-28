@@ -1,15 +1,17 @@
+import { getAxiosErrorMessage } from "@client/utils/get-axios-error.utils";
 import { useAppDispatch } from "@hooks/store-hook";
 import { addAlert } from "@stores/alert.store";
 import { setUser } from "@stores/user.store";
 import styles from "@styles/auth/Login.Component.module.scss";
-import { ApiResponse } from "@typing/api-response.interface";
+import { ApiErrorResponse, ApiResponse } from "@typing/api-response.interface";
 import { IUserCreate, IUserPublic } from "@typing/user.interface";
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 import { Formik } from "formik";
 import { FormikHelpers } from "formik/dist/types";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { FunctionComponent, useEffect, useState } from "react";
+import { OverlayTrigger, Popover } from "react-bootstrap";
 import { XLg } from "react-bootstrap-icons";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
@@ -20,13 +22,20 @@ import * as yup from "yup";
 const userCreateSchema = yup.object({
   email: yup
     .string()
-    .defined()
-    .min(1, "Veuillez entrer un email valide.")
-    .email(),
-  password: yup.string().defined().min(1, "Veuillez entrer un mot de passe."),
+    .defined("Vous devez renseigner ce champ")
+    .min(1)
+    .email("Veuillez entrer un email valide."),
+  password: yup
+    .string()
+    .defined("Vous devez renseigner ce champ")
+    .min(1)
+    .matches(
+      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
+      "Le mot de passe doit comporter au moins 8 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial."
+    ),
   passwordConfirm: yup
     .string()
-    .defined()
+    .defined("Vous devez renseigner ce champ")
     .oneOf(
       [yup.ref("password"), null],
       "Les mots de passe doivent être les mêmes."
@@ -36,6 +45,13 @@ const userCreateSchema = yup.object({
 });
 
 type UserCreateSchema = yup.InferType<typeof userCreateSchema>;
+
+const popover = (
+  <Popover id="password-help" body>
+    Le mot de passe doit comporter au moins 8 caractères, une majuscule, une
+    minuscule, un chiffre et un caractère spécial.
+  </Popover>
+);
 
 const SignupForm: FunctionComponent = () => {
   // store
@@ -82,14 +98,14 @@ const SignupForm: FunctionComponent = () => {
             dispatch(setUser(response.data?.user));
           } else {
             success = false;
-            message = "Nom d'utilisateur ou mot de passe incorrects";
+            message = `Inscription échouée: ${response.error}`;
             setButtonMessage("Inscription échouée.");
           }
         }
       )
-      .catch(() => {
+      .catch((e: AxiosError<ApiErrorResponse>) => {
         success = false;
-        message = "Nom d'utilisateur ou mot de passe incorrects";
+        message = `Inscription échouée: ${getAxiosErrorMessage(e)}`;
         setButtonMessage("Inscription échouée.");
       })
       .finally(() => dispatch(addAlert({ message, success, ttl: 2000 })));
@@ -130,21 +146,34 @@ const SignupForm: FunctionComponent = () => {
                   placeholder="Adresse email"
                   type="email"
                 />
+                <Form.Control.Feedback type="invalid">
+                  {errors.email}
+                </Form.Control.Feedback>
               </Form.Group>
               {/* Password */}
               <Form.Group controlId="password">
                 <Form.Label className="visually-hidden">
                   Mot de passe :
                 </Form.Label>
-                <Form.Control
-                  onChange={handleChange}
-                  name="password"
-                  isInvalid={touched.password && !!errors.password}
-                  isValid={touched.password && !errors.password}
-                  className={styles.loginInput}
-                  placeholder="Mot de passe"
-                  type="password"
-                />
+                <OverlayTrigger
+                  trigger="focus"
+                  placement="auto"
+                  overlay={popover}
+                >
+                  <Form.Control
+                    name="password"
+                    type="password"
+                    placeholder="Mot de passe"
+                    aria-describedby="password-help"
+                    className={styles.loginInput}
+                    isInvalid={touched.password && !!errors.password}
+                    isValid={touched.password && !errors.password}
+                    onChange={handleChange}
+                  />
+                </OverlayTrigger>
+                <Form.Control.Feedback type="invalid">
+                  {errors.password}
+                </Form.Control.Feedback>
               </Form.Group>
               {/* Password confirmation */}
               <Form.Group controlId="passwordConfirm">
@@ -162,6 +191,9 @@ const SignupForm: FunctionComponent = () => {
                   placeholder="Répétez le mot de passe"
                   type="password"
                 />
+                <Form.Control.Feedback type="invalid">
+                  {errors.passwordConfirm}
+                </Form.Control.Feedback>
               </Form.Group>
               <Row as="fieldset">
                 {/* First name */}
