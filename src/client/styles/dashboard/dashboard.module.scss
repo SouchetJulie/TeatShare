@@ -1,6 +1,4 @@
-@import "~bootstrap/scss/functions";
-@import "~bootstrap/scss/mixins";
-@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/bootstrap-utilities";
 @import "../variables";
 
 .dashboardContainer {
@@ -14,9 +12,7 @@
 }
 
 .card {
-  min-width: 345px;
   width: 345px;
-  height: fit-content;
   background: $bluel;
   border: none;
   border-radius: 20px;
@@ -159,19 +155,23 @@
     }
   }
 
-  .lastPostsList::-webkit-scrollbar-thumb {
-    background: $primary;
-    border-radius: 10px;
-  }
-
-  .lastPostsList::-webkit-scrollbar {
-    width: 10px;
-    background: $greyc;
-    border-radius: 10px;
+  .lastPostsList {
+    // For Chromium
+    &::-webkit-scrollbar-thumb {
+      background: $primary;
+      border-radius: 10px;
+    }
+    &::-webkit-scrollbar {
+      width: 10px;
+      background: $greyc;
+      border-radius: 10px;
+    }
+    // For Firefox
+    scrollbar-color: $primary $greyc;
   }
 }
 
-@media screen and (max-width: 522px) {
+@include media-breakpoint-down("sm"){
   .title {
     text-align: center;
     margin: 40px 0 0 0;

@@ -1,7 +1,6 @@
-import avatarLogo from "@assets/logos/avatar_placeholder.png";
+import { getUserAvatar } from "@client/services/user.service";
 import { getUsername } from "@client/utils/get-username.utils";
 import styles from "@styles/dashboard/dashboard.module.scss";
-import { CleanFile } from "@typing/clean-file.interface";
 import { EGrade } from "@typing/grade.enum";
 import { IUserPublic } from "@typing/user.interface";
 import React, { FunctionComponent } from "react";
@@ -19,13 +18,7 @@ const DashBoardCard: FunctionComponent<Props> = ({ user }: Props) => {
         {/* Next considère le logo comme un objet possédant un attribut src */}
         <Card.Img
           variant="top"
-          src={
-            user?.avatar
-              ? `https://storage.googleapis.com/${
-                  process.env.NEXT_PUBLIC_BUCKET_NAME
-                }/${(user.avatar as CleanFile).filepath}`
-              : avatarLogo.src
-          }
+          src={getUserAvatar(user)}
           className={styles.cardImage}
         />
         <Card.Body>

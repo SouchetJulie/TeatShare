@@ -1,3 +1,4 @@
+@import "~bootstrap/scss/bootstrap-utilities";
 @import "../variables";
 
 .profileContainer {
@@ -11,14 +12,13 @@
   color: $primary;
 }
 
-
 .profileMainData {
   display: flex;
   gap: 30px;
-  justify-content: start;
-
+  justify-content: flex-start;
 }
 
+$disabledTextColor: #a9a9a9;
 
 .profileEdit {
   background: white;
@@ -43,7 +43,6 @@
 
     span {
       text-decoration: underline;
-
     }
   }
 
@@ -54,9 +53,8 @@
     flex-direction: column;
     gap: 20px;
 
-
     &::placeholder {
-      color: #dadada
+      color: #dadada;
     }
 
     label {
@@ -72,7 +70,7 @@
 
       &:disabled {
         background: hsl(0, 0%, 95%);
-        color: #818181;
+        color: $disabledTextColor;
       }
     }
 
@@ -86,10 +84,9 @@
       &:disabled {
         border: solid 1px hsl(0, 0%, 90%);
         background: hsl(0, 0%, 95%);
-        color: #818181;
+        color: $disabledTextColor;
       }
     }
-
 
     .formSubmitButton {
       width: fit-content;
@@ -101,24 +98,23 @@
   }
 }
 
-.profileEdit::-webkit-scrollbar-thumb {
-  background: $primary;
-  border-radius: 10px;
+.profileEdit {
+  // For Chromium
+  &::-webkit-scrollbar-thumb {
+    background: $primary;
+    border-radius: 10px;
+  }
+  &::-webkit-scrollbar {
+    width: 10px;
+    background: $greyc;
+    border-radius: 10px;
+  }
+  // For Firefox
+  scrollbar-color: $primary $greyc;
 }
 
-.profileEdit::-webkit-scrollbar {
-  width: 10px;
-  background: $greyc;
-  border-radius: 10px;
-}
-
-.disableText {
-  color: #a9a9a9;
-}
-
-@media screen and (max-width: 767px) {
+@include media-breakpoint-down("md") {
   .profileContainer {
-
     h3 {
       text-align: center;
     }
@@ -141,8 +137,7 @@
   }
 }
 
-
-@media screen and (max-width: 576px) {
+@include media-breakpoint-down("sm") {
   .profileEdit {
     width: 90%;
   }

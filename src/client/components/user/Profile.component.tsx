@@ -1,203 +1,20 @@
-import avatarLogo from "@assets/logos/avatar_placeholder.png";
+import { getUserAvatar } from "@client/services/user.service";
 import { getUsername } from "@client/utils/get-username.utils";
-import { useProfileOnSubmit } from "@components/user/profile-on-submit.hook";
+import ProfileUserForm from "@components/user/ProfileUserForm.component";
 import { useAutoLogin } from "@hooks/auto-login.hook";
 import dashboardStyles from "@styles/dashboard/dashboard.module.scss";
 import styles from "@styles/profile/profile.module.scss";
-import { CleanFile } from "@typing/clean-file.interface";
 import { EGrade } from "@typing/grade.enum";
-import { ESubject } from "@typing/subject.enum";
 import React, { FunctionComponent, useState } from "react";
-import { Button, Card, Form } from "react-bootstrap";
+import { Button, Card } from "react-bootstrap";
 import { Pen } from "react-bootstrap-icons";
 import Container from "react-bootstrap/Container";
-import Select from "react-select";
-
-const subjects = Object.entries(ESubject).map(
-  ([value, label]: [string, string]) => ({
-    value,
-    label,
-  })
-);
-
-const grades = Object.entries(EGrade).map(
-  ([value, label]: [string, string]) => ({
-    value,
-    label,
-  })
-);
 
 const Profile: FunctionComponent = () => {
   const user = useAutoLogin();
-  const onSubmit = useProfileOnSubmit();
+  const [showForm, setShowForm] = useState<boolean>(false);
+  const userAvatar = getUserAvatar(user);
 
-  const [modifiying, setModifiying] = useState<boolean>(false);
-  // const entries: Array<JSX.Element> | null = user
-  //   ? Object.entries(user).map(([key, value]) => (
-  //       <tr key={`row-${key}`}>
-  //         <td>{key}</td>
-  //         <td>
-  //           {Array.isArray(value) ? ( // arrays
-  //             <ListGroup>
-  //               {value.map((item, index) => (
-  //                 <ListGroup.Item key={`${key}-${index}`}>
-  //                   {item}
-  //                 </ListGroup.Item>
-  //               ))}
-  //             </ListGroup>
-  //           ) : typeof value === "object" ? ( // avatar
-  //             value && (
-  //               <Image
-  //                 width={80}
-  //                 height={80}
-  //                 src={`https://storage.googleapis.com/${
-  //                   process.env.NEXT_PUBLIC_BUCKET_NAME
-  //                 }/${(value as CleanFile).filepath}`}
-  //                 alt="avatar"
-  //               />
-  //             )
-  //           ) : (
-  //             value // primitive values
-  //           )}
-  //         </td>
-  //       </tr>
-  //     ))
-  //   : null;
-
-  const userForm: JSX.Element | null = user ? (
-    <Form onSubmit={onSubmit} className={styles.formProfil}>
-      {/* Email */}
-      <Form.Group controlId="email">
-        <Form.Label>Email :</Form.Label>
-        <Form.Control
-          className={`${styles.formInput} ${!modifiying && styles.disableText}`}
-          disabled={!modifiying}
-          name="email"
-          type="email"
-          defaultValue={user.email || "email"}
-        />
-      </Form.Group>
-
-      <Form.Group controlId="firstName">
-        <Form.Label>FirstName :</Form.Label>
-        <Form.Control
-          className={`${styles.formInput} ${!modifiying && styles.disableText}`}
-          disabled={!modifiying}
-          name="firstName"
-          defaultValue={user.firstName || "firstName"}
-        />
-      </Form.Group>
-      {/* Last name */}
-      <Form.Group controlId="lastName">
-        <Form.Label>LastName :</Form.Label>
-        <Form.Control
-          className={`${styles.formInput} ${!modifiying && styles.disableText}`}
-          disabled={!modifiying}
-          name="lastName"
-          defaultValue={user.lastName || "lastName"}
-        />
-      </Form.Group>
-      {/* Description */}
-      <Form.Group controlId="b">
-        <Form.Label>Description :</Form.Label>
-        <Form.Control
-          as="textarea"
-          className={`${styles.formTextarea} ${
-            !modifiying && styles.disableText
-          }`}
-          disabled={!modifiying}
-          name="description"
-          defaultValue={user.description || "description"}
-        />
-      </Form.Group>
-      {/* Location */}
-      {modifiying && (
-        <Form.Group controlId="location">
-          <Form.Label>Location :</Form.Label>
-          <Form.Control
-            className={`${styles.formInput} ${
-              !modifiying && styles.disableText
-            }`}
-            disabled={!modifiying}
-            name="location"
-            defaultValue={user.location || "location"}
-          />
-        </Form.Group>
-      )}
-
-      {/* Grades */}
-      {modifiying && (
-        <Form.Group controlId="grades">
-          <Form.Label>Classes :</Form.Label>
-          <Select
-            isDisabled={!modifiying}
-            className={`${styles.formInput} ${
-              !modifiying && styles.disableText
-            }`}
-            id="grades"
-            name="grades"
-            aria-labelledby="grades"
-            placeholder="grades"
-            isMulti
-            options={grades}
-            hideSelectedOptions={true}
-          />
-        </Form.Group>
-      )}
-      {/* Subjects */}
-      {modifiying && (
-        <Form.Group controlId="subjects">
-          <Form.Label>Matieres :</Form.Label>
-          <Select
-            isDisabled={!modifiying}
-            className={`${styles.formInput} ${
-              !modifiying && styles.disableText
-            }`}
-            id="subjects"
-            name="subjects"
-            aria-labelledby="subjects"
-            placeholder="subjects"
-            isMulti
-            options={subjects}
-            hideSelectedOptions={true}
-          />
-        </Form.Group>
-      )}
-
-      {/* Avatar */}
-      {modifiying && (
-        <Form.Group controlId="avatar">
-          <Form.Label>Avatar :</Form.Label>
-          <Form.Control
-            className={`${styles.formInput} ${
-              !modifiying && styles.disableText
-            }`}
-            disabled={!modifiying}
-            name="avatar"
-            type="file"
-            accept="image/*"
-          />
-        </Form.Group>
-      )}
-      {modifiying && (
-        <>
-          <Button type="submit" className={styles.formSubmitButton}>
-            Sauvegarder
-          </Button>
-          <button
-            onClick={() => {
-              setModifiying(false);
-            }}
-            className={styles.formCancelButton}
-          >
-            Annuler
-          </button>
-        </>
-      )}
-    </Form>
-  ) : null;
-
-  // Return the Component
   return (
     <Container className={styles.profileContainer}>
       <h1 className={styles.title}>Mon profile</h1>
@@ -205,30 +22,27 @@ const Profile: FunctionComponent = () => {
         <h3 className={styles.sectionTitle}>Mes informations</h3>
         <div className={styles.profileMainData}>
           <div className={styles.profileEdit}>
-            {userForm}
-            {!modifiying && (
-              <button
+            {!!user && (
+              <ProfileUserForm
+                show={showForm}
+                setShow={setShowForm}
+                user={user}
+              />
+            )}
+            {!showForm && (
+              <Button
                 className={styles.editButton}
-                onClick={() => {
-                  setModifiying(true);
-                }}
+                onClick={() => setShowForm(true)}
               >
-                <span className={styles.modifyButton}>Modifier</span> <Pen />
-              </button>
+                <Pen />
+                <div className={styles.modifyButton}>Modifier</div>
+              </Button>
             )}
           </div>
           <Card className={dashboardStyles.card}>
-            {/* Next considère le logo comme un objet possédant un attribut src */}
             <Card.Img
               variant="top"
-              src={
-                user?.avatar
-                  ? `
-            }https://storage.googleapis.com/${
-              process.env.NEXT_PUBLIC_BUCKET_NAME
-            }/${(user.avatar as CleanFile).filepath}`
-                  : avatarLogo.src
-              }
+              src={userAvatar}
               className={dashboardStyles.cardImage}
             />
             <Card.Body>
@@ -252,7 +66,7 @@ const Profile: FunctionComponent = () => {
                           );
                         }
                       )
-                    : "Pas de classe.."}
+                    : "Pas de classe..."}
                 </span>
                 <p className={dashboardStyles.nbrPosts}>
                   {user?.lessonIds.length} POSTS - 2 COMMENTAIRES

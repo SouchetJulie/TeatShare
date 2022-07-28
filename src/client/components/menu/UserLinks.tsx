@@ -3,8 +3,8 @@ import { useLogout } from "@hooks/logout.hook";
 import styles from "@styles/menu/navbar.module.scss";
 import { IUserPublic } from "@typing/user.interface";
 import Link from "next/link";
-import React, { FunctionComponent, useEffect, useState } from "react";
-import { Nav, NavDropdown } from "react-bootstrap";
+import { FunctionComponent } from "react";
+import { NavDropdown } from "react-bootstrap";
 import Dropdown from "react-bootstrap/Dropdown";
 
 interface Props {
@@ -17,18 +17,6 @@ interface Props {
  */
 const UserLinks: FunctionComponent<Props> = ({ user }: Props) => {
   const logout = useLogout();
-  const [username, setUsername] = useState("");
-
-  // For display
-  useEffect(() => {
-    if (user) {
-      if (user.firstName || user.lastName) {
-        setUsername(`${user.firstName} ${user.lastName}`.trim());
-      } else {
-        setUsername(user.email);
-      }
-    }
-  }, [user, setUsername]);
 
   return user ? (
     <NavDropdown
