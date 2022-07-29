@@ -1,6 +1,4 @@
-@import "~bootstrap/scss/functions";
-@import "~bootstrap/scss/mixins";
-@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/bootstrap-utilities";
 @import "../variables";
 
 .dashboardContainer {
@@ -173,7 +171,7 @@
   }
 }
 
-@include media-breakpoint-down("xs") {
+@include media-breakpoint-down("sm"){
   .title {
     text-align: center;
     margin: 40px 0 0 0;

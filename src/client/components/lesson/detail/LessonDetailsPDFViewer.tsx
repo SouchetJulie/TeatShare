@@ -1,3 +1,4 @@
+import { getLessonFileURL } from "@client/services/lesson.service";
 import styles from "@styles/lesson/LessonPost.module.scss";
 import { ILesson } from "@typing/lesson.interface";
 import { PDFDocumentProxy } from "pdfjs-dist";
@@ -26,7 +27,7 @@ const LessonDetailsPDFViewer: FunctionComponent<LessonDetailsPDFProps> = ({
     setNumPages(pageNbr);
   }
 
-  const fileURL: string = `https://storage.googleapis.com/${process.env.NEXT_PUBLIC_BUCKET_NAME}/${lesson?.file.filepath}`;
+  const fileURL: string = getLessonFileURL(lesson);
 
   return lesson ? (
     <Container ref={pdfViewerBlock} className={styles.lessonBlock2}>

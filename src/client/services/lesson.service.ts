@@ -25,6 +25,9 @@ const getLessons = async (
   return response;
 };
 
+const getLessonFileURL = (lesson?: ILesson): string =>
+  `https://storage.googleapis.com/${process.env.NEXT_PUBLIC_BUCKET_NAME}/${lesson?.file.filepath}`;
+
 const createCategory = (
   username: string,
   userId: string,
@@ -87,4 +90,4 @@ interface FetchLessonsParameters {
 }
 
 export type { FetchLessonsParameters };
-export { getLessons, createCategory };
+export { getLessons, getLessonFileURL, createCategory };

@@ -1,0 +1,144 @@
+@import "~bootstrap/scss/bootstrap-utilities";
+@import "../variables";
+
+.profileContainer {
+  min-height: 100vh;
+  margin-bottom: 5%;
+}
+
+.title {
+  text-align: center;
+  margin-top: 4%;
+  color: $primary;
+}
+
+.profileMainData {
+  display: flex;
+  gap: 30px;
+  justify-content: flex-start;
+}
+
+$disabledTextColor: #a9a9a9;
+
+.profileEdit {
+  background: white;
+  width: 100%;
+  border-radius: 20px;
+  overflow-y: auto;
+  display: flex;
+  justify-content: space-between;
+  padding: 2%;
+  scrollbar-color: $primary;
+
+  svg {
+    margin-bottom: 5px;
+  }
+
+  button {
+    margin: 0 auto;
+    width: 20%;
+    height: fit-content;
+    background: none;
+    border: none;
+
+    span {
+      text-decoration: underline;
+    }
+  }
+
+  .formProfil {
+    width: 100%;
+    min-width: 80%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    &::placeholder {
+      color: #dadada;
+    }
+
+    label {
+      color: #dadada;
+      font-size: 12px;
+      margin: 5px;
+    }
+
+    .formTextarea {
+      border-radius: 5px;
+      min-height: 100px;
+      max-height: 300px;
+
+      &:disabled {
+        background: hsl(0, 0%, 95%);
+        color: $disabledTextColor;
+      }
+    }
+
+    .formInput {
+      border-radius: 30px;
+
+      & > :nth-child(3) {
+        border-radius: 50px;
+      }
+
+      &:disabled {
+        border: solid 1px hsl(0, 0%, 90%);
+        background: hsl(0, 0%, 95%);
+        color: $disabledTextColor;
+      }
+    }
+
+    .formSubmitButton {
+      width: fit-content;
+      background: $secondary;
+      color: white;
+      text-decoration: none;
+      margin: auto;
+    }
+  }
+}
+
+.profileEdit {
+  // For Chromium
+  &::-webkit-scrollbar-thumb {
+    background: $primary;
+    border-radius: 10px;
+  }
+  &::-webkit-scrollbar {
+    width: 10px;
+    background: $greyc;
+    border-radius: 10px;
+  }
+  // For Firefox
+  scrollbar-color: $primary $greyc;
+}
+
+@include media-breakpoint-down("md") {
+  .profileContainer {
+    h3 {
+      text-align: center;
+    }
+  }
+  .profileMainData {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    margin-bottom: 30px;
+  }
+
+  .profileEdit {
+    .formProfil {
+      width: 90%;
+    }
+
+    .modifyButton {
+      display: none;
+    }
+  }
+}
+
+@include media-breakpoint-down("sm") {
+  .profileEdit {
+    width: 90%;
+  }
+}
