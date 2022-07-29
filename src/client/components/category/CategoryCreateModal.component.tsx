@@ -8,7 +8,7 @@ import { selectAuthenticatedUser } from "@stores/user.store";
 import { ApiErrorResponse } from "@typing/api-response.interface";
 import { ESubject } from "@typing/subject.enum";
 import { AxiosError } from "axios";
-import { ChangeEvent, FormEvent, FunctionComponent, useState } from "react";
+import { ChangeEvent, FunctionComponent, useState } from "react";
 import { Button, Form, Modal, Stack } from "react-bootstrap";
 import { SingleValue } from "react-select";
 import styles from "./category.module.scss";
@@ -35,8 +35,8 @@ const CategoryCreateModal: FunctionComponent<CategoryCreateModalProps> = ({
   const labelOnChange = (e: ChangeEvent<HTMLInputElement>): void =>
     setLabel(e.target.value);
 
-  const onSubmit = (e: FormEvent<HTMLFormElement>): void => {
-    e.preventDefault();
+  const onClick = (): void => {
+    onHide();
 
     let success: boolean;
     let message: string;
@@ -76,7 +76,7 @@ const CategoryCreateModal: FunctionComponent<CategoryCreateModalProps> = ({
         <Modal.Title>Proposer une nouvelle catégorie</Modal.Title>
       </Modal.Header>
 
-      <Form className={styles.createForm} onSubmit={onSubmit}>
+      <Form className={styles.createForm} onSubmit={onClick}>
         <Modal.Body>
           <Stack gap={4}>
             <p>
@@ -108,7 +108,7 @@ const CategoryCreateModal: FunctionComponent<CategoryCreateModalProps> = ({
         </Modal.Body>
 
         <Modal.Footer>
-          <Button variant="primary" type="submit">
+          <Button variant="primary" type="button" onClick={onClick}>
             Envoyer
           </Button>
         </Modal.Footer>

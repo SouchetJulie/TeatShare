@@ -65,7 +65,7 @@ const ProfileUserForm: FunctionComponent<ProfileUserFormProps> = ({
           disabled={!show}
           name="email"
           type="email"
-          placeholder="email"
+          placeholder="Email"
           defaultValue={user.email || ""}
         />
       </Form.Group>
@@ -76,7 +76,7 @@ const ProfileUserForm: FunctionComponent<ProfileUserFormProps> = ({
           className={styles.formInput}
           disabled={!show}
           name="firstName"
-          placeholder="firstName"
+          placeholder="Prénom"
           defaultValue={user.firstName || ""}
         />
       </Form.Group>
@@ -87,7 +87,7 @@ const ProfileUserForm: FunctionComponent<ProfileUserFormProps> = ({
           className={styles.formInput}
           disabled={!show}
           name="lastName"
-          placeholder="lastName"
+          placeholder="Nom"
           defaultValue={user.lastName || ""}
         />
       </Form.Group>
@@ -99,7 +99,7 @@ const ProfileUserForm: FunctionComponent<ProfileUserFormProps> = ({
           className={styles.formTextarea}
           disabled={!show}
           name="description"
-          placeholder="description"
+          placeholder="Description"
           defaultValue={user.description || ""}
         />
       </Form.Group>
@@ -111,7 +111,7 @@ const ProfileUserForm: FunctionComponent<ProfileUserFormProps> = ({
             className={styles.formInput}
             disabled={!show}
             name="location"
-            placeholder="location"
+            placeholder="Lieu"
             defaultValue={user.location || ""}
           />
         </Form.Group>
@@ -126,7 +126,7 @@ const ProfileUserForm: FunctionComponent<ProfileUserFormProps> = ({
             id="grades"
             name="grades"
             aria-label="grades"
-            placeholder="grades"
+            placeholder="Classes"
             isMulti
             options={grades}
             hideSelectedOptions={true}
@@ -142,7 +142,7 @@ const ProfileUserForm: FunctionComponent<ProfileUserFormProps> = ({
             id="subjects"
             name="subjects"
             aria-label="subjects"
-            placeholder="subjects"
+            placeholder="Matières"
             isMulti
             options={subjects}
             hideSelectedOptions={true}
