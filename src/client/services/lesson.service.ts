@@ -3,7 +3,7 @@
  */
 import { ApiResponse } from "@typing/api-response.interface";
 import { ILesson } from "@typing/lesson.interface";
-import axios from "axios";
+import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 
 const lessonApiUrl = "/api/lesson";
 
@@ -25,6 +25,49 @@ const getLessons = async (
   return response;
 };
 
+const createCategory = (
+  username: string,
+  userId: string,
+  label: string,
+  subject?: string
+): Promise<AxiosResponse> => {
+  const url: string = "https://api.github.com/repos/SouchetJulie/DevLab/issues";
+
+  const formattedBody = (): string => {
+    let body: string = "```json\n";
+    body += `{\n  "label": "${label}"`;
+    if (subject) {
+      body += `,\n  "subject": "${subject}"`;
+    }
+    body += "\n}\n";
+    body += "```";
+    return body;
+  };
+
+  const body: Record<string, string | string[]> = {
+    title: `New category: "${label}"` + (subject ? ` (${subject})` : ""),
+    // The indentation is important here for the resulting markdown.
+    body: `
+- **Catégorie :** ${label}
+- **Matière :** ${subject ?? "~~aucune~~"}  
+- **Proposé par :** ${username} (${userId})
+- **Date :** ${new Date().toLocaleString()}
+  
+Pour la base de données :
+${formattedBody()}
+  `,
+    labels: ["proposition: categories"],
+  };
+  const config: AxiosRequestConfig = {
+    headers: {
+      Accept: "application/vnd.github+json",
+      Authorization: `token ${process.env.NEXT_PUBLIC_GITHUB_TOKEN ?? ""}`,
+    },
+  };
+
+  return axios.post(url, body, config);
+};
+
 /**
  * Available filters for the `useFetchLessons` hook
  */
@@ -44,4 +87,4 @@ interface FetchLessonsParameters {
 }
 
 export type { FetchLessonsParameters };
-export { getLessons };
+export { getLessons, createCategory };

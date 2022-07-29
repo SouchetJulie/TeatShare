@@ -1,6 +1,14 @@
+import { createCategory } from "@client/services/lesson.service";
+import { getAxiosErrorMessage } from "@client/utils/get-axios-error.utils";
+import { getUsername } from "@client/utils/get-username.utils";
 import SubjectSelect from "@components/subject/SubjectSelect.component";
+import { useAppDispatch, useAppSelector } from "@hooks/store-hook";
+import { addAlert } from "@stores/alert.store";
+import { selectAuthenticatedUser } from "@stores/user.store";
+import { ApiErrorResponse } from "@typing/api-response.interface";
 import { ESubject } from "@typing/subject.enum";
-import { ChangeEvent, FunctionComponent, useState } from "react";
+import { AxiosError } from "axios";
+import { ChangeEvent, FormEvent, FunctionComponent, useState } from "react";
 import { Button, Form, Modal, Stack } from "react-bootstrap";
 import { SingleValue } from "react-select";
 import styles from "./category.module.scss";
@@ -14,6 +22,9 @@ const CategoryCreateModal: FunctionComponent<CategoryCreateModalProps> = ({
   show,
   onHide,
 }) => {
+  const user = useAppSelector(selectAuthenticatedUser);
+  const dispatch = useAppDispatch();
+
   const [label, setLabel] = useState("");
   const [subject, setSubject] = useState<string | undefined>(undefined);
 
@@ -24,13 +35,48 @@ const CategoryCreateModal: FunctionComponent<CategoryCreateModalProps> = ({
   const labelOnChange = (e: ChangeEvent<HTMLInputElement>): void =>
     setLabel(e.target.value);
 
+  const onSubmit = (e: FormEvent<HTMLFormElement>): void => {
+    e.preventDefault();
+
+    let success: boolean;
+    let message: string;
+
+    if (!user?._id) {
+      dispatch(
+        addAlert({
+          success: false,
+          message: "Il faut être connecté pour effectuer cette action",
+          ttl: 5000,
+        })
+      );
+      return;
+    }
+
+    createCategory(getUsername(user), user._id, label, subject)
+      .then(() => {
+        success = true;
+        message = `Message envoyé : catégorie "${label}" ${
+          subject ? `(${subject}) ` : ""
+        }!`;
+      })
+      .catch((e: AxiosError<ApiErrorResponse>) => {
+        success = false;
+        message = `Erreur lors de l'envoi du message (${
+          e.status ?? getAxiosErrorMessage(e)
+        })`;
+      })
+      .finally(() =>
+        dispatch(addAlert({ success, message, ttl: success ? 2000 : 5000 }))
+      );
+  };
+
   return (
     <Modal centered show={show} onHide={onHide}>
       <Modal.Header closeButton>
         <Modal.Title>Proposer une nouvelle catégorie</Modal.Title>
       </Modal.Header>
 
-      <Form className={styles.createForm}>
+      <Form className={styles.createForm} onSubmit={onSubmit}>
         <Modal.Body>
           <Stack gap={4}>
             <p>
