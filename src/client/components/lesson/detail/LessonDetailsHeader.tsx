@@ -1,4 +1,3 @@
-import avatarLogo from "@assets/logos/avatar_placeholder.png";
 import { getLessonFileURL } from "@client/services/lesson.service";
 import { getUser } from "@client/services/user.service";
 import { getAxiosErrorMessage } from "@client/utils/get-axios-error.utils";
@@ -9,6 +8,7 @@ import LessonBookmark from "@components/lesson/button/LessonBookmark";
 import { LessonDelete } from "@components/lesson/button/LessonDelete.component";
 import { LessonEdit } from "@components/lesson/button/LessonEdit.component";
 import { SubjectBadge } from "@components/subject/subject-badge.component";
+import { Avatar } from "@components/ui/Avatar";
 import { useAppDispatch, useAppSelector } from "@hooks/store-hook";
 import { addAlert } from "@stores/alert.store";
 import { selectAuthenticatedUser } from "@stores/user.store";
@@ -19,7 +19,7 @@ import { IUserPublic } from "@typing/user.interface";
 import { AxiosError, AxiosResponse } from "axios";
 import dayjs from "dayjs";
 import { saveAs } from "file-saver";
-import Image from "next/image";
+import Link from "next/link";
 import { FunctionComponent, useEffect, useMemo, useState } from "react";
 import { ListGroup } from "react-bootstrap";
 import { Download, Printer } from "react-bootstrap-icons";
@@ -88,17 +88,16 @@ const LessonDetailsHeader: FunctionComponent<LessonHeaderComponentProps> = ({
     }
   }, [lesson?.authorId]);
 
+  const authorLink: string =
+    author?._id === user?._id ? "/dashboard" : `/dashboard/${author?._id}`;
+
   return (
     <Row className={styles.lessonHeader}>
       <Col xs={12} md={3}>
-        <Image
-          placeholder={"blur"}
-          className={styles.blockImage}
-          src={avatarLogo}
-          width="70px"
-          height="70px"
-        />
-        <p>{getUsername(author)}</p>
+        <Avatar user={author} size={70} />
+        <p>
+          <Link href={authorLink}>{getUsername(author)}</Link>
+        </p>
         {author && author.subjects.length > 0 && (
           <p>Professeur de {author?.subjects?.join(", ")} </p>
         )}
