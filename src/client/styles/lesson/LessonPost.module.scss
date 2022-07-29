@@ -9,8 +9,9 @@
     text-align: center;
 
     .blockImage {
-      border: solid 1px black !important;
-      border-radius: 50%;
+      box-shadow: lightgrey 0 0 1px;
+      border-radius: 50rem;
+      background-color: white;
     }
     p {
       margin-bottom: 5%;

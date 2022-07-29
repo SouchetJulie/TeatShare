@@ -1,6 +1,6 @@
 import avatarLogo from "@assets/logos/avatar_placeholder.png";
 import { getLessonFileURL } from "@client/services/lesson.service";
-import { getUser } from "@client/services/user.service";
+import { getUser, getUserAvatar } from "@client/services/user.service";
 import { getAxiosErrorMessage } from "@client/utils/get-axios-error.utils";
 import { getUsername } from "@client/utils/get-username.utils";
 import CategoryBadge from "@components/category/CategoryBadge.component";
@@ -91,14 +91,16 @@ const LessonDetailsHeader: FunctionComponent<LessonHeaderComponentProps> = ({
 
   const authorLink: string =
     author?._id === user?._id ? "/dashboard" : `/dashboard/${author?._id}`;
+  const avatar = getUserAvatar(author);
 
   return (
     <Row className={styles.lessonHeader}>
       <Col xs={12} md={3}>
         <Image
-          placeholder={"blur"}
+          placeholder="blur"
+          blurDataURL={avatarLogo.src}
           className={styles.blockImage}
-          src={avatarLogo}
+          src={avatar}
           width="70px"
           height="70px"
         />
