@@ -30,7 +30,7 @@ const getLessonFileURL = (lesson?: ILesson): string =>
 
 const createCategory = (
   username: string,
-  userId: string,
+  email: string,
   label: string,
   subject?: string
 ): Promise<AxiosResponse> => {
@@ -53,7 +53,7 @@ const createCategory = (
     body: `
 - **Catégorie :** ${label}
 - **Matière :** ${subject ?? "~~aucune~~"}  
-- **Proposé par :** ${username} (${userId})
+- **Proposé par :** ${username} (${email})
 - **Date :** ${new Date().toLocaleString()}
   
 Pour la base de données :

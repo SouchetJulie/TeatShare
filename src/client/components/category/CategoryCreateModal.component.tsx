@@ -52,7 +52,7 @@ const CategoryCreateModal: FunctionComponent<CategoryCreateModalProps> = ({
       return;
     }
 
-    createCategory(getUsername(user), user._id, label, subject)
+    createCategory(getUsername(user), user.email, label, subject)
       .then(() => {
         success = true;
         message = `Message envoyé : catégorie "${label}" ${
