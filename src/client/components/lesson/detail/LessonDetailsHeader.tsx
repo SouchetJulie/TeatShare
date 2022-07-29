@@ -20,6 +20,7 @@ import { AxiosError, AxiosResponse } from "axios";
 import dayjs from "dayjs";
 import { saveAs } from "file-saver";
 import Image from "next/image";
+import Link from "next/link";
 import { FunctionComponent, useEffect, useMemo, useState } from "react";
 import { ListGroup } from "react-bootstrap";
 import { Download, Printer } from "react-bootstrap-icons";
@@ -88,6 +89,9 @@ const LessonDetailsHeader: FunctionComponent<LessonHeaderComponentProps> = ({
     }
   }, [lesson?.authorId]);
 
+  const authorLink: string =
+    author?._id === user?._id ? "/dashboard" : `/dashboard/${author?._id}`;
+
   return (
     <Row className={styles.lessonHeader}>
       <Col xs={12} md={3}>
@@ -98,7 +102,9 @@ const LessonDetailsHeader: FunctionComponent<LessonHeaderComponentProps> = ({
           width="70px"
           height="70px"
         />
-        <p>{getUsername(author)}</p>
+        <p>
+          <Link href={authorLink}>{getUsername(author)}</Link>
+        </p>
         {author && author.subjects.length > 0 && (
           <p>Professeur de {author?.subjects?.join(", ")} </p>
         )}
