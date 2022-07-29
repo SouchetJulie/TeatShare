@@ -1,3 +1,5 @@
+import CategoryCreateModal from "@components/category/CategoryCreateModal.component";
+import CategoryNoOptionsMessage from "@components/category/CategoryNoOptionsMessage.component";
 import {
   createSelectStyle,
   fromGroupToGroupOptions,
@@ -6,8 +8,8 @@ import {
 } from "@components/ui/select-option.utils";
 import { useCategoryList } from "@hooks/category-list.hook";
 import { ICategory } from "@typing/category.interface";
-import { FunctionComponent, ReactElement, useMemo } from "react";
-import Select, { MultiValue, StylesConfig } from "react-select";
+import { FunctionComponent, ReactElement, useMemo, useState } from "react";
+import Select, { GroupBase, MultiValue, StylesConfig } from "react-select";
 
 interface CategorySelectProps {
   currentSelected?: string[];
@@ -28,6 +30,7 @@ const CategorySelect: FunctionComponent<CategorySelectProps> = ({
   groupShown,
 }: CategorySelectProps): ReactElement => {
   const categoryList = useCategoryList();
+  const [showModal, setShowModal] = useState(false);
 
   // Converts the category to options for the select
   const categoryOptions = useMemo(() => {
@@ -69,20 +72,38 @@ const CategorySelect: FunctionComponent<CategorySelectProps> = ({
     true
   >({ rounded });
 
+  const NoOptionsMessage = (): ReactElement =>
+    useMemo(
+      () => (
+        <CategoryNoOptionsMessage onClick={(): void => setShowModal(true)} />
+      ),
+      [setShowModal]
+    );
+
   return (
-    <Select
-      isClearable
-      isMulti
-      className="text-dark"
-      options={categoryOptions}
-      id="categoryIds"
-      name="categoryIds"
-      value={selectedCategories}
-      onChange={onChange}
-      aria-label="Catégories"
-      placeholder="Catégories"
-      styles={styles}
-    />
+    <>
+      <CategoryCreateModal
+        show={showModal}
+        onHide={(): void => setShowModal(false)}
+      />
+      <Select<SelectOption<string>, true, GroupBase<SelectOption<string>>>
+        isClearable
+        isMulti
+        className="text-dark"
+        options={categoryOptions}
+        id="categoryIds"
+        name="categoryIds"
+        value={selectedCategories}
+        onChange={onChange}
+        aria-label="Catégories"
+        placeholder="Catégories"
+        styles={styles}
+        hideSelectedOptions
+        components={{
+          NoOptionsMessage,
+        }}
+      />
+    </>
   );
 };
 

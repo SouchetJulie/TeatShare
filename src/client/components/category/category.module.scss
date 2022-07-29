@@ -1,3 +1,6 @@
+@import "~bootstrap/scss/bootstrap-utilities";
+@import "../../styles/variables";
+
 .badge {
   margin-left: 0.25rem;
   margin-right: 0.25rem;
@@ -7,4 +10,29 @@
 
   background-color: transparent !important;
   color: grey !important;
+}
+
+.link {
+  display: block;
+  padding-left: 10px;
+  cursor: pointer;
+  color: $secondary;
+  text-decoration: underline;
+
+  :hover,
+  :focus {
+    color: $secondary-light !important;
+  }
+}
+
+.createForm {
+  label {
+    margin-left: 8px;
+    font-variant: small-caps;
+  }
+
+  input,
+  button {
+    border-radius: $border-radius-pill;
+  }
 }

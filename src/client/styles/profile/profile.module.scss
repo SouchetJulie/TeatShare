@@ -34,18 +34,6 @@ $disabledTextColor: #a9a9a9;
     margin-bottom: 5px;
   }
 
-  button {
-    margin: 0 auto;
-    width: 20%;
-    height: fit-content;
-    background: none;
-    border: none;
-
-    span {
-      text-decoration: underline;
-    }
-  }
-
   .formProfil {
     width: 100%;
     min-width: 80%;
@@ -113,6 +101,18 @@ $disabledTextColor: #a9a9a9;
   scrollbar-color: $primary $greyc;
 }
 
+.modifyButton {
+  width: min-content;
+  margin-left: 15px !important;
+  height: fit-content;
+  background: none;
+  border: none;
+
+  [class=text] {
+    text-decoration: underline;
+  }
+}
+
 @include media-breakpoint-down("md") {
   .profileContainer {
     h3 {
@@ -131,7 +131,7 @@ $disabledTextColor: #a9a9a9;
       width: 90%;
     }
 
-    .modifyButton {
+    .modifyButton [class=text]{
       display: none;
     }
   }

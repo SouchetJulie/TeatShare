@@ -6,7 +6,7 @@ import {
 } from "@components/ui/select-option.utils";
 import { EGrade } from "@typing/grade.enum";
 import { FunctionComponent, ReactElement } from "react";
-import Select, { SingleValue, StylesConfig } from "react-select";
+import Select, { GroupBase, SingleValue, StylesConfig } from "react-select";
 
 interface GradeSelectProps {
   currentSelected?: string;
@@ -29,7 +29,7 @@ const GradeSelect: FunctionComponent<GradeSelectProps> = ({
     false
   > = createSelectStyle<EGrade>({ rounded });
   return (
-    <Select
+    <Select<SelectOption<EGrade>, false, GroupBase<SelectOption<EGrade>>>
       isClearable
       className="text-dark"
       options={gradeOptions}
@@ -40,6 +40,7 @@ const GradeSelect: FunctionComponent<GradeSelectProps> = ({
       aria-label="Classe"
       placeholder="Classe"
       styles={styles}
+      hideSelectedOptions
     />
   );
 };

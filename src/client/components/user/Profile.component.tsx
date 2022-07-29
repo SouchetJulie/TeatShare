@@ -31,11 +31,11 @@ const Profile: FunctionComponent = () => {
             )}
             {!showForm && (
               <Button
-                className={styles.editButton}
+                className={styles.modifyButton}
                 onClick={() => setShowForm(true)}
               >
                 <Pen />
-                <div className={styles.modifyButton}>Modifier</div>
+                <div className="text">Modifier</div>
               </Button>
             )}
           </div>
