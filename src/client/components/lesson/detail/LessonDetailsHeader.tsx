@@ -1,6 +1,5 @@
-import avatarLogo from "@assets/logos/avatar_placeholder.png";
 import { getLessonFileURL } from "@client/services/lesson.service";
-import { getUser, getUserAvatar } from "@client/services/user.service";
+import { getUser } from "@client/services/user.service";
 import { getAxiosErrorMessage } from "@client/utils/get-axios-error.utils";
 import { getUsername } from "@client/utils/get-username.utils";
 import CategoryBadge from "@components/category/CategoryBadge.component";
@@ -9,6 +8,7 @@ import LessonBookmark from "@components/lesson/button/LessonBookmark";
 import { LessonDelete } from "@components/lesson/button/LessonDelete.component";
 import { LessonEdit } from "@components/lesson/button/LessonEdit.component";
 import { SubjectBadge } from "@components/subject/subject-badge.component";
+import { Avatar } from "@components/ui/Avatar";
 import { useAppDispatch, useAppSelector } from "@hooks/store-hook";
 import { addAlert } from "@stores/alert.store";
 import { selectAuthenticatedUser } from "@stores/user.store";
@@ -19,7 +19,6 @@ import { IUserPublic } from "@typing/user.interface";
 import { AxiosError, AxiosResponse } from "axios";
 import dayjs from "dayjs";
 import { saveAs } from "file-saver";
-import Image from "next/image";
 import Link from "next/link";
 import { FunctionComponent, useEffect, useMemo, useState } from "react";
 import { ListGroup } from "react-bootstrap";
@@ -91,19 +90,11 @@ const LessonDetailsHeader: FunctionComponent<LessonHeaderComponentProps> = ({
 
   const authorLink: string =
     author?._id === user?._id ? "/dashboard" : `/dashboard/${author?._id}`;
-  const avatar = getUserAvatar(author);
 
   return (
     <Row className={styles.lessonHeader}>
       <Col xs={12} md={3}>
-        <Image
-          placeholder="blur"
-          blurDataURL={avatarLogo.src}
-          className={styles.blockImage}
-          src={avatar}
-          width="70px"
-          height="70px"
-        />
+        <Avatar user={author} size={70} />
         <p>
           <Link href={authorLink}>{getUsername(author)}</Link>
         </p>
