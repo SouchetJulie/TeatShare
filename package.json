@@ -11,7 +11,7 @@
     "prettier": "prettier -l -w ./src"
   },
   "dependencies": {
-    "@google-cloud/storage": "^5.16.1",
+    "@google-cloud/storage": "^6.2.3",
     "@reduxjs/toolkit": "^1.8.3",
     "@types/styled-components": "^5.1.25",
     "axios": "^0.27.2",
