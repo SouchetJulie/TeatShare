@@ -50,7 +50,7 @@ const getDatabase = async (): Promise<Db> => {
 
 // Fix type for TypeScript
 export type Filter<TSchema> = {
-  [Property in Join<NestedPaths<WithId<TSchema>>, ".">]?: Condition<
+  [Property in Join<NestedPaths<WithId<TSchema>, []>, ".">]?: Condition<
     PropertyType<WithId<TSchema>, Property>
   >;
 } & RootFilterOperators<WithId<TSchema>>;

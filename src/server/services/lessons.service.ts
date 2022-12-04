@@ -5,7 +5,13 @@ import { ILesson, ILessonCreate, ILessonDB } from "@typing/lesson.interface";
 import { IUserPublic } from "@typing/user.interface";
 import { toArray } from "@utils/parse-form.utils";
 import { File } from "formidable";
-import { DeleteResult, InsertOneResult, ObjectId, UpdateResult } from "mongodb";
+import {
+  DeleteResult,
+  InsertOneResult,
+  ObjectId,
+  UpdateFilter,
+  UpdateResult,
+} from "mongodb";
 import { Filter, getDatabase } from "./database.service";
 
 const collection = (await getDatabase()).collection<ILessonDB>("LessonFile");
@@ -151,11 +157,11 @@ export const updateLesson = async (
   uploadedLesson: ILessonCreate
 ): Promise<{ id: ObjectId }> => {
   const lesson = await prepareLessonUpload(uploadedLesson, uploadedFile, user);
+  const filter: Filter<ILessonDB> = { _id: lesson._id };
+  const update: UpdateFilter<ILessonDB> = { $set: { ...lesson } };
+  console.log('[LESSON] Updating lesson', lesson);
 
-  const result: UpdateResult = await collection.updateOne(
-    { _id: lesson._id },
-    { $set: lesson }
-  );
+  const result: UpdateResult = await collection.updateOne(filter, update);
 
   if (result.acknowledged && result.modifiedCount === 1) {
     console.log(

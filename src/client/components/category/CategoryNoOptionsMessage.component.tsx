@@ -5,9 +5,9 @@ interface CategoryNoOptionsMessageProps {
   onClick: VoidFunction;
 }
 
-const CategoryNoOptionsMessage: FunctionComponent<CategoryNoOptionsMessageProps> = ({
-  onClick,
-}) => (
+const CategoryNoOptionsMessage: FunctionComponent<
+  CategoryNoOptionsMessageProps
+> = ({ onClick }) => (
   <a className={styles.link} onClick={onClick}>
     Proposer une nouvelle catégorie ?
   </a>
