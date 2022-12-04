@@ -1,4 +1,8 @@
-@import "~bootstrap/scss/bootstrap-utilities";
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/maps";
+@import "~bootstrap/scss/mixins";
+@import "~bootstrap/scss/utilities";
 @import "../variables";
 
 .profileContainer {
@@ -108,7 +112,7 @@ $disabledTextColor: #a9a9a9;
   background: none;
   border: none;
 
-  [class=text] {
+  [class="text"] {
     text-decoration: underline;
   }
 }
@@ -131,7 +135,7 @@ $disabledTextColor: #a9a9a9;
       width: 90%;
     }
 
-    .modifyButton [class=text]{
+    .modifyButton [class="text"] {
       display: none;
     }
   }

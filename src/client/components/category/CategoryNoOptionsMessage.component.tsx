@@ -1,11 +1,11 @@
 import { FunctionComponent } from "react";
 import styles from "./category.module.scss";
 
-interface CategoryNoOptionsMessage {
+interface CategoryNoOptionsMessageProps {
   onClick: VoidFunction;
 }
 
-const CategoryNoOptionsMessage: FunctionComponent<CategoryNoOptionsMessage> = ({
+const CategoryNoOptionsMessage: FunctionComponent<CategoryNoOptionsMessageProps> = ({
   onClick,
 }) => (
   <a className={styles.link} onClick={onClick}>
