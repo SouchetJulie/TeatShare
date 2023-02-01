@@ -52,7 +52,7 @@
     "@types/react-datepicker": "^4.4.2",
     "@types/react-dom": "^18.0.10",
     "@types/react-pdf": "^5.7.2",
-    "@types/validator": "^13.7.3",
+    "@types/validator": "^13.7.11",
     "@typescript-eslint/eslint-plugin": "^5.30.5",
     "@typescript-eslint/parser": "^5.30.5",
     "eslint": "^8.28.0",
