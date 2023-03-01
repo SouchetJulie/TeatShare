@@ -36,7 +36,7 @@
     "react-pdf": "^5.7.2",
     "react-redux": "^8.0.2",
     "react-select": "^5.4.0",
-    "validator": "^13.7.0",
+    "validator": "^13.9.0",
     "yup": "^0.32.11"
   },
   "devDependencies": {
@@ -52,7 +52,7 @@
     "@types/react-datepicker": "^4.4.2",
     "@types/react-dom": "^18.0.10",
     "@types/react-pdf": "^5.7.2",
-    "@types/validator": "^13.7.3",
+    "@types/validator": "^13.7.12",
     "@typescript-eslint/eslint-plugin": "^5.30.5",
     "@typescript-eslint/parser": "^5.30.5",
     "eslint": "^8.28.0",
