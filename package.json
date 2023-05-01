@@ -28,7 +28,7 @@
     "next": "^12.3.4",
     "print-js": "^1.6.0",
     "react": "18.2.0",
-    "react-bootstrap": "^2.4.0",
+    "react-bootstrap": "^2.7.4",
     "react-bootstrap-icons": "^1.8.4",
     "react-datepicker": "^4.8.0",
     "react-dom": "18.2.0",
