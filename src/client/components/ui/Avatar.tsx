@@ -15,6 +15,7 @@ export const Avatar: FunctionComponent<AvatarProps> = ({ user, size }) => {
 
   return (
     <Image
+      alt="avatar"
       placeholder="blur"
       blurDataURL={avatarLogo.src}
       className={styles.blockImage}

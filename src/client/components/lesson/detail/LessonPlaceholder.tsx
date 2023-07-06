@@ -35,19 +35,19 @@ const LessonPlaceholder: FunctionComponent = () => {
         <div className={styles.avantages}>
           <div>
             <div>
-              <Image src={sparkles} width="50" height="50" />
+              <Image alt="sparkles"src={sparkles} width="50" height="50" />
             </div>
             <h2>D’un accès à tous les articles et vidéos.</h2>
           </div>
           <div>
             <div>
-              <Image src={sparkles} width="50" height="50" />
+              <Image alt="sparkles"src={sparkles} width="50" height="50" />
             </div>
             <h2>Partage de fiches.</h2>
           </div>
           <div>
             <div>
-              <Image src={sparkles} width="50" height="50" />
+              <Image alt="sparkles"src={sparkles} width="50" height="50" />
             </div>
             <h2>Possibilité de chat en ligne avec d’autres professeurs.</h2>
           </div>
