@@ -33,7 +33,7 @@ const FooterLanding: FunctionComponent = (): JSX.Element => {
         </div>
         <div className={styles.landingFooterContact}>
           <div className={styles.spaceText}>
-            <Image src={logo} layout="responsive" className={styles.test} />
+            <Image alt="logo" src={logo} layout="responsive" className={styles.test} />
             <p>+1 (7635) 547-12-97</p>
             <Link href="/">teatshare@live.fr</Link>
           </div>
