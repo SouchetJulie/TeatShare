@@ -48,7 +48,7 @@
     "@types/file-saver": "^2.0.5",
     "@types/formidable": "^3.4.0",
     "@types/node": "^18.11.10",
-    "@types/react": "^18.2.18",
+    "@types/react": "^18.2.24",
     "@types/react-datepicker": "^4.15.0",
     "@types/react-dom": "^18.0.10",
     "@types/react-pdf": "^5.7.2",
